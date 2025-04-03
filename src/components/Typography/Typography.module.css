@@ -1,0 +1,96 @@
+/* Headline Styles */
+.headline1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 48px;
+    line-height: 58px;
+  }
+  
+  .headline2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    line-height: 53px;
+  }
+  
+  .headline3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    line-height: 48px;
+  }
+  .headline4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+ 
+  
+  /* Body Styles */
+  .body1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+  }
+  
+  .body2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+   
+  }
+  
+  .body3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 17px;
+   
+  }
+  .body4 {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    line-height: 14px;
+   
+  }
+  
+  
+  /* Label Styles */
+  .label1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    line-height: 38px;
+   
+  }
+  
+  .label2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    line-height: 28px;
+    
+  }
+  
+  .label3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    line-height: 26px;
+  }
+  
+  /* Font Weight Variants */
+.light {
+    font-weight: 300;
+  }
+  
+  .regular {
+    font-weight: 400;
+  }
+  
+  .medium {
+    font-weight: 500;
+  }
+  
+  .semibold {
+    font-weight: 600;
+  }
+  
+  .bold {
+    font-weight: 700;
+  }
+  

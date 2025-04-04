@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox Component matches snapshot 1`] = `
+<div>
+  <button
+    aria-checked="false"
+    class="Checkbox"
+    data-state="unchecked"
+    role="checkbox"
+    type="button"
+    value="on"
+  />
+</div>
+`;

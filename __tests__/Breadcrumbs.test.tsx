@@ -8,7 +8,7 @@ import {
   BreadcrumbLink,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "../src/components/Breadcrumbs/Breadcrumbs";
+} from "../src/components/atomic/Breadcrumbs/Breadcrumbs";
 import Image from "next/image";
 
 describe("Breadcrumbs Component", () => {

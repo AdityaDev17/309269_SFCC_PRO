@@ -25,7 +25,6 @@
   
   .PopoverContent {
     position: relative;
-    width: 18rem; 
     border-radius: 0.375rem; 
     background-color: hsl(var(--background)); 
     color: hsl(var(--foreground)); 

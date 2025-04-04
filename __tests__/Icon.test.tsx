@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import { Icon} from "@/components/Icons/Icons"
+import { Icon} from "@/components/atomic/Icons/Icons"
 
 describe("Icon Component", () => {
   it("renders correctly with Wishlist icon", () => {

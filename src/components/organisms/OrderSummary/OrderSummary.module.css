@@ -1,0 +1,57 @@
+.layout {
+    width: 440px;
+    border: 1px solid #CCCBCE;
+}
+.standardLayout{
+    padding: 20px;
+}
+.totalRowTop{
+    background-color: #FAFAFA;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+.topDivider{
+    border: 0;
+    border-top: 1px solid #CCCBCE;
+}
+.title{
+    padding-bottom: 20px;
+}
+.summaryRow {
+    display: flex;
+    justify-content: space-between;
+   padding-bottom: 15px;
+}
+.divider {
+    border: 0;
+    border-top: 1px solid #CCCBCE;
+    margin: 10px 0;
+}
+.totalRow {
+    display: flex;
+    justify-content: space-between;
+}
+.totalSavings {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+.reverseTotalSavings {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom:  20px;
+}
+.summaryButton{
+    padding:20px 0;
+}
+.button{
+    width: 400px;
+    height: 34px;
+}
+.paymentImages{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}

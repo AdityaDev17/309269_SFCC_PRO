@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { RadioGroup, RadioGroupItem } from "@/components/radioGroup/radioGroup";
+import { RadioGroup, RadioGroupItem } from "@/components/atomic/radioGroup/radioGroup";
 describe('Radio Group Component', () => {
     test("renders without crashing", () => {
         render(

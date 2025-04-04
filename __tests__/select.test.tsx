@@ -1,4 +1,4 @@
-import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/select/select";
+import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/atomic/select/select";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
 

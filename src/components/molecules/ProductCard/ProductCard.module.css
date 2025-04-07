@@ -1,0 +1,15 @@
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    align-items: center; 
+  }
+
+  .alignStart {
+    align-items: flex-start;
+  }
+  
+
+  .alignEnd {
+    align-items: flex-end;
+  }

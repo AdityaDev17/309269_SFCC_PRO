@@ -178,3 +178,49 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 }
+
+/**
+ * # Select Component
+ *
+ * A customizable and accessible dropdown select component built using Radix UI's `@radix-ui/react-select`.
+ * This component suite includes the root Select, trigger, content display, scrolling buttons, and individual items.
+ *
+ * ## Main Component: `Select`
+ *
+ * - Wraps Radix's `SelectPrimitive.Root`, maintaining open/close state internally.
+ * - Enhances functionality by passing the `isOpen` prop to a custom `SelectTrigger`.
+ *
+ * ## Props (Select)
+ * 
+ * Inherits all props from `SelectPrimitive.Root`.
+ *
+ * - **children** (ReactNode): Should include `SelectTrigger`, `SelectContent`, etc.
+ *
+ * ## Subcomponents
+ *
+ * - **SelectTrigger**
+ *   - Custom trigger component for opening the select dropdown.
+ *   - Props:
+ *     - **variant** (`'sort'`, optional): Adds a 'SORT' label and a specific layout.
+ *     - **isOpen** (boolean, internal): Indicates the open state of the dropdown.
+ *
+ * - **SelectContent**
+ *   - Wrapper around the dropdown content.
+ *   - Props:
+ *     - **position** (string): Controls dropdown positioning. Defaults to `'popper'`.
+ * 
+ * - **SelectItem**
+ *   - A selectable option inside the dropdown. Displays a check icon for the selected item.
+ *
+ * - **SelectScrollUpButton** / **SelectScrollDownButton**
+ *   - Scroll controls for navigating through long lists.
+ *
+ * - **SelectGroup**, **SelectLabel**, **SelectValue**, **SelectSeparator**
+ *   - Additional subcomponents provided for accessibility and grouping.
+ *
+ * ## Component Behavior
+ *
+ * - The `Select` component provides enhanced styling and behavior while keeping accessibility intact.
+ * - Custom styling is handled via CSS Modules (`select.module.css`).
+ * - Icons are conditionally rendered based on the open state.
+ */

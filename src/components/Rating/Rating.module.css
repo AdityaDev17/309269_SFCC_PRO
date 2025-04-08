@@ -1,0 +1,16 @@
+.header{
+    text-align: center;
+}
+.layout{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+.textArea{
+    width: 300px;
+}
+.rating{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

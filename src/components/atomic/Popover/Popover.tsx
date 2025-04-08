@@ -30,3 +30,59 @@ const PopoverContent = React.forwardRef<
 PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 
 export { Popover, PopoverTrigger, PopoverContent };
+
+/**
+ * ## Popover Component
+ *
+ * A wrapper around Radix UI's `@radix-ui/react-popover` providing a styled, accessible popover UI.
+ * Includes `Popover`, `PopoverTrigger`, and `PopoverContent` components with customizable positioning and styling.
+ *
+ * ---
+ *
+ * ### `Popover`
+ * The root component that manages popover state. Wrap this around your `PopoverTrigger` and `PopoverContent`.
+ *
+ * ```tsx
+ * <Popover>
+ *   <PopoverTrigger>Open</PopoverTrigger>
+ *   <PopoverContent>Popover content</PopoverContent>
+ * </Popover>
+ * ```
+ *
+ * ---
+ *
+ * ### `PopoverTrigger`
+ * The button or element that triggers the popover when clicked or focused.
+ *
+ * **Props:**
+ * - Inherits all standard Radix `Trigger` props.
+ * - Typically wraps a button or icon.
+ *
+ * ---
+ *
+ * ### `PopoverContent`
+ * The content that appears when the popover is open. Automatically rendered in a portal.
+ *
+ * **Props:**
+ * - `align?: "start" | "center" | "end"` – Horizontal alignment of the content relative to the trigger. Defaults to `"center"`.
+ * - `sideOffset?: number` – Offset distance between trigger and content. Defaults to `4`.
+ * - Accepts all standard Radix `Content` props.
+ * - Styled using `Popover.module.css`.
+ * 
+ * Includes an overlay container (`.PopoverOverlay`) that wraps the content, useful for custom background or blur effects.
+ *
+ * ---
+ *
+ * ### Example Usage:
+ * ```tsx
+ * <Popover>
+ *   <PopoverTrigger>
+ *     <button>Open Popover</button>
+ *   </PopoverTrigger>
+ *   <PopoverContent>
+ *     <p>This is a custom popover!</p>
+ *   </PopoverContent>
+ * </Popover>
+ * ```
+ */
+

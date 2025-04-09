@@ -102,24 +102,24 @@ export default QuantitySelector;
 
 
 /**
- * ## QuantitySelector Component
+ * # QuantitySelector Component
  *
  * The `QuantitySelector` component allows users to select a quantity either by using 
  * increment and decrement buttons or by selecting a value from a dropdown list. The component 
  * provides a customizable way to handle quantity changes and can be used in situations such as 
  * selecting the quantity of a product in a shopping cart.
  *
- * ### Props:
- * - **`onQuantityChange` (function)**: A callback function that is triggered whenever the quantity 
- *   is updated. It receives the updated quantity as a parameter.
- * 
- * - **`updateQuantity` (boolean)**: A flag that determines the mode of quantity selection:
- *   - `true`: The component will show increment and decrement buttons for updating the quantity.
- *   - `false`: The component will display a dropdown list for selecting a quantity.
+ * ## Props
  *
- * - **`qty` (number, optional)**: An optional prop for initializing the quantity value. If not provided, 
- *   the default quantity is set to `1`. If provided, the quantity will be initialized to this value.
- * 
- * 
+ * - **onQuantityChange** (function): A callback function that is triggered when the quantity changes. It receives the updated quantity as an argument.
+ * - **updateQuantity** (boolean): Determines whether the quantity should be updated via buttons or from a dropdown. If `true`, the user can increase or decrease the quantity by clicking the "+" or "-" icons. If `false`, the quantity can be selected from a dropdown.
+ * - **qty** (number, optional): An initial value for the quantity. If provided, this value will be used as the starting quantity. Defaults to `1` if not provided.
+ *
+ * ## Component Behavior
+ *
+ * - **With `updateQuantity = true`**: The user can click on the "+" and "-" icons to increase or decrease the quantity. The updated quantity is passed to the `onQuantityChange` callback.
+ * - **With `updateQuantity = false`**: The quantity is displayed as text with a dropdown arrow. When the user clicks on it, a dropdown of numbers (1 to 10) is shown, allowing the user to select a number. The selected number is passed to the `onQuantityChange` callback.
+ * - **Quantity Boundaries**: The minimum quantity is `1`, and the user cannot decrease the quantity below that value.
+ * - **Dropdown Functionality**: The dropdown appears when `updateQuantity` is `false`. It allows users to select a quantity from the range `1` to `10`.
  *
  */

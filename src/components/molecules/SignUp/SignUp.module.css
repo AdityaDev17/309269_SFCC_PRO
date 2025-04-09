@@ -1,0 +1,43 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 75px;
+}
+.fontColor {
+  font-size: 14px;
+  font-weight: 400;
+  color: #4f4b53;
+}
+.marginBottom {
+  margin-bottom: 8px;
+}
+.header {
+  text-align: center;
+  font-weight: 600;
+  font-size: 20px;
+}
+.buttonStyle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  width: 325px;
+}
+.policy {
+    font-size: 14px;
+    font-weight: 400;
+  }
+.row{
+    display: flex;
+    flex-direction: row;
+    gap: 7px;
+}
+.selectBox{
+    width: 325px;
+    border:1px solid #B3B2B5;
+    color: #75757A;
+}

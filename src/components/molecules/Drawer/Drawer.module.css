@@ -1,0 +1,110 @@
+.DrawerOverlay {
+    position: fixed; 
+    top: 0; 
+    right: 0; 
+    bottom: 0; 
+    left: 0; 
+    z-index: 50; 
+    background-color: #00000066;
+    backdrop-filter: blur(10px)
+}
+
+/* .DrawerContent {
+    position: fixed; 
+    top: 0; 
+    left: -100%; 
+    bottom: 0; 
+    z-index: 51;
+    display: flex; 
+    height: auto; 
+    flex-direction: column; 
+    border-radius: 0 0 10px 10px; 
+    border: 1px solid white; 
+    background-color: white;
+    transition: transform 0.3s ease;
+    width: 100%; 
+}
+
+.DrawerContent[data-state='open'] {
+    left: 0; 
+} */
+ /* Base */
+.DrawerContent {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: 51;
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    border: 1px solid white;
+    background-color: white;
+}
+
+/* Default off-screen position based on side */
+.DrawerContent[data-side='left'] {
+    left: -100%;
+    right: auto;
+    width: 100%;
+}
+
+.DrawerContent[data-side='right'] {
+    right: -100%;
+    left: auto;
+    width: 595px;
+    border: 1px solid black;
+}
+
+/* Slide in when open */
+.DrawerContent[data-side='left'][data-state='open'] {
+    left: 0;
+    
+}
+
+.DrawerContent[data-side='right'][data-state='open'] {
+    right: 0;
+}
+
+
+
+.DrawerContentDiv {
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: 1rem; 
+    height: 2px; 
+    width: 100px; 
+    border-radius: 50%; 
+    background-color: hsl(var(--muted)); 
+}
+
+.DrawerHeader {
+    display: grid; 
+    gap: 1.5rem;
+    padding: 1rem; 
+    text-align: center; 
+}
+
+@media (min-width: 640px) {
+    .DrawerHeader {
+        text-align: left;
+    }
+}
+
+.DrawerFooter {
+    margin-top: auto; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 0.5rem; 
+    padding: 1rem;
+}
+
+.DrawerTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1; 
+    letter-spacing: -0.025em;
+}
+
+.DrawerDescription {
+    font-size: 0.875rem; 
+}

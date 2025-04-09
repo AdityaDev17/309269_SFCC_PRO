@@ -35,41 +35,65 @@ export default Typography;
 
 
 /**
- * ## Typography Component
+ * # Typography Component
  *
- * The `Typography` component is a reusable text styling component that displays text 
- * based on the type of typography (e.g., Headline, Body, Label) and applies various 
- * style properties such as font size, line height, color, font weight, and text decoration.
- * This component supports different variants of typography, allowing you to easily 
- * customize the appearance of text throughout your application.
+ * The `Typography` component is a flexible text rendering component that can be used to display different types of text, such as headlines, body text, and labels. 
+ * It supports customization through various props, including font weight, color, text decoration, and variant selection.
  *
- * ### Props:
- * - **`type` (string)**: The type of typography to render. It can be one of:
- *   - `"Headline"`: Renders headline-style text.
- *   - `"Body"`: Renders body-style text.
- *   - `"Label"`: Renders label-style text.
+ * ## Props
+ *
+ * - **type** (`"Headline" | "Body" | "Label"`): Specifies the type of typography. This determines the default styles applied to the text. Available values:
+ *   - `"Headline"`: For larger, more prominent text.
+ *   - `"Body"`: For regular body text.
+ *   - `"Label"`: For smaller text typically used for labels or captions.
  * 
- * - **`variant` (number)**: A number representing the specific variant for the chosen typography type. 
- *   For example, `variant=1` will render the first variant for the selected type (e.g., `headline1`, `body1`).
+ * - **variant** (`number`): Specifies the variant or size of the typography. Different numeric values (e.g., `1`, `2`, etc.) correspond to different predefined styles.
  * 
- * - **`color` (string, optional)**: The color of the text. Defaults to `"black"` if not provided.
- *   Accepts any valid CSS color (e.g., `"red"`, `"#FF5733"`, `"rgb(255, 99, 71)"`).
+ * - **color** (`string`, optional): The color of the text. This can be any valid CSS color (e.g., `"red"`, `"#333"`, `"rgba(0, 0, 0, 0.8)"`). Defaults to `"black"`.
  * 
- * - **`fontWeight` (string, optional)**: The weight of the font. Defaults to `"regular"` if not provided.
- *   It can be one of the following:
+ * - **fontWeight** (`"light" | "regular" | "medium" | "semibold" | "bold"`, optional): The weight of the font. Available values:
  *   - `"light"`
- *   - `"regular"`
+ *   - `"regular"` (default)
  *   - `"medium"`
  *   - `"semibold"`
  *   - `"bold"`
  * 
- * - **`label` (string, optional)**: Custom text to display inside the typography component. 
- *   If not provided, the component will display a default text that combines the `type` and `variant`.
+ * - **label** (`string`, optional): If provided, this value will be displayed as the text content. If not provided, the text will default to a combination of the `type` and `variant` values.
  * 
- * - **`textDecoration` (string, optional)**: Text decoration to apply to the text. 
- *   Defaults to `"none"`. Can be one of:
- *   - `"none"`
- *   - `"line-through"`
+ * - **textDecoration** (`"none" | "line-through"`, optional): Specifies the text decoration style. Available values:
+ *   - `"none"`: No text decoration (default).
+ *   - `"line-through"`: The text will have a line through it, often used for indicating strikethrough text.
  *
- 
+ * ## Component Behavior
+ *
+ * - The component dynamically generates class names based on the `type` and `variant` props. This allows different styles for headlines, body text, and labels with different variants.
+ * - The font weight is determined by the `fontWeight` prop, allowing the text to be rendered in different weights (light, regular, medium, semibold, bold).
+ * - The color and text decoration are customizable via inline styles. The `color` prop controls the text color, and the `textDecoration` prop allows for strikethrough or no decoration.
+ * - If the `label` prop is provided, it is displayed as the text content. If not, the component will display a default text like `"Headline 1"`, `"Body 2"`, etc., based on the `type` and `variant`.
+ *
+ * * ## Example Usage
+ *
+ * Here's a simple example of how to use the `Typography` component:
+ *
+ * ```tsx
+ * import React from 'react';
+ * import Typography from './Typography'; // Adjust the import path as needed
+ *
+ * const Example = () => {
+ *   return (
+ *     <div>
+ *       <Typography type="Headline" variant={1} color="blue" fontWeight="bold">
+ *         This is a bold headline
+ *       </Typography>
+ *       <Typography type="Body" variant={2} color="gray">
+ *         This is body text with variant 2
+ *       </Typography>
+ *       <Typography type="Label" variant={1} color="green" textDecoration="line-through">
+ *         This is a label with a line-through
+ *       </Typography>
+ *     </div>
+ *   );
+ * };
+ * ```
+ *
  */

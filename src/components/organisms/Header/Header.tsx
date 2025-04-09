@@ -1,0 +1,187 @@
+
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import styles from './Header.module.css';
+import { DrawerTrigger, DrawerContent, DrawerTitle, DrawerHeader, DrawerClose } from '@/components/molecules/Drawer/Drawer';
+import { Drawer } from 'vaul';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
+
+interface HeaderProps {
+  isHome?: boolean;
+  logoImages: { default: string; white: string };
+  categories: string[];
+  headerIcons: { label: string; icon: string }[];
+  headerWhiteIcons: { label: string; icon: string }[];
+}
+
+const Header: React.FC<HeaderProps> = ({
+  isHome = false,
+  logoImages,
+  categories,
+  headerIcons,
+  headerWhiteIcons,
+}) => {
+  const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+
+  const checkMobileView = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    checkMobileView();
+    window.addEventListener('resize', checkMobileView);
+    return () => window.removeEventListener('resize', checkMobileView);
+  }, []);
+
+  const iconsToRender = isHome ? headerWhiteIcons : headerIcons;
+
+  return (
+    <div className={`${styles.header} ${isHome ? styles.homeHeader : ''}`}>
+      <div className={styles.layout}>
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
+          {isMobile && (
+            <Drawer.Root shouldScaleBackground>
+              <DrawerTrigger asChild>
+                <img
+                  src={isHome ? "images/menu_white.svg": 'images/menu.svg'}
+                  alt="Menu"
+                  style={{ cursor: 'pointer' }}
+                />
+              </DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader className={styles.menuheader}>
+                  <ChevronLeft size={20} />
+                  <DrawerTitle className={styles.title}>MENU</DrawerTitle>
+                  <DrawerClose className={styles.close} asChild>
+                    <img src="images/expand.svg" alt="Close" />
+                  </DrawerClose>
+                </DrawerHeader>
+
+                <div className={styles.categoryList}>
+                  {categories.map((category) => (
+                    <div
+                      key={category}
+                      className={styles.categoryItem}
+                      onClick={() =>
+                        router.push(`/${category.toLowerCase().replace(/\s+/g, '-')}`)
+                      }
+                    >
+                      <span>{category}</span>
+                      <ChevronRight size={20} />
+                    </div>
+                  ))}
+                </div>
+              </DrawerContent>
+            </Drawer.Root>
+          )}
+
+          <img
+            src={isHome ? logoImages.white : logoImages.default}
+            alt="Elenor Logo"
+            onClick={() => router.push('/')}
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
+
+        {!isMobile && (
+          <div className={`${styles.categories} ${isHome ? styles.whiteCategories : ''}`}>
+            {categories.map((category, index) => (
+              <div key={index} className={styles.category}>
+                {category}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className={styles.categories}>
+          {iconsToRender.map(({ label, icon }, index) => (
+            <img key={index} src={icon} alt={label} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Header;
+
+
+/**
+ * # Header Component
+ *
+ * The `Header` component is a navigation header used to display the logo, category links, and icons in the navigation bar. It adapts based on the device's screen width, showing a responsive drawer for mobile views and a horizontal layout for larger screens. It also supports dynamic changes for the logo and icons depending on whether the page is the homepage or not.
+ *
+ * ## Props
+ *
+ * - **isHome** (`boolean`, optional): Indicates whether the current page is the homepage. Defaults to `false`.
+ *   - If `true`, the header will render a different logo and a set of white icons.
+ *   - If `false`, it will render the default logo and a different set of icons.
+ *
+ * - **logoImages** (`object`): Contains the image URLs for the logo in two states:
+ *   - **default** (`string`): The URL for the default logo.
+ *   - **white** (`string`): The URL for the white logo (used when on the homepage).
+ *
+ * - **categories** (`array`): An array of strings representing the categories that will be displayed in the navigation bar.
+ *
+ * - **headerIcons** (`array`): An array of objects containing icons for the header in a non-homepage state. Each object contains:
+ *   - **label** (`string`): The label for the icon.
+ *   - **icon** (`string`): The URL for the icon image.
+ *
+ * - **headerWhiteIcons** (`array`): An array of objects containing icons for the header in the homepage state. It has the same structure as `headerIcons`.
+ *
+ * ## Component Behavior
+ *
+ * - The component uses a responsive layout:
+ *   - For mobile devices (screen width less than 768px), a `Drawer` component is used to display the menu as a sidebar when the menu icon is clicked.
+ *   - For larger screens, categories are displayed horizontally, and the icons are shown in a row on the right.
+ * - The drawer menu lists categories that users can click to navigate to corresponding pages. The categories are dynamically generated from the `categories` prop.
+ * - The `logoImages` prop allows for different logos to be displayed depending on whether the current page is the homepage.
+ * - The `iconsToRender` is dynamically set based on whether the page is the homepage or not, determining which set of icons to render.
+ * - Clicking on the logo navigates the user to the homepage.
+ *
+ * ## Example Usage
+ *
+ * Here's an example of how to use the `Header` component:
+ *
+ * ```tsx
+ * import React from 'react';
+ * import Header from './Header'; // Adjust the import path as needed
+ *
+ * const exampleCategories = ['Home', 'Shop', 'About Us', 'Contact'];
+ *
+ * const exampleIcons = [
+ *   { label: 'Cart', icon: 'images/cart.svg' },
+ *   { label: 'Profile', icon: 'images/profile.svg' }
+ * ];
+ *
+ * const exampleWhiteIcons = [
+ *   { label: 'Cart', icon: 'images/cart_white.svg' },
+ *   { label: 'Profile', icon: 'images/profile_white.svg' }
+ * ];
+ *
+ * const logoImages = {
+ *   default: 'images/logo.svg',
+ *   white: 'images/logo_white.svg'
+ * };
+ *
+ * const Example = () => {
+ *   return (
+ *     <Header
+ *       isHome={true}
+ *       logoImages={logoImages}
+ *       categories={exampleCategories}
+ *       headerIcons={exampleIcons}
+ *       headerWhiteIcons={exampleWhiteIcons}
+ *     />
+ *   );
+ * };
+ * ```
+ *
+ * ## Dynamic Behavior
+ * - On mobile devices, clicking the menu icon triggers the opening of the `Drawer`, which shows a list of categories that can be clicked to navigate.
+ * - On larger devices, categories are shown as a horizontal list and icons are displayed inline.
+ * - The header layout changes based on the `isHome` prop, including displaying a different logo and different icons for the homepage.
+ */

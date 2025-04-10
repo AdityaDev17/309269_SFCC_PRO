@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import ProductImageCarousel from "@/components/organisms/CardLayout/ProductImageCarousel";
+import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
 
 const products = [
     {

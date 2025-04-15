@@ -110,79 +110,54 @@ export {
 }
 
 /**
- * ## Breadcrumb Components
+ * # Breadcrumb Components
  *
- * A collection of accessible and composable breadcrumb navigation components.
- * Useful for indicating the current page’s location within a navigational hierarchy.
+ * A collection of accessible and composable breadcrumb navigation components used to indicate 
+ * the current page’s location within a navigational hierarchy.
  *
- * ---
+ * ## Components
  *
- * ### `Breadcrumb`
- * The root wrapper component that renders a `<nav>` element with `aria-label="breadcrumb"`.
- * 
- * **Props:**
+ * ### Breadcrumb
+ * - Root wrapper component that renders a `<nav>` element with `aria-label="breadcrumb"`.
  * - Accepts all standard props for `<nav>`.
- * - Optional `separator` prop (not used directly here but useful in custom implementations).
+ * - Optional `separator` prop for custom implementations (not used directly in the base component).
  *
- * ---
- *
- * ### `BreadcrumbList`
- * Renders the breadcrumb items inside an `<ol>` list.
- *
- * **Props:**
+ * ### BreadcrumbList
+ * - Wraps the breadcrumb items inside an `<ol>` element.
  * - Accepts all standard props for `<ol>`.
- * - Applies default breadcrumb list styling from `Breadcrumbs.module.css`.
+ * - Applies default breadcrumb list styling via `Breadcrumbs.module.css`.
  *
- * ---
- *
- * ### `BreadcrumbItem`
- * Represents an individual breadcrumb item (`<li>`).
- *
- * **Props:**
+ * ### BreadcrumbItem
+ * - Represents an individual breadcrumb item rendered as `<li>`.
  * - Accepts all standard props for `<li>`.
- * - Automatically styled via `Breadcrumbs.module.css`.
+ * - Styled through `Breadcrumbs.module.css`.
  *
- * ---
- *
- * ### `BreadcrumbLink`
- * A link component for a breadcrumb item.
- *
- * **Props:**
+ * ### BreadcrumbLink
+ * - A link element used inside a breadcrumb item.
  * - Accepts all standard props for `<a>`.
- * - `asChild?: boolean` — if true, renders using a passed child component via Radix UI's `Slot`.
+ * - **asChild** (boolean, optional): If true, uses Radix UI's `Slot` to render the passed child component.
  * - Applies consistent breadcrumb link styles.
  *
- * ---
- *
- * ### `BreadcrumbPage`
- * Used to indicate the current page in the breadcrumb trail.
- *
- * **Props:**
+ * ### BreadcrumbPage
+ * - Indicates the current page in the breadcrumb trail.
+ * - Rendered as a `<span>` with `role="link"` and `aria-current="page"`.
+ * - Non-interactive (disabled).
  * - Accepts all standard props for `<span>`.
- * - Rendered as `role="link"` with `aria-current="page"` and disabled.
  *
- * ---
- *
- * ### `BreadcrumbSeparator`
- * Used between breadcrumb items to visually separate them.
- *
- * **Props:**
+ * ### BreadcrumbSeparator
+ * - Used to visually separate breadcrumb items.
+ * - Rendered as a `<li>` element.
  * - Accepts all standard props for `<li>`.
- * - Defaults to a right chevron icon (`<ChevronRight />`) if no children are passed.
- * - `aria-hidden` for accessibility.
+ * - Defaults to a right-chevron icon (`<ChevronRight />`) if no children are passed.
+ * - `aria-hidden` is applied for accessibility.
  *
- * ---
- *
- * ### `BreadcrumbEllipsis`
- * Renders an ellipsis icon (three dots) when breadcrumb items are truncated.
- *
- * **Props:**
+ * ### BreadcrumbEllipsis
+ * - Renders an ellipsis icon (`<MoreHorizontal />`) to indicate truncated items.
  * - Accepts all standard props for `<span>`.
- * - Uses the `<MoreHorizontal />` icon with screen reader support.
+ * - Includes screen reader support for accessibility.
  *
- * ---
+ * ## Example Usage
  *
- * ### Example Usage:
  * ```tsx
  * <Breadcrumb>
  *   <BreadcrumbList>
@@ -201,3 +176,4 @@ export {
  * </Breadcrumb>
  * ```
  */
+

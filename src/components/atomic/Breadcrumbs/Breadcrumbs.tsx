@@ -113,8 +113,8 @@ export {
  * 
  * ## Breadcrumbs
  *
- * A collection of accessible and composable breadcrumb navigation components.
- * Useful for indicating the current page’s location within a navigational hierarchy.
+ * A collection of accessible and composable breadcrumb navigation components used to indicate 
+ * the current page’s location within a navigational hierarchy.
  *
  * 
  *
@@ -123,7 +123,7 @@ export {
  * 
  * **Props:**
  * - Accepts all standard props for `<nav>`.
- * - Optional `separator` prop (not used directly here but useful in custom implementations).
+ * - Optional `separator` prop for custom implementations (not used directly in the base component).
  *
  *
  * ### BreadcrumbList
@@ -131,7 +131,7 @@ export {
  *
  * **Props:**
  * - Accepts all standard props for `<ol>`.
- * - Applies default breadcrumb list styling from `Breadcrumbs.module.css`.
+ * - Applies default breadcrumb list styling via `Breadcrumbs.module.css`.
  *
  *
  * ### BreadcrumbItem
@@ -139,7 +139,7 @@ export {
  *
  * **Props:**
  * - Accepts all standard props for `<li>`.
- * - Automatically styled via `Breadcrumbs.module.css`.
+ * - Styled through `Breadcrumbs.module.css`.
  *
  *
  * ### BreadcrumbLink
@@ -147,7 +147,7 @@ export {
  *
  * **Props:**
  * - Accepts all standard props for `<a>`.
- * - `asChild?: boolean` — if true, renders using a passed child component via Radix UI's `Slot`.
+ * - **asChild** (boolean, optional): If true, uses Radix UI's `Slot` to render the passed child component.
  * - Applies consistent breadcrumb link styles.
  *
  *
@@ -156,7 +156,6 @@ export {
  *
  * **Props:**
  * - Accepts all standard props for `<span>`.
- * - Rendered as `role="link"` with `aria-current="page"` and disabled.
  *
  *
  * ### BreadcrumbSeparator
@@ -164,8 +163,8 @@ export {
  *
  * **Props:**
  * - Accepts all standard props for `<li>`.
- * - Defaults to a right chevron icon (`<ChevronRight />`) if no children are passed.
- * - `aria-hidden` for accessibility.
+ * - Defaults to a right-chevron icon (`<ChevronRight />`) if no children are passed.
+ * - `aria-hidden` is applied for accessibility.
  *
  *
  * ### BreadcrumbEllipsis
@@ -173,10 +172,9 @@ export {
  *
  * **Props:**
  * - Accepts all standard props for `<span>`.
- * - Uses the `<MoreHorizontal />` icon with screen reader support.
+ * - Includes screen reader support for accessibility.
  *
  *
- * ### Example Usage:
  * ```tsx
  * <Breadcrumb>
  *   <BreadcrumbList>
@@ -195,3 +193,4 @@ export {
  * </Breadcrumb>
  * ```
  */
+

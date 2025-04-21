@@ -32,12 +32,12 @@ export default Checkbox
 
 
 /**
- * # Checkbox Component
+ * ## Checkbox 
  *
  * The `Checkbox` component is a styled wrapper around Radix UI's `CheckboxPrimitive.Root`,
  * used to render an accessible and customizable checkbox input.
  *
- * ## Props
+ * ### Props
  *
  * - Inherits all props from `@radix-ui/react-checkbox`'s `CheckboxPrimitive.Root`.
  *   Common props include:
@@ -46,7 +46,7 @@ export default Checkbox
  *   - **onCheckedChange** (function): Callback fired when the checked state changes.
  *   - **disabled** (boolean): Disables the checkbox if set to `true`.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - Renders a custom-styled checkbox using CSS modules from `checkbox.module.css`.
  * - Displays a checkmark icon (`Check` from `lucide-react`) when checked.

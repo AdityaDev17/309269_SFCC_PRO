@@ -112,34 +112,27 @@ export {
 }
 
 /**
- * # Drawer Component
+ * ## Drawer 
  *
  * The `Drawer` component is a customizable sliding panel that can be used to display content off-canvas, such as navigation menus, notifications, or forms. It can be positioned on either the left or right side of the screen and can include a title, description, and content sections. The drawer can be controlled using triggers, and it supports dynamic scaling of the background.
  *
- * ## Props
+ * ### Props
  *
  * - **shouldScaleBackground** (`boolean`, optional): Controls whether the background should scale when the drawer is open. Defaults to `true`.
  * 
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The `Drawer` component consists of a root drawer element, overlay, content, header, footer, and title/description sections.
  * - The `DrawerContent` can be aligned to the left or right side of the screen using the `side` prop.
  * - The `DrawerTrigger` component is used to open the drawer.
  * - The drawer closes when the user interacts with the close button or the overlay background.
  * 
- * ## Example Usage
+ * ### Example Usage
  *
  * Here's a simple example of how to use the `Drawer` component:
  *
  * ```tsx
- * import React, { useState } from "react";
- * import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription, DrawerClose } from "./Drawer"; // Adjust the import path as needed
- *
- * const Example = () => {
- *   const [isOpen, setIsOpen] = useState(false);
  * 
- *   return (
- *     <div>
  *       <DrawerTrigger onClick={() => setIsOpen(true)}>
  *         Open Drawer
  *       </DrawerTrigger>
@@ -156,9 +149,7 @@ export {
  *           <div>Additional content goes here</div>
  *         </DrawerContent>
  *       </Drawer>
- *     </div>
- *   );
- * };
+ *     
  * ```
  *
  */

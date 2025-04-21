@@ -79,24 +79,24 @@ export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 
 
 /**
- * # Card Component
+ * ## Card
  *
  * The `Card` component is a customizable container that can hold various content, such as text, images, and other elements. 
  * It is designed to be flexible and can be styled with custom CSS.
  *
- * ## Props
+ * ### Props
  *
  * - **width** (string | number, optional): Defines the width of the card. Can be a string (e.g., `'100%'`) or a number (e.g., `440` for pixels). Defaults to `440px`.
  * - **className** (string, optional): Allows for additional custom CSS class names to be applied to the card component.
  * - All other standard `HTMLDivElement` props can be passed as well (e.g., `id`, `style`, `data-*` attributes).
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The card can have a customizable width via the `width` prop, either as a string or a number representing the width in pixels.
  * - The card can be further styled by passing custom class names via the `className` prop.
  * - The component is a wrapper for various card sub-components, which include the header, title, description, content, and footer.
  *
- * ## Example Usage
+ * ### Example Usage
  *
  * Here’s an example of how to use the `Card` component along with its subcomponents:
  *
@@ -115,7 +115,7 @@ export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
  * </Card>
  * ```
  *
- * ## Subcomponents
+ * ### Subcomponents
  * The following subcomponents are available for use inside the `Card` component:
  *
  * - **CardHeader**: A container for the card's header content.
@@ -128,83 +128,83 @@ export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
  */
 
 /**
- * # CardHeader Component
+ * ## CardHeader
  *
  * The `CardHeader` component is a subcomponent of the `Card` that holds the header content.
  * It can be used to display a logo, image, or any other content at the top of the card.
  *
- * ## Props
+ * ### Props
  *
  * - **className** (string, optional): Allows additional CSS class names to be applied to the header.
  * - All other standard `HTMLDivElement` props can be passed as well.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - This component serves as a container for the card's header content, allowing for custom styling and layout.
  */
 
 /**
- * # CardTitle Component
+ * ## CardTitle 
  *
  * The `CardTitle` component is a subcomponent of the `Card` that displays the main heading or title inside the card.
  * Typically used as an `h3` element, but can be customized with additional props.
  *
- * ## Props
+ * ### Props
  *
  * - **className** (string, optional): Allows additional CSS class names to be applied to the title.
  * - All other standard `HTMLHeadingElement` props can be passed as well (e.g., `id`, `style`, `aria-*` attributes).
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - This component renders the card's title, typically inside an `h3` element.
  * - It can be customized with additional CSS classes and other HTML heading attributes.
  */
 
 /**
- * # CardDescription Component
+ * ## CardDescription
  *
  * The `CardDescription` component is a subcomponent of the `Card` that provides a brief description or extra information.
  * This component is typically placed below the title.
  *
- * ## Props
+ * ### Props
  *
  * - **className** (string, optional): Allows additional CSS class names to be applied to the description.
  * - All other standard `HTMLParagraphElement` props can be passed as well (e.g., `id`, `style`, `aria-*` attributes).
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - This component is used to display a short description or content below the card's title.
  * - It can be customized with additional CSS classes and other paragraph attributes.
  */
 
 /**
- * # CardContent Component
+ * ## CardContent
  *
  * The `CardContent` component is a subcomponent of the `Card` that serves as the main container for the card's body content.
  * It can hold any content, including text, images, or other components.
  *
- * ## Props
+ * ### Props
  *
  * - **className** (string, optional): Allows additional CSS class names to be applied to the content area.
  * - All other standard `HTMLDivElement` props can be passed as well.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - This component wraps the main content inside the card. It is flexible and can hold any child components or HTML elements.
  */
 
 /**
- * # CardFooter Component
+ * ## CardFooter
  *
  * The `CardFooter` component is a subcomponent of the `Card` that contains content typically placed at the bottom of the card.
  * This could include action buttons, additional links, or other information.
  *
- * ## Props
+ * ### Props
  *
  * - **className** (string, optional): Allows additional CSS class names to be applied to the footer.
  * - All other standard `HTMLDivElement` props can be passed as well.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - This component is used to place footer content inside the card, such as buttons or additional text.
  * - It can be customized with additional CSS classes and other div element attributes.

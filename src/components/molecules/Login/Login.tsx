@@ -1,6 +1,6 @@
 import Input from "@/components/atomic/input/input";
 import styles from "./Login.module.css";
-import Checkbox from "@/components/atomic/checkbox/checkbox";
+import Checkbox from "@/components/atomic/Checkbox/Checkbox";
 import { Button } from "@/components/atomic/button/button";
 import { useState } from "react";
 

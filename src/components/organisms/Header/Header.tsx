@@ -110,11 +110,11 @@ export default Header;
 
 
 /**
- * # Header Component
+ * ## Header
  *
  * The `Header` component is a navigation header used to display the logo, category links, and icons in the navigation bar. It adapts based on the device's screen width, showing a responsive drawer for mobile views and a horizontal layout for larger screens. It also supports dynamic changes for the logo and icons depending on whether the page is the homepage or not.
  *
- * ## Props
+ * ### Props
  *
  * - **isHome** (`boolean`, optional): Indicates whether the current page is the homepage. Defaults to `false`.
  *   - If `true`, the header will render a different logo and a set of white icons.
@@ -132,7 +132,7 @@ export default Header;
  *
  * - **headerWhiteIcons** (`array`): An array of objects containing icons for the header in the homepage state. It has the same structure as `headerIcons`.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The component uses a responsive layout:
  *   - For mobile devices (screen width less than 768px), a `Drawer` component is used to display the menu as a sidebar when the menu icon is clicked.
@@ -142,33 +142,12 @@ export default Header;
  * - The `iconsToRender` is dynamically set based on whether the page is the homepage or not, determining which set of icons to render.
  * - Clicking on the logo navigates the user to the homepage.
  *
- * ## Example Usage
+ * ### Example Usage
  *
  * Here's an example of how to use the `Header` component:
  *
  * ```tsx
- * import React from 'react';
- * import Header from './Header'; // Adjust the import path as needed
- *
- * const exampleCategories = ['Home', 'Shop', 'About Us', 'Contact'];
- *
- * const exampleIcons = [
- *   { label: 'Cart', icon: 'images/cart.svg' },
- *   { label: 'Profile', icon: 'images/profile.svg' }
- * ];
- *
- * const exampleWhiteIcons = [
- *   { label: 'Cart', icon: 'images/cart_white.svg' },
- *   { label: 'Profile', icon: 'images/profile_white.svg' }
- * ];
- *
- * const logoImages = {
- *   default: 'images/logo.svg',
- *   white: 'images/logo_white.svg'
- * };
- *
- * const Example = () => {
- *   return (
+ * 
  *     <Header
  *       isHome={true}
  *       logoImages={logoImages}
@@ -176,11 +155,10 @@ export default Header;
  *       headerIcons={exampleIcons}
  *       headerWhiteIcons={exampleWhiteIcons}
  *     />
- *   );
- * };
+ *   
  * ```
  *
- * ## Dynamic Behavior
+ * ### Dynamic Behavior
  * - On mobile devices, clicking the menu icon triggers the opening of the `Drawer`, which shows a list of categories that can be clicked to navigate.
  * - On larger devices, categories are shown as a horizontal list and icons are displayed inline.
  * - The header layout changes based on the `isHome` prop, including displaying a different logo and different icons for the homepage.

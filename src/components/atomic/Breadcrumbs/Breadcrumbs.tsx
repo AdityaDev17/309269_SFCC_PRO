@@ -110,41 +110,39 @@ export {
 }
 
 /**
- * ## Breadcrumb Components
+ * 
+ * ## Breadcrumbs
  *
  * A collection of accessible and composable breadcrumb navigation components.
  * Useful for indicating the current page’s location within a navigational hierarchy.
  *
- * ---
+ * 
  *
- * ### `Breadcrumb`
+ * ### Breadcrumb
  * The root wrapper component that renders a `<nav>` element with `aria-label="breadcrumb"`.
  * 
  * **Props:**
  * - Accepts all standard props for `<nav>`.
  * - Optional `separator` prop (not used directly here but useful in custom implementations).
  *
- * ---
  *
- * ### `BreadcrumbList`
+ * ### BreadcrumbList
  * Renders the breadcrumb items inside an `<ol>` list.
  *
  * **Props:**
  * - Accepts all standard props for `<ol>`.
  * - Applies default breadcrumb list styling from `Breadcrumbs.module.css`.
  *
- * ---
  *
- * ### `BreadcrumbItem`
+ * ### BreadcrumbItem
  * Represents an individual breadcrumb item (`<li>`).
  *
  * **Props:**
  * - Accepts all standard props for `<li>`.
  * - Automatically styled via `Breadcrumbs.module.css`.
  *
- * ---
  *
- * ### `BreadcrumbLink`
+ * ### BreadcrumbLink
  * A link component for a breadcrumb item.
  *
  * **Props:**
@@ -152,18 +150,16 @@ export {
  * - `asChild?: boolean` — if true, renders using a passed child component via Radix UI's `Slot`.
  * - Applies consistent breadcrumb link styles.
  *
- * ---
  *
- * ### `BreadcrumbPage`
+ * ### BreadcrumbPage
  * Used to indicate the current page in the breadcrumb trail.
  *
  * **Props:**
  * - Accepts all standard props for `<span>`.
  * - Rendered as `role="link"` with `aria-current="page"` and disabled.
  *
- * ---
  *
- * ### `BreadcrumbSeparator`
+ * ### BreadcrumbSeparator
  * Used between breadcrumb items to visually separate them.
  *
  * **Props:**
@@ -171,16 +167,14 @@ export {
  * - Defaults to a right chevron icon (`<ChevronRight />`) if no children are passed.
  * - `aria-hidden` for accessibility.
  *
- * ---
  *
- * ### `BreadcrumbEllipsis`
+ * ### BreadcrumbEllipsis
  * Renders an ellipsis icon (three dots) when breadcrumb items are truncated.
  *
  * **Props:**
  * - Accepts all standard props for `<span>`.
  * - Uses the `<MoreHorizontal />` icon with screen reader support.
  *
- * ---
  *
  * ### Example Usage:
  * ```tsx

@@ -102,20 +102,20 @@ export default QuantitySelector;
 
 
 /**
- * # QuantitySelector Component
+ * ## QuantitySelector
  *
  * The `QuantitySelector` component allows users to select a quantity either by using 
  * increment and decrement buttons or by selecting a value from a dropdown list. The component 
  * provides a customizable way to handle quantity changes and can be used in situations such as 
  * selecting the quantity of a product in a shopping cart.
  *
- * ## Props
+ * ### Props
  *
  * - **onQuantityChange** (function): A callback function that is triggered when the quantity changes. It receives the updated quantity as an argument.
  * - **updateQuantity** (boolean): Determines whether the quantity should be updated via buttons or from a dropdown. If `true`, the user can increase or decrease the quantity by clicking the "+" or "-" icons. If `false`, the quantity can be selected from a dropdown.
  * - **qty** (number, optional): An initial value for the quantity. If provided, this value will be used as the starting quantity. Defaults to `1` if not provided.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - **With `updateQuantity = true`**: The user can click on the "+" and "-" icons to increase or decrease the quantity. The updated quantity is passed to the `onQuantityChange` callback.
  * - **With `updateQuantity = false`**: The quantity is displayed as text with a dropdown arrow. When the user clicks on it, a dropdown of numbers (1 to 10) is shown, allowing the user to select a number. The selected number is passed to the `onQuantityChange` callback.

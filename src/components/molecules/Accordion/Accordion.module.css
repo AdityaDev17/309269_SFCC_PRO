@@ -12,6 +12,8 @@
     white-space: no-wrap;
     border-top: 1px solid #CCCBCE;
     border-bottom: 1px solid #CCCBCE;
+    border-left: none;
+    border-right: none;
     font-weight: bold;
     text-decoration: none;
     

@@ -1,6 +1,11 @@
 import React from "react";
 import { Button } from "@/components/atomic/button/button";
-import { Card, CardContent, CardFooter, CardHeader } from "@/components/atomic/Card/Card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/atomic/Card/Card";
 import Typography from "@/components/atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
 
@@ -10,13 +15,13 @@ interface ProductCardProps {
   alignment?: Alignment;
   width?: number | string;
   productImage: string;
-  productTitle: string;
+  productTitle?: string;
   productDesc?: string;
   price?: string;
   currency?: string;
   moveToBag?: boolean;
   wishListed?: boolean;
-  bagPrice?:string
+  bagPrice?: string;
 }
 const ProductCard = ({
   alignment = "center",
@@ -28,7 +33,7 @@ const ProductCard = ({
   currency,
   moveToBag,
   wishListed,
-  bagPrice
+  bagPrice,
 }: ProductCardProps) => {
   return (
     <div>
@@ -47,29 +52,29 @@ const ProductCard = ({
             />
           )}
         </CardHeader>
-        <CardContent className={`${styles.cardContent} ${styles[alignment]}`}>
-  <Typography
-    type={"Headline"}
-    variant={5}
-    label={productTitle}
-    fontWeight="regular"
-    color="black"
-  />
-    {productDesc && (
-  <div style={{ paddingTop: "5px" }}>
-      <Button variant="link">
-        <Typography
-          type={"Body"}
-          variant={2}
-          label={productDesc}
-          fontWeight="medium"
-          color="black"
-        />
-      </Button>
-  </div>
-   )}
-   {price && (
-      <div style={{ paddingTop: "5px" }}>
+        {productTitle &&<CardContent className={`${styles.cardContent} ${styles[alignment]}`}>
+          <Typography
+            type={"Headline"}
+            variant={5}
+            label={productTitle}
+            fontWeight="regular"
+            color="black"
+          />
+          {productDesc && (
+            <div style={{ paddingTop: "5px" }}>
+              <Button variant="link">
+                <Typography
+                  type={"Body"}
+                  variant={2}
+                  label={productDesc}
+                  fontWeight="medium"
+                  color="black"
+                />
+              </Button>
+            </div>
+          )}
+          {price && (
+            <div style={{ paddingTop: "5px" }}>
               <Typography
                 type="Body"
                 variant={1}
@@ -77,31 +82,31 @@ const ProductCard = ({
                 fontWeight="medium"
                 label={`${currency}${price}`}
               />
-              </div>
-            )}
-</CardContent>
-<CardFooter className={styles.priceButtonRow}>
-      {bagPrice && (
-        <Typography
-          type="Body"
-          variant={1}
-          color="gray"
-          fontWeight="medium"
-          label={`${currency}${bagPrice}`}
-        />
-      )}
-      {moveToBag && (
-        <Button variant="icon" className={styles.moveToBagButton}>
-          <Typography
-            type="Body"
-            variant={2}
-            label="Move to Bag"
-            fontWeight="medium"
-            color="black"
-          />
-        </Button>
-      )}
-</CardFooter>
+            </div>
+          )}
+        </CardContent>}
+        <CardFooter className={styles.priceButtonRow}>
+          {bagPrice && (
+            <Typography
+              type="Body"
+              variant={1}
+              color="gray"
+              fontWeight="medium"
+              label={`${currency}${bagPrice}`}
+            />
+          )}
+          {moveToBag && (
+            <Button variant="icon" className={styles.moveToBagButton}>
+              <Typography
+                type="Body"
+                variant={2}
+                label="Move to Bag"
+                fontWeight="medium"
+                color="black"
+              />
+            </Button>
+          )}
+        </CardFooter>
       </Card>
     </div>
   );
@@ -120,23 +125,23 @@ export default ProductCard;
  *   - `"center"`: Centers the content (default).
  *   - `"alignStart"`: Aligns the content to the start (left).
  *   - `"alignEnd"`: Aligns the content to the end (right).
- * 
+ *
  * - **width** (`number | string`, optional): Sets the width of the `ProductCard`. Can be a pixel value (`'px'`) or percentage.
- * 
+ *
  * - **productImage** (`string`): The URL of the product image to be displayed on the card.
- * 
+ *
  * - **productTitle** (`string`): The title/name of the product.
- * 
+ *
  * - **productDesc** (`string`, optional): A short description of the product. If provided, it will be displayed under the product title.
- * 
+ *
  * - **price** (`string`, optional): The price of the product, displayed below the product description.
- * 
+ *
  * - **currency** (`string`, optional): The currency symbol or code used for displaying the price (e.g., `$`, `€`, etc.). Defaults to an empty string if not provided.
- * 
+ *
  * - **moveToBag** (`boolean`, optional): If `true`, shows a "Move to Bag" button. Defaults to `false`.
- * 
+ *
  * - **wishListed** (`boolean`, optional): If `true`, a "wishlist" icon is displayed on the product image.
- * 
+ *
  * - **bagPrice** (`string`, optional): The price of the product in the bag, displayed in the footer if provided.
  *
  * ## Component Behavior
@@ -175,4 +180,3 @@ export default ProductCard;
  * ```
  *
  */
-

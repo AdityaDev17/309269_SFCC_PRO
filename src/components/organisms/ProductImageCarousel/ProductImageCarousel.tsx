@@ -1,51 +1,80 @@
-import React from 'react'
-import ProductCard from '@/components/molecules/ProductCard/ProductCard';
-import styles from './ProductImageCarousel.module.css'
+"use client";
+import React, { useState } from "react";
+import ProductCard from "@/components/molecules/ProductCard/ProductCard";
+import styles from "./ProductImageCarousel.module.css";
 
 type Alignment = "center" | "alignStart" | "alignEnd";
 interface LayoutProps {
-    productData: {
-      productImage: string;
-      productTitle: string;
-      productDesc?: string;
-      price?: string;
+  productData: {
+    productImage: string;
+    productTitle: string;
+    productDesc?: string;
+    price?: string;
     currency?: string;
-    wishListed?:boolean;
-    bagPrice?:string;
-    }[];
-    cardsPerRow: number ;
-    width?:string | number;
-    alignment?:Alignment;
-    moveToBag?:boolean
-  }
-  
-  const  ProductImageCarousel= ({ productData, cardsPerRow ,width,alignment, moveToBag}: LayoutProps) => {
-  
-    return (
-        <div className={`${styles.cardLayout}`} style={{ gridTemplateColumns: `repeat(${cardsPerRow}, auto)` }}>
-        {productData.map((product, index) => (
-          <ProductCard
-            key={index}
-            productImage={product.productImage}
-            productTitle={product.productTitle}
-            productDesc={product.productDesc}
-            price={product.price}
-            currency={product.currency}
-            bagPrice={product.bagPrice}
-            wishListed={product.wishListed}
-            width={width} 
-            alignment={alignment}
-            moveToBag={moveToBag}
-           
+    wishListed?: boolean;
+    bagPrice?: string;
+  }[];
+  cardsPerRow: number;
+  width?: string | number;
+  alignment?: Alignment;
+  moveToBag?: boolean;
+  withPagination?:boolean
+}
+
+const ProductImageCarousel = ({
+  productData,
+  cardsPerRow,
+  width,
+  alignment,
+  moveToBag,
+  withPagination,
+}: LayoutProps) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const totalGroups = Math.ceil(productData.length / cardsPerRow);
+
+  const visibleItems = withPagination
+    ? productData.slice(
+        activeIndex * cardsPerRow,
+        (activeIndex + 1) * cardsPerRow
+      )
+    : productData;
+
+  return (
+    <>
+    <div
+      className={`${styles.cardLayout}`}
+      style={{ gridTemplateColumns: `repeat(${cardsPerRow}, auto)` }}
+    >
+      {visibleItems.map((product, index) => (
+        <ProductCard
+          key={index}
+          productImage={product.productImage}
+          productTitle={product.productTitle}
+          productDesc={product.productDesc}
+          price={product.price}
+          currency={product.currency}
+          bagPrice={product.bagPrice}
+          wishListed={product.wishListed}
+          width={width}
+          alignment={alignment}
+          moveToBag={moveToBag}
+        />
+      ))}
+    </div>
+    {withPagination && productData?.length>4 &&<div className={styles.dotsContainer}>
+        {Array.from({ length: totalGroups }).map((_, idx) => (
+          <span
+            key={idx}
+            className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ""}`}
+            onClick={() => setActiveIndex(idx)}
           />
         ))}
-      </div>
-    );
-  };
-  
-  export default ProductImageCarousel;
+      </div>}
+    </>
+  );
+};
 
-
+export default ProductImageCarousel;
 
 /**
  * # ProductImageCarousel Component
@@ -69,7 +98,7 @@ interface LayoutProps {
  *   - `center` (default)
  *   - `alignStart`
  *   - `alignEnd`
- * 
+ *
  * - **moveToBag** (`boolean`, optional): If `true`, the "Move to Bag" button will be displayed on each product card.
  *
  * ## Component Behavior

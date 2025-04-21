@@ -2,7 +2,7 @@
 
 import type React from "react"
 import styles from "./Banner.module.css"
-import Typography from "@/components/Typography/Typography"
+import Typography from "@/components/atomic/Typography/Typography"
 import { Button } from "@/components/atomic/button/button"
 
 interface BannerProps {

@@ -84,42 +84,42 @@ const RatingComponent: React.FC<RatingComponentProps> = ({
 export default RatingComponent;
 
 /**
- * ## Rating Component
+ * ## Rating
  * The `RatingComponent` is a reusable UI component that allows users to provide a star-based rating
  * along with an optional text review.
  *
  * ### Props
  *
- * #### `header?: string`
+ * #### header?: string
  * Optional header text displayed above the rating stars. Defaults to `"Rate and Review"`.
  *
- * #### `headerClassName?: string`
+ * #### headerClassName?: string
  * Optional CSS class to customize the header styling. Can be used in combination with module CSS.
  *
- * #### `maxRating?: number`
+ * #### maxRating?: number
  * Maximum number of stars to display for rating. Defaults to `5`.
  *
- * #### `initialRating?: number`
+ * #### initialRating?: number
  * Initial selected rating (number of stars filled in when the component loads). Defaults to `0`.
  *
- * #### `onRatingChange?: (rating: number) => void`
+ * #### onRatingChange?: (rating: number) => void
  * Callback triggered when the user selects a different rating.
  * The selected rating value (1–`maxRating`) is passed as an argument.
  *
- * #### `handleReview?: (review: string) => void`
+ * #### handleReview?: (review: string) => void
  * Callback triggered when the user types in the review textarea.
  * The current value of the review is passed as an argument.
  *
- * #### `filledStarColor?: string`
+ * #### filledStarColor?: string
  * Sets the color of the filled star icons. Defaults to black (`#000000`).
  *
- * #### `starBorderColor?: string`
+ * #### starBorderColor?: string
  * Sets the color of the empty (unfilled) star icons. Defaults to gray (`#a1a1aa`).
  *
- * #### `starBgColor?: string`
+ * #### starBgColor?: string
  * Sets the background color behind each star. Defaults to white.
  *
- * ---
+ * 
  * ### Example Usage
  * ```tsx
  * <RatingComponent

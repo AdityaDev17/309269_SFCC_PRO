@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import RatingComponent from "../src/components/Rating/Rating";
+import RatingComponent from "../src/components/molecules/Rating/Rating";
 
 describe("RatingComponent", () => {
   test("renders default header text", () => {

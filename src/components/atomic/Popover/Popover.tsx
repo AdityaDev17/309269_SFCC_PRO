@@ -32,16 +32,18 @@ PopoverContent.displayName = PopoverPrimitive.Content.displayName;
 export { Popover, PopoverTrigger, PopoverContent };
 
 /**
- * ## Popover Component
+ * # Popover Component
  *
- * A wrapper around Radix UI's `@radix-ui/react-popover` providing a styled, accessible popover UI.
- * Includes `Popover`, `PopoverTrigger`, and `PopoverContent` components with customizable positioning and styling.
+ * A styled, accessible wrapper around Radix UI's `@radix-ui/react-popover`.
+ * Provides `Popover`, `PopoverTrigger`, and `PopoverContent` for building customizable popovers.
  *
- * ---
+ * ## Components
  *
- * ### `Popover`
- * The root component that manages popover state. Wrap this around your `PopoverTrigger` and `PopoverContent`.
+ * ### Popover
+ * - The root component that manages the popover state.
+ * - Wraps both `PopoverTrigger` and `PopoverContent`.
  *
+ * #### Example:
  * ```tsx
  * <Popover>
  *   <PopoverTrigger>Open</PopoverTrigger>
@@ -49,31 +51,23 @@ export { Popover, PopoverTrigger, PopoverContent };
  * </Popover>
  * ```
  *
- * ---
- *
- * ### `PopoverTrigger`
- * The button or element that triggers the popover when clicked or focused.
- *
- * **Props:**
- * - Inherits all standard Radix `Trigger` props.
+ * ### PopoverTrigger
+ * - The trigger element that opens the popover on click or focus.
  * - Typically wraps a button or icon.
+ * - Inherits all standard Radix `Trigger` props.
  *
- * ---
- *
- * ### `PopoverContent`
- * The content that appears when the popover is open. Automatically rendered in a portal.
- *
- * **Props:**
- * - `align?: "start" | "center" | "end"` – Horizontal alignment of the content relative to the trigger. Defaults to `"center"`.
- * - `sideOffset?: number` – Offset distance between trigger and content. Defaults to `4`.
- * - Accepts all standard Radix `Content` props.
+ * ### PopoverContent
+ * - The floating content that appears when the popover is active.
+ * - Rendered inside a portal for positioning and accessibility.
  * - Styled using `Popover.module.css`.
- * 
- * Includes an overlay container (`.PopoverOverlay`) that wraps the content, useful for custom background or blur effects.
  *
- * ---
+ * #### Props:
+ * - **align?** (`"start" | "center" | "end"`): Horizontal alignment of content relative to the trigger. Defaults to `"center"`.
+ * - **sideOffset?** (`number`): Space between the trigger and content. Defaults to `4`.
+ * - Accepts all standard Radix `Content` props.
+ * - Includes an overlay container (`.PopoverOverlay`) for custom background/blur effects.
  *
- * ### Example Usage:
+ * ## Example Usage
  * ```tsx
  * <Popover>
  *   <PopoverTrigger>

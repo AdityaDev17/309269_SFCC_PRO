@@ -1,7 +1,7 @@
 "use client";
 import Input from "@/components/atomic/input/input";
 import styles from "./SignUp.module.css";
-import Checkbox from "@/components/atomic/checkbox/checkbox";
+import Checkbox from "@/components/atomic/Checkbox/Checkbox";
 import { Button } from "@/components/atomic/button/button";
 import {
   Select,
@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/atomic/select/select";
+} from "@/components/atomic/Select/Select";
 import { useState } from "react";
 
 const SignUp = ({ onProceed }: any) => {

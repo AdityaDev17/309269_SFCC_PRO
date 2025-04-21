@@ -1,0 +1,30 @@
+.container {
+    height: 670px;
+    background: linear-gradient(to right, #C6C0C4, #CFBAB2, #F6F6F6 , #F0F0F0 , #FEFEFF , #FFFFFF );
+}
+
+.navigation {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    gap: 8px;
+}
+
+.loginImg {
+    position: absolute;
+    top: 170px;
+}
+
+.logoImg {
+    position: absolute;
+    top: 635px;
+    left: 500px;
+}
+
+.loginContainer {
+    width: 325px;
+    position: absolute;
+    left: 845px;
+    top: 190px;
+}

@@ -1,0 +1,123 @@
+.carouselWrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: auto;
+  padding-bottom: 2rem; 
+}
+
+.cardsContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  transition: transform 1s ease;
+}
+
+.card {
+  background: white;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  /* align-items: center;       */
+  align-items: flex-start;  /* Align text content to the left */
+  
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+ 
+  
+}
+
+.textCard {
+  display: flex;
+  flex-direction: column;
+  padding-left: clamp(1rem, 2vw, 2rem);
+ 
+}
+
+/* .textCard h2 {
+  font-size: clamp(1.5rem, 2vw, 2.5rem);
+} */
+
+.textCard p {
+  margin: 1rem 0;
+}
+
+.textCard a {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.imageCard {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.pagination {
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.dot {
+  width: 120px;
+  height: 3px;
+  background: #ccc;
+  border-radius: 3px;
+  transition: background 0.3s;
+  
+}
+
+.active {
+  background: #000;
+}
+
+.buttonContainer{
+  margin-top: 25px;
+}
+
+
+@container (max-width: 600px) {
+  .cardsContainer {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .card {
+    width: 100%;
+  }
+
+  /* Ensure text card is on top, and image cards are in a horizontal row below */
+  .cardsContainer > :nth-child(2),
+  .cardsContainer > :nth-child(3) {
+    display: inline-block;
+    width: 48%;
+    margin: 1% !important;
+  }
+
+  .cardsContainer > :nth-child(2) img,
+  .cardsContainer > :nth-child(3) img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .textCard {
+    padding-left: clamp(1rem, 4vw, 2rem);
+    padding-right: clamp(1rem, 4vw, 2rem);
+  }
+
+  .pagination {
+    position: static;
+    margin-top: 2rem;
+    justify-content: center;
+  }
+}

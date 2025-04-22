@@ -2,8 +2,8 @@
 
 import type React from "react"
 import styles from "./Banner.module.css"
-import Typography from "@/components/atomic/Typography/Typography"
-import { Button } from "@/components/atomic/button/button"
+import Typography from "../../atomic/Typography/Typography"
+import { Button } from "../../atomic/Button/Button"
 
 interface BannerProps {
   title: string

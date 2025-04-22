@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react'
 import styles from './BannerCarousel.module.css'
-import Typography from '@/components/atomic/Typography/Typography'
-import { Button } from '@/components/atomic/button/button'
+import Typography from '../../atomic/Typography/Typography'
+import { Button } from '../../atomic/Button/Button'
 import {
   Card,
   CardHeader,
   CardContent,
   CardFooter,
-} from '@/components/atomic/Card/Card'
+} from '../../atomic/Card/Card'
 
 type CardType = {
   type: 'text' | 'image'

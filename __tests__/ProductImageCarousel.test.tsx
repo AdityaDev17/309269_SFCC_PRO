@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
+import ProductImageCarousel from "../src/components/organisms/ProductImageCarousel/ProductImageCarousel";
 
 const products = [
     {
@@ -19,7 +19,7 @@ const products = [
       productDesc: "View More",
     },
   ];
-describe("TypographyBlock Component", () => {
+describe("ProductImageCarousel Component", () => {
   it("renders correctly with default props", () => {
     render(<ProductImageCarousel productData={products} cardsPerRow={3}/>);
   });

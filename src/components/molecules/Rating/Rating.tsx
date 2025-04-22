@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button } from "@/components/atomic/button/button";
+import { Button } from "../../atomic/Button/Button";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import styles from "./Rating.module.css"
-import Textarea from "../../atomic/Textarea/textArea";
+import Textarea from "../../atomic/TextArea/TextArea";
 
 type RatingComponentProps = {
   header?: string;

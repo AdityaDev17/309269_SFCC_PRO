@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/atomic/button/button";
+import { Button } from "../../atomic/Button/Button";
 import {
   DrawerTrigger,
   DrawerContent,
@@ -9,12 +9,12 @@ import {
   DrawerFooter,
   DrawerClose,
   Drawer,
-} from "@/components/molecules/Drawer/Drawer";
+} from "../../molecules/Drawer/Drawer";
 import React from "react";
 import styles from "./MiniCart.module.css";
-import Typography from "@/components/atomic/Typography/Typography";
-import QuantitySelector from "@/components/atomic/QuantitySelector/QuantitySelector";
-import CartItemList from "@/components/molecules/CartItemList/CartItemList";
+import Typography from "../../atomic/Typography/Typography";
+import CartItemList from "../../molecules/CartItemList/CartItemList";
+import Image from "next/image";
 export interface CartItem {
   id: string;
   name: string;
@@ -68,7 +68,7 @@ const MiniCart = ({
           </div>
 
           <DrawerClose className={styles.close} asChild>
-            <img src="images/expand.svg" alt="Close" />
+            <Image src="images/expand.svg" alt="Close"  width={48} height={48}/>
           </DrawerClose>
         </DrawerHeader>
         {cartItems.length > 0 ? (
@@ -119,7 +119,7 @@ const MiniCart = ({
           </>
         ) : (
           <div className={styles.emptyMessage}>
-            <img src="images/emptyBag.svg" alt=" Empty Bag" />
+            <Image src="images/emptyBag.svg" alt=" Empty Bag" width={222} height={205} />
             <Typography
               type="Body"
               variant={2}

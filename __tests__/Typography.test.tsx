@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Typography from "@/components/atomic/Typography/Typography";
+import Typography from "../src/components/atomic/Typography/Typography";
 
 
 

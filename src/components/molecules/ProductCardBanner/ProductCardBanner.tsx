@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./ProductCardBanner.module.css";
-import ProductCard from "@/components/molecules/ProductCard/ProductCard";
-import Typography from "@/components/atomic/Typography/Typography";
+import ProductCard from "../../molecules/ProductCard/ProductCard";
+import Typography from "../../atomic/Typography/Typography";
 
 const dots = [
   {

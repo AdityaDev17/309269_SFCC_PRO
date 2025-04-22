@@ -8,7 +8,7 @@ import {
   DialogFooter,
   DialogTitle,
   DialogDescription,
-} from "@/components/molecules/Dialog/Dialog";
+} from "../src/components/molecules/Dialog/Dialog";
 
 import "@testing-library/jest-dom";
 

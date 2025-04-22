@@ -1,6 +1,6 @@
 import styles from "./EditPassword.module.css";
-import Input from "@/components/atomic/input/input";
-import { Button } from "@/components/atomic/button/button";
+import Input from "../../atomic/Input/Input";
+import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
 const EditPassword = ({onUpdateClicked}:any) => {
   const [userPassword, setUserPassword] = useState({

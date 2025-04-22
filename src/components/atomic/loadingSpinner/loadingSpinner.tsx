@@ -1,5 +1,5 @@
 import { LoaderCircle, LucideProps } from 'lucide-react';
-import styles from './loadingSpinner.module.css';
+import styles from './LoadingSpinner.module.css';
 
 export interface IProps extends LucideProps {
   className?: string;

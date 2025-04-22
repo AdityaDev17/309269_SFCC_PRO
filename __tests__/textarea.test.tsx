@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Textarea from "../src/components/atomic/Textarea/textArea"; // Adjust import based on your structure
+import Textarea from "../src/components/atomic/TextArea/TextArea"; // Adjust import based on your structure
 
 describe("Textarea Component", () => {
   test("renders the textarea component", () => {

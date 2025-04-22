@@ -5,7 +5,7 @@
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
-import styles from './select.module.css';
+import styles from './Select.module.css';
 
 const Select = ({ children, ...props }: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>) => {
   const [open, setOpen] = React.useState(false);

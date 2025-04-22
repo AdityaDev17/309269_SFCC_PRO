@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ProductCardBanner from '@/components/molecules/ProductCardBanner/ProductCardBanner';
+import ProductCardBanner from '../src/components/molecules/ProductCardBanner/ProductCardBanner';
 
 beforeEach(() => {
   jest.useFakeTimers();

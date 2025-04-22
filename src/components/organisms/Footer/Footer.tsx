@@ -158,12 +158,12 @@ const Footer = () => {
 export default Footer;
 
 /**
- * # Footer Component
+ * ## Footer 
  *
  * The `Footer` component displays a structured footer layout for a website, featuring navigation
  * links, social media icons, and a country selection dropdown.
  *
- * ## Component Sections
+ * ### Component Sections
  *
  * - **Logo Section**: Displays the Elenor logo using the Next.js `Image` component.
  * - **Link Groups**: Dynamically renders grouped footer links such as Elenor, Services, and About Us.
@@ -172,7 +172,7 @@ export default Footer;
  * Social Icons**: Displays a copyright
  * message and social media icons.
  *
- * ## Behavior
+ * ### Behavior
  *
  * - The footer structure is driven by a `sample` array, where each object contains a `title` and `children`
  *   (with `title` and `link`).
@@ -180,17 +180,17 @@ export default Footer;
  * - The country selector uses a styled `Select` component from the atomic UI library and updates the selected location.
  * - The footer includes social media icons rendered by the shared `Icon` component.
  *
- * ## Used Components
+ * ### Used Components
  *
  * - `Image` from `next/image` for optimized image rendering.
  * - `Select`, `SelectTrigger`, `SelectValue`, `SelectContent`, `SelectGroup`, `SelectItem` for country selection.
  * - `Icon` for rendering social media icons.
  *
- * ## Styling
+ * ### Styling
  *
  * Custom styles are imported from `Footer.module.css` and applied via `styles.<className>`.
  *
- * ## Example
+ * ### Example
  *
  * ```tsx
  * import Footer from "@/components/Footer/Footer";

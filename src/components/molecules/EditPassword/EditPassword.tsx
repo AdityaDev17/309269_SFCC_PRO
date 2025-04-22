@@ -1,3 +1,4 @@
+'use client'
 import styles from "./EditPassword.module.css";
 import Input from "../../atomic/Input/Input";
 import { Button } from "../../atomic/Button/Button";
@@ -70,6 +71,7 @@ const EditPassword = ({onUpdateClicked}:any) => {
           border: "None",
           backgroundColor: "#000",
           fontSize: "12px",
+          width: "62%",
         }}
         onClick={() => onUpdateClicked(userPassword)}
       >
@@ -81,33 +83,33 @@ const EditPassword = ({onUpdateClicked}:any) => {
 export default EditPassword;
 
 /**
- * # EditPassword Component
+ * ## EditPassword Component
  *
  * The `EditPassword` component provides a controlled form for users to update their password securely.
  *
- * ## Props
+ * ### Props
  *
  * - **onUpdateClicked** (function): A callback function triggered on "UPDATE" button click.
  *   It receives the updated password object as its argument.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - Maintains internal state (`userPassword`) to track current, new, and confirm password fields.
  * - Disables the "UPDATE" button unless all fields are filled and the new password matches the confirmation password.
  * - Input fields are password-type and styled using `EditPassword.module.css`.
  *
- * ## Form Fields
+ * ### Form Fields
  *
  * - **Current Password** (password input)
  * - **New Password** (password input)
  * - **Confirm Password** (password input)
  *
- * ## Validation
+ * ### Validation
  *
  * - All fields must be filled.
  * - The new password and confirm password fields must match.
  *
- * ## Styling
+ * ### Styling
  *
  * - Styles are handled via the `EditPassword.module.css` CSS module.
  */

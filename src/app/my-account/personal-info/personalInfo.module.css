@@ -1,0 +1,57 @@
+.wrapper {
+    padding: clamp(1rem, 5vw, 3rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 3vw, 2rem);
+  
+   
+    container-type: inline-size;
+    container-name: personalInfo;
+  }
+  
+  .header {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 0;
+  }
+  
+  .gridLayout {
+    display: grid;
+    grid-template-columns: 60% 1px 40%;
+    align-items: flex-start;
+    margin-bottom: 50px;
+  }
+ 
+  
+  /* .column {
+    width: 100%;
+  } */
+  
+ .rightColumn {
+    margin-left:50px;
+ }
+  .divider {
+    width: 1px;
+    background-color: #d3d3d3;
+    height: 100%;
+    
+  }
+  
+  /* 🔁 Container query for tablet & mobile */
+  @container personalInfo (max-width: 800px) {
+    .gridLayout {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+  
+    .divider {
+      display: none;
+    }
+  
+    .column {
+      margin-left: 0 !important;
+    }
+  }
+  

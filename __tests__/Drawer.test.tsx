@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Drawer, DrawerTrigger, DrawerClose, DrawerContent, DrawerHeader, DrawerFooter , DrawerTitle } from '@/components/molecules/Drawer/Drawer';
+import { Drawer, DrawerTrigger, DrawerClose, DrawerContent, DrawerHeader, DrawerFooter , DrawerTitle } from '../src/components/molecules/Drawer/Drawer';
 
 describe('Drawer Component', () => {
   it('should render the drawer with the correct content', () => {

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { render, screen,fireEvent } from "@testing-library/react";
-import Captcha from "@/components/atomic/Captcha/Captcha";
+import Captcha from "../src/components/atomic/Captcha/Captcha";
 
 describe("Captcha Component", () => {
     it("renders correctly", () => {

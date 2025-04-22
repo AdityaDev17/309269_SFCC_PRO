@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Slider from "@/components/atomic/slider/slider";
+import Slider from "../src/components/atomic/Slider/Slider";
+
 
 
 describe("Slider Component", () => {

@@ -5,10 +5,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/atomic/select/select";
+} from "../../atomic/Select/Select";
 import styles from "./Profile.module.css";
-import Input from "@/components/atomic/input/input";
-import { Button } from "@/components/atomic/button/button";
+import Input from "../../atomic/Input/Input";
+import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
 const Profile = ({ userDetails, onUpdateClicked }: any) => {
   const [initialUserData, setInitailUserDate] = useState(userDetails);

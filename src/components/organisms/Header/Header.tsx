@@ -9,7 +9,7 @@ import {
   DrawerTitle,
   DrawerHeader,
   DrawerClose,
-} from "@/components/molecules/Drawer/Drawer";
+} from "../../molecules/Drawer/Drawer";
 import { Drawer } from "vaul";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import {
@@ -18,11 +18,11 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "@/components/molecules/NavigationMenu/NavigationMenu";
+} from "../../molecules/NavigationMenu/NavigationMenu";
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/atomic/button/button";
-import Typography from "@/components/atomic/Typography/Typography";
+import { Button } from "../../atomic/Button/Button";
+import Typography from "../../atomic/Typography/Typography";
 
 type CategoriesProps = {
   name: string;
@@ -79,10 +79,12 @@ const Header: React.FC<HeaderProps> = ({
           {isMobile && (
             <Drawer.Root shouldScaleBackground>
               <DrawerTrigger asChild>
-                <img
+                <Image
                   src={isHome ? "images/menu_white.svg" : "images/menu.svg"}
                   alt="Menu"
                   style={{ cursor: "pointer" }}
+                  width={24}
+                  height={24}
                 />
               </DrawerTrigger>
               <DrawerContent>
@@ -90,12 +92,12 @@ const Header: React.FC<HeaderProps> = ({
                   <ChevronLeft size={20} />
                   <DrawerTitle className={styles.title}>MENU</DrawerTitle>
                   <DrawerClose className={styles.close} asChild>
-                    <img src="images/expand.svg" alt="Close" />
+                    <Image src="images/expand.svg" alt="Close" width={48} height={48}/>
                   </DrawerClose>
                 </DrawerHeader>
 
                 <div className={styles.categoryList}>
-                  {categories.map((category, index) => (
+                  {categories.map((category:any, index) => (
                     <div
                       key={index}
                       className={styles.categoryItem}
@@ -116,10 +118,12 @@ const Header: React.FC<HeaderProps> = ({
 
 
 <Link href="/" prefetch>
-  <img
+  <Image
     src={isHome ? logoImages.white : logoImages.default}
     alt="Elenor Logo"
     style={{ cursor: 'pointer' }}
+    width={100}
+    height={20}
   />
 </Link>
 
@@ -222,7 +226,7 @@ const Header: React.FC<HeaderProps> = ({
 
         <div className={styles.categories}>
           {iconsToRender.map(({ label, icon }, index) => (
-            <img key={index} src={icon} alt={label} />
+            <Image key={index} src={icon} alt={label} width={20} height={20} />
           ))}
         </div>
       </div>

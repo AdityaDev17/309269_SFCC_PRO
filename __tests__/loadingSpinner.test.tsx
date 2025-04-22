@@ -1,4 +1,6 @@
-import LoadingSpinner from "@/components/atomic/LoadingSpinner/LoadingSpinner";
+
+
+import LoadingSpinner from "../src/components/atomic/LoadingSpinner/LoadingSpinner";
 import { render, screen } from "@testing-library/react";
 
 describe('Loading Spinner Component', () => {

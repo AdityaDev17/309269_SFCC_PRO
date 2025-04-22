@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import GetTheLookBanner from "@/components/molecules/GetTheLookBanner/GetTheLookBanner";
+import GetTheLookBanner from "../src/components/molecules/GetTheLookBanner/GetTheLookBanner";
 
 
 beforeAll(() => {

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import styles from "./textArea.module.css";
+import styles from "./TextArea.module.css";
 
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 

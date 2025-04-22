@@ -1,16 +1,16 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import ProductCard from "@/components/molecules/ProductCard/ProductCard";
+import ProductCard from "../src/components/molecules/ProductCard/ProductCard";
 
-describe("TypographyBlock Component", () => {
+describe("ProductCard Component", () => {
   it("renders correctly with default props", () => {
-    render(<ProductCard/>);
+    render(<ProductCard productImage={""} productTitle={""}/>);
   });
   it("renders correctly with default props", () => {
-    render(<ProductCard alignment="alignStart"/>);
+    render(<ProductCard alignment="alignStart" productImage={""} productTitle={""}/>);
   });
   it("renders correctly with default props", () => {
-    render(<ProductCard alignment="alignEnd"/>);
+    render(<ProductCard alignment="alignEnd" productImage={""} productTitle={""}/>);
   });
   
 });

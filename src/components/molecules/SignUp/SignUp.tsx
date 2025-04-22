@@ -1,8 +1,8 @@
 "use client";
-import Input from "@/components/atomic/input/input";
+import Input from "../../atomic/Input/Input";
 import styles from "./SignUp.module.css";
-import Checkbox from "@/components/atomic/Checkbox/Checkbox";
-import { Button } from "@/components/atomic/button/button";
+import Checkbox from "../../atomic/CheckBox/CheckBox";
+import { Button } from "../../atomic/Button/Button";
 import {
   Select,
   SelectContent,
@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/atomic/Select/Select";
+} from "../../atomic/Select/Select";
 import { useState } from "react";
 
 const SignUp = ({ onProceed }: any) => {

@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./OrderSummary.module.css";
-import Typography from "@/components/atomic/Typography/Typography";
-import { Button } from "@/components/atomic/button/button";
+import Typography from "../../atomic/Typography/Typography";
+import { Button } from "../../atomic/Button/Button";
+import Image from "next/image";
 
 const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true ,isPaymentImage= true }) => {
   const paymentImages = [
@@ -172,7 +173,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
 {isPaymentImage &&
         <div className={styles.paymentImages}>
           {paymentImages.map((src, index) => (
-            <img key={index} src={src} alt={`payment method ${index + 1}`} />
+            <Image key={index} src={src} alt={`payment method ${index + 1}`} width={42} height={28} />
           ))}
         </div>}
       </div>

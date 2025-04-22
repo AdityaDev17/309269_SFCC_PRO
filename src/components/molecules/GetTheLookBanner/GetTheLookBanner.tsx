@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './GetTheLookBanner.module.css';
-import Typography from '@/components/atomic/Typography/Typography';
-import { Button } from '@/components/atomic/button/button';
-import { Card, CardHeader } from '@/components/atomic/Card/Card';
+import Typography from '../../atomic/Typography/Typography';
+import { Button } from '../../atomic/Button/Button';
+import { Card, CardHeader } from '../../atomic/Card/Card';
 
 const GetTheLookBanner = () => {
   const containerRef = useRef<HTMLDivElement>(null);

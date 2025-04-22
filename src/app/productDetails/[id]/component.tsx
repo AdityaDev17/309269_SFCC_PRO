@@ -3,13 +3,13 @@ import styles from "./page.module.css";
 import Gallery from "@/components/organisms/Gallery/Gallery";
 import { useParams } from "next/navigation";
 import Accordion from "@/components/molecules/Accordion/Accordion";
-import { Button } from "@/components/atomic/button/button";
+import { Button } from "@/components/atomic/Button/Button";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-} from "@/components/atomic/select/select";
+} from "@/components/atomic/Select/Select";
 import { productDetails } from "@/common/constant";
 
 export default function ProductDetails() {

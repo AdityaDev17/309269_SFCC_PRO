@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/atomic/button/button";
+import { Button } from "@/components/atomic/Button/Button";
 import {
   Card,
   CardContent,
@@ -8,6 +8,7 @@ import {
 } from "@/components/atomic/Card/Card";
 import Typography from "@/components/atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
+import Image from "next/image";
 
 type Alignment = "center" | "alignStart" | "alignEnd";
 
@@ -39,16 +40,20 @@ const ProductCard = ({
     <div>
       <Card width={width}>
         <CardHeader className={styles.imageWrapper}>
-          <img
+          <Image
             src={productImage}
             alt="product"
             className={styles.productImage}
+            width={440}
+            height={440}
           />
           {wishListed && (
-            <img
+            <Image
               src="images/whishlist_fill.svg"
               alt="wishlist"
               className={styles.wishlistIcon}
+              width={24}
+              height={24}
             />
           )}
         </CardHeader>
@@ -115,7 +120,7 @@ const ProductCard = ({
 export default ProductCard;
 
 /**
- * ## ProductCard 
+ * ## ProductCard
  *
  * The ProductCard component is a flexible and reusable component designed to display product information such as an image, title, description, price, and additional actions like adding to the bag or wishlisting. It can be customized in terms of alignment, size, and various product details.
  *
@@ -168,7 +173,7 @@ export default ProductCard;
  *         wishListed={true}
  *         bagPrice="25.99"
  *       />
- *    
+ *
  * ```
  *
  */

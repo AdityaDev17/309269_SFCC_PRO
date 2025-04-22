@@ -1,7 +1,7 @@
-import Input from "@/components/atomic/input/input";
+import Input from "../../atomic/Input/Input";
 import styles from "./Login.module.css";
-import Checkbox from "@/components/atomic/Checkbox/Checkbox";
-import { Button } from "@/components/atomic/button/button";
+import Checkbox from "../../atomic/CheckBox/CheckBox";
+import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
 
 const Login = ({ onLoginClicked }: any) => {

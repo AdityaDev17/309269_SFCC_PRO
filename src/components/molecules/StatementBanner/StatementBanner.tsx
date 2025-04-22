@@ -1,8 +1,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import styles from './StatementBanner.module.css';
-import Typography from "@/components/atomic/Typography/Typography";
-import { Button } from "@/components/atomic/button/button";
+import Typography from "../../atomic/Typography/Typography";
+import { Button } from "../../atomic/Button/Button";
 
 type StatementBannerProps = {
   imageSrc: string;

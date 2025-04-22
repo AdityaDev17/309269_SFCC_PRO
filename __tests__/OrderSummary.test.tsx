@@ -1,9 +1,9 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
+import OrderSummary from "../src/components/organisms/OrderSummary/OrderSummary";
 
 
-describe("TypographyBlock Component", () => {
+describe("OrderSummary Component", () => {
   it("renders correctly with default props", () => {
     render(<OrderSummary/>);
   });

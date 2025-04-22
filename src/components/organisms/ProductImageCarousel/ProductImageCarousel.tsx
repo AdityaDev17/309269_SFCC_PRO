@@ -20,7 +20,6 @@ interface LayoutProps {
   moveToBag?: boolean;
   withPagination?:boolean
 }
-
 const ProductImageCarousel = ({
   productData,
   cardsPerRow,
@@ -31,14 +30,12 @@ const ProductImageCarousel = ({
 }: LayoutProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const totalGroups = Math.ceil(productData.length / cardsPerRow);
-
   const visibleItems = withPagination
     ? productData.slice(
         activeIndex * cardsPerRow,
         (activeIndex + 1) * cardsPerRow
       )
     : productData;
-
   return (
     <>
     <div
@@ -123,3 +120,5 @@ export default ProductImageCarousel;
  * ```
  *
  */
+ 
+ 

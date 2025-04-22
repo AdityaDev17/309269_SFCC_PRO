@@ -8,7 +8,7 @@ import {
   PaginationNext,
   PaginationPrevious,
   PaginationEllipsis,
-} from "../src/components/molecules/Pagination/pagination";
+} from '../src/components/molecules/Pagination/Pagination'
 
 describe("Pagination Component", () => {
   test("renders pagination container", () => {

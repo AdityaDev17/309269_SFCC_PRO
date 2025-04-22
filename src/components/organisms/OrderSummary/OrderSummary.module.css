@@ -1,58 +1,69 @@
 .layout {
-    width: 440px;
     border: 1px solid #CCCBCE;
     align-self: flex-start;
-}
-.standardLayout{
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+  
+  .standardLayout {
     padding: 20px;
-}
-.totalRowTop{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .totalRowTop {
     background-color: #FAFAFA;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
     padding: 10px 20px;
-}
-.topDivider{
+    box-sizing: border-box;
+  }
+  
+  .topDivider {
     border: 0;
     border-top: 1px solid #CCCBCE;
-}
-.title{
+  }
+  
+  .title {
     padding-bottom: 20px;
-}
-.summaryRow {
+  }
+  
+  .summaryRow,
+  .totalRow,
+  .totalSavings,
+  .reverseTotalSavings {
     display: flex;
     justify-content: space-between;
-   padding-bottom: 15px;
-}
-.divider {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .divider {
     border: 0;
     border-top: 1px solid #CCCBCE;
     margin: 10px 0;
-}
-.totalRow {
+  }
+  
+  .summaryButton {
+    padding: 20px 0;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-}
-.totalSavings {
-    display: flex;
-    justify-content: space-between;
-    padding-top: 10px;
-}
-.reverseTotalSavings {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom:  20px;
-}
-.summaryButton{
-    padding:20px 0;
-}
-.button{
-    width: 400px;
+    justify-content: center;
+  }
+  
+  .button {
+    width: clamp(200px, 100%, 400px);
     height: 34px;
-}
-.paymentImages{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
+  }
+  
+  .paymentImages {
+    display: flex;
+    flex-wrap: wrap;
     gap: 10px;
-}
+    justify-content: space-between;
+  }
+  

@@ -25,7 +25,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
   if (isMobile) {
     return (
       <div className={styles.mobileGallery}>
-        <ProductCard productImage={mainImage} />
+        <ProductCard productImage={mainImage} width="100%"/>
 
         <div className={styles.dotsContainer}>
           {images.map((_, idx) => (
@@ -58,7 +58,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
           );
         })}
       </div>
-      <ProductCard productImage={mainImage} width="45vw"/>
+      <ProductCard productImage={mainImage} width="42vw"/>
     </div>
   );
 };

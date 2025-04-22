@@ -1,17 +1,46 @@
+"use client";
 
-'use client';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from "./Header.module.css";
+import {
+  DrawerTrigger,
+  DrawerContent,
+  DrawerTitle,
+  DrawerHeader,
+  DrawerClose,
+} from "@/components/molecules/Drawer/Drawer";
+import { Drawer } from "vaul";
+import { ChevronRight, ChevronLeft } from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/molecules/NavigationMenu/NavigationMenu";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/atomic/button/button";
+import Typography from "@/components/atomic/Typography/Typography";
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from './Header.module.css';
-import { DrawerTrigger, DrawerContent, DrawerTitle, DrawerHeader, DrawerClose } from '@/components/molecules/Drawer/Drawer';
-import { Drawer } from 'vaul';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+type CategoriesProps = {
+  name: string;
+  image?: {
+    productImageUrl: string;
+    productName: string;
+  }[];
+  subcategory?: {
+    subCategoryName: string;
+    subcategory: string[];
+  }[];
+};
+
 
 interface HeaderProps {
   isHome?: boolean;
   logoImages: { default: string; white: string };
-  categories: string[];
+  categories: CategoriesProps[];
   headerIcons: { label: string; icon: string }[];
   headerWhiteIcons: { label: string; icon: string }[];
 }
@@ -30,25 +59,30 @@ const Header: React.FC<HeaderProps> = ({
     setIsMobile(window.innerWidth < 768);
   };
 
+  const getImageContainerClass = (length: number) => {
+    if(length === 2) return styles.oneSecondaryImage;
+    if(length === 3) return styles.twoSecondaryImage;
+}
+
   useEffect(() => {
     checkMobileView();
-    window.addEventListener('resize', checkMobileView);
-    return () => window.removeEventListener('resize', checkMobileView);
+    window.addEventListener("resize", checkMobileView);
+    return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
   const iconsToRender = isHome ? headerWhiteIcons : headerIcons;
 
   return (
-    <div className={`${styles.header} ${isHome ? styles.homeHeader : ''}`}>
+    <div className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
       <div className={styles.layout}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
+        <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
           {isMobile && (
             <Drawer.Root shouldScaleBackground>
               <DrawerTrigger asChild>
                 <img
-                  src={isHome ? "images/menu_white.svg": 'images/menu.svg'}
+                  src={isHome ? "images/menu_white.svg" : "images/menu.svg"}
                   alt="Menu"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 />
               </DrawerTrigger>
               <DrawerContent>
@@ -61,15 +95,17 @@ const Header: React.FC<HeaderProps> = ({
                 </DrawerHeader>
 
                 <div className={styles.categoryList}>
-                  {categories.map((category) => (
+                  {categories.map((category, index) => (
                     <div
-                      key={category}
+                      key={index}
                       className={styles.categoryItem}
                       onClick={() =>
-                        router.push(`/${category.toLowerCase().replace(/\s+/g, '-')}`)
+                        router.push(
+                          `/${category.name.toLowerCase().replace(/\s+/g, "-")}`
+                        )
                       }
                     >
-                      <span>{category}</span>
+                      <span>{category.name}</span>
                       <ChevronRight size={20} />
                     </div>
                   ))}
@@ -81,16 +117,101 @@ const Header: React.FC<HeaderProps> = ({
           <img
             src={isHome ? logoImages.white : logoImages.default}
             alt="Elenor Logo"
-            onClick={() => router.push('/')}
-            style={{ cursor: 'pointer' }}
+            onClick={() => router.push("/")}
+            style={{ cursor: "pointer" }}
           />
         </div>
 
         {!isMobile && (
-          <div className={`${styles.categories} ${isHome ? styles.whiteCategories : ''}`}>
+          <div
+            className={`${styles.categories} ${isHome ? styles.whiteCategories : ""}`}
+          >
             {categories.map((category, index) => (
-              <div key={index} className={styles.category}>
-                {category}
+              <div key={index}>
+                <NavigationMenu key={index}>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      {(category.subcategory && category.image) ? (
+                        <>
+                          <NavigationMenuTrigger>
+                            <span className={styles.category}>{category.name}</span>
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                          <section className={styles.overlayContainer}>
+                            <div className={styles.imageContainer}>
+                              <div className={styles.primaryImage}>
+                                <Image
+                                  src={category.image[0].productImageUrl}
+                                  alt={category.image[0].productName}
+                                  width={325}
+                                  height={317}
+                                />
+                              </div>
+                              {category.image.length > 1 && (
+                                <div
+                                  className={getImageContainerClass(
+                                    category.image.length
+                                  )}
+                                >
+                                  {category.image.map(
+                                    ({ productImageUrl, productName }, index) =>
+                                      index !== 0 && (
+                                        <Image
+                                          key={index}
+                                          src={productImageUrl}
+                                          alt={productName}
+                                          width={210}
+                                          height={148}
+                                        />
+                                      )
+                                  )}
+                                </div>
+                              )}
+                            </div>
+
+                            <div className={styles.categoryContainer}>
+                              {category.subcategory.map(
+                                ({ subCategoryName, subcategory }, index) => {
+                                  return (
+                                    <div
+                                      key={index}
+                                      className={styles.subcategoryContainer}
+                                    >
+                                      <Typography
+                                        type="Label"
+                                        variant={3}
+                                        label={subCategoryName}
+                                        fontWeight="bold"
+                                      />
+                                      {subcategory.map(
+                                        (subcategoryName, index) => {
+                                          return (
+                                            <Button
+                                              key={index}
+                                              variant="link"
+                                              style={{ fontWeight: "500" }}
+                                            >
+                                              {subcategoryName}
+                                            </Button>
+                                          );
+                                        }
+                                      )}
+                                    </div>
+                                  );
+                                }
+                              )}
+                            </div>
+                            </section>
+                          </NavigationMenuContent>
+                        </>
+                      ) : (
+                        <Link href="/SUSTAINABILITY">
+                          <span className={styles.category}>{category.name}</span>
+                        </Link>
+                      )}
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
               </div>
             ))}
           </div>
@@ -107,7 +228,6 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 export default Header;
-
 
 /**
  * ## Header

@@ -1,4 +1,4 @@
-import Checkbox from "@/components/atomic/checkbox/checkbox";
+import Checkbox from "@/components/atomic/Checkbox/Checkbox";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 describe('Checkbox Component', () => {

@@ -42,25 +42,24 @@ export default function ProductDetails() {
                 DONATE TO ENVIRONMENTAL CAUSES
               </AccordionTrigger>
               <AccordionContent>
-                <div style={{ textAlign: "justify" }}>
+                <div className={styles.accordionContent}>
                   Introducing Elenor's Monochrome Gloss Lipstick Collection,
                   where vibrant colour meets irresistible shine for a truly
-                  glamorous pout. Made with high-quality ingredients and infused
-                  with nourishing oils, our gloss lipstick formula delivers
-                  long-lasting hydration and a luscious, glossy finish that
-                  lasts all day.
+                  glamorous pout. 
                 </div>
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger>SHOP SUSTAINABLY</AccordionTrigger>
               <AccordionContent>
+              <div className={styles.accordionContent}>
                 Introducing Elenor's Monochrome Gloss Lipstick Collection, where
                 vibrant colour meets irresistible shine for a truly glamorous
                 pout. Made with high-quality ingredients and infused with
                 nourishing oils, our gloss lipstick formula delivers
                 long-lasting hydration and a luscious, glossy finish that lasts
                 all day.
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>

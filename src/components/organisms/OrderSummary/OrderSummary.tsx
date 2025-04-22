@@ -183,9 +183,9 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
 export default OrderSummary;
 
 /**
- * ## OrderSummary Component
+ * ## OrderSummary 
  *
- * The `OrderSummary` component is used to display an order's summary, including the price details,
+ * The OrderSummary component is used to display an order's summary, including the price details,
  *  It showcases the breakdown of costs such as subtotal, delivery
  * charges, tax, total savings, and the final total. This component is typically used in e-commerce
  * platforms, especially during the checkout or order confirmation stages.

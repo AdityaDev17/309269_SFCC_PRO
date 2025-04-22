@@ -115,11 +115,11 @@ const ProductCard = ({
 export default ProductCard;
 
 /**
- * # ProductCard Component
+ * ## ProductCard 
  *
- * The `ProductCard` component is a flexible and reusable component designed to display product information such as an image, title, description, price, and additional actions like adding to the bag or wishlisting. It can be customized in terms of alignment, size, and various product details.
+ * The ProductCard component is a flexible and reusable component designed to display product information such as an image, title, description, price, and additional actions like adding to the bag or wishlisting. It can be customized in terms of alignment, size, and various product details.
  *
- * ## Props
+ * ### Props
  *
  * - **alignment** (`"center" | "alignStart" | "alignEnd"`, optional): Controls the alignment of the content inside the card. Available values:
  *   - `"center"`: Centers the content (default).
@@ -144,7 +144,7 @@ export default ProductCard;
  *
  * - **bagPrice** (`string`, optional): The price of the product in the bag, displayed in the footer if provided.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The card will render a product image, product title, description, price, and optional "Move to Bag" button based on the props provided.
  * - The alignment of the content can be controlled using the `alignment` prop, which allows the text and buttons to be aligned in different ways (centered, left-aligned, or right-aligned).
@@ -152,17 +152,11 @@ export default ProductCard;
  * - If `moveToBag` is `true`, the "Move to Bag" button is shown at the bottom of the card.
  * - If `bagPrice` is provided, it will display the price in the card footer.
  *
- * ## Example Usage
+ * ### Example Usage
  *
  * Here's a simple example of how to use the `ProductCard` component:
  *
  * ```tsx
- * import React from 'react';
- * import ProductCard from './ProductCard'; // Adjust the import path as needed
- *
- * const Example = () => {
- *   return (
- *     <div>
  *       <ProductCard
  *         alignment="center"
  *         productImage="https://via.placeholder.com/150"
@@ -174,9 +168,7 @@ export default ProductCard;
  *         wishListed={true}
  *         bagPrice="25.99"
  *       />
- *     </div>
- *   );
- * };
+ *    
  * ```
  *
  */

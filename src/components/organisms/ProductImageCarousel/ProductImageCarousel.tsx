@@ -77,11 +77,11 @@ const ProductImageCarousel = ({
 export default ProductImageCarousel;
 
 /**
- * # ProductImageCarousel Component
+ * ## ProductImageCarousel
  *
  * The `ProductImageCarousel` component is a carousel-like component that displays a list of `ProductCard` components in a grid layout. It is designed to showcase products with various attributes such as images, titles, descriptions, prices, and wishlisted status. It also allows for flexible configuration in terms of how many cards are displayed per row, alignment, and whether or not the "Move to Bag" action is shown.
  *
- * ## Props
+ * ### Props
  *
  * - **productData** (`array`): An array of product objects that each contain the following properties:
  *   - **productImage** (`string`): The URL of the product image.
@@ -101,46 +101,18 @@ export default ProductImageCarousel;
  *
  * - **moveToBag** (`boolean`, optional): If `true`, the "Move to Bag" button will be displayed on each product card.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The `ProductImageCarousel` renders a grid layout with a dynamic number of product cards based on the `cardsPerRow` prop.
  * - Each `ProductCard` is passed data from the `productData` prop, including details like the product image, title, description, price, and wishlisted status.
  * - The carousel layout is responsive and adjusts based on the number of cards per row, which is determined by the `cardsPerRow` prop.
  * - The `width` and `alignment` props allow you to customize the appearance of the cards, while the `moveToBag` prop controls whether or not the "Move to Bag" button is displayed.
  *
- * ## Example Usage
+ * ### Example Usage
  *
  * Here's an example of how to use the `ProductImageCarousel` component:
  *
  * ```tsx
- * import React from 'react';
- * import ProductImageCarousel from './ProductImageCarousel'; // Adjust the import path as needed
- *
- * const exampleProductData = [
- *   {
- *     productImage: 'https://example.com/product1.jpg',
- *     productTitle: 'Product 1',
- *     productDesc: 'This is product 1',
- *     price: '20.00',
- *     currency: '$',
- *     wishListed: true,
- *     bagPrice: '18.00'
- *   },
- *   {
- *     productImage: 'https://example.com/product2.jpg',
- *     productTitle: 'Product 2',
- *     productDesc: 'This is product 2',
- *     price: '25.00',
- *     currency: '$',
- *     wishListed: false,
- *     bagPrice: '22.00'
- *   },
- *   // Add more product data here...
- * ];
- *
- * const Example = () => {
- *   return (
- *     <div>
  *       <ProductImageCarousel
  *         productData={exampleProductData}
  *         cardsPerRow={3}
@@ -148,9 +120,6 @@ export default ProductImageCarousel;
  *         alignment="center"
  *         moveToBag={true}
  *       />
- *     </div>
- *   );
- * };
  * ```
  *
  */

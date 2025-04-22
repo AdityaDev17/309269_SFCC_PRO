@@ -1,105 +1,150 @@
+import fs from "fs"
+import path from "path"
+import { fileURLToPath } from "url"
 
-const fs = require('fs');
-const path = require('path');
+// Get the directory name using ES modules
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
-const srcDir = path.resolve(__dirname, '../src/components'); // Root directory for components
-const readmeFile = path.resolve(__dirname, '../README.md');
+// Root directory of the project
+const rootDir = path.resolve(__dirname, "..")
+const componentsDir = path.join(rootDir, "src", "components")
+const readmePath = path.join(rootDir, "README.md")
 
-// Function to extract and clean markdown-like comments from the file
-function extractMarkdownComments(filePath) {
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
-  const commentRegex = /\/\*\*([\s\S]*?)\*\//g;
-
-  const comments = [];
-  let match;
-  while ((match = commentRegex.exec(fileContent)) !== null) {
-    // Clean up the comment by removing asterisks at the beginning of lines
-    // and trimming whitespace
-    let cleanedComment = match[1]
-      .split('\n')
-      .map(line => line.replace(/^\s*\*\s?/, ''))
-      .join('\n')
-      .trim();
-    
-    comments.push(cleanedComment);
-  }
-
-  return comments.join('\n\n');
+// Categories for components
+const categories = {
+  atomic: "## Atoms",
+  molecules: "## Molecules",
+  organisms: "## Organisms",
+  components: "## Components", // For direct components
 }
 
-// Function to check if documentation already exists for a component
-function isDocumentationAlreadyPresent(componentName) {
-  if (!fs.existsSync(readmeFile)) return false;
-  const readmeContent = fs.readFileSync(readmeFile, 'utf-8');
-  
-  // Check for component name with different case variations
-  const regex = new RegExp(`# ${componentName}(?:\\s|Component|$)`, 'i');
-  return regex.test(readmeContent);
-}
+// Function to extract documentation comments from a file
+function extractDocumentation(filePath) {
+  try {
+    const content = fs.readFileSync(filePath, "utf8")
 
-// Function to check if the Auto-generated Documentation section exists
-function isAutoGenSectionPresent() {
-  if (!fs.existsSync(readmeFile)) return false;
-  const readmeContent = fs.readFileSync(readmeFile, 'utf-8');
-  return readmeContent.includes('# Auto-generated Documentation');
-}
+    // Match comments between /** and */
+    const docRegex = /\/\*\*([\s\S]*?)\*\//g
+    const matches = content.match(docRegex)
 
-// Function to recursively find all `.tsx` component files
-function getComponentFiles(dir) {
-  let files = [];
-  fs.readdirSync(dir).forEach((file) => {
-    const fullPath = path.join(dir, file);
-    if (fs.statSync(fullPath).isDirectory()) {
-      files = files.concat(getComponentFiles(fullPath)); // Recursive call for subdirectories
-    } else if (file.endsWith('.tsx')) {
-      files.push(fullPath);
-    }
-  });
-  return files;
-}
+    if (!matches) return null
 
-// Function to extract documentation from component files
-function extractFromFiles() {
-  if (!fs.existsSync(srcDir)) {
-    console.error(`Error: Components directory not found at ${srcDir}`);
-    return;
-  }
+    // Get the component name from the file path
+    const componentName = path.basename(path.dirname(filePath))
 
-  const componentFiles = getComponentFiles(srcDir);
-  let markdownContent = '';
-  const autoGenSectionExists = isAutoGenSectionPresent();
+    // Process each documentation block
+    for (const match of matches) {
+      // Clean up the comment by removing * at the beginning of lines
+      const cleanDoc = match
+        .replace(/\/\*\*|\*\//g, "")
+        .replace(/^\s*\*\s?/gm, "")
+        .trim()
 
-  componentFiles.forEach((filePath) => {
-    const componentName = path.basename(filePath, '.tsx');
-
-    if (!isDocumentationAlreadyPresent(componentName)) {
-      const extractedComments = extractMarkdownComments(filePath);
-      if (extractedComments) {
-        // Remove any existing component heading to prevent duplication
-        let cleanedComments = extractedComments;
-        
-        // Check for and remove any "# ComponentName" or "# ComponentName Component" heading
-        const headingRegex = new RegExp(`^# ${componentName}(?:\\s|Component|$).*$`, 'im');
-        cleanedComments = cleanedComments.replace(headingRegex, '').trim();
-        
-        // Add the component name as a heading
-        markdownContent += `\n\n# ${componentName}\n${cleanedComments}`;
+      // Only return if it contains markdown-style documentation
+      if (cleanDoc.includes("##")) {
+        return cleanDoc
       }
     }
-  });
-
-  if (markdownContent) {
-    // Only add the Auto-generated Documentation heading if it doesn't exist
-    if (!autoGenSectionExists) {
-      markdownContent = '\n\n# Auto-generated Documentation' + markdownContent;
-    }
-    
-    fs.appendFileSync(readmeFile, markdownContent);
-    console.log('✅ Documentation appended to README.md!');
-  } else {
-    console.log('⚠️ No new documentation to add.');
+  } catch (error) {
+    console.error(`Error processing file ${filePath}:`, error)
   }
+
+  return null
 }
 
-// Run the script
-extractFromFiles();
+// Function to get all component files recursively
+function getComponentFiles(dir, fileList = []) {
+  const files = fs.readdirSync(dir)
+
+  files.forEach((file) => {
+    const filePath = path.join(dir, file)
+    const stat = fs.statSync(filePath)
+
+    if (stat.isDirectory()) {
+      getComponentFiles(filePath, fileList)
+    } else if (file.endsWith(".tsx") || file.endsWith(".jsx")) {
+      fileList.push(filePath)
+    }
+  })
+
+  return fileList
+}
+
+// Function to determine the category of a component based on its path
+function getComponentCategory(filePath) {
+  const relativePath = path.relative(componentsDir, filePath)
+  const parts = relativePath.split(path.sep)
+
+  if (parts[0] === "atomic") return "atomic"
+  if (parts[0] === "molecules") return "molecules"
+  if (parts[0] === "organisms") return "organisms"
+  return "components" // Default for direct components
+}
+
+// Main function to generate documentation
+async function generateDocs() {
+  console.log("Generating component documentation...")
+
+  // Get all component files
+  const componentFiles = getComponentFiles(componentsDir)
+
+  // Organize documentation by category
+  const docsByCategory = {
+    atomic: [],
+    molecules: [],
+    organisms: [],
+    components: [],
+  }
+
+  // Extract documentation from each file
+  componentFiles.forEach((filePath) => {
+    const doc = extractDocumentation(filePath)
+    if (doc) {
+      const category = getComponentCategory(filePath)
+      docsByCategory[category].push(doc)
+    }
+  })
+
+  // Read existing README content
+  let readmeContent = ""
+  try {
+    readmeContent = fs.readFileSync(readmePath, "utf8")
+  } catch (error) {
+    console.log("README.md not found. Creating a new one.")
+  }
+
+  // Find the components documentation section or create it
+  const componentsSection = "# Auto-generated Documentation"
+  let newContent = ""
+
+  if (readmeContent.includes(componentsSection)) {
+    // Split the README at the components section
+    const parts = readmeContent.split(componentsSection)
+    newContent = parts[0] + componentsSection + "\n\n"
+  } else {
+    // If no components section exists, append it to the end
+    newContent = readmeContent ? readmeContent + "\n\n" + componentsSection + "\n\n" : componentsSection + "\n\n"
+  }
+
+  // Add documentation for each category
+  Object.keys(categories).forEach((category) => {
+    if (docsByCategory[category].length > 0) {
+      newContent += categories[category] + "\n\n"
+      docsByCategory[category].forEach((doc) => {
+        newContent += doc + "\n\n"
+      })
+    }
+  })
+
+  // Write the updated content back to README.md
+  fs.writeFileSync(readmePath, newContent)
+
+  console.log("Documentation generated successfully!")
+}
+
+// Run the documentation generator
+generateDocs().catch((error) => {
+  console.error("Error generating documentation:", error)
+  process.exit(1)
+})

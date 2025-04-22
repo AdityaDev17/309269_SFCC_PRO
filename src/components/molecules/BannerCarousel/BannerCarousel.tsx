@@ -137,15 +137,15 @@ const BannerCarousel = () => {
 export default BannerCarousel
 
 /**
- * # BannerCarousel Component
+ * ## BannerCarousel
  * 
  * The `BannerCarousel` component is a rotating carousel that displays a series of banners with 
  * a mix of text and image cards. It automatically cycles through the banners every 8 seconds.
  * 
- * ## Props
+ * ### Props
  * - No external props are passed directly to the component.
  * 
- * ## Component Behavior
+ * ### Component Behavior
  * 
  * - The component cycles through a set of banners (`bannerData`) every 8 seconds, showing different 
  *   cards consisting of text and images.

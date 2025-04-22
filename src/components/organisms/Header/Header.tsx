@@ -1,17 +1,46 @@
+"use client";
 
-'use client';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import styles from "./Header.module.css";
+import {
+  DrawerTrigger,
+  DrawerContent,
+  DrawerTitle,
+  DrawerHeader,
+  DrawerClose,
+} from "@/components/molecules/Drawer/Drawer";
+import { Drawer } from "vaul";
+import { ChevronRight, ChevronLeft } from "lucide-react";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/molecules/NavigationMenu/NavigationMenu";
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/components/atomic/button/button";
+import Typography from "@/components/atomic/Typography/Typography";
 
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styles from './Header.module.css';
-import { DrawerTrigger, DrawerContent, DrawerTitle, DrawerHeader, DrawerClose } from '@/components/molecules/Drawer/Drawer';
-import { Drawer } from 'vaul';
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+type CategoriesProps = {
+  name: string;
+  image?: {
+    productImageUrl: string;
+    productName: string;
+  }[];
+  subcategory?: {
+    subCategoryName: string;
+    subcategory: string[];
+  }[];
+};
+
 
 interface HeaderProps {
   isHome?: boolean;
   logoImages: { default: string; white: string };
-  categories: string[];
+  categories: CategoriesProps[];
   headerIcons: { label: string; icon: string }[];
   headerWhiteIcons: { label: string; icon: string }[];
 }
@@ -30,25 +59,30 @@ const Header: React.FC<HeaderProps> = ({
     setIsMobile(window.innerWidth < 768);
   };
 
+  const getImageContainerClass = (length: number) => {
+    if(length === 2) return styles.oneSecondaryImage;
+    if(length === 3) return styles.twoSecondaryImage;
+}
+
   useEffect(() => {
     checkMobileView();
-    window.addEventListener('resize', checkMobileView);
-    return () => window.removeEventListener('resize', checkMobileView);
+    window.addEventListener("resize", checkMobileView);
+    return () => window.removeEventListener("resize", checkMobileView);
   }, []);
 
   const iconsToRender = isHome ? headerWhiteIcons : headerIcons;
 
   return (
-    <div className={`${styles.header} ${isHome ? styles.homeHeader : ''}`}>
+    <div className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
       <div className={styles.layout}>
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '5px' }}>
+        <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
           {isMobile && (
             <Drawer.Root shouldScaleBackground>
               <DrawerTrigger asChild>
                 <img
-                  src={isHome ? "/images/menu_white.svg": '/images/menu.svg'}
+                  src={isHome ? "images/menu_white.svg" : "images/menu.svg"}
                   alt="Menu"
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 />
               </DrawerTrigger>
               <DrawerContent>
@@ -61,15 +95,17 @@ const Header: React.FC<HeaderProps> = ({
                 </DrawerHeader>
 
                 <div className={styles.categoryList}>
-                  {categories.map((category) => (
+                  {categories.map((category, index) => (
                     <div
-                      key={category}
+                      key={index}
                       className={styles.categoryItem}
                       onClick={() =>
-                        router.push(`/${category.toLowerCase().replace(/\s+/g, '-')}`)
+                        router.push(
+                          `/${category.name.toLowerCase().replace(/\s+/g, "-")}`
+                        )
                       }
                     >
-                      <span>{category}</span>
+                      <span>{category.name}</span>
                       <ChevronRight size={20} />
                     </div>
                   ))}
@@ -78,19 +114,107 @@ const Header: React.FC<HeaderProps> = ({
             </Drawer.Root>
           )}
 
-          <img
-            src={isHome ? logoImages.white : logoImages.default}
-            alt="Elenor Logo"
-            onClick={() => router.push('/')}
-            style={{ cursor: 'pointer' }}
-          />
+
+<Link href="/" prefetch>
+  <img
+    src={isHome ? logoImages.white : logoImages.default}
+    alt="Elenor Logo"
+    style={{ cursor: 'pointer' }}
+  />
+</Link>
+
         </div>
 
         {!isMobile && (
-          <div className={`${styles.categories} ${isHome ? styles.whiteCategories : ''}`}>
+          <div
+            className={`${styles.categories} ${isHome ? styles.whiteCategories : ""}`}
+          >
             {categories.map((category, index) => (
-              <div key={index} className={styles.category}>
-                {category}
+              <div key={index}>
+                <NavigationMenu key={index}>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      {(category.subcategory && category.image) ? (
+                        <>
+                          <NavigationMenuTrigger>
+                            <span className={styles.category}>{category.name}</span>
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                          <section className={styles.overlayContainer}>
+                            <div className={styles.imageContainer}>
+                              <div className={styles.primaryImage}>
+                                <Image
+                                  src={category.image[0].productImageUrl}
+                                  alt={category.image[0].productName}
+                                  width={325}
+                                  height={317}
+                                />
+                              </div>
+                              {category.image.length > 1 && (
+                                <div
+                                  className={getImageContainerClass(
+                                    category.image.length
+                                  )}
+                                >
+                                  {category.image.map(
+                                    ({ productImageUrl, productName }, index) =>
+                                      index !== 0 && (
+                                        <Image
+                                          key={index}
+                                          src={productImageUrl}
+                                          alt={productName}
+                                          width={210}
+                                          height={148}
+                                        />
+                                      )
+                                  )}
+                                </div>
+                              )}
+                            </div>
+
+                            <div className={styles.categoryContainer}>
+                              {category.subcategory.map(
+                                ({ subCategoryName, subcategory }, index) => {
+                                  return (
+                                    <div
+                                      key={index}
+                                      className={styles.subcategoryContainer}
+                                    >
+                                      <Typography
+                                        type="Label"
+                                        variant={3}
+                                        label={subCategoryName}
+                                        fontWeight="bold"
+                                      />
+                                      {subcategory.map(
+                                        (subcategoryName, index) => {
+                                          return (
+                                            <Button
+                                              key={index}
+                                              variant="link"
+                                              style={{ fontWeight: "500" }}
+                                            >
+                                              {subcategoryName}
+                                            </Button>
+                                          );
+                                        }
+                                      )}
+                                    </div>
+                                  );
+                                }
+                              )}
+                            </div>
+                            </section>
+                          </NavigationMenuContent>
+                        </>
+                      ) : (
+                        <Link href="/SUSTAINABILITY">
+                          <span className={styles.category}>{category.name}</span>
+                        </Link>
+                      )}
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
               </div>
             ))}
           </div>
@@ -108,13 +232,12 @@ const Header: React.FC<HeaderProps> = ({
 
 export default Header;
 
-
 /**
- * # Header Component
+ * ## Header
  *
  * The `Header` component is a navigation header used to display the logo, category links, and icons in the navigation bar. It adapts based on the device's screen width, showing a responsive drawer for mobile views and a horizontal layout for larger screens. It also supports dynamic changes for the logo and icons depending on whether the page is the homepage or not.
  *
- * ## Props
+ * ### Props
  *
  * - **isHome** (`boolean`, optional): Indicates whether the current page is the homepage. Defaults to `false`.
  *   - If `true`, the header will render a different logo and a set of white icons.
@@ -132,7 +255,7 @@ export default Header;
  *
  * - **headerWhiteIcons** (`array`): An array of objects containing icons for the header in the homepage state. It has the same structure as `headerIcons`.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The component uses a responsive layout:
  *   - For mobile devices (screen width less than 768px), a `Drawer` component is used to display the menu as a sidebar when the menu icon is clicked.
@@ -142,33 +265,12 @@ export default Header;
  * - The `iconsToRender` is dynamically set based on whether the page is the homepage or not, determining which set of icons to render.
  * - Clicking on the logo navigates the user to the homepage.
  *
- * ## Example Usage
+ * ### Example Usage
  *
  * Here's an example of how to use the `Header` component:
  *
  * ```tsx
- * import React from 'react';
- * import Header from './Header'; // Adjust the import path as needed
- *
- * const exampleCategories = ['Home', 'Shop', 'About Us', 'Contact'];
- *
- * const exampleIcons = [
- *   { label: 'Cart', icon: 'images/cart.svg' },
- *   { label: 'Profile', icon: 'images/profile.svg' }
- * ];
- *
- * const exampleWhiteIcons = [
- *   { label: 'Cart', icon: 'images/cart_white.svg' },
- *   { label: 'Profile', icon: 'images/profile_white.svg' }
- * ];
- *
- * const logoImages = {
- *   default: 'images/logo.svg',
- *   white: 'images/logo_white.svg'
- * };
- *
- * const Example = () => {
- *   return (
+ * 
  *     <Header
  *       isHome={true}
  *       logoImages={logoImages}
@@ -176,11 +278,10 @@ export default Header;
  *       headerIcons={exampleIcons}
  *       headerWhiteIcons={exampleWhiteIcons}
  *     />
- *   );
- * };
+ *   
  * ```
  *
- * ## Dynamic Behavior
+ * ### Dynamic Behavior
  * - On mobile devices, clicking the menu icon triggers the opening of the `Drawer`, which shows a list of categories that can be clicked to navigate.
  * - On larger devices, categories are shown as a horizontal list and icons are displayed inline.
  * - The header layout changes based on the `isHome` prop, including displaying a different logo and different icons for the homepage.

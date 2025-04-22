@@ -1,17 +1,21 @@
-.banner {
+  .wrapper {
+    container-type: inline-size;
+    container-name: getTheLook;
+    width: 100%;
+  }
+    .banner {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 40% 1fr;
     align-items: center;
     padding: clamp(2rem, 5vw, 5rem);
     gap: 2rem;
     overflow: hidden;
-    container-type: inline-size;
   }
   
   .textBlock {
     transition: transform 0.6s ease;
     transform: translateY(0);
-    z-index: 2;
+    z-index: 1;
   }
   
   .textAnimate {
@@ -30,73 +34,66 @@
     color: #555;
   }
   
+  .buttonContainer{
+    margin-top:30px;
+  }
+  
   .cards {
     position: relative;
     width: 100%;
-    height: clamp(300px, 40vw, 420px);
+    height: clamp(300px, 45vw, 600px);
+    display: grid;
+    place-items: center;
   }
   
   .card {
     position: absolute;
     opacity: 0;
     transition: all 1s ease;
-    width: clamp(120px, 30%, 200px);
-    height: clamp(180px, 40vw, 280px);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  
-  .card img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .card:hover img {
-    transform: scale(1.2);
+    width: clamp(280px, 30vw, 325px) !important;
+    height: clamp(300px, 35vw, 425px);
+   
+   
   }
   
   .inView {
     opacity: 1;
   }
   
-  /* Initial Animations */
   .leftCard {
     left: 0;
     top: 0;
     transform: translateX(-100px);
   }
+  
   .centerCard {
-    left: 100px;
-    top: 100px;
+    left: 210px;
+    top: 170px;
     transform: translateY(100px);
-  }
-  .rightCard {
-    left: 200px;
-    top: 0;
-    transform: translateX(100px);
+    z-index: 2;
   }
   
-  /* Final positions after animation */
+  .rightCard {
+    left: 435px;
+    top: 0;
+    transform: translateX(150px);
+  }
+  
   .inView.leftCard {
     transform: translateX(0);
   }
+  
   .inView.centerCard {
     transform: translateY(0);
   }
+  
   .inView.rightCard {
     transform: translateX(0);
   }
   
-  .buttonContainer {
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: flex-start;
-  }
   
-  /* Container query for mobile */
-  @container (max-width: 600px) {
+  /* @container (max-width: 600px) {
     .banner {
       grid-template-columns: 1fr;
       text-align: center;
@@ -116,102 +113,70 @@
       transform: none !important;
       opacity: 1 !important;
     }
-  
-    .buttonContainer {
-      justify-content: center;
-    }
   }
-  
+  .buttonContainer {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-start;
+  }  
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* changed for crads images display... add this */
-
-  /* .cards {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 5rem;
-    height: auto;
-    justify-content: center;
-  }
-  
-  .card {
-    width: clamp(150px, 30vw, 280px);
-    height: clamp(220px, 40vw, 360px);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.8s ease;
-    opacity: 0;
-  }
-  
-  .card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .card:hover img {
-    transform: scale(1.1);
-  }
-  
-  
-  .leftCard,
-  .rightCard {
-    opacity: 1;
-  }
-  
-  
-  .centerCard {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -20%);
-    z-index: 2;
-  }
-  
-  
-  .inView {
-    opacity: 1;
-    transform: translate(-50%, 0%);
-  }
-  
-  
-  @container (max-width: 600px) {
-    .cards {
+   */
+   @container (max-width: 768px) {
+    .banner {
       grid-template-columns: 1fr;
-      gap: 1.5rem;
-      position: static;
+      grid-template-rows: auto auto;
+      text-align: center;
+      padding: 0 1rem;
+      
+    }
+  
+    .cards {
+      order: -1;
+      height: 450px;
+      position: relative;
+      margin-bottom: 0;
+      width: 100%;
+      display: block;
+     
     }
   
     .card {
-      position: static !important;
-      transform: none !important;
-      opacity: 1 !important;
+      position: absolute;
+      /* width: 45%; */
+      width: 40%;
+      height: auto;
+      max-width: 180px;
+      opacity: 1;
+    }
+  
+    .leftCard {
+      left: 0;
+      top: 50px;
+      z-index: 1;
+      transform: none;
     }
   
     .centerCard {
+      left: 30%;
+      top: 120px;
+      transform: translateX(-50%);
+      z-index: 3;
+    }
+  
+    .rightCard {
+      right: 0;
+      top: 50px;
+      left: auto;
       z-index: 2;
+      transform: none;
     }
   
     .buttonContainer {
       justify-content: center;
     }
+
+    .textBlock {
+      margin-top: -100px;
+    }
   }
-   */

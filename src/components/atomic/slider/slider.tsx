@@ -32,7 +32,7 @@ export default Slider
 
 
 /**
-## Slider Component
+* ## Slider
 *
 * The `Slider` component is an interactive UI element that allows users to select a numeric value within a given range.
 * It is built using Radix UI's Slider primitive and supports customization.

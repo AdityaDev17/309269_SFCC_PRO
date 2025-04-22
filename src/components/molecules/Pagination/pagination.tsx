@@ -1,41 +1,7 @@
-/**
- * ## Pagination Component
- *
- * The `Pagination` component is used for navigating through pages in a paginated UI.
- * It includes navigation links, active page indicators, ellipsis for skipped pages, and next/previous controls.
- *
- * ### Features:
- * - **Accessible Navigation:** Uses `aria-label` and `aria-current` for better accessibility.
- * - **Configurable Styling:** Supports multiple variants for links.
- * - **Modular Components:** `Pagination`, `PaginationContent`, `PaginationItem`, `PaginationLink`, etc., allow flexible customization.
- *
- * ### Challenges & Research:
- * - Ensured accessibility by adding ARIA attributes.
- * - Styled pagination links dynamically with variants.
- * - Used `React.forwardRef` to improve composability.
- *
- * ### Example Usage:
- * ```tsx
- * <Pagination>
- *   <PaginationContent>
- *     <PaginationItem>
- *       <PaginationPrevious href="#" />
- *     </PaginationItem>
- *     <PaginationItem>
- *       <PaginationLink href="#" isActive>1</PaginationLink>
- *     </PaginationItem>
- *     <PaginationItem>
- *       <PaginationNext href="#" />
- *     </PaginationItem>
- *   </PaginationContent>
- * </Pagination>
- * ```
- */
-
 import * as React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
-import type { ButtonProps } from "@/components/atomic/button/button";
-import styles from "./pagination.module.css";
+import type { ButtonProps } from "../../atomic/Button/Button";
+import styles from "./Pagination.module.css";
 
 const Pagination = ({ ...props }: React.ComponentProps<"nav">) => (
   <nav
@@ -140,3 +106,37 @@ export {
   PaginationNext,
   PaginationPrevious,
 };
+
+/**
+ * ## Pagination
+ *
+ * The `Pagination` component is used for navigating through pages in a paginated UI.
+ * It includes navigation links, active page indicators, ellipsis for skipped pages, and next/previous controls.
+ *
+ * ### Features:
+ * - **Accessible Navigation:** Uses `aria-label` and `aria-current` for better accessibility.
+ * - **Configurable Styling:** Supports multiple variants for links.
+ * - **Modular Components:** `Pagination`, `PaginationContent`, `PaginationItem`, `PaginationLink`, etc., allow flexible customization.
+ *
+ * ### Challenges & Research:
+ * - Ensured accessibility by adding ARIA attributes.
+ * - Styled pagination links dynamically with variants.
+ * - Used `React.forwardRef` to improve composability.
+ *
+ * ### Example Usage:
+ * ```tsx
+ * <Pagination>
+ *   <PaginationContent>
+ *     <PaginationItem>
+ *       <PaginationPrevious href="#" />
+ *     </PaginationItem>
+ *     <PaginationItem>
+ *       <PaginationLink href="#" isActive>1</PaginationLink>
+ *     </PaginationItem>
+ *     <PaginationItem>
+ *       <PaginationNext href="#" />
+ *     </PaginationItem>
+ *   </PaginationContent>
+ * </Pagination>
+ * ```
+ */

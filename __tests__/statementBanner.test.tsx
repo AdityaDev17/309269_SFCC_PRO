@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen,act } from "@testing-library/react";
-import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
+import StatementBanner from "../src/components/molecules/StatementBanner/StatementBanner";
 
 
 global.IntersectionObserver = jest.fn().mockImplementation((callback: IntersectionObserverCallback) => {

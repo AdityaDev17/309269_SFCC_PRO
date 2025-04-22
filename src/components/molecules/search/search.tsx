@@ -1,8 +1,8 @@
 'use client'
 import { useState } from "react";
-import { Button } from "../../atomic/button/button";
-import Input from "@/components/atomic/input/input";
-import styles from "./search.module.css";
+import { Button } from "../../atomic/Button/Button";
+import Input from "../../atomic/Input/Input";
+import styles from "./Search.module.css";
 import { Search as SearchIcon, X, Mic } from "lucide-react";
 
 interface SearchProps {

@@ -1,6 +1,6 @@
 'use client'
 import * as React from "react"
-import styles from './input.module.css'
+import styles from './Input.module.css'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onPasswordVisible?: (name: string) => void
@@ -38,7 +38,7 @@ export default Input;
 
 
 /**
-## Input Component
+* ## Input
 *
 * The `Input` component is a customizable input field that supports various HTML input attributes.
 * It also provides additional features such as error handling and optional password visibility callback.

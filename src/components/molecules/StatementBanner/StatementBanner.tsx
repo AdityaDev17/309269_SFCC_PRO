@@ -1,8 +1,8 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import styles from './StatementBanner.module.css';
-import Typography from "@/components/atomic/Typography/Typography";
-import { Button } from "@/components/atomic/button/button";
+import Typography from "../../atomic/Typography/Typography";
+import { Button } from "../../atomic/Button/Button";
 
 type StatementBannerProps = {
   imageSrc: string;
@@ -97,13 +97,13 @@ export default StatementBanner;
 
 
 /**
- * # StatementBanner Component
+ * ## StatementBanner
  * 
  * The `StatementBanner` component displays an image, heading, subheading, description, 
  * and a button. It uses an intersection observer to toggle visibility of the text section 
  * when it comes into view.
  * 
- * ## Props
+ * ### Props
  * 
  * - **imageSrc** (string): The source URL for the image.
  * - **imageAlt** (string, optional): The alt text for the image. Defaults to an empty string.
@@ -113,7 +113,7 @@ export default StatementBanner;
  * - **description** (string): The description text.
  * - **linkText** (string, optional): The button text. Defaults to `VIEW MORE`.
  * 
- * ## Component Behavior
+ * ### Component Behavior
  * 
  * - The banner displays the image and text, adjusting the layout based on `imagePosition`.
  * - The text section becomes visible when at least 30% of it is in the viewport.

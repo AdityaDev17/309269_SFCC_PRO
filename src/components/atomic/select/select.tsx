@@ -5,7 +5,7 @@
 import * as React from "react"
 import * as SelectPrimitive from "@radix-ui/react-select"
 import { Check, ChevronDown, ChevronUp } from "lucide-react"
-import styles from './select.module.css';
+import styles from './Select.module.css';
 
 const Select = ({ children, ...props }: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>) => {
   const [open, setOpen] = React.useState(false);
@@ -180,23 +180,23 @@ export {
 }
 
 /**
- * # Select Component
+ * ## Select
  *
  * A customizable and accessible dropdown select component built using Radix UI's `@radix-ui/react-select`.
  * This component suite includes the root Select, trigger, content display, scrolling buttons, and individual items.
  *
- * ## Main Component: `Select`
+ * ### Main Component: Select
  *
  * - Wraps Radix's `SelectPrimitive.Root`, maintaining open/close state internally.
  * - Enhances functionality by passing the `isOpen` prop to a custom `SelectTrigger`.
  *
- * ## Props (Select)
+ * ### Props (Select)
  * 
  * Inherits all props from `SelectPrimitive.Root`.
  *
  * - **children** (ReactNode): Should include `SelectTrigger`, `SelectContent`, etc.
  *
- * ## Subcomponents
+ * ### Subcomponents
  *
  * - **SelectTrigger**
  *   - Custom trigger component for opening the select dropdown.
@@ -218,7 +218,7 @@ export {
  * - **SelectGroup**, **SelectLabel**, **SelectValue**, **SelectSeparator**
  *   - Additional subcomponents provided for accessibility and grouping.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The `Select` component provides enhanced styling and behavior while keeping accessibility intact.
  * - Custom styling is handled via CSS Modules (`select.module.css`).

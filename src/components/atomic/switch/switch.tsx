@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as SwitchPrimitives from "@radix-ui/react-switch"
 
-import styles from "./switch.module.css"
+import styles from "./Switch.module.css"
 
 const Switch = React.forwardRef<
   React.ElementRef<typeof SwitchPrimitives.Root>,
@@ -25,12 +25,12 @@ export default Switch;
 
 
 /**
- * # Switch Component
+ * ## Switch 
  * 
  * The `Switch` component is a toggle control that allows users to switch between two states, such as "on" and "off."
  * It is built using Radix UI's Switch primitive and supports accessibility and customization.
  * 
- * ## Props
+ * ### Props
  * 
  * - **checked** (boolean, optional): Controls the current state of the switch.
  *   If `true`, the switch is turned on; otherwise, it is off.
@@ -42,7 +42,7 @@ export default Switch;
  * 
  * - **defaultChecked** (boolean, optional): Sets the initial state of the switch when uncontrolled.
  * 
- * ## Component Behavior
+ * ### Component Behavior
  * 
  * - The **`checked`** state can be controlled externally or left uncontrolled using `defaultChecked`.
  * - If **`disabled`** is `true`, the switch will be inactive and visually styled as disabled.

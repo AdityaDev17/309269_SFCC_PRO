@@ -1,8 +1,6 @@
 .Input {
     display: flex;
     height: 2.5rem;
-    width: 100%; 
-    max-width: 400px;
     border: 1px solid #b3b2b5;
     background-color: #ffffff;
     padding-right: 0.75rem; 
@@ -13,7 +11,6 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     color: #4f4b53;
     font-weight: 500;
-    max-width: 30rem;
     padding-left: 0.5rem;
 }
 

@@ -35,12 +35,12 @@ export default Typography;
 
 
 /**
- * # Typography Component
+ * ## Typography
  *
  * The `Typography` component is a flexible text rendering component that can be used to display different types of text, such as headlines, body text, and labels. 
  * It supports customization through various props, including font weight, color, text decoration, and variant selection.
  *
- * ## Props
+ * ### Props
  *
  * - **type** (`"Headline" | "Body" | "Label"`): Specifies the type of typography. This determines the default styles applied to the text. Available values:
  *   - `"Headline"`: For larger, more prominent text.
@@ -64,24 +64,18 @@ export default Typography;
  *   - `"none"`: No text decoration (default).
  *   - `"line-through"`: The text will have a line through it, often used for indicating strikethrough text.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The component dynamically generates class names based on the `type` and `variant` props. This allows different styles for headlines, body text, and labels with different variants.
  * - The font weight is determined by the `fontWeight` prop, allowing the text to be rendered in different weights (light, regular, medium, semibold, bold).
  * - The color and text decoration are customizable via inline styles. The `color` prop controls the text color, and the `textDecoration` prop allows for strikethrough or no decoration.
  * - If the `label` prop is provided, it is displayed as the text content. If not, the component will display a default text like `"Headline 1"`, `"Body 2"`, etc., based on the `type` and `variant`.
  *
- * * ## Example Usage
+ * ### Example Usage
  *
  * Here's a simple example of how to use the `Typography` component:
  *
  * ```tsx
- * import React from 'react';
- * import Typography from './Typography'; // Adjust the import path as needed
- *
- * const Example = () => {
- *   return (
- *     <div>
  *       <Typography type="Headline" variant={1} color="blue" fontWeight="bold">
  *         This is a bold headline
  *       </Typography>
@@ -91,9 +85,6 @@ export default Typography;
  *       <Typography type="Label" variant={1} color="green" textDecoration="line-through">
  *         This is a label with a line-through
  *       </Typography>
- *     </div>
- *   );
- * };
  * ```
  *
  */

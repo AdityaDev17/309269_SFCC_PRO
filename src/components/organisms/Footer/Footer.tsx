@@ -1,14 +1,8 @@
 import Image from "next/image";
 import styles from "./Footer.module.css";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/atomic/select/select";
+
 import { Icon } from "../../atomic/Icons/Icons";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "../../atomic/Select/Select";
 const Footer = () => {
   const sample = [
     {

@@ -1,6 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Search from "@/components/molecules/search/search";
+import Search from "../src/components/molecules/Search/Search";
+
+
 
 describe('Search Component', () => {
     test("renders input with placeholder", () => {

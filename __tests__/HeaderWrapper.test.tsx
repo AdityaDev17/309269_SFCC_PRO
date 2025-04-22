@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import HeaderWrapper from "@/components/organisms/Header/HeaderWrapper";
+import HeaderWrapper from "../src/components/organisms/Header/HeaderWrapper";
 
 jest.mock("next/navigation", () => ({
   usePathname: jest.fn(),

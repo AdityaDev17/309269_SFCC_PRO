@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen ,waitFor,fireEvent} from "@testing-library/react";
-import BannerCarousel from "@/components/molecules/BannerCarousel/BannerCarousel";
+import BannerCarousel from "../src/components/molecules/BannerCarousel/BannerCarousel";
 import '@testing-library/jest-dom';
 
 describe('BannerCarousel', () => {

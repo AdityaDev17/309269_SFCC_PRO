@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen ,fireEvent} from "@testing-library/react";
-import Banner from "@/components/molecules/Banner/Banner";
+import Banner from "../src/components/molecules/Banner/Banner";
 
 
 

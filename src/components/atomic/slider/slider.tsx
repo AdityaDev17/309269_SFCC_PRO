@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import * as SliderPrimitive from "@radix-ui/react-slider"
-import styles from "./slider.module.css"
+import styles from "./Slider.module.css"
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
@@ -32,7 +32,7 @@ export default Slider
 
 
 /**
-## Slider Component
+* ## Slider
 *
 * The `Slider` component is an interactive UI element that allows users to select a numeric value within a given range.
 * It is built using Radix UI's Slider primitive and supports customization.

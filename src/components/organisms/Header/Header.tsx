@@ -114,12 +114,15 @@ const Header: React.FC<HeaderProps> = ({
             </Drawer.Root>
           )}
 
-          <img
-            src={isHome ? logoImages.white : logoImages.default}
-            alt="Elenor Logo"
-            onClick={() => router.push("/")}
-            style={{ cursor: "pointer" }}
-          />
+
+<Link href="/" prefetch>
+  <img
+    src={isHome ? logoImages.white : logoImages.default}
+    alt="Elenor Logo"
+    style={{ cursor: 'pointer' }}
+  />
+</Link>
+
         </div>
 
         {!isMobile && (

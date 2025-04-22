@@ -64,3 +64,51 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 };
 
 export default Gallery;
+
+/**
+ * # Gallery Component
+ *
+ * A responsive image gallery component that displays a set of images with thumbnail navigation.
+ * The component adapts its layout for both mobile and desktop views, allowing users to interact
+ * with the gallery by selecting images or thumbnails.
+ *
+ * ## Props
+ *
+ * ### `images`
+ * - Type: `string[]`
+ * - Required: Yes
+ * - An array of image URLs that will be displayed in the gallery. Each URL represents a different image.
+ * 
+ * ### `contentStyle` (optional)
+ * - Type: `string`
+ * - Optional: Yes
+ * - A CSS class to apply custom styles to the content area (used for thumbnails or image details).
+ * 
+ * ## Usage
+ *
+ * The **Gallery** component can be used to display a set of images that users can browse through, either by selecting a thumbnail
+ * or by navigating through dots (on mobile). It automatically adapts to mobile or desktop views depending on the screen size.
+ *
+ * ### Example Usage
+ *
+ * ```tsx
+ * <Gallery images={['/image1.jpg', '/image2.jpg', '/image3.jpg']} />
+ * ```
+ * 
+ * This renders a gallery with three images:
+ * - On mobile devices, a main image is displayed with clickable dots to navigate between images.
+ * - On larger screens, a set of thumbnails appears, and clicking on or hovering over a thumbnail changes the main image.
+ *
+ * ## Functionality
+ *
+ * - **Mobile View**: When the screen width is below 768px, the gallery displays a main image with navigation dots. Clicking on a dot updates the main image.
+ * - **Desktop View**: On larger screens, the gallery shows thumbnails of all images. Hovering over or clicking a thumbnail changes the main image.
+ *
+ * The gallery uses `useState` to manage:
+ * - The currently displayed main image (`mainImage`).
+ * - The active thumbnail index for navigation (`activeIndex`).
+ * - The device type (mobile or desktop), based on screen width (`isMobile`).
+ * 
+ * The gallery component listens for resize events and adapts the layout when the screen size changes.
+ */
+

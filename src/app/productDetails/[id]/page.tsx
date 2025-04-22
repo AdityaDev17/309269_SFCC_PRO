@@ -1,17 +1,9 @@
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "../../../components/atomic/Breadcrumbs/Breadcrumbs";
-import Image from "next/image";
 import styles from "./page.module.css";
 import ProductDetails from "./component";
 import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
 import Banner from "@/components/molecules/Banner/Banner";
 import Typography from "@/components/atomic/Typography/Typography";
+import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 export default async function ProductDetailsPage({
   params,
 }: {
@@ -71,25 +63,14 @@ export default async function ProductDetailsPage({
   console.log("getProductId", id);
   return (
     <section className={styles.layout}>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator>
-            <Image src="/slash.svg" alt="slash" width={6} height={18} />
-          </BreadcrumbSeparator>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/docs/components">Components</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator>
-            <Image src="/slash.svg" alt="slash" width={6} height={18} />
-          </BreadcrumbSeparator>
-          <BreadcrumbItem>
-            <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <Breadcrumbs
+        breadcrumbItems={[
+          { label: "Home", href: "/" },
+          { label: "Shop", href: "/shop" },
+          { label: "Lipstick" },
+        ]}
+        breadcrumbSeparator="/slash.svg"
+      />
       <ProductDetails />
       <section className={styles.productCarouselSection}>
         <Typography

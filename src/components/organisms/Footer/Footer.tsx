@@ -9,82 +9,15 @@ import {
   SelectValue,
 } from "@/components/atomic/select/select";
 import { Icon } from "../../atomic/Icons/Icons";
+import { footerData } from "@/common/constant";
 const Footer = () => {
-  const sample = [
-    {
-      title: "Elenor",
-      children: [
-        {
-          title: "Makeup",
-          link: "/",
-        },
-        {
-          title: "SkinCare",
-          link: "/",
-        },
-        {
-          title: "Fragnance",
-          link: "/",
-        },
-        {
-          title: "Gift",
-          link: "/",
-        },
-      ],
-    },
-    {
-      title: "Services",
-      children: [
-        {
-          title: "Community Profile",
-          link: "/",
-        },
-        {
-          title: "Sustainability",
-          link: "/",
-        },
-        {
-          title: "Refurbish",
-          link: "/",
-        },
-        {
-          title: "Shipping Options",
-          link: "/",
-        },
-        {
-          title: "FAQ",
-          link: "/",
-        },
-      ],
-    },
-    {
-      title: "About Us",
-      children: [
-        {
-          title: "Store Location",
-          link: "/",
-        },
-        {
-          title: "Contact US",
-          link: "/",
-        },
-        {
-          title: "Legal",
-          link: "/",
-        },
-        {
-          title: "Privacy Policy",
-          link: "/",
-        },
-      ],
-    },
-  ];
+
   return (
     <div className={styles.footer}>
       <div className={styles.logoSection}>
         <Image
           className={styles.logo}
-          src="/images/Elenor-white.svg"
+          src="/images/SFCCLogowhite.svg"
           alt="Next.js logo"
           width={109}
           height={19}
@@ -93,7 +26,7 @@ const Footer = () => {
       </div>
       <div className={styles.containerSection}>
         <div className={styles.container}>
-          {sample.map((item) => {
+          {footerData?.map((item) => {
             return (
               <div key={item?.title}>
                 <div className={styles.title}>{item?.title}</div>
@@ -149,7 +82,7 @@ const Footer = () => {
       </div>
       <div className={styles.buttonSection}>
         <div className={styles.buttonContainer}>
-          <div>&copy;2024 ELENOR International</div>
+          <div>&copy;2024 SFCC PRO International</div>
           <div className={styles.gap}>
             <Icon name="Instagram" />
             <Icon name="Facebook" />
@@ -180,7 +113,7 @@ export default Footer;
  *
  * ## Behavior
  *
- * - The footer structure is driven by a `sample` array, where each object contains a `title` and `children`
+ * - The footer structure is driven by a `footerData` array, where each object contains a `title` and `children`
  *   (with `title` and `link`).
  * - Each footer section renders a group title followed by its corresponding links.
  * - The country selector uses a styled `Select` component from the atomic UI library and updates the selected location.

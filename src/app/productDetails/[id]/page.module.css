@@ -26,7 +26,7 @@
 }
 .firstLayout {
   display: grid;
-  grid-template-rows: auto auto;
+  grid-template-columns: auto auto;
   grid-template-areas:
     "Gallery ProductDetails"
     "Accordion ProductDetails";
@@ -67,7 +67,6 @@
   line-height: 16px;
 }
 .accordion {
-  max-width: 52vw;
   width: 100%;
   grid-area: Accordion;
 }
@@ -80,5 +79,11 @@
 }
 .gallery {
   grid-area: Gallery;
+}
+.buttonContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-bottom: 20px;
 }
 /* Component Styles End*/

@@ -1,13 +1,8 @@
 "use client";
 import styles from "./page.module.css";
-import Gallery from "../../../components/organisms/Gallery/Gallery";
+import Gallery from "@/components/organisms/Gallery/Gallery";
 import { useParams } from "next/navigation";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/molecules/Accordion/Accordion";
+import Accordion from "@/components/molecules/Accordion/Accordion";
 import { Button } from "@/components/atomic/button/button";
 import {
   Select,
@@ -15,73 +10,42 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/atomic/select/select";
+import { productDetails } from "@/common/constant";
 
 export default function ProductDetails() {
   const params = useParams();
-  const productId = params?.id; // Will be "8999"
+  const productId = params?.id; 
 
   console.log("Product ID:", productId);
+
+  const galleryImages = productDetails?.imageGroups
+    .flatMap((group) => group.images)
+    .map((image) => image.link);
+
+  const accordionData = productDetails?.pageMetaTags?.map((item)=>({
+    title:item?.id.toUpperCase(),
+    desc:item?.value
+  }))
 
   return (
     <section className={styles.componentLayout}>
       <div className={styles.firstLayout}>
         <div className={styles.gallery}>
-          <Gallery
-            images={[
-              "/images/product1.svg",
-              "/images/product2.svg",
-              "/images/product.svg",
-              "/images/product3.svg",
-            ]}
-          />
+          <Gallery images={galleryImages} />
         </div>
         <div className={styles.accordion}>
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <AccordionTrigger>
-                DONATE TO ENVIRONMENTAL CAUSES
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className={styles.accordionContent}>
-                  Introducing Elenor's Monochrome Gloss Lipstick Collection,
-                  where vibrant colour meets irresistible shine for a truly
-                  glamorous pout. 
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>SHOP SUSTAINABLY</AccordionTrigger>
-              <AccordionContent>
-              <div className={styles.accordionContent}>
-                Introducing Elenor's Monochrome Gloss Lipstick Collection, where
-                vibrant colour meets irresistible shine for a truly glamorous
-                pout. Made with high-quality ingredients and infused with
-                nourishing oils, our gloss lipstick formula delivers
-                long-lasting hydration and a luscious, glossy finish that lasts
-                all day.
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+          <Accordion
+            items={accordionData}
+            contentStyle={styles.accordionContent}
+          />
         </div>
         <div className={styles.productDetails}>
-          <div className={styles.title}>
-            ELENOR MONOCHROME GLOSS LIPSTICK - P56
+          <div className={styles.title}>{productDetails?.name}</div>
+          <div className={styles.price}>
+            {productDetails?.currency}&nbsp;{productDetails?.price}
           </div>
-          <div className={styles.price}>€60</div>
-          <div className={styles.desc}>
-            Indulge in luxury with our Elenor’s Monochrome Gloss lipstick.
-            Crafted from rare botanicals for a rich, glossy finish. Treat your
-            lips to elegance.
-          </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "12px",
-              paddingBottom: "20px",
-            }}
-          >
+          <div className={styles.desc}>{productDetails?.longDescription}</div>
+          <div className={styles.buttonContainer}>
             <Button style={{ color: "#000" }}>ADD TO WISHLIST</Button>
             <Select>
               <SelectTrigger

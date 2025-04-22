@@ -1,158 +1,90 @@
-/**
- * ---
-title: Accordion
-description: A customizable accordion component built with Radix UI and styled with CSS Modules.
----
+'use client'
 
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/molecules/Accordion/Accordion"
-
-# Accordion Component
-
-The `Accordion` is a composable UI element used to toggle visibility of content sections. It's built using [Radix UI's Accordion primitives](https://www.radix-ui.com/primitives/docs/components/accordion) for accessibility and flexibility, and styled using CSS Modules.
-
----
-
-##  Features
-
-- **Radix Compliant**: Fully accessible and keyboard-friendly.
-- **Chevron Icon**: Built-in indicator rotates on open/close.
-- **CSS Modules**: Scoped styles for clean and isolated design.
-- **Composable API**: Each part (`Item`, `Trigger`, `Content`) is a separate building block.
-- **Forwarded Refs**: Works with animation libraries and advanced integrations.
-
----
-
-## 🔧 Components & Props
-
-### `Accordion`
-
-> The root wrapper for all accordion items.
-
-| Prop           | Type                   | Description                         |
-|----------------|------------------------|-------------------------------------|
-| `type`         | `"single"` \| `"multiple"` | Controls whether one or multiple items can be open. |
-| `collapsible`  | `boolean`              | Allows items to be collapsed.       |
-
----
-
-### `AccordionItem`
-
-> Container for each accordion entry.
-
-| Prop           | Type    | Description                         |
-|----------------|---------|-------------------------------------|
-| `value`        | `string`| A unique value identifying the item. |
-
----
-
-### `AccordionTrigger`
-
-> The button element that toggles the content.
-
-| Prop        | Type         | Description                          |
-|-------------|--------------|--------------------------------------|
-| `children`  | `ReactNode`  | Title or label for the item.         |
-
----
-
-### `AccordionContent`
-
-> The content section that is revealed or hidden.
-
-| Prop        | Type         | Description                          |
-|-------------|--------------|--------------------------------------|
-| `children`  | `ReactNode`  | The content inside the accordion.    |
-
----
-
- * ```tsx Accordion Component example
- * "use client";
 import {
-
-  Accordion,
-
+  Accordion as AccordionWrapper,
   AccordionContent,
-
   AccordionItem,
+  AccordionTrigger
+} from "./AccordionWrapper"
 
-  AccordionTrigger,
-
-} from "@/components/molecules/Accordion/Accordion";
-import AccordionStyle from "@/components/molecules/Accordion/Accordion.module.css";
-
-import { useEffect } from "react";
-  return (
-    <div>
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value="item-1">
-            <AccordionTrigger>DONATE TO ENVIRONMENTAL CAUSES</AccordionTrigger>
-            <AccordionContent>
-              Make a direct impact by allocating your points to support effort
-              or organisations working towards a greener future.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger>SHOP SUSTAINABLY</AccordionTrigger>
-            <AccordionContent>
-              Make a direct impact by allocating your points to support effort
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </div>
-  );
+type AccordionItemType = {
+  title: string
+  desc: string
 }
+
+type AccordionProps = {
+  items: AccordionItemType[]
+  contentStyle?: string
+}
+
+const Accordion = ({ items, contentStyle }: AccordionProps) => {
+  return (
+    <AccordionWrapper type="single" collapsible>
+      {items.map((item, index) => (
+        <AccordionItem key={index} value={`item-${index}`}>
+          <AccordionTrigger>{item.title}</AccordionTrigger>
+          <AccordionContent>
+            <div className={contentStyle}>{item.desc}</div>
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </AccordionWrapper>
+  )
+}
+
+export default Accordion
+
+/**
+ * # Accordion Component
+ *
+ * A flexible and accessible accordion component used to display collapsible content sections.
+ *
+ * ## Components
+ *
+ * ### Accordion
+ * - The root wrapper component that renders the entire accordion.
+ * - Accepts a `type` prop (defaulting to "single") to control the accordion's behavior (either a single collapsible item or multiple).
+ * - The `collapsible` prop allows sections to be individually collapsed or expanded.
+ * - Renders child components of `AccordionItem` to create the collapsible sections.
+ * - Accepts `contentStyle` prop to customize the style of the content in each accordion section.
+ *
+ * ### AccordionItem
+ * - Represents an individual accordion section.
+ * - Accepts a `value` prop to uniquely identify the section.
+ * - Contains the accordion trigger (header) and content components.
+ *
+ * ### AccordionTrigger
+ * - Represents the clickable header of an accordion item.
+ * - Triggers the collapsing/expanding behavior of the `AccordionContent`.
+ *
+ * ### AccordionContent
+ * - Represents the collapsible content of an accordion item.
+ * - By default, the content is hidden until the trigger is clicked.
+ * - Accepts all standard props for `<div>`.
+ *
+ * ## Wrapper Concept
+ *
+ * The **Accordion** component serves as the primary wrapper for the accordion's structure and behavior. It manages the accordion's collapsible state and renders individual sections (`AccordionItem` components) based on the `items` prop.
+ * 
+ * The `items` prop is an array of objects with `title` and `desc` properties, where `title` is the heading of the accordion section (rendered as the trigger) and `desc` is the content (rendered inside the collapsible section).
+ * 
+ * The `AccordionWrapper` component wraps the entire accordion and handles the collapsible behavior, determining how many sections can be open at a time based on the `type` prop. By default, the accordion allows only one section to be open at a time (`type="single"`), but it can be customized for multiple open sections.
+ * 
+ * The `AccordionItem` components use the `AccordionTrigger` and `AccordionContent` to define the clickable header and collapsible content respectively. The `contentStyle` prop can be used to customize the appearance of the content.
+ *
+ * ## Example Usage
+ *
+ * ```tsx
+ * <Accordion
+ *   items={[
+ *     { title: "Section 1", desc: "This is the content of section 1" },
+ *     { title: "Section 2", desc: "This is the content of section 2" },
+ *     { title: "Section 3", desc: "This is the content of section 3" }
+ *   ]}
+ *   contentStyle="custom-content-style"
+ * />
+ * ```
+ * This example renders a collapsible accordion with three sections. Each section has a `title` (rendered as a clickable trigger) and a `desc` (rendered as the collapsible content).
+ *
  */
 
-"use client";
-
-import * as React from "react";
-import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
-import styles from "./Accordion.module.css";
-
-const Accordion = AccordionPrimitive.Root;
-
-const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={styles.AccordionItem}
-    {...props}
-  />
-));
-AccordionItem.displayName = "AccordionItem";
-
-const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
-      ref={ref}
-      className={styles.AccordionPrimitiveTrigger}
-      {...props}
-    >
-      {children}
-      <ChevronDownIcon className={styles.ChevronDownIcon} />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-));
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
-
-const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className={styles.AccordionPrimitiveContent}
-    {...props}
-  >
-    <div className={styles.AccordionContentDiv}>{children}</div>
-  </AccordionPrimitive.Content>
-));
-AccordionContent.displayName = AccordionPrimitive.Content.displayName;
-
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

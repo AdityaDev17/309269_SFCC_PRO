@@ -75,7 +75,7 @@ export default function ProductDetails() {
           </div>
           <Button
             className={styles.button}
-            style={{ backgroundColor: "#000", color: "#fff" }}
+            variant="secondary"
           >
             ADD TO BAG
           </Button>

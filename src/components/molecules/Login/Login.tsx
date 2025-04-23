@@ -1,10 +1,11 @@
+'use client'
 import Input from "../../atomic/Input/Input";
 import styles from "./Login.module.css";
-import Checkbox from "../../atomic/CheckBox/CheckBox";
+import Checkbox from "../../atomic/Checkbox/Checkbox";
 import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
 
-const Login = ({ onLoginClicked }: any) => {
+const Login = ({ onLoginClicked, onCreateAccount }: any) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -72,6 +73,7 @@ const Login = ({ onLoginClicked }: any) => {
           Not yet registered with us
         </div>
         <Button
+          onClick={onCreateAccount}
           variant="secondary"
           size="lg"
           style={{

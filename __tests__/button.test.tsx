@@ -1,6 +1,6 @@
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Button } from "../src/components/atomic/button/button";
+import { Button } from "../src/components/atomic/Button/Button";
 
 describe("Button Component", () => {
   test("renders button with children", () => {

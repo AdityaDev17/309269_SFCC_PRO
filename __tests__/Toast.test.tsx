@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { toast, Toaster } from "@/components/molecules/Toast/Toast";
+import { toast, Toaster } from "../src/components/molecules/Toast/Toast";
 import { ThemeProvider } from "next-themes";
 
 describe("Toaster Component", () => {

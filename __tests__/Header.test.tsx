@@ -1,13 +1,123 @@
 import React from "react";
 import { render } from "@testing-library/react";
-import Header from "@/components/organisms/Header/Header";
+import Header from "../src/components/organisms/Header/Header";
 
 jest.mock('next/navigation', () => ({
     useRouter: () => ({
       push: jest.fn(), 
     }),
   }));
-  const exampleCategories = ['Home', 'Shop', 'About Us', 'Contact'];
+  const exampleCategories = [
+    {
+      name: 'MAKEUP',
+      image: [
+        {
+            productImageUrl: '/images/menuImage1.svg',
+            productName: 'Lipstick'
+        },
+      ],
+      subcategory: [
+        {
+          subCategoryName: 'LIPS',
+          subcategory: ['Lipstick', 'Liquid Lipstick', 'Lip Liner', 'Lip Balm']
+        },
+        {
+            subCategoryName: 'EYE',
+            subcategory: ['Eyeliner', 'Eyebrow', 'Eye Shadow', 'Mascara']
+        },
+        {
+            subCategoryName: 'COMPLEXION',
+            subcategory: ['Blush', 'Foundation', 'Highlighter']
+        }
+      ]
+    },
+    {
+      name: 'SKINCARE',
+      image: [
+        {
+            productImageUrl: '/images/menuImage1.svg',
+            productName: 'Lipstick'
+        },
+      ],
+      subcategory: [
+        {
+          subCategoryName: 'CLEANSER',
+          subcategory: ['Face Wash', 'Peels & Scrubs', 'Toner']
+        },
+        {
+          subCategoryName: 'MOISTURIZERS',
+          subcategory: ['Face Moisturizer', 'Face Oil', 'Lotion', 'Night Cream']
+        },
+        {
+          subCategoryName: 'SERUMS',
+          subcategory: ['Face Serum']
+        },
+        {
+          subCategoryName: 'UV PROTECTION',
+          subcategory: ['Sunscreen']
+        }
+      ]    
+    },
+    {
+      name: 'FRAGRANCE',
+      image: [
+        {
+            productImageUrl: '/images/menuImage1.svg',
+            productName: 'Lipstick'
+        },{
+          productImageUrl: '/images/menuImage1.svg',
+          productName: 'Lipstick'
+      },
+      ],
+      subcategory: [
+        {
+          subCategoryName: 'COLLECTIONS',
+          subcategory: ['For Men', 'For Women']
+        }
+      ],
+      },
+      {
+        name: 'SUSTAINABILITY',
+      },
+      {
+        name: 'SUBSCRIPTION',
+      },
+      {
+        name: 'GLAM GUIDE',
+      },
+      {
+        name: 'MORE',
+      image: [
+        {
+            productImageUrl: '/images/menuImage1.svg',
+            productName: 'Lipstick'
+        },
+        {
+          productImageUrl: '/images/menuImage1.svg',
+          productName: 'Lipstick'
+        },
+        {
+          productImageUrl: '/images/menuImage1.svg',
+          productName: 'Lipstick'
+        },
+      ],
+      subcategory: [
+        {
+          subCategoryName: 'HANDBAGS',
+          subcategory: ['Top Handles', 'Totes', 'Mini Bags']
+        },
+        {
+          subCategoryName: 'JEWELLERY',
+          subcategory: ['Necklaces', 'Rings', 'Earrings', 'Bracelets']
+        },
+        {
+          subCategoryName: 'GIFT',
+          subcategory: ['Festive Hampers', 'Pink Teddy', 'Earrings']
+        }
+      ]
+    }
+  ];
+  
  const exampleIcons = [
    { label: 'Cart', icon: 'images/cart.svg' },
     { label: 'Profile', icon: 'images/profile.svg' }
@@ -20,7 +130,7 @@ jest.mock('next/navigation', () => ({
         default: 'images/logo.svg',
         white: 'images/logo_white.svg'
        };
-describe("TypographyBlock Component", () => {
+describe("Header Component", () => {
   it("renders correctly with default props", () => {
     render(<Header logoImages={logoImages} categories={exampleCategories} headerIcons={exampleIcons} headerWhiteIcons={exampleWhiteIcons}/>);
   });

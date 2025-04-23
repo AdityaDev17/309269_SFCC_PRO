@@ -1,8 +1,8 @@
 'use client'
-import Input from "@/components/atomic/input/input";
+import Input from "@/components/atomic/Input/Input";
 import styles from "./Login.module.css";
-import Checkbox from "@/components/atomic/Checkbox/Checkbox";
-import { Button } from "@/components/atomic/button/button";
+import Checkbox from "@/components/atomic/Checkbox/checkbox";
+import { Button } from "@/components/atomic/Button/Button";
 import { useState } from "react";
 
 const Login = ({ onLoginClicked, onCreateAccount }: any) => {
@@ -92,13 +92,13 @@ const Login = ({ onLoginClicked, onCreateAccount }: any) => {
 export default Login;
 
 /**
- * # Login Component
+ * ## Login
  *
- * The `Login` component is a user authentication form that captures email and password input
+ * The Login component is a user authentication form that captures email and password input
  * and optionally includes a "Remember Me" checkbox. It includes primary and secondary action buttons
  * for login and account creation.
  *
- * ## Props
+ * ### Props
  *
  * - **onLoginClicked** `(function)`: A callback function triggered when the "LOGIN" button is clicked.
  *   Receives the entered email and password as an object:
@@ -109,7 +109,7 @@ export default Login;
  *   }) => void
  *   ```
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - Renders an email/password login form using controlled inputs.
  * - The **"LOGIN"** button is disabled until both email and password fields are filled.
@@ -117,16 +117,16 @@ export default Login;
  * - Displays a **"Forgot Password?"** link for password recovery (non-functional placeholder).
  * - Provides a **"CREATE ACCOUNT"** button for users who are not yet registered (non-functional placeholder).
  *
- * ## Internal State
+ * ### Internal State
  *
  * - `formData`: Object containing `email` and `password`, updated in real-time as the user types.
  *
- * ## Styling
+ * ### Styling
  *
  * - Layout and design are handled via CSS modules (`Login.module.css`).
  * - Button and input styling can be overridden with inline styles as needed.
  *
- * ## Usage Example
+ * ### Usage Example
  *
  * ```tsx
  * import Login from "@/components/molecules/Login/Login";

@@ -4,3 +4,11 @@ global.ResizeObserver = class {
     unobserve() {}
     disconnect() {}
   };
+
+global.matchMedia = global.matchMedia || function() {
+  return {
+    matches: false,
+    addListener: jest.fn(),
+    removeListener: jest.fn(),
+  };
+};

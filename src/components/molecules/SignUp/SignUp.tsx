@@ -1,8 +1,8 @@
 "use client";
-import Input from "@/components/atomic/input/input";
+import Input from "../../atomic/Input/Input";
 import styles from "./SignUp.module.css";
-import Checkbox from "@/components/atomic/Checkbox/Checkbox";
-import { Button } from "@/components/atomic/button/button";
+import Checkbox from "@/components/atomic/Checkbox/checkbox";
+import { Button } from "@/components/atomic/Button/Button";
 import {
   Select,
   SelectContent,
@@ -245,13 +245,13 @@ const SignUp = ({ onProceed }: any) => {
 export default SignUp;
 
 /**
- * # SignUp Component
+ * ## SignUp 
  *
- * The `SignUp` component is a two-step registration form that collects user information
+ * The SignUp component is a two-step registration form that collects user information
  * and validates input before proceeding. It features a clean UI and is built using
  * atomic design components such as `Input`, `Select`, `Checkbox`, and `Button`.
  *
- * ## Props
+ * ### Props
  *
  * - **onProceed** `(function)`: A callback function invoked with the complete form data
  *   once the user submits the form.
@@ -269,7 +269,7 @@ export default SignUp;
  *   }) => void
  *   ```
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - Renders a two-step form:
  *   1. **Step 1**: Collects personal details like title, name, gender, birth date, and email.
@@ -283,12 +283,12 @@ export default SignUp;
  * - Form field values are controlled via component state.
  * - Styling is handled via CSS modules (`SignUp.module.css`) and inline overrides.
  *
- * ## Internal State
+ * ### Internal State
  *
  * - `formData`: Object containing all field values.
  * - `passwordScreen`: Boolean flag to switch between Step 1 and Step 2.
  *
- * ## Usage Example
+ * ### Usage Example
  *
  * ```tsx
  * import SignUp from "@/components/molecules/SignUp/SignUp";

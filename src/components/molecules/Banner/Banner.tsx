@@ -2,8 +2,8 @@
 
 import type React from "react"
 import styles from "./Banner.module.css"
-import Typography from "@/components/Typography/Typography"
-import { Button } from "@/components/atomic/button/button"
+import Typography from "../../atomic/Typography/Typography"
+import { Button } from "../../atomic/Button/Button"
 
 interface BannerProps {
   title: string
@@ -70,12 +70,12 @@ export default Banner
 
 
 /**
- * # Banner Component
+ * ## Banner
  * 
  * The `Banner` component is a customizable banner that displays a title, subtitle, description, 
  * and a button with a background image.
  * 
- * ## Props
+ * ### Props
  * 
  * - **title** (string): The main heading displayed on the banner.
  * - **buttonText** (string): The text displayed on the button.
@@ -90,7 +90,7 @@ export default Banner
  *   Defaults to `center-center`.
  * - **buttonLink** (string, optional): The URL to navigate to when the button is clicked.
  *
- * ## Component Behavior
+ * ### Component Behavior
  * 
  * - The banner adjusts its layout based on the `alignment` prop, determining horizontal 
  *   and vertical positioning of the text.

@@ -1,18 +1,17 @@
 .container {
-    width: 72px;
-    height: 48px;
+    width: 120px;
+    height: 36px;
     background-color: white;
-    border: 1px solid black;
-    display: grid;
-    place-items: center;
-    position: relative;
-  }
+    border: 1px solid #cccbce;
+    position: relative;  }
   
   .content {
-    display: grid;
-    grid-template-columns: auto auto auto;
+    display: flex;
     align-items: center;
-    column-gap: 8px;
+gap: 10px;
+    justify-content: space-between;
+    padding: 5px 10px;
+
   }
   
   .quantityText {
@@ -34,10 +33,10 @@
     position: absolute;
     top: 100%;
     left: 0;
-    width: 71px;
+    width: 119px;
     background-color: white;
     color: black;
-    border: 1px solid black;
+    border: 1px solid #cccbce;
     z-index: 10;
     overflow: hidden;
 }
@@ -63,8 +62,6 @@
   }
   
   .downArrowIcon {
-    width: 8px;
-    height: 4px;
     cursor: pointer;
   }
   

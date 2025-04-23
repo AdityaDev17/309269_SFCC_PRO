@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './GetTheLookBanner.module.css';
 import Typography from '../../atomic/Typography/Typography';

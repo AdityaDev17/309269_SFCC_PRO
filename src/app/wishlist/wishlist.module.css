@@ -1,0 +1,14 @@
+.container {
+    background-color: white;
+    padding: clamp(16px, 20vw, 20px) 40px ; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.filterConainer{
+    display: flex;
+    justify-content: space-between;
+}
+.clearFilter{
+    padding-right: 10px;
+}

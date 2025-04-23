@@ -10,11 +10,10 @@ const page = () => {
   const [isLogin, setIsLogin] = useState(true);
 
   const createAccountHandler = (formData: any) => {
-    console.log("🚀 ~ loginFormHandler ~ formData:", formData)
     setIsLogin(false);
   }
   return (
-    <div>
+    <div className={styles.container}>
       <Breadcrumb >
         <BreadcrumbList className={styles.navigation}>
           <BreadcrumbItem>

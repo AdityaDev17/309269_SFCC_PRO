@@ -1,8 +1,8 @@
 'use client'
 import Input from "@/components/atomic/Input/Input";
 import styles from "./Login.module.css";
-import Checkbox from "@/components/atomic/Checkbox/checkbox";
-import { Button } from "@/components/atomic/Button/Button";
+import Checkbox from "../../atomic/Checkbox/Checkbox";
+import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
 
 const Login = ({ onLoginClicked, onCreateAccount }: any) => {

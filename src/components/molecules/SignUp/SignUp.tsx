@@ -1,8 +1,8 @@
 "use client";
 import Input from "../../atomic/Input/Input";
 import styles from "./SignUp.module.css";
-import Checkbox from "@/components/atomic/Checkbox/checkbox";
-import { Button } from "@/components/atomic/Button/Button";
+import Checkbox from "../../atomic/Checkbox/Checkbox";
+import { Button } from "../../atomic/Button/Button";
 import {
   Select,
   SelectContent,

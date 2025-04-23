@@ -1,18 +1,22 @@
   .wrapper {
     width: 100%;
+    container-type: inline-size;
   }
   
   .bannerContainer {
     position: relative;
     width: 100%;
-  }
+  } 
   
-  .bannerImage {
+  
+   .bannerImage {
     width: 100%;
     height: auto;
     object-fit: contain;
     display: block; 
   }
+  
+  
   
   .textBox {
     position: absolute;
@@ -22,9 +26,11 @@
     color: white;
     padding: 20px;
     gap: 8px;
-    width: auto; 
-    max-width: 80%; 
+    max-width: 80%;
+     
   }
+
+  
   
   /* Horizontal alignment classes */
   .horizontal-left {
@@ -68,4 +74,39 @@
     margin-top: 16px;
   }
   
+  @container (max-width: 768px) {
+    .bannerContainer {
+      aspect-ratio: 4 / 5;
+      height: auto;
+      overflow: hidden;
+    }
+  
+    .bannerImage {
+      height: 100%;
+      object-fit: cover;
+    }
+  
+    .textBox {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 16px;
+      gap: 12px;
+      max-width: 90%;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+    }
+  }
+  
+  @container (max-width: 480px) {
+    .bannerContainer {
+      aspect-ratio: 1 / 1;
+    }
+  
+    .textBox {
+      padding: 12px;
+      gap: 10px;
+    }
+  }
   

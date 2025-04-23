@@ -130,22 +130,22 @@ const categories = [
 ];
 
 const headerIcons = [
-  { label: 'Search', icon: 'images/search.svg' },
-  { label: 'Whishlist', icon: 'images/whishlist.svg' },
-  { label: 'CartBag', icon: 'images/cartBag.svg' },
-  { label: 'Profile', icon: 'images/profile.svg' },
+  { label: 'Search', icon: '/images/search.svg' },
+  { label: 'Whishlist', icon: '/images/whishlist.svg' },
+  { label: 'CartBag', icon: '/images/cartBag.svg' },
+  { label: 'Profile', icon: '/images/profile.svg' },
 ];
 
 const headerWhiteIcons = [
-  { label: 'Search', icon: 'images/search-white.svg' },
-  { label: 'Whishlist', icon: 'images/whishlist-white.svg' },
-  { label: 'CartBag', icon: 'images/cartBag_white.svg' },
-  { label: 'Profile', icon: 'images/profile-white.svg' },
+  { label: 'Search', icon: '/images/search-white.svg' },
+  { label: 'Whishlist', icon: '/images/whishlist-white.svg' },
+  { label: 'CartBag', icon: '/images/cartBag_white.svg' },
+  { label: 'Profile', icon: '/images/profile-white.svg' },
 ];
 
   return <Header isHome={isHome} logoImages={{
-    default:  'images/Elenor.svg',
-    white: 'images/Elenor-white.svg'
+    default:  '/images/SFCCLogo.svg',
+    white: '/images/SFCCLogowhite.svg'
   }} categories={categories} headerIcons={headerIcons} headerWhiteIcons={headerWhiteIcons} />;
 };
 

@@ -1,0 +1,89 @@
+/* Page Styles */
+.layout {
+  padding: clamp(15px, 5vw, 40px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+.productCarouselSection {
+  display: grid;
+  grid-template-rows: 0.1fr 1fr;
+  gap: 20px;
+  text-align: center;
+  padding-top: 25px;
+}
+.bannerLayout {
+  padding-top: 25px;
+}
+/* Page Styles End */
+
+/* Component Styles */
+.componentLayout {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  container-type: inline-size;
+}
+.firstLayout {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    "Gallery ProductDetails"
+    "Accordion ProductDetails";
+  gap: 20px;
+  @container (max-width: 700px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "Gallery"
+      "ProductDetails"
+      "Accordion";
+    row-gap: 25px;
+  }
+}
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 26px;
+  padding-bottom: 21.5px;
+}
+.price {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 37px;
+  color: #3b3944;
+  padding-bottom: 21.5px;
+}
+.desc {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #4f4b53;
+  padding-bottom: 20px;
+}
+.button {
+  width: 100%;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
+.accordion {
+  width: 100%;
+  grid-area: Accordion;
+}
+.accordionContent {
+  text-align: justify;
+  max-width: 50vw;
+}
+.productDetails {
+  grid-area: ProductDetails;
+}
+.gallery {
+  grid-area: Gallery;
+}
+.buttonContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-bottom: 20px;
+}
+/* Component Styles End*/

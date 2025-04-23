@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import ProductCard from "../../molecules/ProductCard/ProductCard";
+import ProductCard from "@/components/molecules/ProductCard/ProductCard";
 import styles from "./ProductImageCarousel.module.css";
- 
+
 type Alignment = "center" | "alignStart" | "alignEnd";
 interface LayoutProps {
   productData: {
@@ -20,7 +20,6 @@ interface LayoutProps {
   moveToBag?: boolean;
   withPagination?:boolean
 }
- 
 const ProductImageCarousel = ({
   productData,
   cardsPerRow,
@@ -31,14 +30,12 @@ const ProductImageCarousel = ({
 }: LayoutProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const totalGroups = Math.ceil(productData.length / cardsPerRow);
- 
   const visibleItems = withPagination
     ? productData.slice(
         activeIndex * cardsPerRow,
         (activeIndex + 1) * cardsPerRow
       )
     : productData;
- 
   return (
     <>
     <div
@@ -61,7 +58,7 @@ const ProductImageCarousel = ({
         />
       ))}
     </div>
-    {withPagination &&<div className={styles.dotsContainer}>
+    {withPagination && productData?.length>4 &&<div className={styles.dotsContainer}>
         {Array.from({ length: totalGroups }).map((_, idx) => (
           <span
             key={idx}
@@ -73,9 +70,9 @@ const ProductImageCarousel = ({
     </>
   );
 };
- 
+
 export default ProductImageCarousel;
- 
+
 /**
  * ## ProductImageCarousel
  *

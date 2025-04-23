@@ -1,12 +1,12 @@
 import React from "react";
-import { Button } from "../../atomic/Button/Button";
+import { Button } from "@/components/atomic/Button/Button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-} from "../../atomic/Card/Card";
-import Typography from "../../atomic/Typography/Typography";
+} from "@/components/atomic/Card/Card";
+import Typography from "@/components/atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ interface ProductCardProps {
   alignment?: Alignment;
   width?: number | string;
   productImage: string;
-  productTitle: string;
+  productTitle?: string;
   productDesc?: string;
   price?: string;
   currency?: string;
@@ -57,7 +57,7 @@ const ProductCard = ({
             />
           )}
         </CardHeader>
-        <CardContent className={`${styles.cardContent} ${styles[alignment]}`}>
+        {productTitle &&<CardContent className={`${styles.cardContent} ${styles[alignment]}`}>
           <Typography
             type={"Headline"}
             variant={5}
@@ -89,7 +89,7 @@ const ProductCard = ({
               />
             </div>
           )}
-        </CardContent>
+        </CardContent>}
         <CardFooter className={styles.priceButtonRow}>
           {bagPrice && (
             <Typography

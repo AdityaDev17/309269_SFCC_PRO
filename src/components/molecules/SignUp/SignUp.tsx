@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/atomic/Select/Select";
+} from "../../atomic/Select/Select";
 import { useState } from "react";
 
 const SignUp = ({ onProceed }: any) => {

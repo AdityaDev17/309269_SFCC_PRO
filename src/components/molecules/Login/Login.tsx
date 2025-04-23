@@ -1,5 +1,5 @@
 'use client'
-import Input from "@/components/atomic/Input/Input";
+import Input from "../../atomic/Input/Input";
 import styles from "./Login.module.css";
 import Checkbox from "../../atomic/Checkbox/Checkbox";
 import { Button } from "../../atomic/Button/Button";

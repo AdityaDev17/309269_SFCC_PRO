@@ -1,0 +1,11 @@
+.layout{
+    height: 600px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.text{
+    padding: 5px 0;
+}

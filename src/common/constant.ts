@@ -148,7 +148,7 @@ export const homepageBanners: BannerData[] = [
     title: "BAG COLLECTION 2024 SNEAK PEEK",
     buttonText: "Invite Me",
     description: "Register for early access and special perks.",
-    backgroundImage: "/images/Luxury_black_bag_gold_chain_black_background.svg",
+    backgroundImage: "/images/productBanner.svg",
     alignment: "left-bottom",
     buttonLink: "",
   },

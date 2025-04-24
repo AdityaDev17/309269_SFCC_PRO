@@ -47,10 +47,23 @@ export const productDetails = {
     },
     {
       id: "feature",
-      value: "Made with high-quality ingredients and infused with nourishing oils,our gloss lipstick formula delivers hydration and a luscious finish",
+      value:
+        "Made with high-quality ingredients and infused with nourishing oils,our gloss lipstick formula delivers hydration and a luscious finish",
     },
   ],
 };
+
+export const colorData = [
+  { hex: "#8B0000", name: "Dark Red" },
+  { hex: "#FF0000", name: "Red" },
+  { hex: "#FF4040", name: "Coral Red" },
+  { hex: "#CD5C5C", name: "Indian Red" },
+];
+
+export const sizes = [
+  { value: "option1", title: "10 GM" },
+  { value: "option2", title: "20 GM" },
+];
 
 export const footerData = [
   {
@@ -134,10 +147,10 @@ export interface ProductCard {
   productImage: string;
   productTitle: string;
   productDesc: string;
-  productId:string;
+  productId: string;
 }
 
-export const homepageBanners: BannerData[] = [ 
+export const homepageBanners: BannerData[] = [
   {
     title: "SPRING COLLECTION 2024",
     buttonText: "View More",
@@ -160,22 +173,22 @@ export const homepageBanners: BannerData[] = [
     alignment: "center-bottom",
     buttonLink: "",
   },
- ];
-export const homepageProducts: ProductCard[] = [ 
+];
+export const homepageProducts: ProductCard[] = [
   {
-    productId:'1',
+    productId: "1",
     productImage: "images/product.svg",
     productTitle: "EXQUISITE COLLECTION",
     productDesc: "VIEW MORE",
   },
   {
-    productId:'2',
+    productId: "2",
     productImage: "images/Product_2.svg",
     productTitle: "ENCHANTING LOOK",
     productDesc: "VIEW MORE",
   },
   {
-    productId:'3',
+    productId: "3",
     productImage: "images/Product_3.svg",
     productTitle: "REVISIT YOUR CHOICES",
     productDesc: "VIEW MORE",
@@ -200,43 +213,48 @@ export const cartItems = [
     price: 50,
     currency: "$",
   },
-
 ];
 
 export const productData = [
-    {
-      productId:'893234',
-      productImage: "images/product.svg",
-      productTitle: "Product 1",
-         bagPrice: "200",
-      currency:'$'
-    },
-    {
-      productId:'2',
-      productImage: "/images/product.svg",
-      productTitle: "Product 2",
-       bagPrice: "200",
-      currency:'$'
-    },
-    {
-      productId:'3',
-      productImage: "/images/product.svg",
-      productTitle: "Product 3",
-      bagPrice: "200",
-      currency:'$',
-    },
-    {
-      productId:'4',
-      productImage: "/images/product.svg",
-      productTitle: "Product 4",
-      bagPrice: "200",
-      currency:'$',
-    },
-    {
-      productId:'4',
-      productImage: "/images/product.svg",
-      productTitle: "Product 4",
-      bagPrice: "200",
-      currency:'$',
-    },
-  ];
+  {
+    productId: "893234",
+    productImage: "images/product.svg",
+    productTitle: "Product 1",
+    bagPrice: "200",
+    currency: "$",
+  },
+  {
+    productId: "2",
+    productImage: "/images/product.svg",
+    productTitle: "Product 2",
+    bagPrice: "200",
+    currency: "$",
+  },
+  {
+    productId: "3",
+    productImage: "/images/product.svg",
+    productTitle: "Product 3",
+    bagPrice: "200",
+    currency: "$",
+  },
+  {
+    productId: "4",
+    productImage: "/images/product.svg",
+    productTitle: "Product 4",
+    bagPrice: "200",
+    currency: "$",
+  },
+  {
+    productId: "4",
+    productImage: "/images/product.svg",
+    productTitle: "Product 4",
+    bagPrice: "200",
+    currency: "$",
+  },
+];
+
+export const states = [
+  { label: "Maharashtra", value: "maharashtra" },
+  { label: "Delhi", value: "delhi" },
+  { label: "Karnataka", value: "karnataka" },
+];

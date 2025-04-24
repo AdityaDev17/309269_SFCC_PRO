@@ -1,0 +1,81 @@
+.AddressDialogContent {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    width: 720px;
+    height: 512px;
+    transform: translate(-50%, -50%);
+    border-radius: var(--radius);
+    background-color: #FAFAFA;
+    box-shadow: -1px -1px 6px hsl(var(--foreground) / 0.80);
+    overflow: hidden;
+}
+
+.AddressDialogHeader {
+    padding: 10px 20px;
+    height: 60px;
+    display: flex;
+    color: black;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+}
+
+.ScrollableContent {
+    padding: 0 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.MandatoryText {
+    font-size: 0.75rem;
+    color: gray;
+    margin-bottom: 1rem;
+}
+
+.Section {
+    border: none;
+    padding: 0;
+    color: black;
+    margin-bottom: 1rem;
+}
+
+.Section legend {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.TwoColumn {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+
+}
+
+.AddressDialogFooter {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 10px 20px;
+    height: 60px;
+    border-top: 1px solid #ccc;
+}
+
+.CheckboxRow {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: black;
+}
+
+.StreetRow {
+    margin-bottom: 16px;
+}
+
+.SelectOutline {
+    border: 1px solid #B3B2B5;
+}

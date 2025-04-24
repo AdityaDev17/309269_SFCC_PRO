@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import HeaderWrapper from "../components/organisms/Header/HeaderWrapper";
 import Footer from "../components/organisms/Footer/Footer";
+import { WebVitals } from "../web-vitals";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`} style={{width:'100vw'}}>
+      <WebVitals />
       <HeaderWrapper/>
         {children}
         <Footer/>

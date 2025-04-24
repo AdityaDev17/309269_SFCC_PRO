@@ -7,7 +7,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "../../components/atomic/Breadcrumbs/Breadcrumbs";
+} from "../../components/atomic/Breadcrumbs/BreadcrumbsWrapper";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import React from "react";

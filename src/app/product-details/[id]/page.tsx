@@ -4,7 +4,7 @@ import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/Pr
 import Banner from "@/components/molecules/Banner/Banner";
 import Typography from "@/components/atomic/Typography/Typography";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
-import { relatedProducts } from "@/common/constant";
+import { productData } from "@/common/constant";
 export default async function ProductDetailsPage({
   params,
 }: {
@@ -34,10 +34,9 @@ export default async function ProductDetailsPage({
         />
         <section>
           <ProductImageCarousel
-            productData={relatedProducts}
-            cardsPerRow={4}
-            width={295}
+            width={"100%"}
             withPagination={true}
+            productData={productData}
             alignment="alignStart"
           />
         </section>

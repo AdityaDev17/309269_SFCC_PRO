@@ -53,57 +53,6 @@ export const productDetails = {
   ],
 };
 
-export const relatedProducts = [
-  {
-    productImage: "/images/product.svg",
-    productTitle: "Product 1",
-    bagPrice: "200",
-    currency: "$",
-  },
-  {
-    productImage: "/images/product1.svg",
-    productTitle: "Product 1",
-    bagPrice: "200",
-    currency: "$",
-  },
-  {
-    productImage: "/images/product.svg",
-    productTitle: "Product 1",
-    bagPrice: "200",
-    currency: "$",
-  },
-  {
-    productImage: "/images/product3.svg",
-    productTitle: "Product 1",
-    bagPrice: "200",
-    currency: "$",
-  },
-  {
-    productImage: "/images/product1.svg",
-    productTitle: "Product 1",
-    bagPrice: "200",
-    currency: "$",
-  },
-  {
-    productImage: "/images/product2.svg",
-    productTitle: "Product 1",
-    bagPrice: "200",
-    currency: "$",
-  },
-  {
-    productImage: "/images/product1.svg",
-    productTitle: "Product 1",
-    bagPrice: "200",
-    currency: "$",
-  },
-  {
-    productImage: "/images/product2.svg",
-    productTitle: "Product 1",
-    bagPrice: "200",
-    currency: "$",
-  },
-];
-
 export const colorData = [
   { hex: "#8B0000", name: "Dark Red" },
   { hex: "#FF0000", name: "Red" },
@@ -270,7 +219,7 @@ export const cartItems = [
 export const productData = [
     {
       productId:'893234',
-      productImage: "images/product.svg",
+      productImage: "/images/product.svg",
       productTitle: "Product 1",
          bagPrice: "200",
       currency:'$'

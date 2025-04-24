@@ -1,4 +1,43 @@
 .container {
+  background-color: white;
+  padding: clamp(16px, 5vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 3vw, 24px);
+}
+
+/* Make container responsive */
+.filterConainer {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  container-type: inline-size; /* Enable container queries */
+}
+
+.buttonConainer {
+  display: flex;
+  width: auto;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  gap: 10px;
+}
+
+/* .clearFilter {
+  padding-right: 10px;
+} */
+
+/* Responsive adjustment: Stack vertically when container is narrow */
+
+/* @container (max-width: 500px) {
+  .clearFilter {
+    align-self: flex-end;
+    padding-right: 0;
+  }
+} */
+
+/* .container {
     background-color: white;
     padding: clamp(16px, 20vw, 20px) 40px ; 
     display: flex;
@@ -11,4 +50,4 @@
 }
 .clearFilter{
     padding-right: 10px;
-}
+} */

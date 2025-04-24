@@ -53,6 +53,18 @@ export const productDetails = {
   ],
 };
 
+export const colorData = [
+  { hex: "#8B0000", name: "Dark Red" },
+  { hex: "#FF0000", name: "Red" },
+  { hex: "#FF4040", name: "Coral Red" },
+  { hex: "#CD5C5C", name: "Indian Red" },
+];
+
+export const sizes = [
+  { value: "option1", title: "10 GM" },
+  { value: "option2", title: "20 GM" },
+];
+
 export const footerData = [
   {
     title: "SFCC",

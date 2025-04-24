@@ -1,0 +1,64 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.colorCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.circleBlack {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #4f4b53;
+  cursor: default;
+}
+
+.circleBlackW {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    cursor: default;
+  }
+
+.extraCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: white;
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ccc;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+
+.content {
+  background-color: #fff;
+  box-shadow:
+    0 2px 4px rgba(15, 19, 23, 0.1),
+    0 8px 24px rgba(15, 19, 23, 0.2);
+  padding: 15px;
+  white-space: nowrap;
+  border-radius: 5px;
+  position: fixed;
+  top:5px
+}
+
+.titleColor{
+    font-size: 12px;
+    font-weight: 400;
+    color: #3B3934;
+    padding-top: 8px;
+}

@@ -21,35 +21,6 @@
   flex: 1;
 }
 
-/* .redeemGrid {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
-  border: 1px solid #cccbce;
-  background-color: #fafafa;
-  max-width: 670px;
-}
-
-.redeemPoints {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex-grow: 1;
-  padding: 16px;
-}
-
-.input {
-  max-width: 432px;
-}
-
-.inputGrid {
-  display: flex;
-  gap: 10px;
-}
-.redeemImage {
-  display: flex;
-  align-items: flex-end;
-} */
 .carosel{
     display: flex;
     align-items: center;
@@ -96,6 +67,6 @@
   display: flex;
   align-items: flex-end;
   justify-content: flex-end;
-  min-width: 113px; /* Keep image from shrinking too much */
+  min-width: 113px; 
 }
 

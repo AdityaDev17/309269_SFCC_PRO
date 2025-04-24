@@ -29,6 +29,8 @@ interface MiniCartProps {
   onDeleteItem?: (itemId: string) => void;
   onUpdateQuantity?: (itemId: string, newQuantity: number) => void;
   onViewBag?: () => void;
+  triggerType?: "button" | "icon";
+  bagIcon?:string;
 }
 
 const MiniCart = ({
@@ -36,17 +38,29 @@ const MiniCart = ({
   onDeleteItem,
   onUpdateQuantity,
   onViewBag,
+  triggerType,
+  bagIcon
 }: MiniCartProps) => {
   return (
     <Drawer>
-      <DrawerTrigger asChild>
-        <Button variant="secondary" className={styles.cartButton}>
-          Add To Bag
-        </Button>
-      </DrawerTrigger>
+     <DrawerTrigger asChild>
+  {triggerType === "icon" && bagIcon ? (
+    <Image
+      src={bagIcon}
+      alt="Open Cart"
+      width={20}
+      height={20}
+      className={styles.bagIcon}
+    />
+  ) : (
+    <Button variant="secondary" className={styles.cartButton}>
+      Add To Bag
+    </Button>
+  )}
+</DrawerTrigger>
       <DrawerContent side="right">
         <DrawerHeader className={styles.bagHeader}>
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <div className={styles.bagWrapper}>
             <DrawerTitle>
               {" "}
               <Typography
@@ -68,7 +82,7 @@ const MiniCart = ({
           </div>
 
           <DrawerClose className={styles.close} asChild>
-            <Image src="images/expand.svg" alt="Close"  width={48} height={48}/>
+            <Image src="/images/expand.svg" alt="Close"  width={48} height={48}/>
           </DrawerClose>
         </DrawerHeader>
         {cartItems.length > 0 ? (
@@ -82,16 +96,10 @@ const MiniCart = ({
 
             <DrawerFooter>
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  paddingRight: "18px",
-                  paddingBottom: "20px",
-                }}
+               className={styles.footerWrapper}
               >
                 <div
-                  style={{ display: "flex", alignItems: "center", gap: "10px" }}
+           className={styles.bagWrapper}
                 >
                   <Typography
                     type={"Label"}
@@ -119,7 +127,7 @@ const MiniCart = ({
           </>
         ) : (
           <div className={styles.emptyMessage}>
-            <Image src="images/emptyBag.svg" alt=" Empty Bag" width={222} height={205} />
+            <Image src="/images/emptyBag.svg" alt=" Empty Bag" width={222} height={205} />
             <Typography
               type="Body"
               variant={2}

@@ -10,7 +10,9 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/atomic/Select/Select";
-import { productDetails } from "@/common/constant";
+import { cartItems, productDetails } from "../../../common/constant";
+import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
+
 
 export default function ProductDetails() {
   const params = useParams();
@@ -73,12 +75,10 @@ export default function ProductDetails() {
               </SelectContent>
             </Select>
           </div>
-          <Button
-            className={styles.button}
-            variant="secondary"
-          >
-            ADD TO BAG
-          </Button>
+          <MiniCart
+                cartItems={cartItems}
+                triggerType="button"
+              />
         </div>
       </div>
     </section>

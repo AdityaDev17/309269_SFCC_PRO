@@ -121,3 +121,122 @@ export const footerData = [
     ],
   },
 ];
+export interface BannerData {
+  title: string;
+  buttonText: string;
+  description?: string;
+  backgroundImage: string;
+  alignment: string;
+  buttonLink: string;
+}
+
+export interface ProductCard {
+  productImage: string;
+  productTitle: string;
+  productDesc: string;
+  productId:string;
+}
+
+export const homepageBanners: BannerData[] = [ 
+  {
+    title: "SPRING COLLECTION 2024",
+    buttonText: "View More",
+    backgroundImage: "/images/heroimageone.svg",
+    alignment: "center-bottom",
+    buttonLink: "",
+  },
+  {
+    title: "BAG COLLECTION 2024 SNEAK PEEK",
+    buttonText: "Invite Me",
+    description: "Register for early access and special perks.",
+    backgroundImage: "/images/productBanner.svg",
+    alignment: "left-bottom",
+    buttonLink: "",
+  },
+  {
+    title: "BEAUTY IS ETERNAL",
+    buttonText: "VIEW MORE",
+    backgroundImage: "/images/eternal-beauty.svg",
+    alignment: "center-bottom",
+    buttonLink: "",
+  },
+ ];
+export const homepageProducts: ProductCard[] = [ 
+  {
+    productId:'1',
+    productImage: "images/product.svg",
+    productTitle: "EXQUISITE COLLECTION",
+    productDesc: "VIEW MORE",
+  },
+  {
+    productId:'2',
+    productImage: "images/Product_2.svg",
+    productTitle: "ENCHANTING LOOK",
+    productDesc: "VIEW MORE",
+  },
+  {
+    productId:'3',
+    productImage: "images/Product_3.svg",
+    productTitle: "REVISIT YOUR CHOICES",
+    productDesc: "VIEW MORE",
+  },
+];
+
+export const cartItems = [
+  {
+    id: "1",
+    name: "ELENOR, MEN’S PERFUME 1, POUR HOMME - 100ML, 3.4",
+    description: "OZ",
+    quantity: 2,
+    price: 50,
+    currency: "$",
+  },
+
+  {
+    id: "2",
+    name: "ELENOR, MEN’S PERFUME 1, POUR HOMME - 100ML, 3.4",
+    description: "OZ",
+    quantity: 1,
+    price: 50,
+    currency: "$",
+  },
+
+];
+
+export const productData = [
+    {
+      productId:'893234',
+      productImage: "images/product.svg",
+      productTitle: "Product 1",
+         bagPrice: "200",
+      currency:'$'
+    },
+    {
+      productId:'2',
+      productImage: "/images/product.svg",
+      productTitle: "Product 2",
+       bagPrice: "200",
+      currency:'$'
+    },
+    {
+      productId:'3',
+      productImage: "/images/product.svg",
+      productTitle: "Product 3",
+      bagPrice: "200",
+      currency:'$',
+    },
+    {
+      productId:'4',
+      productImage: "/images/product.svg",
+      productTitle: "Product 4",
+      bagPrice: "200",
+      currency:'$',
+    },
+    {
+      productId:'4',
+      productImage: "/images/product.svg",
+      productTitle: "Product 4",
+      bagPrice: "200",
+      currency:'$',
+    },
+  ];

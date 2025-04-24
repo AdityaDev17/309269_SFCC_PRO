@@ -1,85 +1,28 @@
+'use client';
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import styles from "./cart.module.css";
-import {
-  Breadcrumb,
-  BreadcrumbList,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "../../components/atomic/Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "../../components/atomic/Typography/Typography";
 import CartItemList from "../../components/molecules/CartItemList/CartItemList";
 import OrderSummary from "../../components/organisms/OrderSummary/OrderSummary";
 import Input from "../../components/atomic/Input/Input";
 import { Button } from "../../components/atomic/Button/Button";
 import ProductImageCarousel from "../../components/organisms/ProductImageCarousel/ProductImageCarousel";
+import { cartItems, productData } from "../../common/constant";
 
-const cartItems = [
-  {
-    id: "1",
-    name: "ELENOR, MEN’S PERFUME 1, POUR HOMME - 100ML, 3.4",
-    description: "OZ",
-    quantity: 2,
-    price: 50,
-    currency: "$",
-  },
-
-  {
-    id: "2",
-    name: "ELENOR, MEN’S PERFUME 1, POUR HOMME - 100ML, 3.4",
-    description: "OZ",
-    quantity: 1,
-    price: 50,
-    currency: "$",
-  },
-
-];
-
-const productData = [
-    {
-      productImage: "/images/product.svg",
-      productTitle: "Product 1",
-         bagPrice: "200",
-      currency:'$'
-    },
-    {
-      productImage: "/images/product.svg",
-      productTitle: "Product 2",
-       bagPrice: "200",
-      currency:'$'
-    },
-    {
-      productImage: "/images/product.svg",
-      productTitle: "Product 3",
-      bagPrice: "200",
-      currency:'$',
-    },
-    {
-      productImage: "/images/product.svg",
-      productTitle: "Product 4",
-      bagPrice: "200",
-      currency:'$',
-    },
-   
-  ];
 const Cart = () => {
+  const router= useRouter();
   return (
     <div className={styles.container}>
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator>
-            <Image src="/slash.svg" alt="slash" width={6} height={18} />
-          </BreadcrumbSeparator>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/cart">Bag</BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+     <Breadcrumbs
+        breadcrumbItems={[
+          { label: "Home", href: "/" },
+          { label: "Bag", href: "/cart" },
+        ]}
+        breadcrumbSeparator="/slash.svg"
+      />
       <Typography
         type={"Label"}
         variant={3}
@@ -154,7 +97,7 @@ const Cart = () => {
         label="YOU MAY ALSO LIKE"
       />
       </div>
-      <ProductImageCarousel cardsPerRow={4} width={325} productData={productData} alignment="alignStart"   withPagination={true}/>
+      <ProductImageCarousel width={'100%'}   withPagination={true} productData={productData} alignment="alignStart"   onCardClick={(id) => router.push(`/productDetails/${id}`)}  />
     </div>
   );
 };

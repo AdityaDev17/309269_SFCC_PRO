@@ -8,6 +8,7 @@ import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/Pr
 const categoryList = ["Perfume", "Jewellery", "Brush Set"];
 const productData = [
   {
+    productId: "Product 1",
     productImage: "/images/product.svg",
     productTitle: "Product 1",
     bagPrice: "200",
@@ -15,42 +16,49 @@ const productData = [
     wishListed: true,
   },
   {
+    productId: "Product 2",
     productImage: "/images/product.svg",
     productTitle: "Product 2",
     bagPrice: "200",
     currency: "$",
   },
   {
+    productId: "Product 3",
     productImage: "/images/product.svg",
     productTitle: "Product 3",
     bagPrice: "200",
     currency: "$",
   },
   {
+    productId: "Product 4",
     productImage: "/images/product.svg",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",
   },
   {
+    productId: "Product 5",
     productImage: "/images/product.svg",
     productTitle: "Product 5",
     bagPrice: "200",
     currency: "$",
   },
   {
+    productId: "Product 6",
     productImage: "/images/product.svg",
     productTitle: "Product 6",
     bagPrice: "200",
     currency: "$",
   },
   {
+    productId: "Product 7",
     productImage: "/images/product.svg",
     productTitle: "Product 7",
     bagPrice: "200",
     currency: "$",
   },
   {
+    productId: "Product 8",
     productImage: "/images/product.svg",
     productTitle: "Product 8",
     bagPrice: "200",

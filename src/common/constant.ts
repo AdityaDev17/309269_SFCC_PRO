@@ -47,10 +47,23 @@ export const productDetails = {
     },
     {
       id: "feature",
-      value: "Made with high-quality ingredients and infused with nourishing oils,our gloss lipstick formula delivers hydration and a luscious finish",
+      value:
+        "Made with high-quality ingredients and infused with nourishing oils,our gloss lipstick formula delivers hydration and a luscious finish",
     },
   ],
 };
+
+export const colorData = [
+  { hex: "#8B0000", name: "Dark Red" },
+  { hex: "#FF0000", name: "Red" },
+  { hex: "#FF4040", name: "Coral Red" },
+  { hex: "#CD5C5C", name: "Indian Red" },
+];
+
+export const sizes = [
+  { value: "option1", title: "10 GM" },
+  { value: "option2", title: "20 GM" },
+];
 
 export const footerData = [
   {
@@ -136,7 +149,7 @@ export interface ProductCard {
   productDesc: string;
 }
 
-export const homepageBanners: BannerData[] = [ 
+export const homepageBanners: BannerData[] = [
   {
     title: "SPRING COLLECTION 2024",
     buttonText: "View More",
@@ -159,8 +172,8 @@ export const homepageBanners: BannerData[] = [
     alignment: "center-bottom",
     buttonLink: "",
   },
- ];
-export const homepageProducts: ProductCard[] = [ 
+];
+export const homepageProducts: ProductCard[] = [
   {
     productImage: "images/product.svg",
     productTitle: "EXQUISITE COLLECTION",

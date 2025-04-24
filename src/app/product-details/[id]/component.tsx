@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/atomic/Select/Select";
-import { productDetails } from "@/common/constant";
+import { productDetails, colorData, sizes } from "@/common/constant";
 import VarientSelector from "@/components/molecules/VarientSelector/VarientSelector";
 
 export default function ProductDetails() {
@@ -27,13 +27,6 @@ export default function ProductDetails() {
     title: item?.id.toUpperCase(),
     desc: item?.value,
   }));
-
-  const colorData = [
-    { hex: "#8B0000", name: "Dark Red" },
-    { hex: "#FF0000", name: "Red" },
-    { hex: "#FF4040", name: "Coral Red" },
-    { hex: "#CD5C5C", name: "Indian Red" },
-  ];
 
   const handleSelected = (selected: any) => {
     console.log("Selectedvarient", selected);
@@ -76,15 +69,14 @@ export default function ProductDetails() {
                   lineHeight: "16px",
                 }}
               >
-                SIZE : 10 GM
+                SIZE
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="option1" data-testid="select-item-1">
-                  Option 1
-                </SelectItem>
-                <SelectItem value="option2" data-testid="select-item-2">
-                  Option 2
-                </SelectItem>
+                {sizes?.map((item: any) => {
+                  return (
+                    <SelectItem value={item?.value}>{item?.title}</SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>

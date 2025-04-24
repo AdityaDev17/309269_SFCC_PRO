@@ -1,6 +1,6 @@
 "use client";
 
-import Input from "@/components/atomic/input/input";
+import Input from "../../atomic/Input/Input";
 import {
   Dialog,
   DialogTrigger,
@@ -17,12 +17,13 @@ import {
   SelectContent,
   SelectItem,
   SelectValue,
-} from "@/components/atomic/select/select";
+} from "../../atomic/Select/Select";
 import styles from "./AddressModal.module.css";
-import { Button } from "@/components/atomic/button/button";
+import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
-import Checkbox from "@/components/atomic/checkbox/checkbox";
+import CheckBox from "../../atomic/CheckBox/CheckBox";
 import clsx, { ClassValue } from "clsx";
+import { states } from "../../../common/constant";
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
 export function AddressDialog() {
@@ -46,9 +47,9 @@ export function AddressDialog() {
 
         {/* Scrollable Content */}
         <DialogDescription className={styles.ScrollableContent}>
-          <p className={styles.MandatoryText}>
+          <div className={styles.MandatoryText}>
             Fields with <span>*</span> sign are mandatory
-          </p>
+          </div>
 
           <fieldset className={styles.Section}>
             <legend>Contact Details:</legend>
@@ -60,7 +61,7 @@ export function AddressDialog() {
               placeholder="Phone No.*"
               name="phone"
               type="tel"
-              style={{ width: "332px" }}
+              className={styles.PhoneInput}
             />
           </fieldset>
 
@@ -88,9 +89,11 @@ export function AddressDialog() {
                     <SelectValue placeholder="State*" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="maharashtra">Maharashtra</SelectItem>
-                    <SelectItem value="delhi">Delhi</SelectItem>
-                    <SelectItem value="karnataka">Karnataka</SelectItem>
+                    {states.map((state) => (
+                      <SelectItem key={state.value} value={state.value}>
+                        {state.label}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
@@ -192,6 +195,11 @@ export function AddressDialog() {
  *   - `.DialogFooter` – Fixed footer styling.
  *   - `.CheckboxRow` – Layout for checkbox and label.
  *   - `.ScrollableContent` – Scrollable inner section.
+ *
+ * ---
+ *
+ * ## Props:
+ * This component does **not** currently accept props. All configuration is internal.
  *
  * ---
  *

@@ -121,3 +121,59 @@ export const footerData = [
     ],
   },
 ];
+export interface BannerData {
+  title: string;
+  buttonText: string;
+  description?: string;
+  backgroundImage: string;
+  alignment: string;
+  buttonLink: string;
+}
+
+export interface ProductCard {
+  productImage: string;
+  productTitle: string;
+  productDesc: string;
+}
+
+export const homepageBanners: BannerData[] = [ 
+  {
+    title: "SPRING COLLECTION 2024",
+    buttonText: "View More",
+    backgroundImage: "/images/heroimageone.svg",
+    alignment: "center-bottom",
+    buttonLink: "",
+  },
+  {
+    title: "BAG COLLECTION 2024 SNEAK PEEK",
+    buttonText: "Invite Me",
+    description: "Register for early access and special perks.",
+    backgroundImage: "/images/productBanner.svg",
+    alignment: "left-bottom",
+    buttonLink: "",
+  },
+  {
+    title: "BEAUTY IS ETERNAL",
+    buttonText: "VIEW MORE",
+    backgroundImage: "/images/eternal-beauty.svg",
+    alignment: "center-bottom",
+    buttonLink: "",
+  },
+ ];
+export const homepageProducts: ProductCard[] = [ 
+  {
+    productImage: "images/product.svg",
+    productTitle: "EXQUISITE COLLECTION",
+    productDesc: "VIEW MORE",
+  },
+  {
+    productImage: "images/Product_2.svg",
+    productTitle: "ENCHANTING LOOK",
+    productDesc: "VIEW MORE",
+  },
+  {
+    productImage: "images/Product_3.svg",
+    productTitle: "REVISIT YOUR CHOICES",
+    productDesc: "VIEW MORE",
+  },
+];

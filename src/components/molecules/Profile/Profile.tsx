@@ -1,3 +1,4 @@
+"use client"
 import {
   Select,
   SelectContent,
@@ -160,29 +161,31 @@ const Profile = ({ userDetails, onUpdateClicked }: any) => {
           border: "None",
           backgroundColor: "#000",
           fontSize: "12px",
+          width: "85%",
         }}
         onClick={() => onUpdateClicked(initialUserData)}
       >
         UPDATE
       </Button>
+      {/* </div> */}
     </div>
   );
 };
 export default Profile;
 
 /**
- * # Profile Component
+ * ## Profile
  *
  * The `Profile` component is a controlled form used to display and update a user's profile details,
  * including name, title, birth date, gender, and email.
  *
- * ## Props
+ * ### Props
  *
  * - **userDetails** (object): The initial user data used to populate the form fields.
  * - **onUpdateClicked** (function): Callback function triggered when the "UPDATE" button is clicked.
  *   Receives the updated user data as its argument.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - The component maintains internal state (`initialUserData`) to track any modifications made to the form.
  * - The "UPDATE" button is disabled unless there are changes made compared to the original `userDetails`.

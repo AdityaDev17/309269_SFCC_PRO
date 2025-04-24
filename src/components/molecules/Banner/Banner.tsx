@@ -7,7 +7,7 @@ import { Button } from "../../atomic/Button/Button"
 
 interface BannerProps {
   title: string
-  buttonText: string
+  buttonText?: string
   subtitle?: string
   description?: string
   backgroundImage?: string
@@ -22,6 +22,8 @@ interface BannerProps {
     | "right-center"
     | "right-bottom"
   buttonLink?: string
+  textColor?: string
+  subtitleVariant?: number
 }
 
 const Banner: React.FC<BannerProps> = ({
@@ -32,6 +34,8 @@ const Banner: React.FC<BannerProps> = ({
   backgroundImage,
   alignment = "center-center",
   buttonLink = "#",
+  textColor = "white",
+  subtitleVariant,
 }) => {
   // Split the alignment into horizontal and vertical components
   const [horizontal, vertical] = alignment.split("-")
@@ -46,17 +50,19 @@ const Banner: React.FC<BannerProps> = ({
           <img src={backgroundImage || "/placeholder.svg"} alt="Banner" className={styles.bannerImage} />
         )}
         <div className={`${styles.textBox} ${alignmentClass}`}>
-          <Typography type="Headline" variant={2} fontWeight="medium" label={title} color="white" />
+          <Typography type="Headline" variant={2} fontWeight="medium" label={title} color={textColor} />
 
-          {subtitle && <Typography type="Headline" variant={2} fontWeight="medium" label={subtitle} color="white" />}
+          {subtitle && <Typography type="Headline" variant={subtitleVariant ?? 2} fontWeight="medium" label={subtitle} color={textColor}/>}
 
-          {description && <Typography type="Body" variant={3} label={description} color="white" />}
-
+          {description && <Typography type="Body" variant={3} label={description} color={textColor} />}
+          
+          {buttonText && (
           <div className={styles.buttonContainer}>
             <Button size="sm" onClick={() => (window.location.href = buttonLink)}>
               {buttonText}
             </Button>
           </div>
+          )}
         </div>
       </section>
     </div>

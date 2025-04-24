@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef, useState } from "react";
 import styles from "./ProductCardBanner.module.css";
 import ProductCard from "../../molecules/ProductCard/ProductCard";

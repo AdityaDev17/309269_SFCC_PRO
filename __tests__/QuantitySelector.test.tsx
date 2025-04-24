@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import QuantitySelector from '@/components/atomic/QuantitySelector/QuantitySelector';
+import QuantitySelector from '../src/components/atomic/QuantitySelector/QuantitySelector';
 
 
 const mockOnQuantityChange = jest.fn();

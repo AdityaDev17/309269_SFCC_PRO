@@ -1,0 +1,72 @@
+.container {
+  padding: clamp(16px, 20vw, 20px) 40px ; 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cartPageWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+.items {
+  padding-bottom: 20px;
+}
+.cartItemsSection {
+  flex: 2;
+}
+
+.orderSummarySection {
+  flex: 1;
+}
+
+.carosel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+.redeemGrid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  border: 1px solid #cccbce;
+  background-color: #fafafa;
+  padding: 16px;
+ max-width: 660px;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
+  overflow-x: auto;   
+}
+
+.redeemPoints {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.inputGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.input {
+  flex: 1 1 200px;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.redeemImage {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  min-width: 113px; 
+}
+

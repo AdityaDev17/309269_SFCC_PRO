@@ -1,0 +1,170 @@
+.header {
+    height: 58px;
+    gap: 10px;
+  
+    background: #FFFFFF;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10);
+}
+.homeHeader {
+    background: #00000033;
+    /* padding:20px clamp(20px, 5vw,40px); */
+}
+
+
+.layout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+    width: 100%;
+    padding:clamp(10px, 5vw,20px) clamp(20px, 5vw,40px);
+}
+
+.categories {
+    display: flex;
+    flex-direction: row;
+    gap: 34px; 
+    align-items: center;
+}
+
+.category {
+    position: relative;
+    font-size: 14px;
+    color: #3B3944;
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  .category:hover,
+  .category.active {
+    color: #4F4B53;
+  }
+  
+  .category:hover::after,
+  .category.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 100%;
+    height: 3px;
+    background-color: #4F4B53;
+    transition: width 0.3s ease;
+  }
+  .whiteCategories .category {
+    color: white;
+}
+
+.drawerCategoryList {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.drawerCategory {
+  padding: 12px 0;
+  font-size: 16px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+  color: #3b3944;
+}
+.menuheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.close {
+  cursor: pointer;
+}
+
+.categoryList {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.categoryItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+.categoryItem:hover {
+  color: #555;
+}
+
+
+/* Category section */
+.overlayContainer {
+  background-color: white;
+  width: 100%;
+  height: 357px;
+  padding: 20px 40px;
+  display: flex;
+  gap: 20px;
+  z-index: 10;
+}
+
+/* Image Container */
+.imageContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.oneSecondaryImage img {
+  width: 325px;
+  height: 317px;
+}
+
+.twoSecondaryImage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.twoSecondaryImage img {
+  object-fit: cover;
+}
+
+/* Category Container */
+.categoryContainer {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.subcategoryContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
+  max-width: 210px;
+}
+
+.subcategory:hover {
+  cursor: pointer;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+}
+.pointer{
+  cursor: pointer;
+}

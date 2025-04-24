@@ -1,110 +1,149 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { ChevronRight, MoreHorizontal } from "lucide-react"
-
-import styles from './Breadcrumbs.module.css'
-
-const Breadcrumb = React.forwardRef<
-  HTMLElement,
-  React.ComponentPropsWithoutRef<"nav"> & {
-    separator?: React.ReactNode
-  }
->(({ ...props }, ref) => <nav ref={ref} aria-label="breadcrumb" {...props} />)
-Breadcrumb.displayName = "Breadcrumb"
-
-const BreadcrumbList = React.forwardRef<
-  HTMLOListElement,
-  React.ComponentPropsWithoutRef<"ol">
->(({ ...props }, ref) => (
-  <ol
-    ref={ref}
-    className={styles.BreadcrumbList}
-    {...props}
-  />
-))
-BreadcrumbList.displayName = "BreadcrumbList"
-
-const BreadcrumbItem = React.forwardRef<
-  HTMLLIElement,
-  React.ComponentPropsWithoutRef<"li">
->(({ ...props }, ref) => (
-  <li
-    ref={ref}
-    className={styles.BreadcrumbItem}
-    {...props}
-  />
-))
-BreadcrumbItem.displayName = "BreadcrumbItem"
-
-const BreadcrumbLink = React.forwardRef<
-  HTMLAnchorElement,
-  React.ComponentPropsWithoutRef<"a"> & {
-    asChild?: boolean
-  }
->(({ asChild, ...props }, ref) => {
-  const Comp = asChild ? Slot : "a"
-
-  return (
-    <Comp
-      ref={ref}
-      className={styles.BreadcrumbLink}
-      {...props}
-    />
-  )
-})
-BreadcrumbLink.displayName = "BreadcrumbLink"
-
-const BreadcrumbPage = React.forwardRef<
-  HTMLSpanElement,
-  React.ComponentPropsWithoutRef<"span">
->(({ ...props }, ref) => (
-  <span
-    ref={ref}
-    role="link"
-    aria-disabled="true"
-    aria-current="page"
-    className={styles.BreadcrumbPage}
-    {...props}
-  />
-))
-BreadcrumbPage.displayName = "BreadcrumbPage"
-
-const BreadcrumbSeparator = ({
-  children,
-  ...props
-}: React.ComponentProps<"li">) => (
-  <li
-    role="presentation"
-    aria-hidden="true"
-    className={styles.BreadcrumbSeparator}
-    {...props}
-  >
-    {children ?? <ChevronRight />}
-  </li>
-)
-BreadcrumbSeparator.displayName = "BreadcrumbSeparator"
-
-const BreadcrumbEllipsis = ({
-  ...props
-}: React.ComponentProps<"span">) => (
-  <span
-    role="presentation"
-    aria-hidden="true"
-    className={styles.BreadcrumbEllipsis}
-    {...props}
-  >
-    <MoreHorizontal style={{ height: '1rem', width: '1rem' }} />
-    <span className="sr-only">More</span>
-  </span>
-)
-BreadcrumbEllipsis.displayName = "BreadcrumbElipssis"
-
-export {
+import React from "react"
+import Image from "next/image"
+import {
   Breadcrumb,
   BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbPage,
   BreadcrumbSeparator,
-  BreadcrumbEllipsis,
+  BreadcrumbPage,
+} from "./BreadcrumbsWrapper"
+
+interface BreadcrumbItemType {
+  label: string
+  href?: string
 }
+
+interface BreadcrumbWrapperProps {
+  breadcrumbItems: BreadcrumbItemType[]
+  breadcrumbSeparator?: string // only image link now
+}
+
+const Breadcrumbs: React.FC<BreadcrumbWrapperProps> = ({
+  breadcrumbItems,
+  breadcrumbSeparator = "/slash.svg", // default image path
+}) => {
+  const lastIndex = breadcrumbItems.length - 1
+
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        {breadcrumbItems.map((item, index) => (
+          <React.Fragment key={index}>
+            <BreadcrumbItem>
+              {index === lastIndex || !item.href ? (
+                <BreadcrumbPage>{item.label}</BreadcrumbPage>
+              ) : (
+                <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+              )}
+            </BreadcrumbItem>
+            {index < lastIndex && (
+              <BreadcrumbSeparator>
+                <Image
+                  src={breadcrumbSeparator}
+                  alt="separator"
+                  width={6}
+                  height={18}
+                />
+              </BreadcrumbSeparator>
+            )}
+          </React.Fragment>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
+  )
+}
+
+export default Breadcrumbs
+
+/**
+ * # Breadcrumb Components
+ *
+ * A collection of accessible and composable breadcrumb navigation components used to indicate 
+ * the current page’s location within a navigational hierarchy.
+ *
+ * 
+ *
+ * ### Breadcrumb
+ * The root wrapper component that renders a `<nav>` element with `aria-label="breadcrumb"`.
+ * 
+ * **Props:**
+ * - Accepts all standard props for `<nav>`.
+ * - Optional `separator` prop for custom implementations (not used directly in the base component).
+ *
+ *
+ * ### BreadcrumbList
+ * Renders the breadcrumb items inside an `<ol>` list.
+ *
+ * **Props:**
+ * - Accepts all standard props for `<ol>`.
+ * - Applies default breadcrumb list styling via `Breadcrumbs.module.css`.
+ *
+ *
+ * ### BreadcrumbItem
+ * Represents an individual breadcrumb item (`<li>`).
+ *
+ * **Props:**
+ * - Accepts all standard props for `<li>`.
+ * - Styled through `Breadcrumbs.module.css`.
+ *
+ *
+ * ### BreadcrumbLink
+ * A link component for a breadcrumb item.
+ *
+ * **Props:**
+ * - Accepts all standard props for `<a>`.
+ * - **asChild** (boolean, optional): If true, uses Radix UI's `Slot` to render the passed child component.
+ * - Applies consistent breadcrumb link styles.
+ *
+ *
+ * ### BreadcrumbPage
+ * Used to indicate the current page in the breadcrumb trail.
+ *
+ * **Props:**
+ * - Accepts all standard props for `<span>`.
+ *
+ *
+ * ### BreadcrumbSeparator
+ * Used between breadcrumb items to visually separate them.
+ *
+ * **Props:**
+ * - Accepts all standard props for `<li>`.
+ * - Defaults to a right-chevron icon (`<ChevronRight />`) if no children are passed.
+ * - `aria-hidden` is applied for accessibility.
+ *
+ *
+ * ### BreadcrumbEllipsis
+ * Renders an ellipsis icon (three dots) when breadcrumb items are truncated.
+ *
+ * **Props:**
+ * - Accepts all standard props for `<span>`.
+ * - Includes screen reader support for accessibility.
+ *
+ * ## Wrapper Concept
+ *
+ * The **BreadcrumbWrapper** (`Breadcrumbs` component) serves as the main container and logic controller for rendering 
+ * the breadcrumb navigation. It accepts the `breadcrumbItems` array that consists of `label` and optional `href` values 
+ * for each breadcrumb item. The `breadcrumbSeparator` prop allows customization of the separator used between breadcrumb items, 
+ * defaulting to a path to an image (`/slash.svg`). This makes the `Breadcrumbs` component flexible and reusable in various 
+ * contexts while maintaining consistent structure and behavior for accessibility.
+ *
+ * The wrapper processes the list of items, dynamically rendering the appropriate breadcrumb item (link or page) 
+ * and separator between them. It uses the helper components (`Breadcrumb`, `BreadcrumbList`, `BreadcrumbItem`, 
+ * `BreadcrumbLink`, `BreadcrumbPage`, and `BreadcrumbSeparator`) for composing the overall structure, ensuring 
+ * separation of concerns and maintainability.
+ *
+ * ## Example Usage
+ *
+ * ```tsx
+ * <Breadcrumbs breadcrumbItems={[
+ *   { label: "Home", href: "/" },
+ *   { label: "Products", href: "/products" },
+ *   { label: "Headphones" }
+ * ]} />
+ * ```
+ * This example renders a breadcrumb navigation for a path like:
+ * Home → Products → Headphones (with "Headphones" being the current page).
+ *
+ */
+

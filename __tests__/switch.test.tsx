@@ -1,6 +1,8 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Switch from "@/components/atomic/switch/switch";
+import Switch from "../src/components/atomic/Switch/Switch";
+
+
 
 
 describe("Switch Component", () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from "@testing-library/react";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/atomic/Card/Card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../src/components/atomic/Card/Card';
 
 describe("Card component", () => {
   it("should render Card with default className", () => {

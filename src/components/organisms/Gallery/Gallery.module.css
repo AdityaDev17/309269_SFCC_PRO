@@ -1,0 +1,66 @@
+.layoutGallery {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+}
+
+.thumbnails {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.thumbnailWrapper {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.thumbnailWrapper:hover {
+  transform: scale(1.05);
+}
+
+.selected {
+  border: 1px solid black;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Existing styles remain */
+
+.mobileGallery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.dotsContainer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.activeDot {
+  background-color: #000;
+}

@@ -1,0 +1,43 @@
+.cartButton{
+    width: 398px;
+    height: 36px;
+}
+.bagHeader{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding:5px 20px;
+    border-bottom: 1px solid #cccbce;
+}
+.bagWrapper{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.bagIcon {
+    cursor: pointer;
+  }
+  
+.viewbag{
+    width: 555px;
+    height: 37px;
+    border: 1px solid #cccbce ;
+}
+.emptyMessage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%; 
+    text-align: center;
+    padding: 40px;
+    justify-content: center;
+    gap: 20px;
+}
+.footerWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 18px;
+    padding-bottom: 20px;
+
+}

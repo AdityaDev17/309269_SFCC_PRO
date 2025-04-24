@@ -1,0 +1,45 @@
+/* .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+  }
+  
+  
+  
+  .tilesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+   */
+
+   .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 5vw, 40px);
+    padding: clamp(16px, 5vw, 32px);
+    container-type: inline-size;
+    container-name: my-account;
+  }
+  
+  .tilesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(16px, 5vw, 20px);
+  }
+  
+  @container my-account (max-width: 600px) {
+    .tilesGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: #f7f7f7;
+    border-radius: 12px;
+    color: #1D1823;
+  }

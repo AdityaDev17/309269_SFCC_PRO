@@ -1,0 +1,90 @@
+.bagContent {
+  background-color: #FAFAFA;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-bottom: 1px solid #cccbce;
+  overflow-y: auto;
+}
+
+.whiteBackground {
+  background-color: #FFFFFF;
+  border-bottom: none;
+  padding: 0px;
+}
+
+.cartItem {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.productImageWrapper {
+  border: 1px solid #cccbce;
+}
+
+.productImage {
+  width: clamp(85px, 20vw, 140px);
+  height: clamp(85px, 20vw, 140px);
+}
+
+.quantity {
+  padding-top: 5px;
+}
+
+.orderPrice {
+  padding-top: 8px;
+}
+
+.wishlistBtn {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.miniCartControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.miniCartLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.deleteIcon {
+  cursor: pointer;
+}
+
+.fullCartControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-content: center;
+}
+
+.fullCartLeft {
+  display: flex;
+  gap: 10px;
+}
+.mobileCartLeft {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.deleteWrapper {
+  display: flex;
+  align-items: center;
+}

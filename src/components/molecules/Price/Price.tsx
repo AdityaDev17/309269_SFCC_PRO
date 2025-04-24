@@ -32,20 +32,42 @@ const Price = ({ price, priceAfterDiscount, currency }: PriceProps) => {
 export default Price;
 
 /**
- * ## Price Component
+ * ## Price 
  *
- * The `Price` component is used to display the original price and the discounted price (if applicable) 
- * of a product or item. It visually distinguishes the original price by crossing it out (using the 
- * `line-through` text decoration) and displays the discounted price in a bold font.
+ * The `Price` component is used to display the original price and the discounted price of a product. It shows the original price with a strikethrough and the discounted price in bold.
  *
- * ### Props:
- * - **`price` (number)**: The original price of the item or product before any discounts.
- * - **`priceAfterDiscount` (number)**: The price of the item after applying a discount.
- * - **`currency` (string)**: The currency symbol or code that will be used to prefix both the original price and the discounted price (e.g., `$`, `€`, `£`).
- * 
- * ### Component Behavior:
- * - The original price is displayed with a **strikethrough** (`line-through` text decoration) to indicate that it is the former price.
- * - The discounted price is displayed next to the original price in a bold style to emphasize the new price.
- * 
+ * ### Props
+ *
+ * - **price** (`number`): The original price of the product.
+ * - **priceAfterDiscount** (`number`): The price of the product after applying any discounts.
+ * - **currency** (`string`): The currency symbol or code (e.g., "$", "€") used to display the price.
+ *
+ * ### Component Behavior
+ *
+ * - The original price is displayed with a strikethrough effect to indicate that it is no longer applicable.
+ * - The discounted price is displayed prominently in bold to highlight the new price.
+ * - Both the original price and the discounted price are prefixed with the currency symbol provided by the `currency` prop.
+ *
+ * ### Example Usage
+ *
+ * Here's a simple example of how to use the `Price` component:
+ *
+ * ```tsx
+ *       <Price 
+ *         price={100} 
+ *         priceAfterDiscount={80} 
+ *         currency="$" 
+ *       />
+ *    
+ * ```
+ *
+ * In this example:
+ * - The original price is `$100` (with a strikethrough).
+ * - The discounted price is `$80` (displayed in bold).
+ *
+ * ### Dynamic Behavior
+ * - The `Price` component conditionally renders both the original price and the discounted price based on the props provided.
+ * - If no discount is provided, you may set the `priceAfterDiscount` equal to the original `price` to show only one price.
  */
+
 

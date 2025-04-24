@@ -1,16 +1,17 @@
 import Banner from "@/components/molecules/Banner/Banner";
 import BannerCarousel from "@/components/molecules/BannerCarousel/BannerCarousel";
 import GetTheLookBanner from "@/components/molecules/GetTheLookBanner/GetTheLookBanner";
-import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
 import ProductCardBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
-import { homepageBanners, homepageProducts } from "../common/constant"
+import { homepageBanners, homepageProducts } from "../common/constant";
+import styles from "./page.module.css";
+import ProductCard from "../components/molecules/ProductCard/ProductCard";
 
 export const revalidate = 60;
 
 export default async function Home() {
 
   return (
-    <>
+    <div className={styles.homeContainer}>
       <Banner
         title={homepageBanners[0]?.title}
         buttonText={homepageBanners[0]?.buttonText}
@@ -19,12 +20,22 @@ export default async function Home() {
         alignment={homepageBanners[0]?.alignment}
         buttonLink={homepageBanners[0]?.buttonLink}
       />
-      
-      <ProductImageCarousel productData={homepageProducts} cardsPerRow={3} />
+
+      <div className={`${styles.cardLayout}`}>
+      {homepageProducts.map((product, index) => (
+        <ProductCard
+          key={index}
+          productId={product.productId}
+          productImage={product.productImage}
+          productTitle={product.productTitle}
+          productDesc={product.productDesc}
+        />
+      ))}
+    </div>
       <GetTheLookBanner />
       <ProductCardBanner />
       <BannerCarousel />
-      
+
       <Banner
         title={homepageBanners[1]?.title}
         buttonText={homepageBanners[1]?.buttonText}
@@ -42,6 +53,7 @@ export default async function Home() {
         alignment={homepageBanners[2]?.alignment}
         buttonLink={homepageBanners[2]?.buttonLink}
       />
-    </>
+   </div>
   );
 }
+ 

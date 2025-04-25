@@ -22,6 +22,7 @@ export interface CartItem {
   quantity: number;
   price: number;
   currency: string;
+  productImage: string;
 }
 
 interface MiniCartProps {
@@ -41,8 +42,15 @@ const MiniCart = ({
   triggerType,
   bagIcon
 }: MiniCartProps) => {
+  const [open, setOpen] = React.useState(false);
+  const handleViewBag = () => {
+    if (onViewBag) {
+      onViewBag(); 
+    }
+    setOpen(false);
+  };
   return (
-    <Drawer>
+    <Drawer open={open} onOpenChange={setOpen}>
      <DrawerTrigger asChild>
   {triggerType === "icon" && bagIcon ? (
     <Image
@@ -119,7 +127,7 @@ const MiniCart = ({
               <Button
                 variant="icon"
                 className={styles.viewbag}
-                onClick={onViewBag}
+                onClick={handleViewBag}
               >
                 VIEW BAG
               </Button>

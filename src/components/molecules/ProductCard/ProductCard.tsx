@@ -15,7 +15,7 @@ import Image from "next/image";
 type Alignment = "center" | "alignStart" | "alignEnd";
 
 interface ProductCardProps {
-  productId: string;
+  productId?: string;
   alignment?: Alignment;
   width?: number | string;
   productImage: string;
@@ -60,7 +60,7 @@ const ProductCard = ({
   }, []);
   return (
     <div>
-    <Card width={width} onClick={() => onClick?.(productId)}>
+    <Card width={width} onClick={() =>productId && onClick?.(productId)}>
   <CardHeader className={styles.imageWrapper}>
     <Image
       src={productImage}
@@ -96,7 +96,7 @@ const ProductCard = ({
             variant="link"
             onClick={(e) => {
               e.stopPropagation();
-              onButtonClick?.(productId);
+              productId &&  onButtonClick?.(productId);
             }}
           >
             <Typography
@@ -139,7 +139,7 @@ const ProductCard = ({
         className={styles.moveToBagButton}
         onClick={(e) => {
           e.stopPropagation();
-          onMoveToBag?.(productId);
+          productId &&   onMoveToBag?.(productId);
         }}
       >
         <Typography
@@ -168,7 +168,7 @@ const ProductCard = ({
         className={styles.moveToBagMobileButton}
         onClick={(e) => {
           e.stopPropagation();
-          onMoveToBag?.(productId);
+          productId &&  onMoveToBag?.(productId);
         }}
       >
         <Typography

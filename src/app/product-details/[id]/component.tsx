@@ -13,10 +13,12 @@ import {
 import { productDetails, colorData, sizes, cartItems } from "@/common/constant";
 import VarientSelector from "@/components/molecules/VarientSelector/VarientSelector";
 import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
+import { useRouter } from "next/navigation";
 
 export default function ProductDetails() {
   const params = useParams();
-  const productId = params?.id;
+  const productId = params?.id; 
+  const router = useRouter();
 
   console.log("Product ID:", productId);
 
@@ -81,7 +83,11 @@ export default function ProductDetails() {
               </SelectContent>
             </Select>
           </div>
-          <MiniCart cartItems={cartItems} triggerType="button" />
+          <MiniCart
+                cartItems={cartItems}
+                triggerType="button"
+                onViewBag={()=>router.push('/cart')}
+              />
         </div>
       </div>
     </section>

@@ -27,10 +27,12 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+    overlayClassName?: string;
+  }
+>(({ children,overlayClassName, ...props }, ref) => (
   <DialogPortal>
-    <DialogOverlay />
+   <DialogOverlay className={overlayClassName || styles.DialogOverlay} />
     <DialogPrimitive.Content
       ref={ref}
       className={`${styles.DialogContent} ${props.className ?? ""}`}
@@ -113,7 +115,7 @@ export {
  * It allows developers to render dialogs with structured headers, content areas, and footers with full control over styling and behavior.
  *
  *
- * #3# Features:
+ * ### Features:
  * - **Composable API**: Includes `Trigger`, `Content`, `Title`, `Description`, `Header`, and `Footer` for flexible modal layouts.
  * - **Accessible**: Leverages Radix's accessibility features like focus trapping, `aria-*` roles, and keyboard interaction.
  * - **Modular Styling**: Uses CSS Modules for styling via scoped classes like `DialogOverlay`, `DialogContent`, etc.

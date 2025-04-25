@@ -119,11 +119,11 @@ export {
 
 
 /**
- * # NavigationMenu Component
+ * ## NavigationMenu Component
  *
  * The `NavigationMenu` component is a set of styled primitives built on top of `@radix-ui/react-navigation-menu` for building accessible and customizable navigation menus in React applications. It includes several subcomponents to structure your navigation, including items, triggers, content areas, indicators, and more.
  *
- * ## Components
+ * ### Components
  *
  * - **NavigationMenu**: Root component that wraps the entire navigation menu.
  * - **NavigationMenuList**: Container that holds one or more `NavigationMenuItem` components.
@@ -134,7 +134,7 @@ export {
  * - **NavigationMenuViewport**: Renders the viewport area where content is displayed.
  * - **NavigationMenuIndicator**: Shows a visual indicator below the active trigger.
  *
- * ## Props
+ * ### Props
  *
  * - **NavigationMenu**
  *   - Inherits all props from `@radix-ui/react-navigation-menu.Root`.
@@ -175,7 +175,7 @@ export {
  *   - `ref`: Forwarded to the underlying Indicator element.
  *   - `className` (string): Styles the indicator and its wrapper div.
  *
- * ## Component Behavior
+ * ### Component Behavior
  *
  * - Fully accessible and keyboard-navigable as per Radix UI standards.
  * - Menu items can trigger content dropdowns using `NavigationMenuTrigger`.

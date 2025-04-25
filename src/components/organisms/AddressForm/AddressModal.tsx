@@ -21,9 +21,9 @@ import {
 import styles from "./AddressModal.module.css";
 import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
-import CheckBox from "../../atomic/CheckBox/CheckBox";
 import clsx, { ClassValue } from "clsx";
 import { states } from "../../../common/constant";
+import Checkbox from "../../atomic/Checkbox/checkbox";
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
 export function AddressDialog() {
@@ -46,60 +46,62 @@ export function AddressDialog() {
         </DialogHeader>
 
         {/* Scrollable Content */}
-        <DialogDescription className={styles.ScrollableContent}>
-          <div className={styles.MandatoryText}>
-            Fields with <span>*</span> sign are mandatory
-          </div>
+        <DialogDescription asChild>
+          <div className={styles.ScrollableContent}>
+            <div className={styles.MandatoryText}>
+              Fields with <span>*</span> sign are mandatory
+            </div>
 
-          <fieldset className={styles.Section}>
-            <legend>Contact Details:</legend>
-            <div className={styles.TwoColumn}>
-              <Input placeholder="First Name*" name="firstName" />
-              <Input placeholder="Last Name" name="lastName" />
-            </div>
-            <Input
-              placeholder="Phone No.*"
-              name="phone"
-              type="tel"
-              className={styles.PhoneInput}
-            />
-          </fieldset>
-
-          <fieldset className={styles.Section}>
-            <legend>Location Details:</legend>
-            <div className={styles.TwoColumn}>
-              <Input placeholder="Apartment, Suite, etc.*" name="apartment" />
-              <Input placeholder="Building no.*" name="building" />
-            </div>
-            <div className={styles.StreetRow}>
-              <Input
-                placeholder="Street, Locality name*"
-                name="street"
-                className="AddressStreet"
-              />
-            </div>
-            <div className={styles.TwoColumn}>
-              <Input placeholder="Landmark" name="landmark" />
-              <Input placeholder="City*" name="city" />
-            </div>
-            <div className={styles.TwoColumn}>
-              <div className={styles.SelectOutline}>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="State*" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {states.map((state) => (
-                      <SelectItem key={state.value} value={state.value}>
-                        {state.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+            <fieldset className={styles.Section}>
+              <legend>Contact Details:</legend>
+              <div className={styles.TwoColumn}>
+                <Input placeholder="First Name*" name="firstName" />
+                <Input placeholder="Last Name" name="lastName" />
               </div>
-              <Input placeholder="ZIP code*" name="zipcode" />
-            </div>
-          </fieldset>
+              <Input
+                placeholder="Phone No.*"
+                name="phone"
+                type="tel"
+                className={styles.PhoneInput}
+              />
+            </fieldset>
+
+            <fieldset className={styles.Section}>
+              <legend>Location Details:</legend>
+              <div className={styles.TwoColumn}>
+                <Input placeholder="Apartment, Suite, etc.*" name="apartment" />
+                <Input placeholder="Building no.*" name="building" />
+              </div>
+              <div className={styles.StreetRow}>
+                <Input
+                  placeholder="Street, Locality name*"
+                  name="street"
+                  className="AddressStreet"
+                />
+              </div>
+              <div className={styles.TwoColumn}>
+                <Input placeholder="Landmark" name="landmark" />
+                <Input placeholder="City*" name="city" />
+              </div>
+              <div className={styles.TwoColumn}>
+                <div className={styles.SelectOutline}>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="State*" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {states.map((state) => (
+                        <SelectItem key={state.value} value={state.value}>
+                          {state.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Input placeholder="ZIP code*" name="zipcode" />
+              </div>
+            </fieldset>
+          </div>
         </DialogDescription>
 
         {/* Footer (stays fixed) */}

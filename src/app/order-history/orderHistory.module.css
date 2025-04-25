@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+}
+
+.orderDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.orderDetailsTop {
+  display: flex;
+  flex-direction: column;
+}
+
+.orderDetailsBottom {
+  display: flex;
+  flex-direction: column;
+}

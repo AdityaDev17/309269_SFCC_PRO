@@ -12,6 +12,7 @@ interface CartItem {
   quantity: number;
   price: number;
   currency: string;
+  productImage: string;
 }
 
 interface CartItemListProps {
@@ -41,7 +42,7 @@ const CartItemList = ({ cartItems, onDeleteItem, onUpdateQuantity, miniCart, ord
     <div className={styles.cartItem}>
       <div className={styles.productImageWrapper}>
         <Image
-          src="/images/cartImage.svg"
+          src={item.productImage}
           alt="cart Image"
           width={140}
           height={140}

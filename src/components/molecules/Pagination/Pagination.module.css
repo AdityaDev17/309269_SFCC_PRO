@@ -157,3 +157,12 @@
     font-weight: bold;
     color: black;
 }
+
+.PaginationFixedBottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem 0;
+
+}

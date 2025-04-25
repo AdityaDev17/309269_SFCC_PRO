@@ -218,7 +218,7 @@ export const cartItems = [
 export const productData = [
   {
     productId: "893234",
-    productImage: "images/product.svg",
+    productImage: "/images/product.svg",
     productTitle: "Product 1",
     bagPrice: "200",
     currency: "$",
@@ -252,6 +252,7 @@ export const productData = [
     currency: "$",
   },
 ];
+export const categoryList = ["Perfume", "Jewellery", "Brush Set"];
 
 export const states = [
   { label: "Maharashtra", value: "maharashtra" },

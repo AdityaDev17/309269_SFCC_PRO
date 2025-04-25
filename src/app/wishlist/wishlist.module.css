@@ -1,5 +1,4 @@
 .container {
-  background-color: white;
   padding: clamp(16px, 20vw, 20px) 40px;
   display: flex;
   flex-direction: column;

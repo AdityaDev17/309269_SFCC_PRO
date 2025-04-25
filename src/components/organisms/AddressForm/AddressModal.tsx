@@ -107,7 +107,7 @@ export function AddressDialog() {
         {/* Footer (stays fixed) */}
         <DialogFooter className={styles.AddressDialogFooter}>
           <div className={styles.CheckboxRow}>
-            <Checkbox
+            <CheckBox
               checked={isChecked}
               onCheckedChange={(checked) => setIsChecked(!!checked)}
               id="setDefault"

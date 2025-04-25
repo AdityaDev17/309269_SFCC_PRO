@@ -1,3 +1,5 @@
+import { alignmentType } from "../components/molecules/Banner/Banner";
+
 export const productDetails = {
   currency: "USD",
   id: "ACNPETS_154",
@@ -139,7 +141,7 @@ export interface BannerData {
   buttonText: string;
   description?: string;
   backgroundImage: string;
-  alignment: string;
+  alignment: alignmentType;
   buttonLink: string;
 }
 
@@ -203,6 +205,7 @@ export const cartItems = [
     quantity: 2,
     price: 50,
     currency: "$",
+    productImage:'/images/product.svg'
   },
 
   {
@@ -212,6 +215,7 @@ export const cartItems = [
     quantity: 1,
     price: 50,
     currency: "$",
+      productImage:'/images/product.svg'
   },
 ];
 

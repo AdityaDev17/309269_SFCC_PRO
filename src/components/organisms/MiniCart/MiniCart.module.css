@@ -1,5 +1,5 @@
 .cartButton{
-    width: 398px;
+    width:  100%;
     height: 36px;
 }
 .bagHeader{
@@ -19,7 +19,7 @@
   }
   
 .viewbag{
-    width: 555px;
+    width: 100%;
     height: 37px;
     border: 1px solid #cccbce ;
 }

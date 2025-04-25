@@ -65,9 +65,16 @@
     text-align: center; 
 }
 
-@media (min-width: 640px) {
+@media (max-width: 768px) {
     .DrawerHeader {
         text-align: left;
+    }
+    .DrawerContent[data-side='right'] {
+        right: -100%;
+        left: auto;
+        width: 100%;
+        border: 1px solid black;
+        height: auto;
     }
 }
 

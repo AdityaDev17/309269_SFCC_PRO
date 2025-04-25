@@ -1,14 +1,16 @@
 "use client";
 
 import React from "react";
-import ButtonList from "@/app/wishlist/component";
-import styles from "@/app/wishlist/wishlist.module.css";
-import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
-import Typography from "@/components/atomic/Typography/Typography";
-import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
-import ErrorComponent from "@/components/molecules/ErrorComponent/ErrorComponent";
-import { toast, Toaster } from "@/components/molecules/Toast/Toast";
-import { productData, categoryList } from "@/common/constant";
+import ButtonList from "./component";
+import styles from "./wishlist.module.css";
+
+import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
+import Typography from "../../components/atomic/Typography/Typography";
+import ProductImageCarousel from "../../components/organisms/ProductImageCarousel/ProductImageCarousel";
+import ErrorComponent from "../../components/molecules/ErrorComponent/ErrorComponent";
+import { toast, Toaster } from "../../components/molecules/Toast/Toast";
+
+import { productData, categoryList } from "../../common/constant";
 
 function Wishlist() {
   return productData.length === 0 ? (

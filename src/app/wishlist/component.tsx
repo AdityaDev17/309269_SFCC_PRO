@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "@/app/wishlist/wishlist.module.css";
-import Typography from "@/components/atomic/Typography/Typography";
-import { Button } from "@/components/atomic/Button/Button";
+import styles from "./wishlist.module.css";
+import Typography from "../../components/atomic/Typography/Typography";
+import { Button } from "../../components/atomic/Button/Button";
 const ButtonList = ({ buttonNames }: { buttonNames: string[] }) => {
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 

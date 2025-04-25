@@ -12,6 +12,7 @@ interface CartItem {
   quantity: number;
   price: number;
   currency: string;
+  productImage: string;
 }
 
 interface CartItemListProps {
@@ -41,11 +42,12 @@ const CartItemList = ({ cartItems, onDeleteItem, onUpdateQuantity, miniCart, ord
     <div className={styles.cartItem}>
       <div className={styles.productImageWrapper}>
         <Image
-          src="images/cartImage.svg"
+          src={item.productImage}
           alt="cart Image"
           width={140}
           height={140}
           className={styles.productImage}
+          loading='eager'
         />
       </div>
 
@@ -84,7 +86,7 @@ const CartItemList = ({ cartItems, onDeleteItem, onUpdateQuantity, miniCart, ord
                   qty={item.quantity}
                 />
                 <Image
-                  src="images/delete.svg"
+                  src="/images/delete.svg"
                   alt="Delete"
                   onClick={() => onDeleteItem?.(item.id)}
                   className={styles.deleteIcon}
@@ -113,7 +115,7 @@ const CartItemList = ({ cartItems, onDeleteItem, onUpdateQuantity, miniCart, ord
                   <button className={styles.wishlistBtn}>Move to Wishlist</button>
                   <div className={styles.deleteWrapper}>
                     <Image
-                      src="images/delete.svg"
+                      src="/images/delete.svg"
                       alt="Delete"
                       onClick={() => onDeleteItem?.(item.id)}
                       className={styles.deleteIcon}
@@ -150,7 +152,7 @@ const CartItemList = ({ cartItems, onDeleteItem, onUpdateQuantity, miniCart, ord
         <button className={styles.wishlistBtn}>Move to Wishlist</button>
         <div className={styles.deleteWrapper}>
           <Image
-            src="images/delete.svg"
+            src="/images/delete.svg"
             alt="Delete"
             onClick={() => onDeleteItem?.(item.id)}
             className={styles.deleteIcon}

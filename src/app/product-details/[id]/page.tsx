@@ -4,62 +4,14 @@ import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/Pr
 import Banner from "@/components/molecules/Banner/Banner";
 import Typography from "@/components/atomic/Typography/Typography";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
+import { productData } from "@/common/constant";
 export default async function ProductDetailsPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const products = [
-    {
-      productImage: "/images/product.svg",
-      productTitle: "Product 1",
-      bagPrice: "200",
-      currency: "$",
-    },
-    {
-      productImage: "/images/product1.svg",
-      productTitle: "Product 1",
-      bagPrice: "200",
-      currency: "$",
-    },
-    {
-      productImage: "/images/product.svg",
-      productTitle: "Product 1",
-      bagPrice: "200",
-      currency: "$",
-    },
-    {
-      productImage: "/images/product3.svg",
-      productTitle: "Product 1",
-      bagPrice: "200",
-      currency: "$",
-    },
-    {
-      productImage: "/images/product1.svg",
-      productTitle: "Product 1",
-      bagPrice: "200",
-      currency: "$",
-    },
-    {
-      productImage: "/images/product2.svg",
-      productTitle: "Product 1",
-      bagPrice: "200",
-      currency: "$",
-    },
-    {
-      productImage: "/images/product1.svg",
-      productTitle: "Product 1",
-      bagPrice: "200",
-      currency: "$",
-    },
-    {
-      productImage: "/images/product2.svg",
-      productTitle: "Product 1",
-      bagPrice: "200",
-      currency: "$",
-    },
-  ];
+
   console.log("getProductId", id);
   return (
     <section className={styles.layout}>
@@ -82,10 +34,9 @@ export default async function ProductDetailsPage({
         />
         <section>
           <ProductImageCarousel
-            productData={products}
-            cardsPerRow={4}
-            width={295}
+            width={"100%"}
             withPagination={true}
+            productData={productData}
             alignment="alignStart"
           />
         </section>

@@ -24,6 +24,16 @@
   justify-content: center;
   container-type: inline-size;
 }
+.select {
+  background-color: #fff;
+  border: solid;
+  border-width: 1px;
+  border-color: #cccbce;
+  color: #000;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+}
 .firstLayout {
   display: grid;
   grid-template-columns: auto auto;
@@ -80,10 +90,13 @@
 .gallery {
   grid-area: Gallery;
 }
-.buttonContainer{
+.buttonContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  padding-bottom: 20px;
+}
+.varientSection {
   padding-bottom: 20px;
 }
 /* Component Styles End*/

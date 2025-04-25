@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import LoginComponent from './component'
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '@/components/atomic/Breadcrumbs/Breadcrumbs'
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '../../components/atomic/Breadcrumbs/BreadcrumbsWrapper'
 import Login from '../../components/molecules/Login/Login'
 import styles from "./login.module.css"
 import SignUp from '../../components/molecules/SignUp/SignUp'

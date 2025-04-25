@@ -10,11 +10,15 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/atomic/Select/Select";
-import { productDetails } from "@/common/constant";
+import { productDetails, colorData, sizes, cartItems } from "@/common/constant";
+import VarientSelector from "@/components/molecules/VarientSelector/VarientSelector";
+import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
+import { useRouter } from "next/navigation";
 
 export default function ProductDetails() {
   const params = useParams();
   const productId = params?.id; 
+  const router = useRouter();
 
   console.log("Product ID:", productId);
 
@@ -22,10 +26,14 @@ export default function ProductDetails() {
     .flatMap((group) => group.images)
     .map((image) => image.link);
 
-  const accordionData = productDetails?.pageMetaTags?.map((item)=>({
-    title:item?.id.toUpperCase(),
-    desc:item?.value
-  }))
+  const accordionData = productDetails?.pageMetaTags?.map((item) => ({
+    title: item?.id.toUpperCase(),
+    desc: item?.value,
+  }));
+
+  const handleSelected = (selected: any) => {
+    console.log("Selectedvarient", selected);
+  };
 
   return (
     <section className={styles.componentLayout}>
@@ -45,8 +53,11 @@ export default function ProductDetails() {
             {productDetails?.currency}&nbsp;{productDetails?.price}
           </div>
           <div className={styles.desc}>{productDetails?.longDescription}</div>
+          <div className={styles.varientSection}>
+            <VarientSelector colors={colorData} onSelected={handleSelected} />
+          </div>
           <div className={styles.buttonContainer}>
-            <Button style={{ color: "#000" }}>ADD TO WISHLIST</Button>
+            <Button>ADD TO WISHLIST</Button>
             <Select>
               <SelectTrigger
                 data-testid="select-trigger"
@@ -61,24 +72,22 @@ export default function ProductDetails() {
                   lineHeight: "16px",
                 }}
               >
-                SIZE : 10 GM
+                SIZE
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="option1" data-testid="select-item-1">
-                  Option 1
-                </SelectItem>
-                <SelectItem value="option2" data-testid="select-item-2">
-                  Option 2
-                </SelectItem>
+                {sizes?.map((item: any) => {
+                  return (
+                    <SelectItem value={item?.value}>{item?.title}</SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>
-          <Button
-            className={styles.button}
-            variant="secondary"
-          >
-            ADD TO BAG
-          </Button>
+          <MiniCart
+                cartItems={cartItems}
+                triggerType="button"
+                onViewBag={()=>router.push('/cart')}
+              />
         </div>
       </div>
     </section>

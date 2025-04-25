@@ -23,6 +23,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
+import MiniCart from "../MiniCart/MiniCart";
+import { cartItems } from "../../../common/constant";
 
 type CategoriesProps = {
   name: string;
@@ -80,9 +82,9 @@ const Header: React.FC<HeaderProps> = ({
             <Drawer.Root shouldScaleBackground>
               <DrawerTrigger asChild>
                 <Image
-                  src={isHome ? "images/menu_white.svg" : "images/menu.svg"}
+                  src={isHome ? "/images/menu_white.svg" : "/images/menu.svg"}
                   alt="Menu"
-                  style={{ cursor: "pointer" }}
+                  className={styles.pointer}
                   width={24}
                   height={24}
                 />
@@ -92,12 +94,17 @@ const Header: React.FC<HeaderProps> = ({
                   <ChevronLeft size={20} />
                   <DrawerTitle className={styles.title}>MENU</DrawerTitle>
                   <DrawerClose className={styles.close} asChild>
-                    <Image src="images/expand.svg" alt="Close" width={48} height={48}/>
+                    <Image
+                      src="/images/expand.svg"
+                      alt="Close"
+                      width={48}
+                      height={48}
+                    />
                   </DrawerClose>
                 </DrawerHeader>
 
                 <div className={styles.categoryList}>
-                  {categories.map((category:any, index) => (
+                  {categories.map((category: any, index) => (
                     <div
                       key={index}
                       className={styles.categoryItem}
@@ -116,17 +123,15 @@ const Header: React.FC<HeaderProps> = ({
             </Drawer.Root>
           )}
 
-
-<Link href="/" prefetch>
-  <Image
-    src={isHome ? logoImages.white : logoImages.default}
-    alt="Elenor Logo"
-    style={{ cursor: 'pointer' }}
-    width={100}
-    height={20}
-  />
-</Link>
-
+          <Link href="/" prefetch>
+            <Image
+              src={isHome ? logoImages.white : logoImages.default}
+              alt="Elenor Logo"
+             className={styles.pointer}
+              width={100}
+              height={20}
+            />
+          </Link>
         </div>
 
         {!isMobile && (
@@ -138,82 +143,89 @@ const Header: React.FC<HeaderProps> = ({
                 <NavigationMenu key={index}>
                   <NavigationMenuList>
                     <NavigationMenuItem>
-                      {(category.subcategory && category.image) ? (
+                      {category.subcategory && category.image ? (
                         <>
                           <NavigationMenuTrigger>
-                            <span className={styles.category}>{category.name}</span>
+                            <span className={styles.category}>
+                              {category.name}
+                            </span>
                           </NavigationMenuTrigger>
                           <NavigationMenuContent>
-                          <section className={styles.overlayContainer}>
-                            <div className={styles.imageContainer}>
-                              <div className={styles.primaryImage}>
-                                <Image
-                                  src={category.image[0].productImageUrl}
-                                  alt={category.image[0].productName}
-                                  width={325}
-                                  height={317}
-                                />
-                              </div>
-                              {category.image.length > 1 && (
-                                <div
-                                  className={getImageContainerClass(
-                                    category.image.length
-                                  )}
-                                >
-                                  {category.image.map(
-                                    ({ productImageUrl, productName }, index) =>
-                                      index !== 0 && (
-                                        <Image
-                                          key={index}
-                                          src={productImageUrl}
-                                          alt={productName}
-                                          width={210}
-                                          height={148}
-                                        />
-                                      )
-                                  )}
+                            <section className={styles.overlayContainer}>
+                              <div className={styles.imageContainer}>
+                                <div className={styles.primaryImage}>
+                                  <Image
+                                    src={category.image[0].productImageUrl}
+                                    alt={category.image[0].productName}
+                                    width={325}
+                                    height={317}
+                                  />
                                 </div>
-                              )}
-                            </div>
+                                {category.image.length > 1 && (
+                                  <div
+                                    className={getImageContainerClass(
+                                      category.image.length
+                                    )}
+                                  >
+                                    {category.image.map(
+                                      (
+                                        { productImageUrl, productName },
+                                        index
+                                      ) =>
+                                        index !== 0 && (
+                                          <Image
+                                            key={index}
+                                            src={productImageUrl}
+                                            alt={productName}
+                                            width={210}
+                                            height={148}
+                                          />
+                                        )
+                                    )}
+                                  </div>
+                                )}
+                              </div>
 
-                            <div className={styles.categoryContainer}>
-                              {category.subcategory.map(
-                                ({ subCategoryName, subcategory }, index) => {
-                                  return (
-                                    <div
-                                      key={index}
-                                      className={styles.subcategoryContainer}
-                                    >
-                                      <Typography
-                                        type="Label"
-                                        variant={3}
-                                        label={subCategoryName}
-                                        fontWeight="bold"
-                                      />
-                                      {subcategory.map(
-                                        (subcategoryName, index) => {
-                                          return (
-                                            <Button
-                                              key={index}
-                                              variant="link"
-                                              style={{ fontWeight: "500" }}
-                                            >
-                                              {subcategoryName}
-                                            </Button>
-                                          );
-                                        }
-                                      )}
-                                    </div>
-                                  );
-                                }
-                              )}
-                            </div>
+                              <div className={styles.categoryContainer}>
+                                {category.subcategory.map(
+                                  ({ subCategoryName, subcategory }, index) => {
+                                    return (
+                                      <div
+                                        key={index}
+                                        className={styles.subcategoryContainer}
+                                      >
+                                        <Typography
+                                          type="Label"
+                                          variant={3}
+                                          label={subCategoryName}
+                                          fontWeight="bold"
+                                        />
+                                        {subcategory.map(
+                                          (subcategoryName, index) => {
+                                            return (
+                                              <Button
+                                                key={index}
+                                                variant="link"
+                                                style={{ fontWeight: "500" }}
+                                              >
+                                                {subcategoryName}
+                                              </Button>
+                                            );
+                                          }
+                                        )}
+                                      </div>
+                                    );
+                                  }
+                                )}
+                              </div>
                             </section>
                           </NavigationMenuContent>
                         </>
                       ) : (
                         <Link href="/SUSTAINABILITY">
-                          <span className={styles.category}>{category.name}</span>
+                          <span className={styles.category}>
+                            {category.name}
+                          </span>
                         </Link>
                       )}
                     </NavigationMenuItem>
@@ -225,9 +237,25 @@ const Header: React.FC<HeaderProps> = ({
         )}
 
         <div className={styles.categories}>
-          {iconsToRender.map(({ label, icon }, index) => (
-            <Image key={index} src={icon} alt={label} width={20} height={20} />
-          ))}
+          {iconsToRender.map(({ label, icon }, index) =>
+            label === "CartBag" ? (
+              <MiniCart
+                key={index}
+                cartItems={cartItems}
+                triggerType="icon"
+                bagIcon={icon}
+                onViewBag={()=>router.push('/cart')}
+              />
+            ) : (
+              <Image
+                key={index}
+                src={icon}
+                alt={label}
+                width={20}
+                height={20}
+              />
+            )
+          )}
         </div>
       </div>
     </div>

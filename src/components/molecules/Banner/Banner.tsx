@@ -4,23 +4,22 @@ import type React from "react"
 import styles from "./Banner.module.css"
 import Typography from "../../atomic/Typography/Typography"
 import { Button } from "../../atomic/Button/Button"
-
+export type alignmentType = "left-top"
+| "left-center"
+| "left-bottom"
+| "center-top"
+| "center-center"
+| "center-bottom"
+| "right-top"
+| "right-center"
+| "right-bottom"
 interface BannerProps {
   title: string
   buttonText?: string
   subtitle?: string
   description?: string
   backgroundImage?: string
-  alignment?:
-    | "left-top"
-    | "left-center"
-    | "left-bottom"
-    | "center-top"
-    | "center-center"
-    | "center-bottom"
-    | "right-top"
-    | "right-center"
-    | "right-bottom"
+  alignment?:alignmentType;
   buttonLink?: string
   textColor?: string
   subtitleVariant?: number

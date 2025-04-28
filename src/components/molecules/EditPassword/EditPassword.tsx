@@ -1,8 +1,9 @@
 'use client'
 import styles from "./EditPassword.module.css";
-import Input from "../../atomic/Input/Input";
+import  Input  from "../../atomic/Input/Input";
 import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
+
 const EditPassword = ({onUpdateClicked}:any) => {
   const [userPassword, setUserPassword] = useState({
     currentPassword: "",
@@ -63,20 +64,16 @@ const EditPassword = ({onUpdateClicked}:any) => {
           </div>
         </div>
       </div>
+      <div className={styles.buttonContainer}>
       <Button
         disabled={handleDisable()}
-        style={{
-          height: "36px",
-          color: "#FFF",
-          border: "None",
-          backgroundColor: "#000",
-          fontSize: "12px",
-          width: "62%",
-        }}
+        variant="profileUpdate"
+        className={styles.updateButton}
         onClick={() => onUpdateClicked(userPassword)}
       >
         UPDATE
       </Button>
+      </div>
     </div>
   );
 };

@@ -3,8 +3,6 @@
     display: flex;
     flex-direction: column;
     gap: clamp(1rem, 3vw, 2rem);
-  
-   
     container-type: inline-size;
     container-name: personalInfo;
   }
@@ -23,14 +21,15 @@
     margin-bottom: 50px;
   }
  
-  
-  /* .column {
-    width: 100%;
-  } */
-  
- .rightColumn {
+  .column:nth-of-type(3) {
     margin-left:50px;
- }
+  }
+  
+  
+  .column {
+    width: 100%;
+  }
+  
   .divider {
     width: 1px;
     background-color: #d3d3d3;
@@ -38,8 +37,7 @@
     
   }
   
-  /* 🔁 Container query for tablet & mobile */
-  @container personalInfo (max-width: 800px) {
+  @container personalInfo (max-width: 600px) {
     .gridLayout {
       display: flex;
       flex-direction: column;

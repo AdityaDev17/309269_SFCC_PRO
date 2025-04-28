@@ -1,5 +1,6 @@
-
+"use client"
 import React, { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import styles from './StatementBanner.module.css';
 import Typography from "../../atomic/Typography/Typography";
 import { Button } from "../../atomic/Button/Button";
@@ -33,7 +34,7 @@ const StatementBanner: React.FC<StatementBannerProps> = ({
           setIsVisible(true);
         }
       },
-      { threshold: 0.3 } // Trigger when 30% of the section is visible
+      { threshold: 0.3 } 
     );
 
     if (textRef.current) {
@@ -51,7 +52,14 @@ const StatementBanner: React.FC<StatementBannerProps> = ({
     <section className={styles.section}>
       <div className={`${styles.container} ${imagePosition === 'left' ? styles.left : styles.right}`}>
         <div className={styles.imageWrapper}>
-          <img src={imageSrc} alt={imageAlt} className={styles.image} />
+          <Image
+            src={imageSrc}
+            alt={imageAlt}
+            className={styles.image}
+            width={825}
+            height={600}
+            loading="eager"
+          />
         </div>
         <div 
           className={`${styles.text} ${isVisible ? styles.visible : ''}`} 
@@ -59,21 +67,21 @@ const StatementBanner: React.FC<StatementBannerProps> = ({
         >
           <Typography
             type="Headline"
-            variant={2} // Heading level 1 (headline1)
+            variant={2} 
             fontWeight="semibold"
             color="black"
             label={heading}
           />
           <Typography
             type="Headline"
-            variant={2} // Subheading
+            variant={2} 
             fontWeight="semibold"
             color="black"
             label={subheading}
           />
           <Typography
             type="Body"
-            variant={2} // Body text
+            variant={2} 
             fontWeight="regular"
             color="#555"
             label={description}

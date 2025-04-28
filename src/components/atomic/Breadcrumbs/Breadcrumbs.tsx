@@ -57,7 +57,7 @@ const Breadcrumbs: React.FC<BreadcrumbWrapperProps> = ({
 export default Breadcrumbs
 
 /**
- * # Breadcrumb Components
+ * ## Breadcrumb Components
  *
  * A collection of accessible and composable breadcrumb navigation components used to indicate 
  * the current page’s location within a navigational hierarchy.
@@ -120,7 +120,7 @@ export default Breadcrumbs
  * - Accepts all standard props for `<span>`.
  * - Includes screen reader support for accessibility.
  *
- * ## Wrapper Concept
+ * ### Wrapper Concept
  *
  * The **BreadcrumbWrapper** (`Breadcrumbs` component) serves as the main container and logic controller for rendering 
  * the breadcrumb navigation. It accepts the `breadcrumbItems` array that consists of `label` and optional `href` values 
@@ -133,7 +133,7 @@ export default Breadcrumbs
  * `BreadcrumbLink`, `BreadcrumbPage`, and `BreadcrumbSeparator`) for composing the overall structure, ensuring 
  * separation of concerns and maintainability.
  *
- * ## Example Usage
+ * ### Example Usage
  *
  * ```tsx
  * <Breadcrumbs breadcrumbItems={[

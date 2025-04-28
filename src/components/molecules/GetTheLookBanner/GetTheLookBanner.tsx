@@ -1,5 +1,6 @@
-"use client";
+'use client'
 import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import styles from './GetTheLookBanner.module.css';
 import Typography from '../../atomic/Typography/Typography';
 import { Button } from '../../atomic/Button/Button';
@@ -36,7 +37,13 @@ const GetTheLookBanner = () => {
             width="auto"
           >
             <CardHeader>
-              <img src="/images/carousel-image3.svg" alt="Look 1" />
+              <Image
+                src="/images/carousel-image3.svg"
+                alt="Look 1"
+                width={325}
+                height={422}
+                loading="eager"
+              />
             </CardHeader>
           </Card>
 
@@ -45,7 +52,13 @@ const GetTheLookBanner = () => {
             width="auto"
           >
             <CardHeader>
-              <img src="/images/lookbanner-img2.svg" alt="Look 2" />
+              <Image
+                src="/images/lookbanner-img2.svg"
+                alt="Look 2"
+                width={325}
+                height={422}
+                loading="eager"
+              />
             </CardHeader>
           </Card>
 
@@ -54,7 +67,13 @@ const GetTheLookBanner = () => {
             width="auto"
           >
             <CardHeader>
-              <img src="/images/carousel-image6.svg" alt="Look 3" />
+              <Image
+                src="/images/carousel-image6.svg"
+                alt="Look 3"
+                width={325}
+                height={422}
+                loading="eager"
+              />
             </CardHeader>
           </Card>
         </div>

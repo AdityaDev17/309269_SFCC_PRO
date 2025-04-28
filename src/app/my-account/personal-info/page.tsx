@@ -4,16 +4,10 @@ import AccountBreadcrumb from "../AccountBreadcrumb";
 import Profile from "../../../components/molecules/Profile/Profile";
 import EditPassword from "../../../components/molecules/EditPassword/EditPassword";
 import styles from "./PersonalInfo.module.css";
+import { mockUserDetails } from "../../../common/constant";
 
 export default function PersonalInfoPage() {
-  // const mockUserDetails = {
-  //   title: "Mr.",
-  //   firstName: "Utkarsh",
-  //   lastName: "Pai",
-  //   birthDate: "1985-12-04",
-  //   gender: "Male",
-  //   email: "utkarshpai@abc.com",
-  // };
+  
 
   const handleProfileUpdate = (updatedData: any) => {
     console.log("Updated Profile Data:", updatedData);
@@ -30,13 +24,13 @@ export default function PersonalInfoPage() {
 
       <div className={styles.gridLayout}>
         <div className={styles.column}>
-          <Profile  onUpdateClicked={handleProfileUpdate} />
+          <Profile userDetails={mockUserDetails} onUpdateClicked={handleProfileUpdate} />
         </div>
 
         
         <div className={styles.divider} />
 
-        <div className={styles.rightColumn}>
+        <div className={styles.column}>
           <EditPassword onUpdateClicked={handlePasswordUpdate} />
         </div>
       </div>

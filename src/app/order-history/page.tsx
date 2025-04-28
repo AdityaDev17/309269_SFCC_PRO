@@ -1,15 +1,15 @@
-import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
-import Typography from "@/components/atomic/Typography/Typography";
+import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
+import Typography from "../../components/atomic/Typography/Typography";
 import React from "react";
-import { Filter, OrderCardContainer } from "./component";
+import { OrderCardContainer } from "./component";
 import styles from "./orderHistory.module.css";
-import ErrorComponent from "@/components/molecules/ErrorComponent/ErrorComponent";
+import ErrorComponent from "../../components/molecules/ErrorComponent/ErrorComponent";
+import { orderData } from "../../common/constant";
 
 function OrderHistory() {
-  const data = [1];
   return (
     <div className={styles.container}>
-      {data.length === 0 ? (
+      {orderData.length === 0 ? (
         <ErrorComponent
           errImg="./images/orderListEmpty.svg"
           imgHeight={204}
@@ -34,8 +34,8 @@ function OrderHistory() {
             fontWeight="semibold"
             label="ORDER HISTORY"
           />
-          <Filter />
-          <OrderCardContainer />
+
+          <OrderCardContainer orderData={orderData}/>
         </>
       )}
     </div>

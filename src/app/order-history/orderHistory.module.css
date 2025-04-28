@@ -43,7 +43,7 @@
   height: 100%;
 }
 
-.blurOverlay {
+/* .blurOverlay {
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.2);
@@ -54,6 +54,27 @@
   font-weight: bold;
   font-size: 24px;
   color: black;
+} */
+.blurOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle {
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .orderDetails {
@@ -84,15 +105,45 @@
   text-overflow: ellipsis;
 }
 
-/* .orderTotal {
-  padding-bottom: 20px;
-} */
-
 .pageNavigator {
   margin-top: 40px;
 }
 
-@container (max-width: 599px) {
+.mobileFilter {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background-color: white;
+  width: 100%;
+  padding: 15px;
+  border-top: 1px solid #cccbce;
+  font-size: 20px;
+  text-align: center;
+}
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid #ddd;
+}
+.filterList {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.filterItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+@container (max-width: 899px) {
   .orderCardContainer {
     display: flex;
     flex-direction: column;
@@ -111,5 +162,10 @@
   .orderDetails {
     row-gap: 30px;
     justify-content: start;
+  }
+  .circle {
+    height: 32px;
+    width: 32px;
+    font: 13px;
   }
 }

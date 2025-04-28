@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./orderHistory.module.css";
-import { Button } from "@/components/atomic/Button/Button";
-import Typography from "@/components/atomic/Typography/Typography";
+import { Button } from "../../components/atomic/Button/Button";
+import Typography from "../../components/atomic/Typography/Typography";
 import {
   Select,
   SelectContent,
@@ -11,7 +11,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/atomic/Select/Select";
+} from "../../components/atomic/Select/Select";
 import Image from "next/image";
 import {
   Pagination,
@@ -20,32 +20,87 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/molecules/Pagination/Pagination";
+} from "../../components/molecules/Pagination/Pagination";
 
-const Filter = () => {
+import {
+  DrawerTrigger,
+  DrawerContent,
+  DrawerTitle,
+  DrawerHeader,
+  DrawerClose,
+} from "../../components/molecules/Drawer/Drawer";
+import { Drawer } from "vaul";
+import { ChevronRight } from "lucide-react";
+
+const Filter = ({ isMobile }: { isMobile: boolean }) => {
+  const filters = ["3 Months", "6 Months", "2025", "2024", "2023"];
+
   return (
-    <div className={styles.filter}>
-      <Select>
-        <SelectTrigger variant="sort">
-          <SelectValue placeholder="Orders in last 3 Months" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Duration</SelectLabel>
-            <SelectItem value="3">3 Months</SelectItem>
-            <SelectItem value="6">6 Months</SelectItem>
-            <SelectItem value="2025">2025</SelectItem>
-            <SelectItem value="2024">2024</SelectItem>
-            <SelectItem value="2023">2023</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select>
-    </div>
+    <>
+      {isMobile ? (
+        <Drawer.Root shouldScaleBackground>
+          <DrawerTrigger asChild>
+            <div className={styles.mobileFilter}>FILTERS</div>
+          </DrawerTrigger>
+          <DrawerContent>
+            <DrawerHeader className={styles.filterHeader}>
+              <DrawerTitle className={styles.title}>FILTERS</DrawerTitle>
+              <DrawerClose className={styles.close} asChild>
+                <Image
+                  src="./images/expand.svg"
+                  alt="Close"
+                  width={48}
+                  height={48}
+                />
+              </DrawerClose>
+            </DrawerHeader>
+
+            <div className={styles.filterList}>
+              {filters.map((filter, index) => (
+                <div key={index} className={styles.filterItem}>
+                  <span>{filter}</span>
+                  <ChevronRight size={20} />
+                </div>
+              ))}
+            </div>
+          </DrawerContent>
+        </Drawer.Root>
+      ) : (
+        <div className={styles.filter}>
+          <Select>
+            <SelectTrigger variant="sort">
+              <SelectValue placeholder="Orders in last 3 Months" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Duration</SelectLabel>
+                <SelectItem value="3">3 Months</SelectItem>
+                <SelectItem value="6">6 Months</SelectItem>
+                <SelectItem value="2025">2025</SelectItem>
+                <SelectItem value="2024">2024</SelectItem>
+                <SelectItem value="2023">2023</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+    </>
   );
 };
 
-const ImageGrid = () => {
-  const productData = [1, 2, 3, 4, 5];
+const ImageGrid = ({
+  productData,
+}: {
+  productData: [
+    {
+      productId: string;
+      productImage: string;
+      productTitle: string;
+      bagPrice: string;
+      currency: string;
+    },
+  ];
+}) => {
   const visibleImages = productData.slice(0, 4);
   const remainingCount = productData.length - 3;
   return (
@@ -57,7 +112,7 @@ const ImageGrid = () => {
           const isOverlay = index === 3 && productData.length > 4;
 
           return (
-            <div key={src} className={styles.imageWrapper}>
+            <div key={index} className={styles.imageWrapper}>
               <Image
                 src="./images/product.svg"
                 alt="product"
@@ -66,7 +121,9 @@ const ImageGrid = () => {
                 loading="eager"
               />
               {isOverlay && (
-                <div className={styles.blurOverlay}>+{remainingCount}</div>
+                <div className={styles.blurOverlay}>
+                  <div className={styles.circle}>{`+${remainingCount}`}</div>
+                </div>
               )}
             </div>
           );
@@ -76,10 +133,28 @@ const ImageGrid = () => {
   );
 };
 
-const OrderCard = () => {
+const OrderCard = ({
+  orderData,
+}: {
+  orderData: {
+    orderId: string;
+    price: number;
+    orderName: string;
+    items: [
+      {
+        productId: string;
+        productImage: string;
+        productTitle: string;
+        bagPrice: string;
+        currency: string;
+      },
+    ];
+  };
+}) => {
+  const { orderId, price, orderName, items } = orderData;
   return (
     <div className={styles.orderCard}>
-      <ImageGrid />
+      <ImageGrid productData={items} />
       <div className={styles.orderDetails}>
         <div className={styles.orderDetailsTop}>
           <div className={styles.orderStatus}>
@@ -95,7 +170,7 @@ const OrderCard = () => {
               type="Label"
               variant={3}
               fontWeight="semibold"
-              label="Men's Perfume 1, 100ml"
+              label={orderName}
             />
           </div>
           <div className={styles.orderId}>
@@ -103,7 +178,7 @@ const OrderCard = () => {
               type="Body"
               variant={2}
               fontWeight="regular"
-              label="ORDER ID : ABCD12345678"
+              label={`ORDER ID : ${orderId}`}
             />
           </div>
         </div>
@@ -113,7 +188,7 @@ const OrderCard = () => {
               type="Body"
               variant={3}
               fontWeight="semibold"
-              label="Order Total: $100"
+              label={`Order Total: $${price}`}
             />
           </div>
           <Button>
@@ -130,16 +205,25 @@ const OrderCard = () => {
   );
 };
 
-const OrderCardContainer = () => {
-  // const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const OrderCardContainer = ({ orderData }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const checkMobileView = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    checkMobileView();
+    window.addEventListener("resize", checkMobileView);
+    return () => window.removeEventListener("resize", checkMobileView);
+  }, []);
+
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(orderData.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = data.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = orderData.slice(startIndex, startIndex + itemsPerPage);
 
   const handlePrev = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -160,11 +244,13 @@ const OrderCardContainer = () => {
   };
   return (
     <>
+      {!isMobile && <Filter isMobile={false} />}
       <div className={styles.orderCardContainer}>
-        {currentItems.map((_, idx) => (
-          <OrderCard key={idx} />
+        {currentItems.map((order, idx) => (
+          <OrderCard key={idx} orderData={order} />
         ))}
       </div>
+
       <div className={styles.pageNavigator}>
         <Pagination>
           <PaginationContent>
@@ -192,6 +278,7 @@ const OrderCardContainer = () => {
             </PaginationItem>
           </PaginationContent>
         </Pagination>
+        {isMobile && <Filter isMobile />}
       </div>
     </>
   );

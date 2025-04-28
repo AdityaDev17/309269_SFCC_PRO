@@ -205,7 +205,7 @@ export const cartItems = [
     quantity: 2,
     price: 50,
     currency: "$",
-    productImage:'/images/product.svg'
+    productImage: "/images/product.svg",
   },
 
   {
@@ -215,7 +215,7 @@ export const cartItems = [
     quantity: 1,
     price: 50,
     currency: "$",
-      productImage:'/images/product.svg'
+    productImage: "/images/product.svg",
   },
 ];
 
@@ -262,4 +262,55 @@ export const states = [
   { label: "Maharashtra", value: "maharashtra" },
   { label: "Delhi", value: "delhi" },
   { label: "Karnataka", value: "karnataka" },
+];
+
+export const orderData = [
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData.slice(0,3),
+  },
 ];

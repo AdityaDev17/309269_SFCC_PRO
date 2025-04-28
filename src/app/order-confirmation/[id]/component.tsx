@@ -4,6 +4,17 @@ import Image from "next/image";
 import { cartItems } from "@/common/constant";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
+import { orderDetails } from "@/common/constant";
+
+const orderdedItems = orderDetails?.productItems?.map((item) => ({
+  id: item?.productId,
+  name: item?.productName,
+  description: "",
+  quantity: item?.quantity,
+  price: item?.price,
+  currency: orderDetails?.currency,
+  productImage: item?.productImage,
+}));
 const OrderConfimation = () => {
   return (
     <section className={styles.layout}>
@@ -19,7 +30,7 @@ const OrderConfimation = () => {
           <section className={styles.addressSection}>
             <div className={styles.rootLayer}>
               <Image
-                src={"/images/redeem.svg"}
+                src={"/images/deliveryAddress.svg"}
                 alt={"redeem"}
                 width={24}
                 height={24}
@@ -27,40 +38,46 @@ const OrderConfimation = () => {
               <div className={styles.row}>
                 <div className={styles.title}>Delivery Address</div>
                 <div className={styles.address}>
-                  Sarthak Sharma 123 Main Street Anytown, California - 90210
-                  Contact Number: +1 1234567890
+                  <div>
+                    {orderDetails?.shipments[0]?.shippingAddress?.fullName}
+                  </div>
+                  <div>
+                    {orderDetails?.shipments[0]?.shippingAddress?.address1}
+                  </div>
+                  <div>{orderDetails?.shipments[0]?.shippingAddress?.city}</div>
+                  <div>
+                    {orderDetails?.shipments[0]?.shippingAddress?.countryCode}
+                  </div>
                 </div>
               </div>
             </div>
             <div className={styles.border}></div>
             <div className={styles.rootLayer}>
               <Image
-                src={"/images/redeem.svg"}
+                src={"/images/date.svg"}
                 alt={"redeem"}
                 width={24}
                 height={24}
               />
               <div className={styles.row}>
-                <div className={styles.title}>Delivery Address</div>
+                <div className={styles.title}>Date of Order</div>
                 <div className={styles.address}>
-                  Sarthak Sharma 123 Main Street Anytown, California - 90210
-                  Contact Number: +1 1234567890
+                  {orderDetails?.creationDate?.split('T')[0]}
                 </div>
               </div>
             </div>
             <div className={styles.border}></div>
             <div className={styles.rootLayer}>
               <Image
-                src={"/images/redeem.svg"}
+                src={"/images/payment.svg"}
                 alt={"redeem"}
                 width={24}
                 height={24}
               />
               <div className={styles.row}>
-                <div className={styles.title}>Delivery Address</div>
+                <div className={styles.title}>Method of Payment</div>
                 <div className={styles.address}>
-                  Sarthak Sharma 123 Main Street Anytown, California - 90210
-                  Contact Number: +1 1234567890
+                  {orderDetails?.paymentInstruments[0]?.paymentMethodId}
                 </div>
               </div>
             </div>
@@ -74,7 +91,7 @@ const OrderConfimation = () => {
               label={"Product Details"}
             />
             <CartItemList
-              cartItems={cartItems}
+              cartItems={orderdedItems}
               orderQuantity={true}
               isWhiteBackground={true}
             />

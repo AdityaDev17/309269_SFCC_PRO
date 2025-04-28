@@ -61,5 +61,6 @@
     font-weight: 400;
     line-height: 22px;
     color: #4F4B53;
+    display: grid;
 
 }

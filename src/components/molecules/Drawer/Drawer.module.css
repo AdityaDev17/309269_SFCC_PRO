@@ -45,6 +45,31 @@
 .DrawerContent[data-side='right'][data-state='open'] {
     right: 0;
 }
+.DrawerContent[data-side='top'] {
+    top: -100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+}
+
+.DrawerContent[data-side='bottom'] {
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+}
+
+/* When open - Slide in properly */
+.DrawerContent[data-side='top'][data-state='open'] {
+    top: 0;
+    height: 200px;
+}
+
+.DrawerContent[data-side='bottom'][data-state='open'] {
+    bottom: 0;
+}
 
 
 

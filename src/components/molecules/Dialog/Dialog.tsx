@@ -33,7 +33,7 @@ const DialogContent = React.forwardRef<
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
-      className={styles.DialogContent}
+      className={`${styles.DialogContent} ${props.className ?? ""}`}
       {...props}
     >
       {children}
@@ -57,7 +57,7 @@ const DialogHeader = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={(styles.DialogHeader, className)} {...props} />
+  <div className={`${styles.DialogHeader} ${className ?? ""}`} {...props} />
 );
 DialogHeader.displayName = "DialogHeader";
 
@@ -65,7 +65,7 @@ const DialogFooter = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={(styles.DialogFooter, className)} {...props} />
+  <div className={`${styles.DialogFooter} ${className ?? ""}`} {...props} />
 );
 DialogFooter.displayName = "DialogFooter";
 
@@ -75,7 +75,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={(styles.DialogTitle, className)}
+    className={`${styles.DialogTitle} ${className ?? ""}`}
     {...props}
   />
 ));
@@ -84,10 +84,10 @@ DialogTitle.displayName = DialogPrimitive.Title.displayName;
 const DialogDescription = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Description>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ ...props }, ref) => (
+>(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={styles.DialogDescription}
+    className={`${styles.DialogDescription} ${className ?? ""}`}
     {...props}
   />
 ));
@@ -159,7 +159,7 @@ export {
  *         </DialogFooter>
  *       </DialogContent>
  *     </Dialog>
- *   
+ *
  * ```
  *
  *

@@ -12,11 +12,12 @@ interface LayoutProps {
     imgWidth:number;
     text1?:string;
     text2?:string;
-    buttonText?:string
+    buttonText?:string;
+    onButtonClick?: () => void;
   }
   
 
-function ErrorComponent({ errImg,imgHeight, imgWidth, text1, text2, buttonText="TRY AGAIN"}: LayoutProps) {
+function ErrorComponent({ errImg,imgHeight, imgWidth, text1, text2, buttonText="TRY AGAIN",onButtonClick,}: LayoutProps) {
   return (
     <div className={styles.layout}>
         <Image 
@@ -39,7 +40,7 @@ function ErrorComponent({ errImg,imgHeight, imgWidth, text1, text2, buttonText="
               <Typography type="Body" variant={1} label={text2} fontWeight="regular" color="#4F4B53"/>
           </div>
         }
-        <Button style={{marginTop:"10px"}}>
+        <Button style={{marginTop:"10px"}} onClick={onButtonClick}>
             <Typography type="Body" variant={3} fontWeight="semibold" label={buttonText}/>
         </Button>
     </div>

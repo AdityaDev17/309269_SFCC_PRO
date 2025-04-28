@@ -223,7 +223,7 @@
 /* Base styles */
 .SelectContent {
     position: relative;
-    z-index: 50;
+    z-index: 1000;
     max-height: 24rem; 
     min-width: 8rem; 
     overflow: hidden;

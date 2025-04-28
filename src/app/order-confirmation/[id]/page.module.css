@@ -1,5 +1,4 @@
 .layout{
-    padding: 20px 40px;
     display: grid;
     gap:27px;
     container-type: inline-size;
@@ -62,4 +61,8 @@
     color: #4F4B53;
     display: grid;
 
+}
+
+.pageLayout{
+    padding: 20px 40px;
 }

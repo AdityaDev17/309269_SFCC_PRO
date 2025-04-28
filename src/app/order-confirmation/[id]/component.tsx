@@ -1,7 +1,6 @@
 import Typography from "@/components/atomic/Typography/Typography";
 import styles from "./page.module.css";
 import Image from "next/image";
-import { cartItems } from "@/common/constant";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { orderDetails } from "@/common/constant";
@@ -36,7 +35,13 @@ const OrderConfimation = () => {
                 height={24}
               />
               <div className={styles.row}>
-                <div className={styles.title}>Delivery Address</div>
+                <Typography
+                  type="Label"
+                  variant={3}
+                  fontWeight="bold"
+                  color="black"
+                  label={"Delivery Address"}
+                />
                 <div className={styles.address}>
                   <div>
                     {orderDetails?.shipments[0]?.shippingAddress?.fullName}
@@ -60,9 +65,15 @@ const OrderConfimation = () => {
                 height={24}
               />
               <div className={styles.row}>
-                <div className={styles.title}>Date of Order</div>
+                <Typography
+                  type="Label"
+                  variant={3}
+                  fontWeight="bold"
+                  color="black"
+                  label={"Date of Order"}
+                />
                 <div className={styles.address}>
-                  {orderDetails?.creationDate?.split('T')[0]}
+                  {orderDetails?.creationDate?.split("T")[0]}
                 </div>
               </div>
             </div>
@@ -75,7 +86,13 @@ const OrderConfimation = () => {
                 height={24}
               />
               <div className={styles.row}>
-                <div className={styles.title}>Method of Payment</div>
+                <Typography
+                  type="Label"
+                  variant={3}
+                  fontWeight="bold"
+                  color="black"
+                  label={"Method of Payment"}
+                />
                 <div className={styles.address}>
                   {orderDetails?.paymentInstruments[0]?.paymentMethodId}
                 </div>

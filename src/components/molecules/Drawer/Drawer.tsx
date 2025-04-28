@@ -7,13 +7,17 @@ import styles from './Drawer.module.css'
 
 const Drawer = ({
   shouldScaleBackground = true,
+  side = 'left',
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
+}: React.ComponentProps<typeof DrawerPrimitive.Root> & { side?: 'left' | 'right' | 'top' | 'bottom' }
+) => (
   <DrawerPrimitive.Root
     shouldScaleBackground={shouldScaleBackground}
+    direction={side} 
     {...props}
   />
 )
+
 Drawer.displayName = "Drawer"
 
 const DrawerTrigger = DrawerPrimitive.Trigger
@@ -36,7 +40,7 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & { side?: 'left' | 'right' }
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & { side?: 'left' | 'right' | 'top' | 'bottom' }
 >(({ children, side = 'left', ...props }, ref) => (
   <DrawerPortal>
     <DrawerOverlay />

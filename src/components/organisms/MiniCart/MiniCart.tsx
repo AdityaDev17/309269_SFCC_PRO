@@ -50,7 +50,7 @@ const MiniCart = ({
     setOpen(false);
   };
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
+    <Drawer open={open} onOpenChange={setOpen} side="right">
      <DrawerTrigger asChild>
   {triggerType === "icon" && bagIcon ? (
     <Image

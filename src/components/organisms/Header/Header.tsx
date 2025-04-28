@@ -82,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({
             <Drawer.Root shouldScaleBackground>
               <DrawerTrigger asChild>
                 <Image
-                  src={isHome ? "images/menu_white.svg" : "images/menu.svg"}
+                  src={isHome ? "/images/menu_white.svg" : "/images/menu.svg"}
                   alt="Menu"
                   className={styles.pointer}
                   width={24}
@@ -95,7 +95,7 @@ const Header: React.FC<HeaderProps> = ({
                   <DrawerTitle className={styles.title}>MENU</DrawerTitle>
                   <DrawerClose className={styles.close} asChild>
                     <Image
-                      src="images/expand.svg"
+                      src="/images/expand.svg"
                       alt="Close"
                       width={48}
                       height={48}

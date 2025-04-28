@@ -1,5 +1,4 @@
-
-'use client';
+"use client";
 import React, { useEffect, useState } from "react";
 import { Button } from "@/components/atomic/Button/Button";
 import {
@@ -15,7 +14,7 @@ import Image from "next/image";
 type Alignment = "center" | "alignStart" | "alignEnd";
 
 interface ProductCardProps {
-  productId: string;
+  productId?: string;
   alignment?: Alignment;
   width?: number | string;
   productImage: string;
@@ -26,9 +25,9 @@ interface ProductCardProps {
   moveToBag?: boolean;
   wishListed?: boolean;
   bagPrice?: string;
-  onClick?: (productId: string) => void;       
-  onButtonClick?: (productId: string) => void; 
-  onMoveToBag?: (productId: string) => void; 
+  onClick?: (productId: string) => void;
+  onButtonClick?: (productId: string) => void;
+  onMoveToBag?: (productId: string) => void;
 }
 const ProductCard = ({
   productId,
@@ -46,7 +45,6 @@ const ProductCard = ({
   onButtonClick,
   onMoveToBag,
 }: ProductCardProps) => {
-
   const [isMobile, setIsMobile] = useState(false);
 
   const checkMobileView = () => {
@@ -60,130 +58,131 @@ const ProductCard = ({
   }, []);
   return (
     <div>
-    <Card width={width} onClick={() => onClick?.(productId)}>
-  <CardHeader className={styles.imageWrapper}>
-    <Image
-      src={productImage}
-      alt="product"
-      className={styles.productImage}
-      width={440}
-      height={440}
-      loading="eager"
-    />
-    {wishListed && (
-      <Image
-        src="/images/whishlist_fill.svg"
-        alt="wishlist"
-        className={styles.wishlistIcon}
-        width={24}
-        height={24}
-      />
-    )}
-  </CardHeader>
+      <Card width={width} onClick={() => productId && onClick?.(productId)}>
+        <CardHeader className={styles.imageWrapper}>
+          <Image
+            src={productImage}
+            alt="product"
+            className={styles.productImage}
+            width={440}
+            height={440}
+            loading="eager"
+          />
+          {wishListed && (
+            <Image
+              src="/images/whishlist_fill.svg"
+              alt="wishlist"
+              className={styles.wishlistIcon}
+              width={24}
+              height={24}
+            />
+          )}
+        </CardHeader>
 
-  {productTitle && (
-    <CardContent className={`${styles.cardContent} ${styles[alignment]}`}>
-      <Typography
-        type={"Headline"}
-        variant={5}
-        label={productTitle}
-        fontWeight="regular"
-        color="black"
-      />
-      {productDesc && (
-        <div className={styles.spacing}>
-          <Button
-            variant="link"
-            onClick={(e) => {
-              e.stopPropagation();
-              onButtonClick?.(productId);
-            }}
-          >
+        {productTitle && (
+          <CardContent className={`${styles.cardContent} ${styles[alignment]}`}>
             <Typography
-              type={"Body"}
-              variant={2}
-              label={productDesc}
-              fontWeight="medium"
+              type={"Headline"}
+              variant={5}
+              label={productTitle}
+              fontWeight="regular"
               color="black"
             />
-          </Button>
-        </div>
-      )}
-      {price && (
-       <div className={styles.spacing}>
-          <Typography
-            type="Body"
-            variant={1}
-            color="gray"
-            fontWeight="medium"
-            label={`${currency}${price}`}
-          />
-        </div>
-      )}
-    </CardContent>
-  )}
+            {productDesc && (
+              <div className={styles.spacing}>
+                <Button
+                  variant="link"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    productId && onButtonClick?.(productId);
+                  }}
+                >
+                  <Typography
+                    type={"Body"}
+                    variant={2}
+                    label={productDesc}
+                    fontWeight="medium"
+                    color="black"
+                  />
+                </Button>
+              </div>
+            )}
+            {price && (
+              <div className={styles.spacing}>
+                <Typography
+                  type="Body"
+                  variant={1}
+                  color="gray"
+                  fontWeight="medium"
+                  label={`${currency}${price}`}
+                />
+              </div>
+            )}
+          </CardContent>
+        )}
 
-  {!isMobile ?(<CardFooter className={styles.priceButtonRow}>
-    {bagPrice && (
-      <Typography
-        type="Body"
-        variant={1}
-        color="gray"
-        fontWeight="medium"
-        label={`${currency}${bagPrice}`}
-      />
-    )}
-    {moveToBag && (
-      <Button
-        variant="icon"
-        className={styles.moveToBagButton}
-        onClick={(e) => {
-          e.stopPropagation();
-          onMoveToBag?.(productId);
-        }}
-      >
-        <Typography
-          type="Body"
-          variant={2}
-          label="Move to Bag"
-          fontWeight="medium"
-          color="black"
-        />
-      </Button>
-    )}
-  </CardFooter>) :(
-    <CardFooter className={styles.pricemobileButtonRow}>
-    {bagPrice && (
-      <Typography
-        type="Body"
-        variant={1}
-        color="gray"
-        fontWeight="medium"
-        label={`${currency}${bagPrice}`}
-      />
-    )}
-    {moveToBag && (
-      <Button
-        variant="icon"
-        className={styles.moveToBagMobileButton}
-        onClick={(e) => {
-          e.stopPropagation();
-          onMoveToBag?.(productId);
-        }}
-      >
-        <Typography
-          type="Body"
-          variant={2}
-          label="Move to Bag"
-          fontWeight="medium"
-          color="black"
-        />
-      </Button>
-    )}
-  </CardFooter>
-  )}
-</Card>
-
+        {!isMobile ? (
+          <CardFooter className={styles.priceButtonRow}>
+            {bagPrice && (
+              <Typography
+                type="Body"
+                variant={1}
+                color="gray"
+                fontWeight="medium"
+                label={`${currency}${bagPrice}`}
+              />
+            )}
+            {moveToBag && (
+              <Button
+                variant="icon"
+                className={styles.moveToBagButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  productId && onMoveToBag?.(productId);
+                }}
+              >
+                <Typography
+                  type="Body"
+                  variant={2}
+                  label="Move to Bag"
+                  fontWeight="medium"
+                  color="black"
+                />
+              </Button>
+            )}
+          </CardFooter>
+        ) : (
+          <CardFooter className={styles.pricemobileButtonRow}>
+            {bagPrice && (
+              <Typography
+                type="Body"
+                variant={1}
+                color="gray"
+                fontWeight="medium"
+                label={`${currency}${bagPrice}`}
+              />
+            )}
+            {moveToBag && (
+              <Button
+                variant="icon"
+                className={styles.moveToBagMobileButton}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  productId && onMoveToBag?.(productId);
+                }}
+              >
+                <Typography
+                  type="Body"
+                  variant={2}
+                  label="Move to Bag"
+                  fontWeight="medium"
+                  color="black"
+                />
+              </Button>
+            )}
+          </CardFooter>
+        )}
+      </Card>
     </div>
   );
 };

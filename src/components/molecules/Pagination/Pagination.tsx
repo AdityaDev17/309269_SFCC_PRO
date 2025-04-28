@@ -3,14 +3,22 @@ import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import type { ButtonProps } from "../../atomic/Button/Button";
 import styles from "./Pagination.module.css";
 
-const Pagination = ({ ...props }: React.ComponentProps<"nav">) => (
-  <nav
-    role="navigation"
-    aria-label="pagination"
-    className={styles.Pagination}
-    {...props}
-  />
-);
+interface PaginationProps extends React.ComponentProps<"nav"> {
+  fixedBottom?: boolean;
+}
+
+const Pagination = ({ fixedBottom, className, ...props }: PaginationProps) => {
+  const combinedClassName = `${styles.Pagination} ${fixedBottom ? styles.PaginationFixedBottom : ""} ${className ?? ""}`;
+
+  return (
+    <nav
+      role="navigation"
+      aria-label="pagination"
+      className={combinedClassName}
+      {...props}
+    />
+  );
+};
 Pagination.displayName = "Pagination";
 
 const PaginationContent = React.forwardRef<

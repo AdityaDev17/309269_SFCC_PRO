@@ -1,0 +1,23 @@
+.container {
+  padding: clamp(16px, 20vw, 20px) 40px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 3vw, 24px);
+}
+
+.filterConainer {
+  display: flex;
+  /* flex-wrap: wrap; */
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  container-type: inline-size;
+}
+
+.buttonConainer {
+  display: flex;
+  width: auto;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  gap: 10px;
+}

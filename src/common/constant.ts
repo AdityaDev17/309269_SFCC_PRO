@@ -432,6 +432,57 @@ export const states = [
   { label: "Karnataka", value: "karnataka" },
 ];
 
+export const orderData = [
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData.slice(0,3),
+  },
+];
+
 
 export const mockUserDetails = {
   title: "Mr.",

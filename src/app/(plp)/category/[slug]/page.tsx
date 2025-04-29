@@ -1,6 +1,6 @@
 import styles from "./layout.module.css";
-import ProductCard from "@/components/molecules/ProductCard/ProductCard";
-import FilterDialog from "@/components/molecules/FilterDialog/FilterDialog";
+import ProductCard from "../../../../components/molecules/ProductCard/ProductCard";
+import FilterDialog from "../../../../components/molecules/FilterDialog/FilterDialog";
 import {
   Select,
   SelectContent,

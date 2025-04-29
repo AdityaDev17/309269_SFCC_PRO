@@ -288,22 +288,40 @@
 }
 
 .input {
-  border: none;
+  border: none !important;
   outline: none;
   box-shadow: none;
   background-color: transparent;
   flex: 1;
   padding: 0.5rem;
   font-size: 1rem;
+  appearance: none;
 }
 
 .search,
 .cancel,
 .mic {
-  border: none;
+  border: none !important;
   background: transparent;
   box-shadow: none;
   padding: 0.25rem;
+  margin-right: 0.25rem;
+  outline: none;
+  appearance: none;
+}
+
+.input:hover {
+  background-color: #FFFFFF;
+}
+
+.cancel:hover {
+  background-color: white;
+  border: none;
+}
+
+.mic:hover {
+  background-color: white;
+  border: none;
 }
 
 .relative {
@@ -407,6 +425,7 @@ z-index: 9999;
 .customSearch {
   width: 100%;
 }
+
 .searchBar {
   margin-bottom: 2rem;
 }

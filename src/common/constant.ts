@@ -205,7 +205,7 @@ export const cartItems = [
     quantity: 2,
     price: 50,
     currency: "$",
-    productImage:'/images/product.svg'
+    productImage: "/images/product.svg",
   },
 
   {
@@ -215,7 +215,7 @@ export const cartItems = [
     quantity: 1,
     price: 50,
     currency: "$",
-      productImage:'/images/product.svg'
+    productImage: "/images/product.svg",
   },
 ];
 
@@ -263,3 +263,19 @@ export const states = [
   { label: "Delhi", value: "delhi" },
   { label: "Karnataka", value: "karnataka" },
 ];
+
+export const filterTabs = ["Price", "Notes", "Brands", "Features", "Discount"];
+
+export const filterOptions: Record<string, string[]> = {
+  Price: [
+    "Below ₹1000",
+    "₹1001 to ₹2000",
+    "₹2001 to ₹3000",
+    "₹3001 to ₹4000",
+    "₹4001 and above",
+  ],
+  Notes: ["Floral", "Woody", "Citrus", "Spicy", "Musk"],
+  Brands: ["Gucci", "Dior", "Chanel", "Versace", "Armani"],
+  Features: ["Long Lasting", "Travel Size", "Refillable"],
+  Discount: ["10% and above", "25% and above", "50% and above"],
+};

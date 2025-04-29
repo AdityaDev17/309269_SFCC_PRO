@@ -64,15 +64,14 @@ export default function FAQPage() {
           {/* FAQ Sections */}
           <div className={styles.faqSection}>
             {/* Search Bar */}
-            <div className="mb-8">
+            <div className={styles.searchBar}>
               <SearchWithSuggestions
                 placeholder="Search your queries..."
                 value={searchTerm}
                 onChange={setSearchTerm}
-                onSearch={(term) => console.log("Searching for:", term)}
                 onClear={() => setSearchTerm("")}
                 onMicClick={() => console.log("Mic clicked")}
-                className="w-full"
+                className={styles.customSearch}
                 allFaqItems={allFaqItems}
                 onSuggestionClick={handleSuggestionClick}
               />
@@ -132,7 +131,7 @@ export default function FAQPage() {
             </div>
           </div>
 
-          <div className="col-span-1">
+          <div className={styles.needAssistance}>
            <NeedAssistance />
           </div>
         </div>

@@ -400,6 +400,17 @@ z-index: 9999;
   margin-top: 4px;
 }
 
+.needAssistance {
+  grid-column: span 1 / span 1;
+}
+
+.customSearch {
+  width: 100%;
+}
+.searchBar {
+  margin-bottom: 2rem;
+}
+
 
 
 

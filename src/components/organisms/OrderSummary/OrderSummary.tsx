@@ -16,7 +16,7 @@ const OrderSummary = ({
   tax = "",
   total = "",
   totalSavings = "",
-  buttonText = "",
+  buttonText = "CONTINUE",
 }) => {
   const paymentImages = [
     "/images/pay1.svg",

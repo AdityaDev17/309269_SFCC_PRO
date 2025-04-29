@@ -432,6 +432,21 @@ export const states = [
   { label: "Karnataka", value: "karnataka" },
 ];
 
+export const filterTabs = ["Price", "Notes", "Brands", "Features", "Discount"];
+
+export const filterOptions: Record<string, string[]> = {
+  Price: [
+    "Below ₹1000",
+    "₹1001 to ₹2000",
+    "₹2001 to ₹3000",
+    "₹3001 to ₹4000",
+    "₹4001 and above",
+  ],
+  Notes: ["Floral", "Woody", "Citrus", "Spicy", "Musk"],
+  Brands: ["Gucci", "Dior", "Chanel", "Versace", "Armani"],
+  Features: ["Long Lasting", "Travel Size", "Refillable"],
+  Discount: ["10% and above", "25% and above", "50% and above"],
+};
 export const orderData = [
   {
     orderId: "ABCD12345678",
@@ -479,10 +494,9 @@ export const orderData = [
     orderId: "ABCD12345678",
     price: 100,
     orderName: "Men's Perfume 1, 100ml",
-    items: productData.slice(0,3),
+    items: productData.slice(0, 3),
   },
 ];
-
 
 export const mockUserDetails = {
   title: "Mr.",
@@ -494,50 +508,49 @@ export const mockUserDetails = {
 };
 
 export type CardType = {
-  type: 'text' | 'image'
-  title?: string
-  subtitle?: string
-  description?: string
-  link?: string
-  image?: string
-}
+  type: "text" | "image";
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  link?: string;
+  image?: string;
+};
 
- export const bannerData: CardType[][] = [
+export const bannerData: CardType[][] = [
   [
     {
-      type: 'text',
-      title: 'LOVE YOUR',
-      subtitle: 'SKIN ENOUGH',
-      description: 'Skincare reimagined',
-      link: '#',
+      type: "text",
+      title: "LOVE YOUR",
+      subtitle: "SKIN ENOUGH",
+      description: "Skincare reimagined",
+      link: "#",
     },
-    { type: 'image', image: '/images/carousel-image1.svg' },
-    { type: 'image', image: '/images/carousel-image2.svg' },
+    { type: "image", image: "/images/carousel-image1.svg" },
+    { type: "image", image: "/images/carousel-image2.svg" },
   ],
   [
-    { type: 'image', image: '/images/carousel-image3.svg' },
+    { type: "image", image: "/images/carousel-image3.svg" },
     {
-      type: 'text',
-      title: 'FRAGRANCE',
-      subtitle: ' RARE AS YOU',
-      description: 'With lips that speak volumes',
-      link: '#',
+      type: "text",
+      title: "FRAGRANCE",
+      subtitle: " RARE AS YOU",
+      description: "With lips that speak volumes",
+      link: "#",
     },
-    { type: 'image', image: '/images/carousel-image4.svg' },
+    { type: "image", image: "/images/carousel-image4.svg" },
   ],
   [
-    { type: 'image', image: '/images/carousel-image5.svg' },
-    { type: 'image', image: '/images/carousel-image6.svg' },
+    { type: "image", image: "/images/carousel-image5.svg" },
+    { type: "image", image: "/images/carousel-image6.svg" },
     {
-      type: 'text',
-      title: 'DARE TO BE',
-      subtitle: 'DIFFERENT',
-      description: 'With lips that speaks volumes',
-      link: '#',
+      type: "text",
+      title: "DARE TO BE",
+      subtitle: "DIFFERENT",
+      description: "With lips that speaks volumes",
+      link: "#",
     },
   ],
-]
-
+];
 
 export const dots = [
   {
@@ -546,7 +559,7 @@ export const dots = [
     left: "60%",
     productImage: "/images/lipstick.svg",
     productTitle: "TILBURY MATTE REVOLUTION",
-    productDesc: "VIEW MORE"
+    productDesc: "VIEW MORE",
   },
   {
     id: 2,
@@ -554,7 +567,7 @@ export const dots = [
     left: "60%",
     productImage: "/images/lipstick.svg",
     productTitle: "EYELINER MAGIC",
-    productDesc: "VIEW MORE"
+    productDesc: "VIEW MORE",
   },
   {
     id: 3,
@@ -562,53 +575,54 @@ export const dots = [
     left: "65%",
     productImage: "/images/product.svg",
     productTitle: "PERFUME",
-    productDesc: "VIEW MORE"
-  }
+    productDesc: "VIEW MORE",
+  },
 ];
 
-
-export const addresses = [{
-      firstName: "Utkarsh",
-      lastName: "Pai",
-      apartment: "20",
-      building: "Impasse Odette Dijoux",
-      street: "Letellier-la-Forêt",
-      city: "Pinto",
-      state: "France",
-      zipcode: "97459",
-      phone: "XXX4398238",
-      isDefault: true,
-    },
-    {
-      firstName: "Sharmili",
-      lastName: "K",
-      apartment: "D/12",
-      building: "Chand Society",
-      street: "Jvpd Scheme",
-      city: "Mumbai",
-      state: "Maharashtra",
-      zipcode: "110005",
-      phone: "XXX4398238",
-    },
-    {
-      firstName: "Robin",
-      lastName: "Wood",
-      apartment: "25",
-      building: "Impasse Odette Dijoux",
-      street: "Letellier-la-Forêt",
-      city: "Pinto",
-      state: "France",
-      zipcode: "97459",
-      phone: "XXX4398238",
-    },
-    {
-      firstName: "Kantilal",
-      lastName: "Patel",
-      apartment: "6",
-      building: "Old Mahavir Bldg",
-      street: "Behind Matunga P.o.",
-      city: "Matunga(c.r)",
-      state: "Mumbai",
-      zipcode: "110011",
-      phone: "XXX4398238",
-    }]
+export const addresses = [
+  {
+    firstName: "Utkarsh",
+    lastName: "Pai",
+    apartment: "20",
+    building: "Impasse Odette Dijoux",
+    street: "Letellier-la-Forêt",
+    city: "Pinto",
+    state: "France",
+    zipcode: "97459",
+    phone: "XXX4398238",
+    isDefault: true,
+  },
+  {
+    firstName: "Sharmili",
+    lastName: "K",
+    apartment: "D/12",
+    building: "Chand Society",
+    street: "Jvpd Scheme",
+    city: "Mumbai",
+    state: "Maharashtra",
+    zipcode: "110005",
+    phone: "XXX4398238",
+  },
+  {
+    firstName: "Robin",
+    lastName: "Wood",
+    apartment: "25",
+    building: "Impasse Odette Dijoux",
+    street: "Letellier-la-Forêt",
+    city: "Pinto",
+    state: "France",
+    zipcode: "97459",
+    phone: "XXX4398238",
+  },
+  {
+    firstName: "Kantilal",
+    lastName: "Patel",
+    apartment: "6",
+    building: "Old Mahavir Bldg",
+    street: "Behind Matunga P.o.",
+    city: "Matunga(c.r)",
+    state: "Mumbai",
+    zipcode: "110011",
+    phone: "XXX4398238",
+  },
+];

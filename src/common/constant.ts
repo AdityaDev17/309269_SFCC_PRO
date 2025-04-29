@@ -436,3 +436,132 @@ export const productInfoData = [
     category: "product-info",
   },
 ]
+
+export const mockUserDetails = {
+  title: "Mr.",
+  firstName: "Utkarsh",
+  lastName: "Pai",
+  birthDate: "1985-12-04",
+  gender: "Male",
+  email: "utkarshpai@abc.com",
+};
+
+export type CardType = {
+  type: 'text' | 'image'
+  title?: string
+  subtitle?: string
+  description?: string
+  link?: string
+  image?: string
+}
+
+ export const bannerData: CardType[][] = [
+  [
+    {
+      type: 'text',
+      title: 'LOVE YOUR',
+      subtitle: 'SKIN ENOUGH',
+      description: 'Skincare reimagined',
+      link: '#',
+    },
+    { type: 'image', image: '/images/carousel-image1.svg' },
+    { type: 'image', image: '/images/carousel-image2.svg' },
+  ],
+  [
+    { type: 'image', image: '/images/carousel-image3.svg' },
+    {
+      type: 'text',
+      title: 'FRAGRANCE',
+      subtitle: ' RARE AS YOU',
+      description: 'With lips that speak volumes',
+      link: '#',
+    },
+    { type: 'image', image: '/images/carousel-image4.svg' },
+  ],
+  [
+    { type: 'image', image: '/images/carousel-image5.svg' },
+    { type: 'image', image: '/images/carousel-image6.svg' },
+    {
+      type: 'text',
+      title: 'DARE TO BE',
+      subtitle: 'DIFFERENT',
+      description: 'With lips that speaks volumes',
+      link: '#',
+    },
+  ],
+]
+
+
+export const dots = [
+  {
+    id: 1,
+    top: "48%",
+    left: "60%",
+    productImage: "/images/lipstick.svg",
+    productTitle: "TILBURY MATTE REVOLUTION",
+    productDesc: "VIEW MORE"
+  },
+  {
+    id: 2,
+    top: "35%",
+    left: "60%",
+    productImage: "/images/lipstick.svg",
+    productTitle: "EYELINER MAGIC",
+    productDesc: "VIEW MORE"
+  },
+  {
+    id: 3,
+    top: "60%",
+    left: "65%",
+    productImage: "/images/product.svg",
+    productTitle: "PERFUME",
+    productDesc: "VIEW MORE"
+  }
+];
+
+
+export const addresses = [{
+      firstName: "Utkarsh",
+      lastName: "Pai",
+      apartment: "20",
+      building: "Impasse Odette Dijoux",
+      street: "Letellier-la-Forêt",
+      city: "Pinto",
+      state: "France",
+      zipcode: "97459",
+      phone: "XXX4398238",
+      isDefault: true,
+    },
+    {
+      firstName: "Sharmili",
+      lastName: "K",
+      apartment: "D/12",
+      building: "Chand Society",
+      street: "Jvpd Scheme",
+      city: "Mumbai",
+      state: "Maharashtra",
+      zipcode: "110005",
+      phone: "XXX4398238",
+    },
+    {
+      firstName: "Robin",
+      lastName: "Wood",
+      apartment: "25",
+      building: "Impasse Odette Dijoux",
+      street: "Letellier-la-Forêt",
+      city: "Pinto",
+      state: "France",
+      zipcode: "97459",
+      phone: "XXX4398238",
+    },
+    {
+      firstName: "Kantilal",
+      lastName: "Patel",
+      apartment: "6",
+      building: "Old Mahavir Bldg",
+      street: "Behind Matunga P.o.",
+      city: "Matunga(c.r)",
+      state: "Mumbai",
+      zipcode: "110011",
+      phone: "XXX4398238",
+    }]

@@ -66,13 +66,13 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 export default Gallery;
 
 /**
- * # Gallery Component
+ * ## Gallery Component
  *
  * A responsive image gallery component that displays a set of images with thumbnail navigation.
  * The component adapts its layout for both mobile and desktop views, allowing users to interact
  * with the gallery by selecting images or thumbnails.
  *
- * ## Props
+ * ### Props
  *
  * ### `images`
  * - Type: `string[]`
@@ -84,7 +84,7 @@ export default Gallery;
  * - Optional: Yes
  * - A CSS class to apply custom styles to the content area (used for thumbnails or image details).
  * 
- * ## Usage
+ * ### Usage
  *
  * The **Gallery** component can be used to display a set of images that users can browse through, either by selecting a thumbnail
  * or by navigating through dots (on mobile). It automatically adapts to mobile or desktop views depending on the screen size.
@@ -99,7 +99,7 @@ export default Gallery;
  * - On mobile devices, a main image is displayed with clickable dots to navigate between images.
  * - On larger screens, a set of thumbnails appears, and clicking on or hovering over a thumbnail changes the main image.
  *
- * ## Functionality
+ * ### Functionality
  *
  * - **Mobile View**: When the screen width is below 768px, the gallery displays a main image with navigation dots. Clicking on a dot updates the main image.
  * - **Desktop View**: On larger screens, the gallery shows thumbnails of all images. Hovering over or clicking a thumbnail changes the main image.

@@ -46,7 +46,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
   active?: boolean;
   onRemove?: () => void;
-  variant?: "secondary" | "link" | "icon";
+  variant?: "secondary" | "link" | "icon" |  "profileUpdate";
   size?: "sm" | "lg" | "icon";
   icon?: React.ReactNode;
 }

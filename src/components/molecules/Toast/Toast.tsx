@@ -1,12 +1,12 @@
 /**
- * # Toast Component
+ * ## Toast Component
  *
  * The `Toaster` component provides customizable toast notifications using the `sonner` library.
  * It adapts to the current theme from `next-themes` and supports rich styling via CSS Modules.
  *
  * ---
  *
- * ## Features:
+ * ### Features:
  * - **Theme Aware**: Inherits system, dark, or light theme based on user preference.
  * - **Positioning**: Toasts appear in the top-right corner by default.
  * - **Auto Dismiss**: Toasts automatically disappear after 2500ms.
@@ -16,7 +16,7 @@
  *
  * ---
  *
- * ## Props:
+ * ### Props:
  *
  * The `Toaster` accepts all props from the `sonner` library.
  *
@@ -29,47 +29,18 @@
  *
  * ---
  *
- * ## Accessibility Considerations:
+ * ### Accessibility Considerations:
  * - Close button supports screen readers.
  * - Appears in a non-intrusive location to minimize disruption.
  * - Dismissable via click and auto timeout.
  *
  * ---
  *
- * ## Styling Notes:
+ * ### Styling Notes:
  * - Uses CSS Modules via `Toast.module.css`.
  * - Classnames like `Toast`, `ToastDescription`, `ToastActionButton`, and `ToastCancelButton` allow full control of the design.
  *
- * ---
- * * Here's a simple example of how to use the `Toast` component:
- *
- * ```tsx
- * "use client";
-import { toast, Toaster } from "@/components/molecules/Toast/Toast"; // Adjust the import path as needed
-import styles from "@/components/molecules/Toast/Toast.module.css"; // Adjust the import path as needed
-import { useEffect } from "react";
-export default function ToastPage() {
-
-  useEffect(() => {
-    toast("Item has been moved to your Bag!", {
-      className: `${styles.Toast} ${styles.ToastSuccess}`,
-      unstyled: true,
-    });
-
-    setTimeout(() => {
-      toast("Item Added to Cart!", {
-        className: `${styles.Toast} ${styles.ToastSuccess}`,
-        unstyled: true,
-      });
-    }, 2500);
-  }, []);
-
-  return (
-    <div>
-      <Toaster />
-    </div>
-  );
-}
+ * 
  */
 
 "use client";

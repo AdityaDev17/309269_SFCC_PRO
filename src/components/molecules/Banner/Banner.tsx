@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import Image from "next/image";
 import styles from "./Banner.module.css"
 import Typography from "../../atomic/Typography/Typography"
 import { Button } from "../../atomic/Button/Button"
@@ -36,17 +37,22 @@ const Banner: React.FC<BannerProps> = ({
   textColor = "white",
   subtitleVariant,
 }) => {
-  // Split the alignment into horizontal and vertical components
+ 
   const [horizontal, vertical] = alignment.split("-")
-
-  // Create the alignment class by combining horizontal and vertical classes
   const alignmentClass = `${styles[`horizontal-${horizontal}`]} ${styles[`vertical-${vertical}`]}`
 
   return (
     <div className={styles.wrapper}>
       <section className={styles.bannerContainer}>
         {backgroundImage && (
-          <img src={backgroundImage || "/placeholder.svg"} alt="Banner" className={styles.bannerImage} />
+          <Image
+            src={backgroundImage || "/placeholder.svg"}
+            alt="Banner"
+            className={styles.bannerImage}
+            width={1440}
+            height={740}
+            loading="eager"
+  />
         )}
         <div className={`${styles.textBox} ${alignmentClass}`}>
           <Typography type="Headline" variant={2} fontWeight="medium" label={title} color={textColor} />

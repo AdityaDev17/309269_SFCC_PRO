@@ -92,36 +92,7 @@
     transform: translateX(0);
   }
   
-  
-  /* @container (max-width: 600px) {
-    .banner {
-      grid-template-columns: 1fr;
-      text-align: center;
-    }
-  
-    .cards {
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-      position: static;
-    }
-  
-    .card {
-      position: static;
-      transform: none !important;
-      opacity: 1 !important;
-    }
-  }
-  .buttonContainer {
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: flex-start;
-  }  
 
-
-   */
    @container (max-width: 768px) {
     .banner {
       grid-template-columns: 1fr;

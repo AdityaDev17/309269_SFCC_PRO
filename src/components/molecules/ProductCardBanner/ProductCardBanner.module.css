@@ -4,6 +4,7 @@
     overflow: hidden;
     margin: 0;
     padding: 0;
+    container-type: inline-size;
   }
   
   .imageArea {
@@ -26,7 +27,7 @@
     white-space: pre-line;
   }
   
-  /* Dot Base Style */
+ 
   .dot {
     position: absolute;
     width: 16px;
@@ -45,7 +46,7 @@
     background-color: rgba(255, 0, 0, 0.7);
   }
   
-  /* Animation: Float In */
+  
   @keyframes dotFloatIn {
     0% {
       transform: translateY(20px) scale(0.8);
@@ -64,7 +65,7 @@
   .productCardPopup {
     position: absolute;
     bottom: 30%;
-    left: 20%;
+    left: 30%;
     z-index: 4;
     background-color: rgba(255, 255, 255, 0.95);
     padding: 16px;
@@ -87,4 +88,41 @@
     height: 80px;
     object-fit: cover;
   }
+   
+
+  @container (max-width: 600px) {
+    .productCardPopup {
+      left: 50%;
+      bottom: 20%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: none;
+      padding: 12px;
+    }
+  
+    .textBlock {
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      width: 90%;
+    }
+  
+    .productCardPopup img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
   

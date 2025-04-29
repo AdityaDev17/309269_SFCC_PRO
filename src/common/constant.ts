@@ -263,3 +263,13 @@ export const states = [
   { label: "Delhi", value: "delhi" },
   { label: "Karnataka", value: "karnataka" },
 ];
+
+export const searchSuggestions = ['Blush', 'Foundation', 'Highlighters'];
+
+export const productSuggestions = [
+  {
+    productId: '1',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+]

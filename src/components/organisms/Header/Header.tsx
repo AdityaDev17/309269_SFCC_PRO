@@ -6,11 +6,13 @@ import styles from "./Header.module.css";
 import {
   DrawerTrigger,
   DrawerContent,
-  DrawerTitle,
   DrawerHeader,
+  DrawerTitle,
+  DrawerDescription,
+  DrawerFooter,
   DrawerClose,
+  Drawer,
 } from "../../molecules/Drawer/Drawer";
-import { Drawer } from "vaul";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import {
   NavigationMenu,
@@ -25,6 +27,7 @@ import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import MiniCart from "../MiniCart/MiniCart";
 import { cartItems } from "../../../common/constant";
+import SearchMenu from "./SearchMenu";
 
 type CategoriesProps = {
   name: string;
@@ -79,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({
       <div className={styles.layout}>
         <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
           {isMobile && (
-            <Drawer.Root shouldScaleBackground>
+            <Drawer side="left">
               <DrawerTrigger asChild>
                 <Image
                   src={isHome ? "/images/menu_white.svg" : "/images/menu.svg"}
@@ -89,7 +92,7 @@ const Header: React.FC<HeaderProps> = ({
                   height={24}
                 />
               </DrawerTrigger>
-              <DrawerContent>
+              <DrawerContent side="left">
                 <DrawerHeader className={styles.menuheader}>
                   <ChevronLeft size={20} />
                   <DrawerTitle className={styles.title}>MENU</DrawerTitle>
@@ -120,14 +123,14 @@ const Header: React.FC<HeaderProps> = ({
                   ))}
                 </div>
               </DrawerContent>
-            </Drawer.Root>
+              </Drawer>
           )}
 
           <Link href="/" prefetch>
             <Image
               src={isHome ? logoImages.white : logoImages.default}
               alt="Elenor Logo"
-             className={styles.pointer}
+              className={styles.pointer}
               width={100}
               height={20}
             />
@@ -237,25 +240,33 @@ const Header: React.FC<HeaderProps> = ({
         )}
 
         <div className={styles.categories}>
-          {iconsToRender.map(({ label, icon }, index) =>
-            label === "CartBag" ? (
-              <MiniCart
-                key={index}
-                cartItems={cartItems}
-                triggerType="icon"
-                bagIcon={icon}
-                onViewBag={()=>router.push('/cart')}
-              />
-            ) : (
-              <Image
-                key={index}
-                src={icon}
-                alt={label}
-                width={20}
-                height={20}
-              />
-            )
-          )}
+          {iconsToRender.map(({ label, icon }, index) => {
+            if (label === "CartBag") {
+              return (
+                <MiniCart
+                  key={index}
+                  cartItems={cartItems}
+                  triggerType="icon"
+                  bagIcon={icon}
+                  onViewBag={() => router.push("/cart")}
+                />
+              );
+            } else if (label === "Search") {
+              return (
+                <SearchMenu keyVal={index} searchIcon={icon}/>
+              );
+            } else {
+              return (
+                <Image
+                  key={index}
+                  src={icon}
+                  alt={label}
+                  width={20}
+                  height={20}
+                />
+              );
+            }
+          })}
         </div>
       </div>
     </div>

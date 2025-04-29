@@ -48,7 +48,7 @@ const Search = ({
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <Button className={styles.search} aria-label="Search" onClick={onSearch}>
+      <Button style={{backgroundColor: 'white', border: 'none', padding: '6px 8px'}} aria-label="Search" onClick={onSearch}>
         <SearchIcon strokeWidth={1.2} color="grey" />
       </Button>
 
@@ -62,7 +62,7 @@ const Search = ({
       />
 
       {inputValue && (
-        <Button className={styles.cancel} aria-label="Clear search" onClick={handleClear}>
+        <Button  style={{backgroundColor: 'white', border: 'none', padding: '6px 8px'}}aria-label="Clear search" onClick={handleClear}>
           <X strokeWidth={2} color="grey" />
         </Button>
       )}
@@ -70,7 +70,7 @@ const Search = ({
       <span className={styles.bar} />
 
       {showMic && (
-        <Button className={styles.mic} aria-label="Voice search" onClick={onMicClick}>
+        <Button style={{backgroundColor: 'white', border: 'none', padding: '6px 8px'}} aria-label="Voice search" onClick={onMicClick}>
           <Mic strokeWidth={1.8} color="grey" />
         </Button>
       )}

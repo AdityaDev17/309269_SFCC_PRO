@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import Input from "../../atomic/Input/Input"
+import Input from "../../atomic/Input/Input";
 import {
   Dialog,
   DialogTrigger,
@@ -22,36 +22,36 @@ import {
 } from "../../atomic/Select/Select";
 import styles from "./AddressModal.module.css";
 import { Button } from "../../atomic/Button/Button";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import clsx, { ClassValue } from "clsx";
 import { states } from "../../../common/constant";
 import CheckBox from "../../atomic/CheckBox/CheckBox";
 
-export const cn = (...args: ClassValue[]) => clsx(...args)
+export const cn = (...args: ClassValue[]) => clsx(...args);
 
 type AddressType = {
-  firstName: string
-  lastName: string
-  phone: string
-  apartment: string
-  building: string
-  street: string
-  landmark?: string
-  city: string
-  state: string
-  zipcode: string
-  isDefault?: boolean
-}
+  firstName: string;
+  lastName: string;
+  phone: string;
+  apartment: string;
+  building: string;
+  street: string;
+  landmark?: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  isDefault?: boolean;
+};
 
 type AddressDialogProps = {
-  className?: string
-  onAddAddress?: (address: AddressType) => void
-  onEditAddress?: (address: AddressType) => void
-  addressToEdit?: AddressType | null
-  isOpen?: boolean
-  onOpenChange?: (open: boolean) => void
-  trigger?: React.ReactNode
-}
+  className?: string;
+  onAddAddress?: (address: AddressType) => void;
+  onEditAddress?: (address: AddressType) => void;
+  addressToEdit?: AddressType | null;
+  isOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  trigger?: React.ReactNode;
+};
 
 export function AddressDialog({
   className,
@@ -62,7 +62,7 @@ export function AddressDialog({
   onOpenChange,
   trigger,
 }: AddressDialogProps) {
-  const [isChecked, setIsChecked] = useState(false)
+  const [isChecked, setIsChecked] = useState(false);
   const [formData, setFormData] = useState<AddressType>({
     firstName: "",
     lastName: "",
@@ -75,14 +75,13 @@ export function AddressDialog({
     state: "",
     zipcode: "",
     isDefault: false,
-  })
+  });
 
-  
   useEffect(() => {
     if (addressToEdit) {
-      setFormData(addressToEdit)
-      setIsChecked(addressToEdit.isDefault || false)
-    } else { 
+      setFormData(addressToEdit);
+      setIsChecked(addressToEdit.isDefault || false);
+    } else {
       setFormData({
         firstName: "",
         lastName: "",
@@ -95,32 +94,32 @@ export function AddressDialog({
         state: "",
         zipcode: "",
         isDefault: false,
-      })
-      setIsChecked(false)
+      });
+      setIsChecked(false);
     }
-  }, [addressToEdit])
+  }, [addressToEdit]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSelectState = (value: string) => {
-    setFormData((prev) => ({ ...prev, state: value }))
-  }
+    setFormData((prev) => ({ ...prev, state: value }));
+  };
 
   const handleSubmit = () => {
     const updatedAddress = {
       ...formData,
       isDefault: isChecked,
-    }
+    };
 
     if (addressToEdit) {
-      onEditAddress?.(updatedAddress)
+      onEditAddress?.(updatedAddress);
     } else {
-      onAddAddress?.(updatedAddress)
+      onAddAddress?.(updatedAddress);
     }
-  }
+  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
@@ -130,7 +129,6 @@ export function AddressDialog({
         className={cn(styles.DialogContent, styles.AddressDialogContent)}
         overlayClassName={styles.dialogOverlay}
       >
-      
         <DialogHeader className={styles.AddressDialogHeader}>
           <DialogTitle className={styles.AddressDialogTitle}>
             {addressToEdit ? "Edit Address" : "Add Address"}
@@ -216,9 +214,8 @@ export function AddressDialog({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
-
 
 /**
  * ## AddressDialog Component

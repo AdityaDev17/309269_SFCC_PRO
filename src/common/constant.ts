@@ -136,6 +136,174 @@ export const footerData = [
     ],
   },
 ];
+
+export const orderDetails = {
+  adjustedMerchandizeTotalTax: 0.0,
+  adjustedShippingTotalTax: 0.0,
+  billingAddress: {
+    address1: "jej",
+    city: "us",
+    countryCode: "US",
+    firstName: "kavya",
+    fullName: "kavya k",
+    id: "53015021a3621a91a47887112a",
+    lastName: "k",
+    phone: "3333333333",
+    postalCode: "98967",
+    stateCode: "AR",
+  },
+  channelType: "storefront",
+  confirmationStatus: "not_confirmed",
+  createdBy: "Customer",
+  creationDate: "2025-04-15T17:47:22.000Z",
+  currency: "USD",
+  customerInfo: {
+    customerId: "acmraFlbpHkXcRkedHxqYYmuw0",
+    customerName: "kavya kv",
+    customerNo: "00006001",
+    email: "kavya1234@gmail.com",
+  },
+  customerName: "kavya kv",
+  exportStatus: "not_exported",
+  guest: false,
+  lastModified: "2025-04-22T08:34:27.000Z",
+  merchandizeTotalTax: 0.0,
+  notes: {},
+  orderNo: "00002501",
+  orderToken: "skKdNVt3L0_rJG8yQLMB7lkfAsNRt_-HhMqdAXMvdCM",
+  orderTotal: 141.1,
+  orderViewCode: "dpHrMm7XmjK3vluN9hHzqlmNy3J6rlL0Ai-6co35otU",
+  paymentInstruments: [
+    {
+      amount: 141.1,
+      paymentCard: {
+        cardType: "scheme",
+        creditCardExpired: false,
+      },
+      paymentInstrumentId: "039d67ce0ec597ee2d28710ce6",
+      paymentMethodId: "AdyenComponent",
+    },
+  ],
+  paymentStatus: "not_paid",
+  productItems: [
+    {
+      adjustedTax: 0.0,
+      basePrice: 12.0,
+      bonusProductLineItem: false,
+      gift: false,
+      itemId: "0a09c7086a263d0f1aeb850555",
+      itemText: "Dog Treats Healthy Planet",
+      price: 24.0,
+      priceAfterItemDiscount: 21.6,
+      priceAfterOrderDiscount: 21.6,
+      productId: "ACNPETS_123",
+      productName: "ELENOR, MEN’S PERFUME 1, POUR HOMME - 100ML, 3.4",
+      productImage: "/images/product.svg",
+      quantity: 2,
+      shipmentId: "me",
+      tax: 0.0,
+      taxBasis: 24.0,
+      taxClassId: "standard",
+      taxRate: 0,
+    },
+    {
+      adjustedTax: 0.0,
+      basePrice: 35.0,
+      bonusProductLineItem: false,
+      gift: false,
+      itemId: "4730fab2a49cb16505fb9768ba",
+      itemText: "Organic Rope Chew",
+      price: 105.0,
+      productImage: "/images/product.svg",
+      priceAdjustments: [
+        {
+          appliedDiscount: {
+            amount: 0.1,
+            percentage: 10,
+            type: "percentage",
+          },
+          creationDate: "2025-04-15T17:47:22.000Z",
+          custom: false,
+          itemText: "trade_in",
+          lastModified: "2025-04-15T17:47:22.000Z",
+          manual: false,
+          price: -10.5,
+          priceAdjustmentId: "5339a9254eedfaf66b00bc579a",
+          promotionId: "trade_in",
+        },
+      ],
+      priceAfterItemDiscount: 94.5,
+      priceAfterOrderDiscount: 94.5,
+      productId: "ACNPETS_130",
+      productName: "Organic Rope Chew",
+      quantity: 3,
+      shipmentId: "me",
+      tax: 0.0,
+      taxBasis: 105.0,
+      taxClassId: "standard",
+      taxRate: 0,
+    },
+  ],
+  productSubTotal: 116.1,
+  productTotal: 116.1,
+  shipments: [
+    {
+      adjustedMerchandizeTotalTax: 0.0,
+      adjustedShippingTotalTax: 0.0,
+      gift: false,
+      merchandizeTotalTax: 0.0,
+      productSubTotal: 116.1,
+      productTotal: 116.1,
+      shipmentId: "me",
+      shipmentNo: "00003504",
+      shipmentTotal: 141.1,
+      shippingAddress: {
+        address1: "123 Main street AnyTown",
+        city: "California",
+        countryCode: "US",
+        firstName: "kavya",
+        fullName: "kavya k",
+        id: "8e3298bf3f39c36c46119e703c",
+        lastName: "k",
+        phone: "3333333333",
+        postalCode: "98967",
+        stateCode: "AR",
+      },
+      shippingMethod: {
+        id: "express",
+        name: "Express post",
+        price: 25.0,
+      },
+      shippingStatus: "not_shipped",
+      shippingTotal: 25.0,
+      shippingTotalTax: 0.0,
+      taxTotal: 0.0,
+    },
+  ],
+  shippingItems: [
+    {
+      adjustedTax: 0.0,
+      basePrice: 25.0,
+      itemId: "a166764c05b493613d2824e981",
+      itemText: "Shipping",
+      price: 25.0,
+      priceAfterItemDiscount: 25.0,
+      shipmentId: "me",
+      tax: 0.0,
+      taxBasis: 25.0,
+      taxClassId: "standard",
+      taxRate: 0,
+    },
+  ],
+  shippingStatus: "not_shipped",
+  shippingTotal: 25.0,
+  shippingTotalTax: 0.0,
+  siteId: "acndoggo",
+  status: "new",
+  taxation: "net",
+  taxRoundedAtGroup: false,
+  taxTotal: 0.0,
+};
 export interface BannerData {
   title: string;
   buttonText: string;
@@ -205,7 +373,7 @@ export const cartItems = [
     quantity: 2,
     price: 50,
     currency: "$",
-    productImage:'/images/product.svg'
+    productImage: "/images/product.svg",
   },
 
   {
@@ -215,7 +383,7 @@ export const cartItems = [
     quantity: 1,
     price: 50,
     currency: "$",
-      productImage:'/images/product.svg'
+    productImage: "/images/product.svg",
   },
 ];
 
@@ -436,6 +604,71 @@ export const productInfoData = [
     category: "product-info",
   },
 ]
+export const filterTabs = ["Price", "Notes", "Brands", "Features", "Discount"];
+
+export const filterOptions: Record<string, string[]> = {
+  Price: [
+    "Below ₹1000",
+    "₹1001 to ₹2000",
+    "₹2001 to ₹3000",
+    "₹3001 to ₹4000",
+    "₹4001 and above",
+  ],
+  Notes: ["Floral", "Woody", "Citrus", "Spicy", "Musk"],
+  Brands: ["Gucci", "Dior", "Chanel", "Versace", "Armani"],
+  Features: ["Long Lasting", "Travel Size", "Refillable"],
+  Discount: ["10% and above", "25% and above", "50% and above"],
+};
+export const orderData = [
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData,
+  },
+  {
+    orderId: "ABCD12345678",
+    price: 100,
+    orderName: "Men's Perfume 1, 100ml",
+    items: productData.slice(0, 3),
+  },
+];
 
 export const mockUserDetails = {
   title: "Mr.",
@@ -447,50 +680,49 @@ export const mockUserDetails = {
 };
 
 export type CardType = {
-  type: 'text' | 'image'
-  title?: string
-  subtitle?: string
-  description?: string
-  link?: string
-  image?: string
-}
+  type: "text" | "image";
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  link?: string;
+  image?: string;
+};
 
- export const bannerData: CardType[][] = [
+export const bannerData: CardType[][] = [
   [
     {
-      type: 'text',
-      title: 'LOVE YOUR',
-      subtitle: 'SKIN ENOUGH',
-      description: 'Skincare reimagined',
-      link: '#',
+      type: "text",
+      title: "LOVE YOUR",
+      subtitle: "SKIN ENOUGH",
+      description: "Skincare reimagined",
+      link: "#",
     },
-    { type: 'image', image: '/images/carousel-image1.svg' },
-    { type: 'image', image: '/images/carousel-image2.svg' },
+    { type: "image", image: "/images/carousel-image1.svg" },
+    { type: "image", image: "/images/carousel-image2.svg" },
   ],
   [
-    { type: 'image', image: '/images/carousel-image3.svg' },
+    { type: "image", image: "/images/carousel-image3.svg" },
     {
-      type: 'text',
-      title: 'FRAGRANCE',
-      subtitle: ' RARE AS YOU',
-      description: 'With lips that speak volumes',
-      link: '#',
+      type: "text",
+      title: "FRAGRANCE",
+      subtitle: " RARE AS YOU",
+      description: "With lips that speak volumes",
+      link: "#",
     },
-    { type: 'image', image: '/images/carousel-image4.svg' },
+    { type: "image", image: "/images/carousel-image4.svg" },
   ],
   [
-    { type: 'image', image: '/images/carousel-image5.svg' },
-    { type: 'image', image: '/images/carousel-image6.svg' },
+    { type: "image", image: "/images/carousel-image5.svg" },
+    { type: "image", image: "/images/carousel-image6.svg" },
     {
-      type: 'text',
-      title: 'DARE TO BE',
-      subtitle: 'DIFFERENT',
-      description: 'With lips that speaks volumes',
-      link: '#',
+      type: "text",
+      title: "DARE TO BE",
+      subtitle: "DIFFERENT",
+      description: "With lips that speaks volumes",
+      link: "#",
     },
   ],
-]
-
+];
 
 export const dots = [
   {
@@ -499,7 +731,7 @@ export const dots = [
     left: "60%",
     productImage: "/images/lipstick.svg",
     productTitle: "TILBURY MATTE REVOLUTION",
-    productDesc: "VIEW MORE"
+    productDesc: "VIEW MORE",
   },
   {
     id: 2,
@@ -507,7 +739,7 @@ export const dots = [
     left: "60%",
     productImage: "/images/lipstick.svg",
     productTitle: "EYELINER MAGIC",
-    productDesc: "VIEW MORE"
+    productDesc: "VIEW MORE",
   },
   {
     id: 3,
@@ -515,53 +747,54 @@ export const dots = [
     left: "65%",
     productImage: "/images/product.svg",
     productTitle: "PERFUME",
-    productDesc: "VIEW MORE"
-  }
+    productDesc: "VIEW MORE",
+  },
 ];
 
-
-export const addresses = [{
-      firstName: "Utkarsh",
-      lastName: "Pai",
-      apartment: "20",
-      building: "Impasse Odette Dijoux",
-      street: "Letellier-la-Forêt",
-      city: "Pinto",
-      state: "France",
-      zipcode: "97459",
-      phone: "XXX4398238",
-      isDefault: true,
-    },
-    {
-      firstName: "Sharmili",
-      lastName: "K",
-      apartment: "D/12",
-      building: "Chand Society",
-      street: "Jvpd Scheme",
-      city: "Mumbai",
-      state: "Maharashtra",
-      zipcode: "110005",
-      phone: "XXX4398238",
-    },
-    {
-      firstName: "Robin",
-      lastName: "Wood",
-      apartment: "25",
-      building: "Impasse Odette Dijoux",
-      street: "Letellier-la-Forêt",
-      city: "Pinto",
-      state: "France",
-      zipcode: "97459",
-      phone: "XXX4398238",
-    },
-    {
-      firstName: "Kantilal",
-      lastName: "Patel",
-      apartment: "6",
-      building: "Old Mahavir Bldg",
-      street: "Behind Matunga P.o.",
-      city: "Matunga(c.r)",
-      state: "Mumbai",
-      zipcode: "110011",
-      phone: "XXX4398238",
-    }]
+export const addresses = [
+  {
+    firstName: "Utkarsh",
+    lastName: "Pai",
+    apartment: "20",
+    building: "Impasse Odette Dijoux",
+    street: "Letellier-la-Forêt",
+    city: "Pinto",
+    state: "France",
+    zipcode: "97459",
+    phone: "XXX4398238",
+    isDefault: true,
+  },
+  {
+    firstName: "Sharmili",
+    lastName: "K",
+    apartment: "D/12",
+    building: "Chand Society",
+    street: "Jvpd Scheme",
+    city: "Mumbai",
+    state: "Maharashtra",
+    zipcode: "110005",
+    phone: "XXX4398238",
+  },
+  {
+    firstName: "Robin",
+    lastName: "Wood",
+    apartment: "25",
+    building: "Impasse Odette Dijoux",
+    street: "Letellier-la-Forêt",
+    city: "Pinto",
+    state: "France",
+    zipcode: "97459",
+    phone: "XXX4398238",
+  },
+  {
+    firstName: "Kantilal",
+    lastName: "Patel",
+    apartment: "6",
+    building: "Old Mahavir Bldg",
+    street: "Behind Matunga P.o.",
+    city: "Matunga(c.r)",
+    state: "Mumbai",
+    zipcode: "110011",
+    phone: "XXX4398238",
+  },
+];

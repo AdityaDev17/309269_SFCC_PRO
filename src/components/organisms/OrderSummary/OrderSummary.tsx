@@ -4,7 +4,7 @@ import Typography from "../../atomic/Typography/Typography";
 import { Button } from "../../atomic/Button/Button";
 import Image from "next/image";
 
-const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true ,isPaymentImage= true }) => {
+const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true ,isPaymentImage= true ,totalAmt="",currency="$",subTotal="",delivery="",tax="",total="",totalSavings="",buttonText=""}) => {
   const paymentImages = [
     "/images/pay1.svg",
     "/images/pay2.svg",
@@ -28,7 +28,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
               type={"Label"}
               variant={3}
               fontWeight="medium"
-              label="$420"
+              label={totalAmt}
             />
           </div>
           <hr className={styles.topDivider} />
@@ -55,7 +55,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
             type={"Body"}
             variant={2}
             fontWeight="regular"
-            label="$400"
+            label={subTotal}
             color="#4F4B53"
           />
         </div>
@@ -71,7 +71,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
             type={"Body"}
             variant={2}
             fontWeight="regular"
-            label="Free"
+            label={delivery}
             color="#4F4B53"
           />
         </div>
@@ -87,7 +87,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
             type={"Body"}
             variant={2}
             fontWeight="regular"
-            label="$20"
+            label={tax}
             color="#4F4B53"
           />
         </div>
@@ -105,7 +105,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
                 type={"Body"}
                 variant={2}
                 fontWeight="medium"
-                label="$20"
+                label={total}
               />
             </>
           ) : (
@@ -121,7 +121,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
                 type={"Label"}
                 variant={3}
                 fontWeight="medium"
-                label="$420"
+                label={total}
               />
             </>
           )}
@@ -140,7 +140,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
               type={"Body"}
               variant={2}
               fontWeight="regular"
-              label="$20"
+              label={totalSavings}
               color="#4F4B53"
             />
           </div>
@@ -148,7 +148,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
 {isButton && 
         <div className={styles.summaryButton}>
           <Button variant="secondary" className={styles.button}>
-            CONTINUE
+            {buttonText}
           </Button>
         </div>
 }
@@ -165,7 +165,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
               type={"Body"}
               variant={2}
               fontWeight="regular"
-              label="$20"
+              label={totalSavings}
               color="#4F4B53"
             />
           </div>

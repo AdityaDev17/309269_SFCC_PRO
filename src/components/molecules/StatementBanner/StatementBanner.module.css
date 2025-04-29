@@ -1,62 +1,3 @@
-/* 
-   .section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    height: auto;
-  }
-  
-  .container {
-    display: grid;
-    grid-template-columns: 60% 40%;
-    align-items: center;
-    width: 100%;
-    gap: 1rem;
-  }
-  
-  .left {
-    direction: ltr;
-  }
-  
-  .right {
-    direction: rtl;
-  }
-  
-  .imageWrapper {
-    width: 100%;
-  }
-  
-  .image {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-  }
-  
-  .text {
-    direction: ltr;
-    text-align: left;
-    width: 434px;
-    opacity: 0;
-    transform: translateY(20px); 
-    transition: opacity 2s ease, transform 2s ease; 
-  }
-  
-  .text.visible {
-    opacity: 1;
-    transform: translateY(0); 
-  }
-  
-  .buttonContainer {
-    margin-top: 25px;
-  }
-  
-  
-   */
-
-
-
 
 /* with reposnsiveness */
    .section {
@@ -78,7 +19,7 @@
     gap: clamp(1rem, 2vw, 2rem);
   }
   
-  /* Left and right positioning (for large screens) */
+  
   .left {
     direction: ltr;
   }
@@ -138,7 +79,7 @@
   
     .left,
     .right {
-      direction: ltr; /* Reset direction for stacked layout */
+      direction: ltr; 
     }
   }
   

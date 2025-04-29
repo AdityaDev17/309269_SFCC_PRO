@@ -1,60 +1,18 @@
 'use client'
-
 import React, { useEffect, useState } from 'react'
+import Image from 'next/image';
 import styles from './BannerCarousel.module.css'
 import Typography from '../../atomic/Typography/Typography'
-import { Button } from '../../atomic/Button/Button'
+import { Button }  from '../../atomic/Button/Button'
+
 import {
   Card,
   CardHeader,
   CardContent,
   CardFooter,
 } from '../../atomic/Card/Card'
+import { bannerData, CardType } from '../../../common/constant';
 
-type CardType = {
-  type: 'text' | 'image'
-  title?: string
-  subtitle?: string
-  description?: string
-  link?: string
-  image?: string
-}
-
-const bannerData: CardType[][] = [
-  [
-    {
-      type: 'text',
-      title: 'LOVE YOUR',
-      subtitle: 'SKIN ENOUGH',
-      description: 'Skincare reimagined',
-      link: '#',
-    },
-    { type: 'image', image: '/images/carousel-image1.svg' },
-    { type: 'image', image: '/images/carousel-image2.svg' },
-  ],
-  [
-    { type: 'image', image: '/images/carousel-image3.svg' },
-    {
-      type: 'text',
-      title: 'FRAGRANCE',
-      subtitle: ' RARE AS YOU',
-      description: 'With lips that speak volumes',
-      link: '#',
-    },
-    { type: 'image', image: '/images/carousel-image4.svg' },
-  ],
-  [
-    { type: 'image', image: '/images/carousel-image5.svg' },
-    { type: 'image', image: '/images/carousel-image6.svg' },
-    {
-      type: 'text',
-      title: 'DARE TO BE',
-      subtitle: 'DIFFERENT',
-      description: 'With lips that speaks volumes',
-      link: '#',
-    },
-  ],
-]
 
 const BannerCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -113,7 +71,13 @@ const BannerCarousel = () => {
               </div>
             ) : (
               <CardHeader>
-                <img src={card.image} alt="Banner" />
+                <Image
+                  src={card.image ?? '/placeholder.svg'} 
+                  alt="Banner"
+                  width={440} 
+                  height={600} 
+                  loading="eager"
+                />
               </CardHeader>
             )}
           </Card>

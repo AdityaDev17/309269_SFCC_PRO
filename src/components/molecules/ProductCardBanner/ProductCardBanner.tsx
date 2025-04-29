@@ -3,33 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./ProductCardBanner.module.css";
 import ProductCard from "../../molecules/ProductCard/ProductCard";
 import Typography from "../../atomic/Typography/Typography";
+import { dots } from "../../../common/constant";
 
-const dots = [
-  {
-    id: 1,
-    top: "48%",
-    left: "60%",
-    productImage: "/images/lipstick.svg",
-    productTitle: "TILBURY MATTE REVOLUTION",
-    productDesc: "VIEW MORE"
-  },
-  {
-    id: 2,
-    top: "35%",
-    left: "60%",
-    productImage: "/images/lipstick.svg",
-    productTitle: "EYELINER MAGIC",
-    productDesc: "VIEW MORE"
-  },
-  {
-    id: 3,
-    top: "60%",
-    left: "65%",
-    productImage: "/images/product.svg",
-    productTitle: "PERFUME",
-    productDesc: "VIEW MORE"
-  }
-];
+
 
 const ProductCardBanner = () => {
   const [activeDot, setActiveDot] = useState<number | null>(null);

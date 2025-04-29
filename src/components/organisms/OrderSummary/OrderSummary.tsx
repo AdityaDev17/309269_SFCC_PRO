@@ -4,7 +4,20 @@ import Typography from "../../atomic/Typography/Typography";
 import { Button } from "../../atomic/Button/Button";
 import Image from "next/image";
 
-const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true ,isPaymentImage= true ,totalAmt="",currency="$",subTotal="",delivery="",tax="",total="",totalSavings="",buttonText=""}) => {
+const OrderSummary = ({
+  reverseOrder = false,
+  totalRowTop = false,
+  isButton = true,
+  isPaymentImage = true,
+  totalAmt = "",
+  currency = "$",
+  subTotal = "",
+  delivery = "",
+  tax = "",
+  total = "",
+  totalSavings = "",
+  buttonText = "",
+}) => {
   const paymentImages = [
     "/images/pay1.svg",
     "/images/pay2.svg",
@@ -28,7 +41,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
               type={"Label"}
               variant={3}
               fontWeight="medium"
-              label={totalAmt}
+              label={`${currency}${totalAmt}`}
             />
           </div>
           <hr className={styles.topDivider} />
@@ -55,7 +68,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
             type={"Body"}
             variant={2}
             fontWeight="regular"
-            label={subTotal}
+            label={`${currency}${subTotal}`}
             color="#4F4B53"
           />
         </div>
@@ -105,7 +118,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
                 type={"Body"}
                 variant={2}
                 fontWeight="medium"
-                label={total}
+                label={`${currency}${total}`}
               />
             </>
           ) : (
@@ -121,7 +134,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
                 type={"Label"}
                 variant={3}
                 fontWeight="medium"
-                label={total}
+                label={`${currency}${total}`}
               />
             </>
           )}
@@ -140,18 +153,18 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
               type={"Body"}
               variant={2}
               fontWeight="regular"
-              label={totalSavings}
+              label={`${currency}${totalSavings}`}
               color="#4F4B53"
             />
           </div>
         )}
-{isButton && 
-        <div className={styles.summaryButton}>
-          <Button variant="secondary" className={styles.button}>
-            {buttonText}
-          </Button>
-        </div>
-}
+        {isButton && (
+          <div className={styles.summaryButton}>
+            <Button variant="secondary" className={styles.button}>
+              {buttonText}
+            </Button>
+          </div>
+        )}
         {reverseOrder && (
           <div className={styles.reverseTotalSavings}>
             <Typography
@@ -165,17 +178,24 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
               type={"Body"}
               variant={2}
               fontWeight="regular"
-              label={totalSavings}
+              label={`${currency}${totalSavings}`}
               color="#4F4B53"
             />
           </div>
         )}
-{isPaymentImage &&
-        <div className={styles.paymentImages}>
-          {paymentImages.map((src, index) => (
-            <Image key={index} src={src} alt={`payment method ${index + 1}`} width={42} height={28} />
-          ))}
-        </div>}
+        {isPaymentImage && (
+          <div className={styles.paymentImages}>
+            {paymentImages.map((src, index) => (
+              <Image
+                key={index}
+                src={src}
+                alt={`payment method ${index + 1}`}
+                width={42}
+                height={28}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -184,7 +204,7 @@ const OrderSummary = ({ reverseOrder = false, totalRowTop = false, isButton=true
 export default OrderSummary;
 
 /**
- * ## OrderSummary 
+ * ## OrderSummary
  *
  * The OrderSummary component is used to display an order's summary, including the price details,
  *  It showcases the breakdown of costs such as subtotal, delivery

@@ -124,6 +124,7 @@ const OrderConfimation = () => {
           subTotal={orderDetails?.productSubTotal.toString()}
           delivery="Free"
           tax={orderDetails?.taxTotal.toString()}
+          currency={orderDetails?.currency}
         />
       </section>
     </section>

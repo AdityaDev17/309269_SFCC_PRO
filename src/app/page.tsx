@@ -2,9 +2,10 @@ import Banner from "@/components/molecules/Banner/Banner";
 import BannerCarousel from "@/components/molecules/BannerCarousel/BannerCarousel";
 import GetTheLookBanner from "@/components/molecules/GetTheLookBanner/GetTheLookBanner";
 import ProductCardBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
-import { homepageBanners, homepageProducts } from "../common/constant";
+import { homepageBanners, homepageProducts, statementBannerData } from "../common/constant";
 import styles from "./page.module.css";
 import ProductCard from "../components/molecules/ProductCard/ProductCard";
+import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
 
 export const revalidate = 60;
 
@@ -35,7 +36,14 @@ export default async function Home() {
       <GetTheLookBanner />
       <ProductCardBanner />
       <BannerCarousel />
-
+      <StatementBanner
+        imageSrc={statementBannerData.imageSrc}
+        imageAlt={statementBannerData.imageAlt}
+        imagePosition={statementBannerData.imagePosition}
+        heading={statementBannerData.heading}
+        subheading={statementBannerData.subheading}
+        description={statementBannerData.description}
+      />
       <Banner
         title={homepageBanners[1]?.title}
         buttonText={homepageBanners[1]?.buttonText}

@@ -344,6 +344,7 @@ export const homepageBanners: BannerData[] = [
     buttonLink: "",
   },
 ];
+
 export const homepageProducts: ProductCard[] = [
   {
     productId: "1",
@@ -364,6 +365,15 @@ export const homepageProducts: ProductCard[] = [
     productDesc: "VIEW MORE",
   },
 ];
+
+export const statementBannerData = {
+  imageSrc: "/images/lipstick.svg",
+  imageAlt: "Lipstick collection",
+  imagePosition: "left",
+  heading: "STATEMENT SHADES",
+  subheading: "FOR EVERY MOOD",
+  description: "6 new iconic shades which minimizes lines giving your lips a soft appearance.",
+};
 
 export const cartItems = [
   {

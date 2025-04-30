@@ -1,240 +1,213 @@
 .faqContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   min-height: 100vh;
 }
 
 .mainContainer {
   max-width: 100%;
-  padding-left: 4rem;
-  padding-right: 4rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding: 2rem 4rem;
 }
 
 .heading {
-  font-size: 1.5rem;   /* text-2xl = 24px = 1.5rem */
-  font-weight: 500;    /* font-medium */
-  margin-bottom: 1.5rem; /* mb-6 = 1.5rem */
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
 }
 
 .faqGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;           /* gap-8 = 2rem */
-}
-
-@media (min-width: 768px) {
-  .faqGrid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+  align-items: start;
 }
 
 .faqSection {
-  grid-column: span 2;
+  grid-column: span 1;
 }
 
 .accordionContainer > * + * {
-  margin-top: 1rem;   
+  margin-top: 1rem;
 }
 
-
 .pageContainer {
-  display: flex;
-  flex-direction: column;
+  display: block;
   min-height: 100vh;
 }
 
 .mainContent {
-  max-width: 1200px; /* equivalent to container */
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem; /* px-4 py-4 */
-  flex: 1;
+  padding: 1rem;
 }
 
 .pageTitle {
-  font-size: 1.5rem; /* text-2xl */
-  font-weight: 500;   /* font-medium */
-  margin-bottom: 1.5rem; /* mb-6 */
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
 }
 
 .gridLayout {
   display: grid;
-  grid-template-columns: 1fr; /* Mobile: single column */
-  gap: 2rem; /* spacing between rows/columns */
-
-  /* Responsive: 2 columns on medium screens and up */
-  @media (min-width: 768px) {
-    grid-template-columns: 2fr 1fr; /* Adjust ratio as needed */
-  }
+  grid-template-columns: 1fr;
+  gap: 2rem;
 }
 
 .searchWrapper {
   position: relative;
-  margin-bottom: 2rem; /* mb-8 */
+  margin-bottom: 2rem;
 }
 
 .searchIcon {
   position: absolute;
-  left: 0.75rem; /* left-3 */
+  left: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #9ca3af; /* text-gray-400 */
-  height: 1.25rem; /* h-5 */
-  width: 1.25rem;  /* w-5 */
+  color: #9ca3af;
+  height: 1.25rem;
+  width: 1.25rem;
 }
 
 .searchInput {
-  padding-left: 2.5rem; /* pl-10 */
-  border: 1px solid #d1d5db; /* border-gray-300 */
-  border-radius: 0.375rem;   /* rounded-md */
+  padding-left: 2.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
   width: 100%;
 }
 
 .faqAccordions {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  display: block;
+}
+
+.faqAccordions > * + * {
+  margin-top: 1rem;
 }
 
 .accordionIcon {
   height: 1.25rem;
   width: 1.25rem;
 }
+
 .assistanceCol {
   grid-column: span 1;
 }
 
 .assistanceBox {
-  border: 1px solid #e5e7eb; /* border-gray-200 */
-  padding: 1.5rem; /* p-6 */
+  border: 1px solid #e5e7eb;
+  padding: 1.5rem;
 }
 
 .assistanceHeading {
-  font-size: 1.125rem; /* text-lg */
-  font-weight: 500;    /* font-medium */
-  margin-bottom: 1rem; /* mb-4 */
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
 }
 
-.assistanceSectionSpacing {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem; /* space-y-6 */
+.assistanceSectionSpacing > * + * {
+  margin-top: 1.5rem;
 }
 
 .assistanceText {
-  font-size: 0.875rem; /* text-sm */
-  margin-bottom: 0.5rem; /* mb-2 */
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
 }
 
 .assistanceBoxDark {
   background-color: #231f20;
   color: white;
-  padding: 0.75rem; /* p-3 */
-  display: flex;
-  align-items: center;
-  gap: 0.5rem; /* space-x-2 */
+  padding: 0.75rem;
+}
+
+.assistanceBoxDark > * + * {
+  margin-left: 0.5rem;
 }
 
 .assistanceSubtext {
   font-size: 0.875rem;
-  color: #6b7280; /* text-gray-500 */
-  margin-top: 0.25rem; /* mt-1 */
+  color: #6b7280;
+  margin-top: 0.25rem;
 }
 
 .assistanceButton {
   width: 100%;
   background-color: white;
   color: #231f20;
-  border: 1px solid #d1d5db; /* border-gray-300 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem; /* space-x-2 */
+  border: 1px solid #d1d5db;
   padding: 0.75rem 1rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  text-align: center;
 }
 
 .assistanceButton:hover {
-  background-color: #f3f4f6; /* hover:bg-gray-100 */
+  background-color: #f3f4f6;
 }
 
 .statusIndicator {
-  display: flex;
-  align-items: center;
-  margin-top: 0.5rem; /* mt-2 */
+  display: table;
+  margin-top: 0.5rem;
 }
 
 .statusDot {
-  width: 0.5rem; /* h-2 w-2 */
+  width: 0.5rem;
   height: 0.5rem;
   background-color: #3e8629;
   border-radius: 9999px;
-  margin-right: 0.5rem; /* mr-2 */
+  display: inline-block;
+  margin-right: 0.5rem;
 }
 
 .statusText {
-  font-size: 0.875rem; /* text-sm */
-}  
+  font-size: 0.875rem;
+}
 
 .accordionWrapper {
-  border-bottom: 1px solid #e5e7eb; /* border-gray-200 */
-  padding-top: 1rem;   /* py-4 */
-  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
 }
 
 .accordionButton {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  text-align: left;
 }
 
 .accordionTitleWrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem; /* space-x-3 */
+  display: table;
+  width: 100%;
+}
+
+.accordionTitleWrapper > * {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .accordionTitle {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem; /* space-x-3 */
-  color: #231f20; /* dark text color */
-  font-weight: 500; 
+  color: #231f20;
+  font-weight: 500;
   font-size: 1rem;
 }
 
-/* Chevron or right icon */
 .accordionChevron {
-  color: #6b7280; 
-}
-.icon {
-  width: 1.25rem;  /* 20px (equivalent to w-5) */
-  height: 1.25rem; /* 20px (equivalent to h-5) */
-}
-.breadcumbsContainer {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 1rem;  /* 4px */
-  padding-bottom: 1rem; /* 4px */
+  color: #6b7280;
 }
 
-.breadcrumbsWrapper {
-  display: flex;
-  align-items: center;
-  font-size: 0.875rem; /* 14px */
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
 }
+
+.breadcumbsContainer {
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem 0;
+}
+
+.breadcrumbsWrapper,
 .breadcrumbs {
-  display: flex;
-  align-items: center;
-  font-size: 0.875rem; /* 14px */
+  display: inline-block;
+  font-size: 0.875rem;
 }
 
 .breadcrumbs a {
@@ -243,13 +216,14 @@
 }
 
 .breadcrumbs a:hover {
-  color: #007BFF; /* Example hover color */
+  color: #007BFF;
 }
 
 .breadcrumbs .separator {
-  margin: 0 0.5rem; /* Space between breadcrumb items */
-  color: #777; /* Gray separator color */
+  margin: 0 0.5rem;
+  color: #777;
 }
+
 .suggestionsContainer {
   position: absolute;
   top: 100%;
@@ -280,80 +254,61 @@
 }
 
 .inputRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
+  gap: 0.25rem;
   background-color: white;
   border: none;
   box-shadow: none;
 }
 
+
 .input {
   border: none !important;
   outline: none;
-  box-shadow: none;
   background-color: transparent;
-  flex: 1;
   padding: 0.5rem;
   font-size: 1rem;
-  appearance: none;
+  width: 100%;
 }
 
 .search,
 .cancel,
 .mic {
-  border: none !important;
   background: transparent;
-  box-shadow: none;
+  border: none !important;
   padding: 0.25rem;
-  margin-right: 0.25rem;
-  outline: none;
-  appearance: none;
-}
-
-.input:hover {
-  background-color: #FFFFFF;
-}
-
-.cancel:hover {
-  background-color: white;
-  border: none;
-}
-
-.mic:hover {
-  background-color: white;
-  border: none;
-}
-
-.relative {
-  position: relative;
+  margin: 0;
 }
 
 .suggestionContainer {
   position: absolute;
   z-index: 10;
   width: 100%;
-  margin-top: 0.25rem; /* mt-1 */
+  margin-top: 0.25rem;
   background-color: white;
-  border: 1px solid #e5e7eb; /* border-gray-200 */
-  border-radius: 0.375rem; /* rounded-md */
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-              0 4px 6px -4px rgba(0, 0, 0, 0.1); /* shadow-lg */
+              0 4px 6px -4px rgba(0, 0, 0, 0.1);
   top: 100%;
 }
 
 .suggestionHeader {
-  padding: 0.5rem; /* p-2 */
+  padding: 0.5rem;
   border-bottom: 1px solid #e5e7eb;
 }
 
 .suggestionTitle {
-  font-size: 0.75rem; /* text-xs */
-  color: #6b7280; /* text-gray-500 */
+  font-size: 0.75rem;
+  color: #6b7280;
   text-transform: uppercase;
 }
+
 .suggestionsWrapper {
-background-color: #fff;
-z-index: 9999;
+  background-color: #fff;
+  z-index: 9999;
 }
 
 .suggestionsBox {
@@ -381,13 +336,13 @@ z-index: 9999;
 }
 
 .suggestionButton {
-  display: flex;
-  align-items: center;
+  display: inline-block;
   width: 100%;
   padding: 12px 16px;
   background: none;
   border: none;
   cursor: pointer;
+  text-align: left;
 }
 
 .suggestionIcon {
@@ -398,7 +353,6 @@ z-index: 9999;
 .suggestionText {
   color: #333;
   font-size: 14px;
-  text-align: left;
 }
 
 .noResults {
@@ -419,7 +373,7 @@ z-index: 9999;
 }
 
 .needAssistance {
-  grid-column: span 1 / span 1;
+  grid-column: span 1;
 }
 
 .customSearch {
@@ -429,12 +383,3 @@ z-index: 9999;
 .searchBar {
   margin-bottom: 2rem;
 }
-
-
-
-
-
-
-
-
-

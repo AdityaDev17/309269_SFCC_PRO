@@ -1,11 +1,11 @@
 "use client";
-import Typography from "@/components/atomic/Typography/Typography";
+import Typography from "../../components/atomic/Typography/Typography";
 import React, { useState } from "react";
-import { orderDetails } from "@/common/constant";
+import { orderDetails } from "../../common/constant";
 import styles from "./orderDetails.module.css";
-import CartItemList from "@/components/molecules/CartItemList/CartItemList";
-import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
-import { Button } from "@/components/atomic/Button/Button";
+import CartItemList from "../../components/molecules/CartItemList/CartItemList";
+import OrderSummary from "../../components/organisms/OrderSummary/OrderSummary";
+import { Button } from "../../components/atomic/Button/Button";
 import Timeline from "../../components/organisms/Timeline/Timeline";
 import {
   Dialog,
@@ -15,24 +15,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/molecules/Dialog/Dialog";
+} from "../../components/molecules/Dialog/Dialog";
 import {
   RadioGroup,
   RadioGroupItem,
-} from "@/components/atomic/RadioGroup/RadioGroup";
-import Input from "@/components/atomic/Input/Input";
+} from "../../components/atomic/RadioGroup/RadioGroup";
+import Input from "../../components/atomic/Input/Input";
+import { orderStatus } from "../../common/constant";
 
 const Details = () => {
-  const isDelivered = true;
-  const steps = [
-    { header: "Order Placed", text: "8th Oct’23, 8:00 AM" },
-    { header: "Order Shipped", text: "Shipped by EE-Kart" },
-    { header: "Order reached your nearest hub", text: " " },
-    { header: "Out for delivery", text: "OTP: 2398" },
-    { header: "Delivered", text: "Estimated delivery: 12th Oct’23" },
-  ];
-  const currentStep = 3;
-  const complete = false;
+  const { isDelivered, steps, currentStep } = orderStatus;
   const orderdedItems = orderDetails?.productItems?.map((item) => ({
     id: item?.productId,
     name: item?.productName,
@@ -73,13 +65,14 @@ const Details = () => {
             cartItems={orderdedItems}
             orderQuantity={true}
             isWhiteBackground={true}
-            buttons={true}
+            button1={true}
+            button2={true}
           />
         </div>
       </div>
 
       <div className={styles.tracker}>
-        <Timeline steps={steps} currentStep={currentStep} complete={complete} />
+        <Timeline steps={steps} currentStep={currentStep} complete={false} />
       </div>
 
       <div className={styles.bottom}>
@@ -93,11 +86,47 @@ const Details = () => {
               label={"Customer Information"}
             />
             <div className={styles.address}>
-              <div>{orderDetails?.shipments[0]?.shippingAddress?.fullName}</div>
-              <div>{orderDetails?.shipments[0]?.shippingAddress?.address1}</div>
-              <div>{orderDetails?.shipments[0]?.shippingAddress?.city}</div>
-              <div>
-                {orderDetails?.shipments[0]?.shippingAddress?.countryCode}
+              <div className={styles.custInfo}>
+                <Typography
+                  type="Body"
+                  variant={2}
+                  fontWeight="semibold"
+                  label="Name: "
+                />
+                <Typography
+                  type="Body"
+                  variant={2}
+                  fontWeight="regular"
+                  label={orderDetails?.shipments[0]?.shippingAddress?.fullName}
+                />
+              </div>
+              <div className={styles.custInfo}>
+                <Typography
+                  type="Body"
+                  variant={2}
+                  fontWeight="semibold"
+                  label="Phone no.: "
+                />
+                <Typography
+                  type="Body"
+                  variant={2}
+                  fontWeight="regular"
+                  label={orderDetails?.shipments[0]?.shippingAddress?.fullName}
+                />
+              </div>
+              <div className={styles.custInfo}>
+                <Typography
+                  type="Body"
+                  variant={2}
+                  fontWeight="semibold"
+                  label="Email ID: "
+                />
+                <Typography
+                  type="Body"
+                  variant={2}
+                  fontWeight="regular"
+                  label={orderDetails?.shipments[0]?.shippingAddress?.fullName}
+                />
               </div>
             </div>
           </div>

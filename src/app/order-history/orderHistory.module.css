@@ -1,7 +1,6 @@
 .container {
   padding: clamp(8px, 4vw, 20px) clamp(8px, 20vw, 20px);
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 20px;
   container-type: inline-size;
 }
@@ -91,11 +90,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  /* display: grid;
+  grid-template-rows: auto auto;
+  justify-content: space-between; */
 }
 
 .orderDetailsBottom {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   height: 36px;
 }
 .orderName {
@@ -145,9 +146,13 @@
 
 @container (max-width: 899px) {
   .orderCardContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    /* display: flex;
+    flex-direction: column; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
   .imageGrid {
     height: 85px;

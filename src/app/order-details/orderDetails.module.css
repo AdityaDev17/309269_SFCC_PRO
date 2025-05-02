@@ -32,6 +32,9 @@
   /* display: grid;
   gap: 100px; */
 }
+.custInfo {
+  display: flex;
+}
 .addressSection {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -45,6 +48,13 @@
   display: grid;
   grid-template-rows: 0.2fr 1fr;
   gap: 8px;
+}
+.address {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  color: #4f4b53;
+  display: grid;
 }
 
 .tracker {

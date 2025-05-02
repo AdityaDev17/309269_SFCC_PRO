@@ -32,7 +32,6 @@ const EditPassword = ({onUpdateClicked}:any) => {
   return (
     <div className={styles.layout}>
       <div className={styles.profileText}>Password</div>
-      <div className={styles.section}>
         <div className={styles.sectionForm}>
           <div>
             <div className={styles.fontColor}>Current Password*</div>
@@ -62,7 +61,6 @@ const EditPassword = ({onUpdateClicked}:any) => {
             />
           </div>
         </div>
-      </div>
       <Button
         disabled={handleDisable()}
         style={{
@@ -71,7 +69,7 @@ const EditPassword = ({onUpdateClicked}:any) => {
           border: "None",
           backgroundColor: "#000",
           fontSize: "12px",
-          width: "62%",
+          width: "325px",
         }}
         onClick={() => onUpdateClicked(userPassword)}
       >

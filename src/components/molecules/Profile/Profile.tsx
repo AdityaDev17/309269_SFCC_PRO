@@ -161,7 +161,7 @@ const Profile = ({ userDetails, onUpdateClicked }: any) => {
           border: "None",
           backgroundColor: "#000",
           fontSize: "12px",
-          width: "85%",
+          width: "97%",
         }}
         onClick={() => onUpdateClicked(initialUserData)}
       >

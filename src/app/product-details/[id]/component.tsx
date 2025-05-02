@@ -77,7 +77,7 @@ export default function ProductDetails() {
               <SelectContent>
                 {sizes?.map((item: any) => {
                   return (
-                    <SelectItem value={item?.value}>{item?.title}</SelectItem>
+                    <SelectItem value={item?.value} key={item?.title}>{item?.title}</SelectItem>
                   );
                 })}
               </SelectContent>

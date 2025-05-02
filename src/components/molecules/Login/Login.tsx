@@ -1,7 +1,7 @@
 'use client'
 import Input from "../../atomic/Input/Input";
 import styles from "./Login.module.css";
-import Checkbox from "../../atomic/CheckBox/CheckBox";
+import Checkbox from "@/components/atomic/CheckBox/CheckBox";
 import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
 

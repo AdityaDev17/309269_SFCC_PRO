@@ -1,10 +1,9 @@
 "use client";
-
-import AccountBreadcrumb from "../AccountBreadcrumb";
 import Profile from "../../../components/molecules/Profile/Profile";
 import EditPassword from "../../../components/molecules/EditPassword/EditPassword";
 import styles from "./PersonalInfo.module.css";
 import { mockUserDetails } from "../../../common/constant";
+import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 
 export default function PersonalInfoPage() {
   
@@ -19,7 +18,14 @@ export default function PersonalInfoPage() {
 
   return (
     <div className={styles.wrapper}>
-      <AccountBreadcrumb />
+      
+      <Breadcrumbs
+        breadcrumbItems={[
+          { label: "Home", href: "/" },
+          { label: "My Account", href: "/my-account" },
+          { label: "Personal Information" },
+        ]}
+      />
       <h2 className={styles.header}>Personal Information</h2>
 
       <div className={styles.gridLayout}>

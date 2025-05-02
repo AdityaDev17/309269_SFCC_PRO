@@ -66,7 +66,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 export default Gallery;
 
 /**
- * ## Gallery Component
+ * ## Gallery
  *
  * A responsive image gallery component that displays a set of images with thumbnail navigation.
  * The component adapts its layout for both mobile and desktop views, allowing users to interact

@@ -6,7 +6,8 @@
     position: relative;  }
   
   .content {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
     align-items: center;
 gap: 10px;
     justify-content: space-between;

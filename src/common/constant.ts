@@ -579,50 +579,53 @@ export const dots = [
   },
 ];
 
-export const addresses = [
+export const billingAddress= [
   {
-    firstName: "Utkarsh",
-    lastName: "Pai",
-    apartment: "20",
-    building: "Impasse Odette Dijoux",
-    street: "Letellier-la-Forêt",
-    city: "Pinto",
-    state: "France",
-    zipcode: "97459",
+    id: "Billing Address",
+    value:''
+  }
+]
+
+export const address = [{
+  id:'1',
+  title:"Utkarsh Pai",
+    description:'20, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,',
     phone: "XXX4398238",
     isDefault: true,
   },
   {
-    firstName: "Sharmili",
-    lastName: "K",
-    apartment: "D/12",
-    building: "Chand Society",
-    street: "Jvpd Scheme",
-    city: "Mumbai",
-    state: "Maharashtra",
-    zipcode: "110005",
-    phone: "XXX4398238",
+    id:'2',
+    title:"Apple",
+      description:'25, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,',
+      phone: "XXX4398238",
+      isDefault: false,
   },
   {
-    firstName: "Robin",
-    lastName: "Wood",
-    apartment: "25",
-    building: "Impasse Odette Dijoux",
-    street: "Letellier-la-Forêt",
-    city: "Pinto",
-    state: "France",
-    zipcode: "97459",
-    phone: "XXX4398238",
+    id:'3',
+    title:"Robin Hood",
+      description:'30, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,',
+      phone: "XXX4398238",
+      isDefault: false,
   },
   {
-    firstName: "Kantilal",
-    lastName: "Patel",
-    apartment: "6",
-    building: "Old Mahavir Bldg",
-    street: "Behind Matunga P.o.",
-    city: "Matunga(c.r)",
-    state: "Mumbai",
-    zipcode: "110011",
+    id:'4',
+  title:"Kantilal Kantilal",
+    description:'20, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,',
     phone: "XXX4398238",
-  },
-];
+    isDefault: false,
+  },]
+
+  export const shippingMethodsFromBackend = [
+    {
+      id: "Standard Delivery",
+      title: "Delivery within 3-4 business days",
+      description:"Delivery within 3-4 business days",
+      extraInfo: '0'
+    },
+    {
+      id: "Express Delivery",
+      title: "One day delivery",
+      description:"One day delivery",
+      extraInfo: '200'
+    },
+  ];

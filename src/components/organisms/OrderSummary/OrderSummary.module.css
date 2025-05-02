@@ -1,68 +1,65 @@
 .layout {
-    border: 1px solid #CCCBCE;
-    align-self: flex-start;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .standardLayout {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .totalRowTop {
-    background-color: #FAFAFA;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 10px 20px;
-    box-sizing: border-box;
-  }
-  
-  .topDivider {
-    border: 0;
-    border-top: 1px solid #CCCBCE;
-  }
-  
-  .title {
-    padding-bottom: 20px;
-  }
-  
-  .summaryRow,
-  .totalRow,
-  .totalSavings,
-  .reverseTotalSavings {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-  
-  .divider {
-    border: 0;
-    border-top: 1px solid #CCCBCE;
-    margin: 10px 0;
-  }
-  
-  .summaryButton {
-    padding: 20px 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  
-  .button {
-    width: clamp(200px, 100%, 400px);
-    height: 34px;
-  }
-  
-  .paymentImages {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: space-between;
-  }
-  
+  border: 1px solid #CCCBCE;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 320px;
+}
+
+.standardLayout {
+  padding: 20px;
+  display: grid;
+  row-gap: 12px;
+}
+
+.totalRowTop {
+  background-color: #FAFAFA;
+  display: grid;
+  grid-template-columns: repeat(2,auto);
+  gap: 8px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.topDivider {
+  border: 0;
+  border-top: 1px solid #CCCBCE;
+}
+
+.title {
+  padding-bottom: 20px;
+}
+
+.summaryRow,
+.totalRow,
+.totalSavings,
+.reverseTotalSavings {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid #CCCBCE;
+  margin: 10px 0;
+}
+
+.summaryButton {
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.button {
+  width: 100%;
+  height: 34px;
+}
+
+.paymentImages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(42px, 1fr));
+  gap: 10px;
+  justify-content: space-between;
+}

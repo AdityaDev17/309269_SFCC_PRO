@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/atomic/Button/Button";
+import { Button } from "../../atomic/Button/Button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-} from "@/components/atomic/Card/Card";
-import Typography from "@/components/atomic/Typography/Typography";
+} from "../../atomic/Card/Card";
+import Typography from "../../atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
 import Image from "next/image";
 
@@ -192,58 +192,119 @@ export default ProductCard;
 /**
  * ## ProductCard
  *
- * The ProductCard component is a flexible and reusable component designed to display product information such as an image, title, description, price, and additional actions like adding to the bag or wishlisting. It can be customized in terms of alignment, size, and various product details.
+ * The `ProductCard` component displays a product in a card layout with an image, title, description, price,
+ * and optional action buttons. It supports responsive behavior and can be used across product listings, wishlists,
+ * and other commerce-related views.
+ *
+ * ---
  *
  * ### Props
  *
- * - **alignment** (`"center" | "alignStart" | "alignEnd"`, optional): Controls the alignment of the content inside the card. Available values:
- *   - `"center"`: Centers the content (default).
- *   - `"alignStart"`: Aligns the content to the start (left).
- *   - `"alignEnd"`: Aligns the content to the end (right).
+ * #### `productId?: string`
+ * - Optional. Unique identifier for the product, used in event callbacks like click or button actions.
  *
- * - **width** (`number | string`, optional): Sets the width of the `ProductCard`. Can be a pixel value (`'px'`) or percentage.
+ * #### `alignment?: "center" | "alignStart" | "alignEnd"`
+ * - Optional. Alignment of the card content (`productTitle`, `productDesc`, and `price`). Defaults to `"center"`.
  *
- * - **productImage** (`string`): The URL of the product image to be displayed on the card.
+ * #### `width?: number | string`
+ * - Optional. Width of the card. Can be a number (pixels) or string (e.g., `"100%"`).
  *
- * - **productTitle** (`string`): The title/name of the product.
+ * #### `productImage: string`
+ * - Required. URL of the main product image.
  *
- * - **productDesc** (`string`, optional): A short description of the product. If provided, it will be displayed under the product title.
+ * #### `productTitle?: string`
+ * - Optional. Name/title of the product.
  *
- * - **price** (`string`, optional): The price of the product, displayed below the product description.
+ * #### `productDesc?: string`
+ * - Optional. Description or secondary text below the product title (usually a link).
  *
- * - **currency** (`string`, optional): The currency symbol or code used for displaying the price (e.g., `$`, `€`, etc.). Defaults to an empty string if not provided.
+ * #### `price?: string`
+ * - Optional. Price displayed under the description (used in regular listing views).
  *
- * - **moveToBag** (`boolean`, optional): If `true`, shows a "Move to Bag" button. Defaults to `false`.
+ * #### `currency?: string`
+ * - Optional. Currency symbol prefixed to `price` or `bagPrice` (e.g., `"$"`).
  *
- * - **wishListed** (`boolean`, optional): If `true`, a "wishlist" icon is displayed on the product image.
+ * #### `moveToBag?: boolean`
+ * - Optional. If `true`, shows a "Move to Bag" button (typically in wishlist views).
  *
- * - **bagPrice** (`string`, optional): The price of the product in the bag, displayed in the footer if provided.
+ * #### `wishListed?: boolean`
+ * - Optional. If `true`, displays a filled wishlist icon overlay.
  *
- * ### Component Behavior
+ * #### `bagPrice?: string`
+ * - Optional. Alternate price display used in the footer, commonly shown in wishlist or bag views.
  *
- * - The card will render a product image, product title, description, price, and optional "Move to Bag" button based on the props provided.
- * - The alignment of the content can be controlled using the `alignment` prop, which allows the text and buttons to be aligned in different ways (centered, left-aligned, or right-aligned).
- * - If `wishListed` is `true`, a wishlist icon is shown in the header of the card.
- * - If `moveToBag` is `true`, the "Move to Bag" button is shown at the bottom of the card.
- * - If `bagPrice` is provided, it will display the price in the card footer.
+ * #### `onClick?: (productId: string) => void`
+ * - Optional. Callback fired when the card itself is clicked.
+ *
+ * #### `onButtonClick?: (productId: string) => void`
+ * - Optional. Callback fired when the linked `productDesc` is clicked.
+ *
+ * #### `onMoveToBag?: (productId: string) => void`
+ * - Optional. Callback fired when the "Move to Bag" button is clicked.
+ *
+ * ---
+ *
+ * ### Behavior
+ *
+ * - **Image & Wishlist**:
+ *   - Always renders the product image.
+ *   - Renders a wishlist icon if `wishListed` is `true`.
+ *
+ * - **Card Content**:
+ *   - Displays product title, optional description (as a clickable link), and price if provided.
+ *   - Aligns content based on the `alignment` prop.
+ *
+ * - **Responsive Footer**:
+ *   - On **desktop**, shows `bagPrice` and "Move to Bag" button side by side.
+ *   - On **mobile**, the same layout is stacked with adjusted styles for smaller screens.
+ *
+ * ---
+ *
+ * ### Styling (CSS Modules: `ProductCard.module.css`)
+ *
+ * - `imageWrapper`: Styles the image section.
+ * - `productImage`: Controls the sizing and cropping of the main image.
+ * - `wishlistIcon`: Positioned overlay icon for wishlist status.
+ * - `cardContent`: Wrapper for the title, description, and price.
+ * - `spacing`: Applies vertical spacing between elements.
+ * - `priceButtonRow` / `pricemobileButtonRow`: Footer layout containers (desktop/mobile).
+ * - `moveToBagButton` / `moveToBagMobileButton`: Button styles for "Move to Bag".
+ *
+ * ---
+ *
+ * ### Dependencies
+ *
+ * - `Card`, `CardHeader`, `CardContent`, `CardFooter`: Atomic layout components.
+ * - `Typography`: Used for all text content for consistent style.
+ * - `Button`: Used for "Move to Bag" and linked description.
+ * - `next/image`: Optimized image rendering.
+ *
+ * ---
  *
  * ### Example Usage
  *
- * Here's a simple example of how to use the `ProductCard` component:
- *
  * ```tsx
- *       <ProductCard
- *         alignment="center"
- *         productImage="https://via.placeholder.com/150"
- *         productTitle="Sample Product"
- *         productDesc="This is a description of the product."
- *         price="29.99"
- *         currency="$"
- *         moveToBag={true}
- *         wishListed={true}
- *         bagPrice="25.99"
- *       />
- *
+ * <ProductCard
+ *   productId="abc123"
+ *   alignment="alignStart"
+ *   productImage="/images/shoe.png"
+ *   productTitle="Running Shoes"
+ *   productDesc="Explore details"
+ *   price="129.99"
+ *   currency="$"
+ *   wishListed={true}
+ *   moveToBag={true}
+ *   bagPrice="129.99"
+ *   onClick={(id) => console.log("View product:", id)}
+ *   onButtonClick={(id) => console.log("Clicked description for:", id)}
+ *   onMoveToBag={(id) => console.log("Moved to bag:", id)}
+ * />
  * ```
  *
+ * ---
+ *
+ * ### Notes
+ *
+ * - The card is fully clickable unless you interact with the `Button` elements, which stop propagation.
+ * - Best used within product grids or wishlist views.
  */

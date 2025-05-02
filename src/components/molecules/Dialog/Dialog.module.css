@@ -17,7 +17,7 @@
     bottom: 0;
     left: 0;
     z-index: 50;
-    background-color: grey;
+    backdrop-filter: blur(12px);
 }
 
 .DialogOverlay[data-state="open"] {
@@ -39,7 +39,6 @@
     transform: translate(-50%, -50%);
     gap: 1rem;
     border-radius: var(--radius);
-    background-color: black;
     padding: 1.5rem;
     box-shadow: -1px -1px 6px hsl(var(--foreground) / 0.80);
 }

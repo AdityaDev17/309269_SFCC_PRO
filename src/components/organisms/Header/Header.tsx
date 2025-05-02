@@ -241,7 +241,7 @@ const Header: React.FC<HeaderProps> = ({
             label === "CartBag" ? (
               <MiniCart
                 key={index}
-                cartItems={cartItems}
+                cartItems={[]}
                 triggerType="icon"
                 bagIcon={icon}
                 onViewBag={()=>router.push('/cart')}

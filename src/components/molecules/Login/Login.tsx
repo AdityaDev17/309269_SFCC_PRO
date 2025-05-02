@@ -1,7 +1,7 @@
 'use client'
 import Input from "../../atomic/Input/Input";
 import styles from "./Login.module.css";
-import Checkbox from "@/components/atomic/CheckBox/CheckBox";
+import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
 
@@ -47,7 +47,7 @@ const Login = ({ onLoginClicked, onCreateAccount }: any) => {
       </div>
       <div className={styles.row}>
         <div className={styles.rowGap}>
-          <Checkbox data-testid="checkbox" style={{ borderColor: "#4F4B53" }} />
+          <CheckBox data-testid="checkbox" style={{ borderColor: "#4F4B53" }} />
           <div className={styles.forgotPassword}>Remember Me</div>
         </div>
         <div>

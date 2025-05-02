@@ -1,7 +1,7 @@
 "use client";
 import Input from "../../atomic/Input/Input";
 import styles from "./SignUp.module.css";
-import Checkbox from "../../atomic/CheckBox/CheckBox";
+import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 import { Button } from "../../atomic/Button/Button";
 import {
   Select,
@@ -209,7 +209,7 @@ const SignUp = ({ onProceed }: any) => {
           />
         </div>
         <div className={styles.row}>
-          <Checkbox
+          <CheckBox
             data-testid="checkbox"
             style={{ borderColor: "#4F4B53" }}
             checked={formData.agreeToTerms}

@@ -1,72 +1,91 @@
 .container {
-  padding: clamp(16px, 20vw, 20px) 40px ; 
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  padding: clamp(15px, 5vw, 40px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
 }
-.cartPageWrapper {
-  display: flex;
-  justify-content: space-between;
-  gap: 50px;
-  flex-wrap: wrap;
+.productCarouselSection {
+  display: grid;
+  grid-template-rows: 0.1fr 1fr;
+  gap: 20px;
+  text-align: center;
+  padding-top: 20px;
+}
+.componentLayout {
+  display: grid;
+  align-items: center;
+  container-type: inline-size;
+}
+.firstLayout {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    "ItemsWrapper OrderSummary"
+    "CartItemList OrderSummary"
+    "RedeemPoints OrderSummary";
+  gap: 20px;
+  @container (max-width: 700px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+     "ItemsWrapper"
+      "CartItemList"
+      "RedeemPoints"
+      "OrderSummary"
+      "CaroselWrapper";
+    row-gap: 25px;
+  }
+}
+.cartItemList {
+  grid-area: CartItemList;
 }
 .items {
   padding-bottom: 20px;
+  grid-area: ItemsWrapper;
 }
-.cartItemsSection {
-  flex: 2;
-}
+
 
 .orderSummarySection {
-  flex: 1;
+  grid-area: OrderSummary;
 }
-
-.carosel{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
+.redeemWrapper{
+  grid-area: RedeemPoints;
+  padding-top: 20px;
 }
 .redeemGrid {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 16px;
   border: 1px solid #cccbce;
   background-color: #fafafa;
-  padding: 16px;
- max-width: 660px;
   box-sizing: border-box;
-  flex-wrap: nowrap;
-  overflow-x: auto;   
+  overflow-x: auto;
+  margin-top: 15px;
 }
 
 .redeemPoints {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 12px;
-  flex: 1 1 auto;
-  min-width: 0;
+  padding: 16px;
+  align-content: start;
 }
 
 .inputGrid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 10px;
   width: 100%;
 }
 
 .input {
-  flex: 1 1 200px;
+  width: 100%;
   min-width: 0;
   box-sizing: border-box;
 }
 
 .redeemImage {
-  flex-shrink: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  min-width: 113px; 
+  display: grid;
+  align-items: end;
+  justify-items: end;
+  min-width: 113px;
 }
 

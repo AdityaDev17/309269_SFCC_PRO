@@ -19,8 +19,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;  
-  /* align-items: center;       */
-  align-items: flex-start;  /* Align text content to the left */
+  align-items: flex-start; 
   
 }
 
@@ -38,10 +37,6 @@
   padding-left: clamp(1rem, 2vw, 2rem);
  
 }
-
-/* .textCard h2 {
-  font-size: clamp(1.5rem, 2vw, 2.5rem);
-} */
 
 .textCard p {
   margin: 1rem 0;
@@ -95,7 +90,7 @@
     width: 100%;
   }
 
-  /* Ensure text card is on top, and image cards are in a horizontal row below */
+  
   .cardsContainer > :nth-child(2),
   .cardsContainer > :nth-child(3) {
     display: inline-block;

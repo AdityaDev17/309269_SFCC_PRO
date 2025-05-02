@@ -203,18 +203,53 @@ const OrderSummary = ({
 
 export default OrderSummary;
 
+
+
 /**
  * ## OrderSummary
  *
- * The OrderSummary component is used to display an order's summary, including the price details,
- *  It showcases the breakdown of costs such as subtotal, delivery
- * charges, tax, total savings, and the final total. This component is typically used in e-commerce
- * platforms, especially during the checkout or order confirmation stages.
+ * The `OrderSummary` displays a detailed pricing breakdown for an order, including subtotal, delivery, tax, total, and optional savings, along with a call-to-action button and supported payment method icons.
  *
+ * ### Props
  *
- * ### Component Behavior:
- * - The component displays various sections such as "Sub Total", "Delivery", "Tax", and "Total",
- *   with corresponding values.
- * - A button is provided at the bottom for progressing to the next step (e.g., payment or confirmation).
+ * - `reverseOrder` (optional): If `true`, displays the "Total Savings" section below the total row. Defaults to `false`.
+ * - `totalRowTop` (optional): If `true`, moves the "Total" row to the top of the summary. Defaults to `false`.
+ * - `isButton` (optional): Controls whether the "CONTINUE" button is rendered. Defaults to `true`.
+ * - `isPaymentImage` (optional): Controls whether supported payment method icons are displayed. Defaults to `true`.
  *
+ * ### Behavior
+ *
+ * - The summary displays a breakdown including "Sub Total", "Delivery", "Tax", and "Total".
+ * - If `totalRowTop` is `true`, the total section appears at the top before the price breakdown.
+ * - The component optionally shows a savings section based on `reverseOrder`.
+ * -- A button is provided at the bottom for progressing to the next step (e.g., payment or confirmation).
+ * - A list of payment method icons is rendered at the bottom if `isPaymentImage` is `true`.
+ *
+ * ### Used Components
+ *
+ * - `Typography` for consistent text rendering and styling.
+ * - `Button` from the atomic UI library for the call-to-action.
+ * - `Image` from `next/image` for optimized image rendering of payment method logos.
+ *
+ * ### Styling
+ *
+ * Custom styles are imported from `OrderSummary.module.css`, with classes such as `layout`, `summaryRow`, `divider`, `totalRow`, `summaryButton`, and `paymentImages` to control layout and appearance.
+ *
+ * ### Example
+ *
+ * ```tsx
+ * import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
+ *
+ * export default function Page() {
+ *   return (
+ *     <OrderSummary 
+ *       reverseOrder={false} 
+ *       totalRowTop={true} 
+ *       isButton={true} 
+ *       isPaymentImage={true} 
+ *     />
+ *   );
+ * }
+ * ```
  */
+

@@ -26,13 +26,13 @@ import { states } from "../../../common/constant";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
-export function AddressDialog() {
+export function AddressDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void,}) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="secondary">ADD NEW ADDRESS</Button>
+        {/* <Button variant="secondary">ADD NEW ADDRESS</Button> */}
       </DialogTrigger>
 
       <DialogContent
@@ -99,6 +99,9 @@ export function AddressDialog() {
                   </Select>
                 </div>
                 <Input placeholder="ZIP code*" name="zipcode" />
+              </div>
+              <div>
+              <Input placeholder="Country" name="country" />
               </div>
             </fieldset>
           </div>

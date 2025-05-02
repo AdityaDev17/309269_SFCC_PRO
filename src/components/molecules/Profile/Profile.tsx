@@ -153,21 +153,16 @@ const Profile = ({ userDetails, onUpdateClicked }: any) => {
           </div>
         </div>
       </div>
+      <div className={styles.buttonContainer}>
       <Button
         disabled={isDisabled}
-        style={{
-          height: "36px",
-          color: "#FFF",
-          border: "None",
-          backgroundColor: "#000",
-          fontSize: "12px",
-          width: "97%",
-        }}
+        variant="profileUpdate"
+        className={styles.updateButton}
         onClick={() => onUpdateClicked(initialUserData)}
       >
         UPDATE
       </Button>
-      {/* </div> */}
+      </div>
     </div>
   );
 };

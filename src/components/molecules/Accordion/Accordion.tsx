@@ -35,11 +35,10 @@ const Accordion = ({ items, contentStyle }: AccordionProps) => {
 export default Accordion
 
 /**
- * # Accordion Component
+ * ## Accordion 
  *
  * A flexible and accessible accordion component used to display collapsible content sections.
  *
- * ## Components
  *
  * ### Accordion
  * - The root wrapper component that renders the entire accordion.
@@ -62,7 +61,7 @@ export default Accordion
  * - By default, the content is hidden until the trigger is clicked.
  * - Accepts all standard props for `<div>`.
  *
- * ## Wrapper Concept
+ * ### Wrapper Concept
  *
  * The **Accordion** component serves as the primary wrapper for the accordion's structure and behavior. It manages the accordion's collapsible state and renders individual sections (`AccordionItem` components) based on the `items` prop.
  * 
@@ -72,7 +71,7 @@ export default Accordion
  * 
  * The `AccordionItem` components use the `AccordionTrigger` and `AccordionContent` to define the clickable header and collapsible content respectively. The `contentStyle` prop can be used to customize the appearance of the content.
  *
- * ## Example Usage
+ * ### Example Usage
  *
  * ```tsx
  * <Accordion

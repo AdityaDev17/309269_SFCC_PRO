@@ -159,3 +159,13 @@
     
   }
   
+.editIcon {
+    cursor: pointer;
+  }
+  .icon {
+    cursor: pointer;
+    color: #666;
+  }
+.button{
+    width: 168px;
+}

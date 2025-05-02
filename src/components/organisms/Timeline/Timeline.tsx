@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { TiTick } from "react-icons/ti";
 import styles from "./timeline.module.css";
-import Typography from "@/components/atomic/Typography/Typography";
-import { Button } from "@/components/atomic/Button/Button";
+import Typography from "../../atomic/Typography/Typography";
+import { Button } from "../../atomic/Button/Button";
 
 interface TimelineProps {
   steps: { header: string; text?: string }[];

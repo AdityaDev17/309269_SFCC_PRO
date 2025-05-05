@@ -31,6 +31,7 @@ import {
 } from "../../components/molecules/Drawer/Drawer";
 import { Drawer } from "vaul";
 import { ChevronRight } from "lucide-react";
+import { allOrderData } from "../../common/constant";
 
 const Filter = ({ isMobile }: { isMobile: boolean }) => {
   const filters = ["3 Months", "6 Months", "2025", "2024", "2023"];
@@ -91,15 +92,13 @@ const Filter = ({ isMobile }: { isMobile: boolean }) => {
 const ImageGrid = ({
   productData,
 }: {
-  productData: [
-    {
-      productId: string;
-      productImage: string;
-      productTitle: string;
-      bagPrice: string;
-      currency: string;
-    },
-  ];
+  productData: {
+    productId: string;
+    productImage: string;
+    productTitle: string;
+    bagPrice: string;
+    currency: string;
+  }[];
 }) => {
   const visibleImages = productData.slice(0, 4);
   const remainingCount = productData.length - 3;
@@ -140,15 +139,13 @@ const OrderCard = ({
     orderId: string;
     price: number;
     orderName: string;
-    items: [
-      {
-        productId: string;
-        productImage: string;
-        productTitle: string;
-        bagPrice: string;
-        currency: string;
-      },
-    ];
+    items: {
+      productId: string;
+      productImage: string;
+      productTitle: string;
+      bagPrice: string;
+      currency: string;
+    }[];
   };
 }) => {
   const { orderId, price, orderName, items } = orderData;
@@ -205,7 +202,7 @@ const OrderCard = ({
   );
 };
 
-const OrderCardContainer = ({ orderData }) => {
+const OrderCardContainer = () => {
   const [isMobile, setIsMobile] = useState(false);
   const checkMobileView = () => {
     setIsMobile(window.innerWidth < 768);
@@ -220,10 +217,13 @@ const OrderCardContainer = ({ orderData }) => {
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(orderData.length / itemsPerPage);
+  const totalPages = Math.ceil(allOrderData.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentItems = orderData.slice(startIndex, startIndex + itemsPerPage);
+  const currentItems = allOrderData.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const handlePrev = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1);

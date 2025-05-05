@@ -631,7 +631,7 @@ export const filterOptions: Record<string, string[]> = {
   Features: ["Long Lasting", "Travel Size", "Refillable"],
   Discount: ["10% and above", "25% and above", "50% and above"],
 };
-export const orderData = [
+export const allOrderData = [
   {
     orderId: "ABCD12345678",
     price: 100,

@@ -137,15 +137,15 @@ const headerIcons = [
 ];
 
 const headerWhiteIcons = [
-  { label: 'Search', icon: '/images/search-white.svg' },
-  { label: 'Whishlist', icon: '/images/whishlist-white.svg' },
-  { label: 'CartBag', icon: '/images/cartBag_white.svg' },
-  { label: 'Profile', icon: '/images/profile-white.svg' },
+  { label: 'Search', icon: '/images/searchWhite.png' },
+  { label: 'Whishlist', icon: '/images/wishlistWhite.png' },
+  { label: 'CartBag', icon: '/images/catBagWhite.png' },
+  { label: 'Profile', icon: '/images/profileWhite.png' },
 ];
 
   return <Header isHome={isHome} logoImages={{
     default:  '/images/SFCCLogo.svg',
-    white: '/images/SFCCLogowhite.svg'
+    white: '/images/SFCCPROWhite.png'
   }} categories={categories} headerIcons={headerIcons} headerWhiteIcons={headerWhiteIcons} />;
 };
 

@@ -349,19 +349,19 @@ export const homepageBanners: BannerData[] = [
 export const homepageProducts: ProductCard[] = [
   {
     productId: "1",
-    productImage: "images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "EXQUISITE COLLECTION",
     productDesc: "VIEW MORE",
   },
   {
     productId: "2",
-    productImage: "images/Product_2.svg",
+    productImage: "/images/Tile_4.png",
     productTitle: "ENCHANTING LOOK",
     productDesc: "VIEW MORE",
   },
   {
     productId: "3",
-    productImage: "images/Product_3.svg",
+    productImage: "/images/Tile_6.png",
     productTitle: "REVISIT YOUR CHOICES",
     productDesc: "VIEW MORE",
   },
@@ -385,7 +385,7 @@ export const cartItems = [
     quantity: 2,
     price: 50,
     currency: "$",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.svg",
   },
 
   {
@@ -395,42 +395,42 @@ export const cartItems = [
     quantity: 1,
     price: 50,
     currency: "$",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.svg",
   },
 ];
 
 export const productData = [
   {
     productId: "893234",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.svg",
     productTitle: "Product 1",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "2",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.svg",
     productTitle: "Product 2",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "3",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.svg",
     productTitle: "Product 3",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "4",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.svg",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "4",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.svg",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",

@@ -11,7 +11,7 @@ const Footer = () => {
       <div className={styles.logoSection}>
         <Image
           className={styles.logo}
-          src="/images/SFCCLogowhite.svg"
+          src="/images/SFCCLogoWhite.svg"
           alt="Next.js logo"
           width={109}
           height={19}

@@ -3,26 +3,59 @@ import {
   Drawer,
   DrawerContent,
   DrawerHeader,
+  DrawerTitle,
   DrawerTrigger,
 } from "@/components/molecules/Drawer/Drawer";
 import { X, SearchIcon } from "lucide-react";
-import ProductImageCarousel from "../ProductImageCarousel/ProductImageCarousel";
 import Search from "@/components/molecules/Search/search";
 import {
   searchSuggestions,
   productSuggestions,
 } from "../../../common/constant";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useRef, useEffect } from "react";
 import Image from "next/image";
 import styles from "./Header.module.css";
+import ProductCard from "@/components/molecules/ProductCard/ProductCard";
 
 interface SearchMenuProps {
   keyVal: number;
   searchIcon: string;
+  isMobile: boolean
 }
 
-const SearchMenu = ({ keyVal, searchIcon }: SearchMenuProps) => {
+const SearchMenu = ({ keyVal, searchIcon, isMobile }: SearchMenuProps) => {
+  const searchMenuHeight = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState(0);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+  
+    let resizeObserver: ResizeObserver | null = null;
+  
+    const timeout = setTimeout(() => {
+      const element = searchMenuHeight.current;
+      if (!element) return;
+  
+      setHeight(element.getBoundingClientRect().height);
+  
+      resizeObserver = new ResizeObserver((entries) => {
+        for (let entry of entries) {
+          setHeight(entry.contentRect.height);
+        }
+      });
+  
+      resizeObserver.observe(element);
+    }, 100);
+  
+    return () => {
+      clearTimeout(timeout);
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
+    };
+  }, [open]);
+  
 
   const closeHandler = () => {
     setOpen(false);
@@ -39,23 +72,25 @@ const SearchMenu = ({ keyVal, searchIcon }: SearchMenuProps) => {
           className={styles.searchLogo}
         />
       </DrawerTrigger>
-      <DrawerContent height="417px" side="top">
+      <DrawerContent height={`${height + 26}px`} side="top">
+        <DrawerTitle/>
+        <div ref={searchMenuHeight}>
         <DrawerHeader className={styles.bagHeader}>
-          <div className={styles.bagWrapper}>
+          <div className={styles.searchMenuContainer}>
             <div className={styles.searchHeader}>
-              <Image
+              {!isMobile && <Image
                 src={"/images/SFCCLogo.svg"}
                 height={20}
                 width={109}
                 alt="SFCC LOGO"
-              />
-              <Search />
-              <X
+              />}
+              <Search isMobile={isMobile} onClose={closeHandler}/>
+              {!isMobile && <X
                 onClick={closeHandler}
                 strokeWidth={2}
                 color="grey"
                 className={styles.close}
-              />
+              />}
             </div>
             <div className={styles.suggestionWrapper}>
               <div className={styles.searchSuggestion}>
@@ -74,15 +109,16 @@ const SearchMenu = ({ keyVal, searchIcon }: SearchMenuProps) => {
                   variant={1}
                   label="PRODUCT SUGGESTION"
                 />
-                <ProductImageCarousel
-                  width={95}
-                  productData={productSuggestions}
-                  alignment="alignStart"
-                />
+                <div className={styles.productSuggestionWrapper}>
+                  {productSuggestions.map((suggestion, index) => (
+                    <ProductCard key={index} productImage={suggestion.productImage} width={'100%'} productTitle={suggestion.productTitle} alignment="alignStart" />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </DrawerHeader>
+        </div>
       </DrawerContent>
     </Drawer>
   );

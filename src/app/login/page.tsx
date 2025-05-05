@@ -14,13 +14,15 @@ const page = () => {
   }
   return (
     <div className={styles.container}>
-      <Breadcrumbs
-        breadcrumbItems={[
-          { label: "Home", href: "/" },
-          { label: "Login", href: "/login" },
-        ]}
-        breadcrumbSeparator="/slash.svg"
-      />
+      <div className={styles.navigation}>
+        <Breadcrumbs
+          breadcrumbItems={[
+            { label: "Home", href: "/" },
+            { label: "Login", href: "/login" },
+          ]}
+          breadcrumbSeparator="/slash.svg"
+        />
+      </div>
       <div className={styles.loginContainer}>
         {isLogin ? <Login onCreateAccount={createAccountHandler}/> : <SignUp/>}
       </div>

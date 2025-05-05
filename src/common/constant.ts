@@ -272,6 +272,21 @@ export const productSuggestions = [
     productTitle: 'Men’s fragrances',
     productImage: '/images/product.svg'
   },
+  {
+    productId: '2',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '1',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '2',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
 ]
 
 export const mockUserDetails = {

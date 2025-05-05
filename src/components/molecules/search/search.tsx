@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import styles from "./Search.module.css";
-import { Search as SearchIcon, X, Mic } from "lucide-react";
+import { Search as SearchIcon, X, Mic, ChevronLeft } from "lucide-react";
 
 interface SearchProps {
   placeholder?: string;
@@ -12,8 +12,10 @@ interface SearchProps {
   onSearch?: () => void;
   onClear?: () => void;
   onMicClick?: () => void;
+  onClose?: () => void;
   showMic?: boolean;
   className?: string;
+  isMobile: boolean;
 }
 
 const Search = ({
@@ -23,8 +25,10 @@ const Search = ({
   onSearch,
   onClear,
   onMicClick,
+  onClose,
   showMic = true,
   className = "",
+  isMobile
 }: SearchProps) => {
   const [internalValue, setInternalValue] = useState("");
 
@@ -48,9 +52,17 @@ const Search = ({
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <Button style={{backgroundColor: 'white', border: 'none', padding: '6px 8px'}} aria-label="Search" onClick={onSearch}>
-        <SearchIcon strokeWidth={1.2} color="grey" />
-      </Button>
+      {
+        isMobile ?
+        <Button style={{backgroundColor: 'white', border: 'none', padding: '6px 8px'}} aria-label="Search" onClick={onClose}>
+          <ChevronLeft strokeWidth={1.2} color="grey" />
+        </Button>
+        :
+        <Button style={{backgroundColor: 'white', border: 'none', padding: '6px 8px'}} aria-label="Search" onClick={onSearch}>
+          <SearchIcon strokeWidth={1.2} color="grey" />
+        </Button>
+      }
+      
 
       <Input
         type="search"

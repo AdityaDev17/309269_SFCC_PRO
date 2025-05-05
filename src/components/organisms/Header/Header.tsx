@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({
   const [isMobile, setIsMobile] = useState(false);
 
   const checkMobileView = () => {
-    setIsMobile(window.innerWidth < 768);
+    setIsMobile(window.innerWidth <= 768);
   };
 
   const getImageContainerClass = (length: number) => {
@@ -253,7 +253,7 @@ const Header: React.FC<HeaderProps> = ({
               );
             } else if (label === "Search") {
               return (
-                <SearchMenu keyVal={index} searchIcon={icon}/>
+                <SearchMenu isMobile={isMobile} keyVal={index} searchIcon={icon}/>
               );
             } else {
               return (

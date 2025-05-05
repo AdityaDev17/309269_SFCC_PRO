@@ -168,3 +168,68 @@
 .pointer{
   cursor: pointer;
 }
+
+.close, .searchLogo {
+  cursor: pointer;
+}
+
+.searchMenuContainer {
+  container-type: inline-size;
+  container-name: searchMenuContainer;
+}
+
+.searchHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 40px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.10);
+}
+
+.suggestionWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+}
+
+.searchSuggestion {
+  width: min(670px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: min(50px, 5vw);
+}
+
+.searchSuggestionValue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+}
+
+.productSuggestion {
+  /* width: 670px; */
+  width: min(670px, 100%);
+  margin-left: min(50px, 5vw);
+  display: grid;
+  gap: 10px;
+}
+
+.productSuggestionWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 152px);
+  gap: 20px; 
+}
+
+@container searchMenuContainer (max-width: 766px) {
+  .productSuggestionWrapper {
+    grid-template-columns: repeat(2, 152px);
+    gap: 20px;
+  }
+  .searchHeader {
+    padding: 8px 16px;
+  }
+}

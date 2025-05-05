@@ -442,6 +442,30 @@ export const states = [
   { label: "Karnataka", value: "karnataka" },
 ];
 
+export const searchSuggestions = ['Blush', 'Foundation', 'Highlighters'];
+
+export const productSuggestions = [
+  {
+    productId: '1',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '2',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '1',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '2',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+]
 // FAQ data with IDs for scrolling
 export const frequentlyAskedData = [
   {

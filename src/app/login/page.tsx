@@ -1,10 +1,10 @@
 'use client'
 import React, { useState } from 'react'
 import LoginComponent from './component'
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, BreadcrumbPage } from '../../components/atomic/Breadcrumbs/BreadcrumbsWrapper'
 import Login from '../../components/molecules/Login/Login'
 import styles from "./login.module.css"
 import SignUp from '../../components/molecules/SignUp/SignUp'
+import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
 
 const page = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,17 +14,15 @@ const page = () => {
   }
   return (
     <div className={styles.container}>
-      <Breadcrumb >
-        <BreadcrumbList className={styles.navigation}>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/">Home</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator>/</BreadcrumbSeparator>
-          <BreadcrumbItem>
-            <BreadcrumbPage>Login</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
+      <div className={styles.navigation}>
+        <Breadcrumbs
+          breadcrumbItems={[
+            { label: "Home", href: "/" },
+            { label: "Login", href: "/login" },
+          ]}
+          breadcrumbSeparator="/slash.svg"
+        />
+      </div>
       <div className={styles.loginContainer}>
         {isLogin ? <Login onCreateAccount={createAccountHandler}/> : <SignUp/>}
       </div>

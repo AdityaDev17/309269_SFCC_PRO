@@ -7,7 +7,7 @@ import {
   DrawerTrigger,
 } from "@/components/molecules/Drawer/Drawer";
 import { X, SearchIcon } from "lucide-react";
-import Search from "@/components/molecules/Search/search";
+import Search from "@/components/molecules/Search/Search";
 import {
   searchSuggestions,
   productSuggestions,

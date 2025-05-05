@@ -1,0 +1,125 @@
+.container {
+  height: auto;
+  width: 100%;
+  background-color: #fafafa;
+  border: 1px solid #cccbce;
+  padding: 30px;
+}
+
+.progress {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  height: auto;
+  padding-top: 20px;
+}
+
+.stepItem {
+  position: relative;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  width: auto;
+  height: 44px;
+  /* z-index: 100; */
+}
+.statusText {
+  display: flex;
+  flex-direction: column;
+  padding-left: 20px;
+}
+
+/* Connector line between steps */
+/* .stepItem:not(:first-child)::before {
+  content: "";
+  background-color: #e2e8f0; 
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  left: 50%;
+  top: 33%;
+  transform: translateY(-70%);
+  transform: translateX(60%);
+  z-index: 0;
+} */
+/* .stepItem:not(.firstStep)::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 50px;
+  border-left: 2px dotted #e2e8f0;
+  z-index: 0;
+} */
+
+/* .step::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0px;
+  border-left: 1px dotted #e2e8f0;
+  height: 100%;
+  background-color: #e2e8f0;
+  z-index: 1;
+}
+.firstStep .step::before {
+  content: none;
+} */
+/* Circle number or tick */
+.step {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* z-index: 100; */
+  background-color: #ffffff;
+  border: 1px solid #4f4b53; /* default gray */
+  border-radius: 50%;
+  font-weight: 600;
+  color: white;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+
+/* Completed step (green) */
+.complete .step {
+  background-color: #4f4b53;
+}
+
+/* .complete:not(:first-child)::before,
+.active:not(:first-child)::before {
+  background-color: #16a34a;
+} */
+/* .stepItem.complete .step::before,
+.stepItem.active .step::before {
+  border-left: 1px solid #e2e8f0;
+} */
+.verticalLine {
+  width: 0px;
+  height: 60px;
+  border-left: 2px dotted #cccbce;
+  /* background-color: #e2e8f0; */
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  margin-top: 4px;
+  /* z-index: -1; */
+}
+.complete .verticalLine {
+  border-left: 2px solid #cccbce;
+}

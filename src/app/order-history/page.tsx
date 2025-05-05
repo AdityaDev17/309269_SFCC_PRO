@@ -4,12 +4,12 @@ import React from "react";
 import { OrderCardContainer } from "./component";
 import styles from "./orderHistory.module.css";
 import ErrorComponent from "../../components/molecules/ErrorComponent/ErrorComponent";
-import { orderData } from "../../common/constant";
+import { allOrderData } from "../../common/constant";
 
 function OrderHistory() {
   return (
     <div className={styles.container}>
-      {orderData.length === 0 ? (
+      {allOrderData.length === 0 ? (
         <ErrorComponent
           errImg="./images/orderListEmpty.svg"
           imgHeight={204}
@@ -35,7 +35,7 @@ function OrderHistory() {
             label="ORDER HISTORY"
           />
 
-          <OrderCardContainer orderData={orderData}/>
+          <OrderCardContainer />
         </>
       )}
     </div>

@@ -8,7 +8,7 @@ import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "../../components/atomic/Typography/Typography";
 import ProductImageCarousel from "../../components/organisms/ProductImageCarousel/ProductImageCarousel";
 import ErrorComponent from "../../components/molecules/ErrorComponent/ErrorComponent";
-import { toast, Toaster } from "../../components/molecules/Toast/Toast";
+import sonnerToast, { Toaster } from "../../components/molecules/Toast/Toast";
 
 import { productData, categoryList } from "../../common/constant";
 
@@ -42,7 +42,7 @@ function Wishlist() {
         withPagination={false}
         moveToBag={true}
         onMoveToBag={() => {
-          toast("Item has been moved to your Bag!", {
+          sonnerToast("Item has been moved to your Bag!", {
             className: `${styles.Toast} ${styles.ToastSuccess}`,
             unstyled: true,
           });

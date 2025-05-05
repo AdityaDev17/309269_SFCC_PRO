@@ -1,8 +1,6 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import Input from "../../atomic/Input/Input"
+import Input from "../../atomic/Input/Input";
 import {
   Dialog,
   DialogTrigger,
@@ -22,118 +20,29 @@ import {
 } from "../../atomic/Select/Select";
 import styles from "./AddressModal.module.css";
 import { Button } from "../../atomic/Button/Button";
-import { useState,useEffect } from "react";
+import { useState } from "react";
 import clsx, { ClassValue } from "clsx";
 import { states } from "../../../common/constant";
 import CheckBox from "../../atomic/CheckBox/CheckBox";
 
-export const cn = (...args: ClassValue[]) => clsx(...args)
 
-type AddressType = {
-  firstName: string
-  lastName: string
-  phone: string
-  apartment: string
-  building: string
-  street: string
-  landmark?: string
-  city: string
-  state: string
-  zipcode: string
-  isDefault?: boolean
-}
-
-type AddressDialogProps = {
-  className?: string
-  onAddAddress?: (address: AddressType) => void
-  onEditAddress?: (address: AddressType) => void
-  addressToEdit?: AddressType | null
-  isOpen?: boolean
-  onOpenChange?: (open: boolean) => void
-  trigger?: React.ReactNode
-}
-
-export function AddressDialog({
-  className,
-  onAddAddress,
-  onEditAddress,
-  addressToEdit,
-  isOpen,
-  onOpenChange,
-  trigger,
-}: AddressDialogProps) {
-  const [isChecked, setIsChecked] = useState(false)
-  const [formData, setFormData] = useState<AddressType>({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    apartment: "",
-    building: "",
-    street: "",
-    landmark: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    isDefault: false,
-  })
-
-  
-  useEffect(() => {
-    if (addressToEdit) {
-      setFormData(addressToEdit)
-      setIsChecked(addressToEdit.isDefault || false)
-    } else { 
-      setFormData({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        apartment: "",
-        building: "",
-        street: "",
-        landmark: "",
-        city: "",
-        state: "",
-        zipcode: "",
-        isDefault: false,
-      })
-      setIsChecked(false)
-    }
-  }, [addressToEdit])
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
-
-  const handleSelectState = (value: string) => {
-    setFormData((prev) => ({ ...prev, state: value }))
-  }
-
-  const handleSubmit = () => {
-    const updatedAddress = {
-      ...formData,
-      isDefault: isChecked,
-    }
-
-    if (addressToEdit) {
-      onEditAddress?.(updatedAddress)
-    } else {
-      onAddAddress?.(updatedAddress)
-    }
-  }
+export const cn = (...args: ClassValue[]) => clsx(...args);
+export function AddressDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void,}) {
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogTrigger asChild>
+        {/* <Button variant="secondary">ADD NEW ADDRESS</Button> */}
+      </DialogTrigger>
 
       <DialogContent
         className={cn(styles.DialogContent, styles.AddressDialogContent)}
-        overlayClassName={styles.dialogOverlay}
       >
-      
+        {/* Header */}
         <DialogHeader className={styles.AddressDialogHeader}>
           <DialogTitle className={styles.AddressDialogTitle}>
-            {addressToEdit ? "Edit Address" : "Add Address"}
+            Add Address
           </DialogTitle>
         </DialogHeader>
 
@@ -192,10 +101,14 @@ export function AddressDialog({
                 </div>
                 <Input placeholder="ZIP code*" name="zipcode" />
               </div>
+              <div>
+              <Input placeholder="Country" name="country" />
+              </div>
             </fieldset>
           </div>
         </DialogDescription>
 
+        {/* Footer (stays fixed) */}
         <DialogFooter className={styles.AddressDialogFooter}>
           <div className={styles.CheckboxRow}>
             <CheckBox
@@ -208,25 +121,22 @@ export function AddressDialog({
           <DialogClose asChild>
             <Button>Cancel</Button>
           </DialogClose>
-          <DialogClose asChild>
-            <Button variant="secondary" type="submit" onClick={handleSubmit}>
-              Save
-            </Button>
-          </DialogClose>
+          <Button variant="secondary" type="submit">
+            Save
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }
 
-
 /**
- * ## AddressDialog Component
+ * # AddressDialog Component
  *
  * `AddressDialog` is a composable modal dialog built using Radix UI primitives and custom atomic components.
  * It allows users to input and save a new shipping address, with validations for mandatory fields, structured sections for contact and location, and the option to set the address as default.
  *
- * ### Features:
+ * ## Features:
  * - **Custom Dialog UI**: Built using the `Dialog` component set (Trigger, Content, Header, Title, Description, Footer, Close).
  * - **Atomic Inputs**: Uses project-level `Input`, `Select`, `Button`, and `Checkbox` components for consistency and design coherence.
  * - **Stateful Checkbox**: Includes an internal state (`isChecked`) to track the "Set as Default" checkbox.
@@ -236,7 +146,7 @@ export function AddressDialog({
  *
  * ---
  *
- * ### Component Hierarchy:
+ * ## Component Hierarchy:
  *
  * ```tsx
  * <Dialog>
@@ -260,7 +170,7 @@ export function AddressDialog({
  *
  * ---
  *
- * ### Example Usage:
+ * ## Example Usage:
  *
  * ```tsx
  * import { AddressDialog } from "@/components/sections/addressModal/AddressModal";
@@ -276,14 +186,14 @@ export function AddressDialog({
  *
  * ---
  *
- * ### Accessibility Considerations:
+ * ## Accessibility Considerations:
  * - Inherits focus trapping, ARIA roles, and keyboard navigation from Radix Dialog.
  * - Uses semantic HTML elements (`fieldset`, `legend`, `label`) for better screen reader support.
  * - Dialog closes on ESC key or when clicking the Cancel button.
  *
  * ---
  *
- * ### Styling Notes:
+ * ## Styling Notes:
  * - Modular styles are defined in `AddressModal.module.css`.
  * - Key class hooks:
  *   - `.AddressDialogContent` – Dialog positioning and box styling.
@@ -294,16 +204,18 @@ export function AddressDialog({
  *
  * ---
  *
- * ### Props:
+ * ## Props:
  * This component does **not** currently accept props. All configuration is internal.
  *
  * ---
  *
- * ### Future Enhancements:
+ * ## Future Enhancements:
  * - Add form validation and controlled input states.
  * - Replace hardcoded state list with dynamic API-based data.
  * - Support for address editing by passing initial values via props.
  *
  * ---
  *
+ * @component
+ * @returns {JSX.Element} A fully styled, interactive address input modal component.
  */

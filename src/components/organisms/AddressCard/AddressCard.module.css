@@ -1,0 +1,158 @@
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.twoColumnGrid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+@container (max-width: 700px) {
+  .twoColumnGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .cardGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.card {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border: 1px solid #ddd;
+  padding: 1rem;
+  background: #fff;
+  gap: 0.5rem;
+  transition: background 0.3s;
+}
+
+.defaultCard {
+  background-color: #fafafa;
+  border: 1px solid #4f4b53;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+  padding: 0 4px;
+}
+
+.name {
+  font-weight: 600;
+  font-size: 1rem;
+  margin-top: 5px;
+  margin-bottom: 0.25rem;
+  padding-bottom: 1rem;
+}
+
+.address {
+  font-size: 0.875rem;
+  color: #444;
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+}
+
+.phone {
+  font-size: 0.875rem;
+  color: #444;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: auto;
+  margin-bottom: 0.5rem;
+}
+
+.checkbox {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #3b3b3b;
+}
+
+
+.checkbox span {
+  line-height: 1;
+}
+
+.iconGroup {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  gap: 1rem;
+}
+
+.icon {
+  cursor: pointer;
+  color: #666;
+}
+
+.dialogContent {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background-color: #fff;
+  width: calc(100% - clamp(2rem, 5vw, 4rem));
+  max-width: 400px;
+  padding: 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+}
+
+.dialogHeader {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.dialogTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.dialogCloseIcon {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.dialogDescription {
+  padding: 2rem 1.5rem;
+  font-size: 0.95rem;
+  color: #444;
+  border-bottom: 1px solid #ccc;
+  background-color: #fafafa;
+  padding-bottom: 3.5rem;
+}
+
+.dialogFooter {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+  gap: 1rem;
+  padding: 0.5rem 0.5rem;
+}
+
+.AddressDialogContent {
+  width: clamp(320px, 90vw, 720px);
+  height: clamp(60vh, 90vh, 512px);
+}

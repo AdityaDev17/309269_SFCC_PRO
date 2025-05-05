@@ -5,7 +5,7 @@ import { AddressDialog } from "../src/components/organisms/AddressForm/AddressMo
 
 describe("AddressDialog Component", () => {
   beforeEach(() => {
-    render(<AddressDialog />);
+    render(<AddressDialog open={false} onOpenChange={jest.fn()} />);
   });
 
   it("renders the trigger button", () => {

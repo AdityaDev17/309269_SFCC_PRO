@@ -245,7 +245,7 @@ const Header: React.FC<HeaderProps> = ({
               return (
                 <MiniCart
                   key={index}
-                  cartItems={cartItems}
+                  cartItems={[]}
                   triggerType="icon"
                   bagIcon={icon}
                   onViewBag={() => router.push("/cart")}

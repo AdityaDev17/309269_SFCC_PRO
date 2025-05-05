@@ -12,16 +12,13 @@
 
 
 .horizontalRow {
-  display: flex;
-  flex-wrap: nowrap;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(189px, 40vw, 325px);
   gap: 16px;
   padding-bottom: 10px;
 }
 
-.cardWrapper {
-  flex: 0 0 auto;
-  width: clamp(189px, 40vw, 325px); 
-}
 .cardLayout {
   display: grid;
   column-gap: 20px;
@@ -41,14 +38,14 @@
   }
 }
 .carouselRow {
-  display: flex;
+  display: grid;
   gap: 20px;
   overflow: hidden;
 }
 
 .dotsContainer {
-  display: flex;
-  align-items: center;
+  display: grid;
+grid-template-columns: auto auto;
   justify-content: center;
   margin-top: 12px;
   gap: 8px;

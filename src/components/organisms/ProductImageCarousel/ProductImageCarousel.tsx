@@ -79,8 +79,8 @@ const ProductImageCarousel = ({
         <div className={styles.scrollContainer} ref={scrollRef}>
           <div className={styles.horizontalRow}>
             {productData.map((product, index) => (
-              <div className={styles.cardWrapper} key={index}>
                 <ProductCard
+                key={index}
                   productId={product.productId}
                   productImage={product.productImage}
                   productTitle={product.productTitle}
@@ -96,7 +96,6 @@ const ProductImageCarousel = ({
                   onButtonClick={onButtonClick ? () => onButtonClick(product.productId) : undefined}
                   onMoveToBag={onMoveToBag ? () => onMoveToBag(product.productId) : undefined}
                 />
-              </div>
             ))}
           </div>
         </div>
@@ -145,49 +144,61 @@ export default ProductImageCarousel;
 /**
  * ## ProductImageCarousel
  *
- * The `ProductImageCarousel` component is a carousel-like component that displays a list of `ProductCard` components in a grid layout. It is designed to showcase products with various attributes such as images, titles, descriptions, prices, and wishlisted status. It also allows for flexible configuration in terms of how many cards are displayed per row, alignment, and whether or not the "Move to Bag" action is shown.
+ * The `ProductImageCarousel` component displays a horizontally scrollable collection of `ProductCard` components,
+ * optionally with pagination controls. It can be used to showcase product recommendations, related items, or
+ * curated collections.
  *
  * ### Props
  *
- * - **productData** (`array`): An array of product objects that each contain the following properties:
- *   - **productImage** (`string`): The URL of the product image.
- *   - **productTitle** (`string`): The title of the product.
- *   - **productDesc** (`string`, optional): A description of the product.
- *   - **price** (`string`, optional): The price of the product.
- *   - **currency** (`string`, optional): The currency symbol/code for the product's price.
- *   - **wishListed** (`boolean`, optional): Whether the product is wishlisted.
- *   - **bagPrice** (`string`, optional): The price of the product in the bag.
+ * - `productData` **(required)**: An array of product objects containing:
+ *   - `productId`: Unique identifier of the product.
+ *   - `productImage`: Image URL of the product.
+ *   - `productTitle` (optional): Title/name of the product.
+ *   - `productDesc` (optional): Description or subtext of the product.
+ *   - `price` (optional): Price of the product.
+ *   - `currency` (optional): Currency for the price.
+ *   - `bagPrice` (optional): Alternate pricing for bag/checkout context.
+ *   - `wishListed` (optional): Indicates if the item is wishlisted.
  *
- * - **cardsPerRow** (`number`): The number of product cards to display per row in the carousel.
- * - **width** (`string | number`, optional): The width of each product card.
- * - **alignment** (`"center" | "alignStart" | "alignEnd"`, optional): Controls the alignment of the product cards. Available values:
- *   - `center` (default)
- *   - `alignStart`
- *   - `alignEnd`
+ * - `width` (optional): Width of each individual `ProductCard`. Accepts string or number.
+ * - `alignment` (optional): Alignment of content inside the card. Options: `"center"`, `"alignStart"`, `"alignEnd"`.
+ * - `moveToBag` (optional): Enables a "Move to Bag" button on the product card if `true`.
+ * - `withPagination` (optional): Enables scroll-based pagination and dot indicators. Defaults to `false`.
+ * - `onCardClick` (optional): Callback triggered when a product card is clicked, receives the `productId`.
+ * - `onButtonClick` (optional): Callback for a product card's action button, receives the `productId`.
+ * - `onMoveToBag` (optional): Callback for the "Move to Bag" action, receives the `productId`.
  *
- * - **moveToBag** (`boolean`, optional): If `true`, the "Move to Bag" button will be displayed on each product card.
+ * ### Behavior
  *
- * ### Component Behavior
+ * - Without `withPagination`, all product cards are rendered in a flexible row layout.
+ * - With `withPagination`, cards are grouped by 4 per page, and the user can navigate using pagination dots.
+ * - Pagination scroll syncs with the carousel and updates the active dot based on scroll position.
+ * - Product cards support interactions via optional `onCardClick`, `onButtonClick`, and `onMoveToBag`.
  *
- * - The `ProductImageCarousel` renders a grid layout with a dynamic number of product cards based on the `cardsPerRow` prop.
- * - Each `ProductCard` is passed data from the `productData` prop, including details like the product image, title, description, price, and wishlisted status.
- * - The carousel layout is responsive and adjusts based on the number of cards per row, which is determined by the `cardsPerRow` prop.
- * - The `width` and `alignment` props allow you to customize the appearance of the cards, while the `moveToBag` prop controls whether or not the "Move to Bag" button is displayed.
+ * ### Used Components
  *
- * ### Example Usage
+ * - `ProductCard`: Reusable card that renders product image, title, price, and interactive buttons.
+ * - `Image` (Next.js): Optimized image rendering for product visuals.
  *
- * Here's an example of how to use the `ProductImageCarousel` component:
+ * ### Example
  *
  * ```tsx
- *       <ProductImageCarousel
- *         productData={exampleProductData}
- *         cardsPerRow={3}
- *         width={250}
- *         alignment="center"
- *         moveToBag={true}
- *       />
+ * <ProductImageCarousel
+ *   productData={[
+ *     {
+ *       productId: "123",
+ *       productImage: "/images/shoe1.jpg",
+ *       productTitle: "Running Shoe",
+ *       price: "99.99",
+ *       currency: "USD",
+ *     },
+ *     // more products...
+ *   ]}
+ *   width={250}
+ *   alignment="center"
+ *   moveToBag={true}
+ *   withPagination={true}
+ *   onCardClick={(id) => console.log("Clicked product", id)}
+ * />
  * ```
- *
  */
- 
- 

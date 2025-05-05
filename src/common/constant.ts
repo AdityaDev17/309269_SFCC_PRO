@@ -1,3 +1,4 @@
+import { StatementBannerProps } from "../components/molecules/StatementBanner/StatementBanner";
 import { alignmentType } from "../components/molecules/Banner/Banner";
 
 export const productDetails = {
@@ -324,7 +325,7 @@ export const homepageBanners: BannerData[] = [
   {
     title: "SPRING COLLECTION 2024",
     buttonText: "View More",
-    backgroundImage: "/images/heroimageone.svg",
+    backgroundImage: "/images/heroimageone.webp",
     alignment: "center-bottom",
     buttonLink: "",
   },
@@ -366,7 +367,7 @@ export const homepageProducts: ProductCard[] = [
   },
 ];
 
-export const statementBannerData = {
+export const statementBannerData : StatementBannerProps = {
   imageSrc: "/images/lipstick.svg",
   imageAlt: "Lipstick collection",
   imagePosition: "left",

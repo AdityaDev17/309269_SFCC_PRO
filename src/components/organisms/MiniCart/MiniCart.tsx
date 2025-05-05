@@ -11,6 +11,7 @@ import {
   Drawer,
 } from "../../molecules/Drawer/Drawer";
 import React from "react";
+import { useRouter } from "next/navigation";
 import styles from "./MiniCart.module.css";
 import Typography from "../../atomic/Typography/Typography";
 import CartItemList from "../../molecules/CartItemList/CartItemList";
@@ -29,7 +30,6 @@ interface MiniCartProps {
   cartItems: CartItem[];
   onDeleteItem?: (itemId: string) => void;
   onUpdateQuantity?: (itemId: string, newQuantity: number) => void;
-  onViewBag?: () => void;
   triggerType?: "button" | "icon";
   bagIcon?:string;
 }
@@ -38,17 +38,11 @@ const MiniCart = ({
   cartItems,
   onDeleteItem,
   onUpdateQuantity,
-  onViewBag,
   triggerType,
   bagIcon
 }: MiniCartProps) => {
+  const router = useRouter()
   const [open, setOpen] = React.useState(false);
-  const handleViewBag = () => {
-    if (onViewBag) {
-      onViewBag(); 
-    }
-    setOpen(false);
-  };
   return (
     <Drawer open={open} onOpenChange={setOpen} side="right">
      <DrawerTrigger asChild>
@@ -128,7 +122,10 @@ const MiniCart = ({
               <Button
                 variant="icon"
                 className={styles.viewbag}
-                onClick={handleViewBag}
+                onClick={() => {
+                  router.push('/cart');
+                  setOpen(false);
+                }}                
               >
                 VIEW BAG
               </Button></div>
@@ -164,7 +161,6 @@ export default MiniCart;
  * - `cartItems`: An array of items in the cart. Each item includes `id`, `name`, `description`, `quantity`, `price`, `currency`, and `productImage`.
  * - `onDeleteItem` (optional): Callback fired when an item is removed from the cart.
  * - `onUpdateQuantity` (optional): Callback triggered when the quantity of an item is changed.
- * - `onViewBag` (optional): Callback invoked when the user clicks the "VIEW BAG" button.
  * - `triggerType` (optional): Defines how the drawer is triggered, either `"button"` or `"icon"`. Defaults to a button if not specified.
  * - `bagIcon` (optional): Path to the icon image used when `triggerType` is `"icon"`.
  *
@@ -174,7 +170,6 @@ export default MiniCart;
  * - Opens via a button or custom icon trigger depending on `triggerType`.
  * - If `cartItems` is empty, a message and an empty bag image are shown.
  * - When items are present, it shows a list using `CartItemList`, displays subtotal, and includes a "VIEW BAG" button.
- * - The "VIEW BAG" button triggers the `onViewBag` callback and closes the drawer.
  *
  * ### Used Components
  *
@@ -214,7 +209,6 @@ export default MiniCart;
  *   return (
  *     <MiniCart
  *       cartItems={cartData}
- *       onViewBag={handleViewBag}
  *       triggerType="icon"
  *       bagIcon="/icons/cart.svg"
  *     />

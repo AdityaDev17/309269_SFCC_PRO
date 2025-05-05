@@ -21,7 +21,7 @@ interface BannerProps {
   description?: string
   backgroundImage?: string
   alignment?:alignmentType;
-  buttonLink?: string
+  buttonLink?: () => void;
   textColor?: string
   subtitleVariant?: number
 }
@@ -52,6 +52,7 @@ const Banner: React.FC<BannerProps> = ({
             width={1440}
             height={740}
             loading="eager"
+            priority={true}
   />
         )}
         <div className={`${styles.textBox} ${alignmentClass}`}>
@@ -63,7 +64,7 @@ const Banner: React.FC<BannerProps> = ({
           
           {buttonText && (
           <div className={styles.buttonContainer}>
-            <Button size="sm" onClick={() => (window.location.href = buttonLink)}>
+            <Button size="sm" onClick={()=>buttonLink}>
               {buttonText}
             </Button>
           </div>

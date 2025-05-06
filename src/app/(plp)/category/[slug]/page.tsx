@@ -22,13 +22,13 @@ import Breadcrumbs from "../../../../components/atomic/Breadcrumbs/Breadcrumbs";
 import { isLargeCard } from "../layoutPattern";
 
 type PageProps = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 export default async function PLPPage({ params }: PageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const products = await getProductsByCategory(slug);
   // Format slug to readable category name (optional)
   const categoryName = slug

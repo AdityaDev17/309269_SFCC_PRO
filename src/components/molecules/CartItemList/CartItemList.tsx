@@ -139,7 +139,7 @@ const CartItemList = ({
                         qty={item.quantity}
                       />
                       <Image
-                        src="/images/delete.svg"
+                        src="/images/delete.png"
                         alt="Delete"
                         onClick={() => onDeleteItem?.(item.id)}
                         className={styles.deleteIcon}
@@ -172,12 +172,13 @@ const CartItemList = ({
                         </button>
                         <div className={styles.deleteWrapper}>
                           <Image
-                            src="/images/delete.svg"
+                            src="/images/delete.png"
                             alt="Delete"
                             onClick={() => onDeleteItem?.(item.id)}
                             className={styles.deleteIcon}
                             width={24}
                             height={24}
+                            priority
                           />
                         </div>
                       </div>
@@ -211,7 +212,7 @@ const CartItemList = ({
                 <button className={styles.wishlistBtn}>Move to Wishlist</button>
                 <div className={styles.deleteWrapper}>
                   <Image
-                    src="/images/delete.svg"
+                    src="/images/delete.png"
                     alt="Delete"
                     onClick={() => onDeleteItem?.(item.id)}
                     className={styles.deleteIcon}

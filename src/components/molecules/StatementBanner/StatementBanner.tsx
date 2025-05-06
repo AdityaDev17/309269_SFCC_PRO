@@ -5,7 +5,7 @@ import styles from './StatementBanner.module.css';
 import Typography from "../../atomic/Typography/Typography";
 import { Button } from "../../atomic/Button/Button";
 
-type StatementBannerProps = {
+export type StatementBannerProps = {
   imageSrc: string;
   imageAlt?: string;
   imagePosition?: 'left' | 'right';

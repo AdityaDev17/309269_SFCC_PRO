@@ -84,7 +84,7 @@ const SearchMenu = ({ keyVal, searchIcon, isMobile }: SearchMenuProps) => {
                 width={109}
                 alt="SFCC LOGO"
               />}
-              <Search isMobile={isMobile} onClose={closeHandler}/>
+              <Search/>
               {!isMobile && <X
                 onClick={closeHandler}
                 strokeWidth={2}

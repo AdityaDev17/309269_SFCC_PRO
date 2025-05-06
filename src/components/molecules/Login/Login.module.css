@@ -1,13 +1,12 @@
 .layout {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  row-gap: 20px;  
 }
 .row {
-  display: flex;
-  flex-direction: row;
-  gap: 75px;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;  
+  column-gap: 88px;  
+  justify-content: space-between;  
 }
 .fontColor {
   font-size: 14px;
@@ -18,9 +17,9 @@
   margin-bottom: 8px;
 }
 .rowGap {
-  display: flex;
-  flex-direction: row;
-  gap: 7px;
+  display: grid;
+  grid-auto-flow: column;  
+  column-gap: 7px;         
 }
 .forgotPassword {
   font-size: 14px;

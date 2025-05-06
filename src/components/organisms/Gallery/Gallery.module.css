@@ -1,13 +1,13 @@
 .layoutGallery {
-  display: flex;
+  display: grid;
   gap: 20px;
-  flex-direction: row;
+  grid-template-columns: 0.1fr 1fr;
 }
 
 .thumbnails {
-  display: flex;
-  flex-direction: column;
-  gap: 21px;
+  display: grid;
+  grid-auto-rows: 0.1fr;
+  row-gap: 21px;
 }
 
 .thumbnailWrapper {
@@ -39,17 +39,18 @@
 
 /* Existing styles remain */
 
+
 .mobileGallery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
+  display: grid;
+  justify-items: center; /* aligns items horizontally */
+  row-gap: 12px;         /* vertical spacing between rows */
 }
 
 .dotsContainer {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column; /* lay items out in a row */
   justify-content: center;
-  gap: 8px;
+  column-gap: 8px;        /* horizontal spacing */
 }
 
 .dot {

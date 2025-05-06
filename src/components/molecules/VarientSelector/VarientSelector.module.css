@@ -1,7 +1,9 @@
 .container {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: grid;
+  align-items: center;    
+  grid-auto-flow: column; 
+  column-gap: 14px; 
+  justify-content: flex-start;      
 }
 
 .colorCircle {
@@ -36,7 +38,7 @@
   color: #555;
   font-size: 14px;
   font-weight: 500;
-  display: flex;
+  display: grid;
   align-items: center;
   justify-content: center;
   border: 2px solid #ccc;

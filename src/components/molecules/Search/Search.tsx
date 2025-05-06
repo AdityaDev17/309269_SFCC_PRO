@@ -1,9 +1,9 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import styles from "./Search.module.css";
-import { Search as SearchIcon, X, Mic } from "lucide-react";
+import { Search as SearchIcon, X, Mic, ChevronLeft  } from "lucide-react";
 
 interface SearchProps {
   placeholder?: string;
@@ -11,9 +11,11 @@ interface SearchProps {
   onChange?: (val: string) => void;
   onSearch?: () => void;
   onClear?: () => void;
+  onClose?: () => void;
   onMicClick?: () => void;
   showMic?: boolean;
   className?: string;
+  isMobile?: boolean;
 }
 
 const Search = ({
@@ -22,9 +24,11 @@ const Search = ({
   onChange,
   onSearch,
   onClear,
+  onClose,
   onMicClick,
   showMic = true,
   className = "",
+  isMobile,
 }: SearchProps) => {
   const [internalValue, setInternalValue] = useState("");
 
@@ -48,9 +52,21 @@ const Search = ({
 
   return (
     <div className={`${styles.wrapper} ${className}`}>
-      <Button className={styles.search} aria-label="Search" onClick={onSearch}>
-        <SearchIcon strokeWidth={1.2} color="grey" />
-      </Button>
+      {isMobile ? (
+        <SearchBarButton
+          aria-label="Close"
+          clickHandler={onClose}
+        >
+          <ChevronLeft strokeWidth={1.2} color="grey" />
+        </SearchBarButton>
+      ) : (
+        <SearchBarButton
+          aria-label="Search"
+          clickHandler={onSearch}
+        >
+          <SearchIcon strokeWidth={1.2} color="grey" />
+        </SearchBarButton>
+      )}
 
       <Input
         type="search"
@@ -62,20 +78,58 @@ const Search = ({
       />
 
       {inputValue && (
-        <Button className={styles.cancel} aria-label="Clear search" onClick={handleClear}>
+        <SearchBarButton
+          aria-label="Clear search"
+          clickHandler={handleClear}
+        >
           <X strokeWidth={2} color="grey" />
-        </Button>
+        </SearchBarButton>
       )}
 
       <span className={styles.bar} />
 
       {showMic && (
-        <Button className={styles.mic} aria-label="Voice search" onClick={onMicClick}>
+        <SearchBarButton
+          aria-label="Voice search"
+          clickHandler={onMicClick}
+        >
           <Mic strokeWidth={1.8} color="grey" />
-        </Button>
+        </SearchBarButton>
       )}
     </div>
   );
 };
 
 export default Search;
+
+
+function SearchBarButton({children, label, clickHandler}: any) {
+  const [isHovered, setIsHovered] = useState(false);
+  const baseStyle = {
+    backgroundColor: 'white',
+    border: 'none',
+    padding: '6px 8px',
+    cursor: 'pointer'
+  };
+
+  const hoverStyle = {
+    backgroundColor: 'white',
+    border: 'none'
+  };
+
+  const combinedStyle = isHovered
+    ? { ...baseStyle, ...hoverStyle }
+    : baseStyle;
+
+  return (
+    <Button
+      style={combinedStyle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      aria-label={label}
+      onClick={clickHandler}
+    >
+      {children}
+    </Button>
+  );
+}

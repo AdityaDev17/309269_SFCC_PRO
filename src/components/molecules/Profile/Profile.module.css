@@ -1,31 +1,27 @@
-.layout{
-    display: flex;
-    flex-direction: column;
-    gap:20px
+.layout {
+  display: grid;
+  row-gap: 20px;
 }
-.section{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap:20px;
+.section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+  gap: 20px;
 }
-.sectionForm{
-    display: flex;
-    flex-direction: column;
-    gap:20px;
-    
+.sectionForm {
+  display: grid;
+  row-gap: 20px;
 }
 
-.profileText{
-    font-weight: 600;
-    font-size: 14px;
-    text-transform: uppercase;
+.profileText {
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
 }
-.fontColor{
-    font-weight: 400;
-    font-size: 14px;
-    color: #4F4B53;
-    padding-bottom: 4px;
+.fontColor {
+  font-weight: 400;
+  font-size: 14px;
+  color: #4f4b53;
+  padding-bottom: 4px;
 }
 
 

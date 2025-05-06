@@ -38,9 +38,14 @@ const DrawerOverlay = React.forwardRef<
 ))
 DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 
+
+interface DrawerContentProps extends React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> {
+  height?: String
+}
+
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content> & { side?: 'left' | 'right' | 'top' | 'bottom' }
+  DrawerContentProps & { side?: 'left' | 'right' | 'top' | 'bottom' }
 >(({ children, side = 'left', ...props }, ref) => (
   <DrawerPortal>
     <DrawerOverlay />
@@ -48,6 +53,7 @@ const DrawerContent = React.forwardRef<
       ref={ref}
       data-side={side}
       className={styles.DrawerContent}
+      style={{height: `${props?.height}`}}
       {...props}
     >
       <div className={styles.DrawerContentDiv} />

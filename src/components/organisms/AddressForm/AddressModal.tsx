@@ -23,8 +23,7 @@ import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
 import clsx, { ClassValue } from "clsx";
 import { states } from "../../../common/constant";
-import CheckBox from "../../atomic/CheckBox/CheckBox";
-
+import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
 export function AddressDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void,}) {

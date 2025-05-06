@@ -1,3 +1,4 @@
+import { StatementBannerProps } from "../components/molecules/StatementBanner/StatementBanner";
 import { alignmentType } from "../components/molecules/Banner/Banner";
 
 export const productDetails = {
@@ -324,7 +325,7 @@ export const homepageBanners: BannerData[] = [
   {
     title: "SPRING COLLECTION 2024",
     buttonText: "View More",
-    backgroundImage: "/images/heroimageone.svg",
+    backgroundImage: "/images/heroimageone.webp",
     alignment: "center-bottom",
     buttonLink: "",
   },
@@ -348,31 +349,32 @@ export const homepageBanners: BannerData[] = [
 export const homepageProducts: ProductCard[] = [
   {
     productId: "1",
-    productImage: "images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "EXQUISITE COLLECTION",
     productDesc: "VIEW MORE",
   },
   {
     productId: "2",
-    productImage: "images/Product_2.svg",
+    productImage: "/images/Tile_4.png",
     productTitle: "ENCHANTING LOOK",
     productDesc: "VIEW MORE",
   },
   {
     productId: "3",
-    productImage: "images/Product_3.svg",
+    productImage: "/images/Tile_6.png",
     productTitle: "REVISIT YOUR CHOICES",
     productDesc: "VIEW MORE",
   },
 ];
 
-export const statementBannerData = {
+export const statementBannerData : StatementBannerProps = {
   imageSrc: "/images/lipstick.svg",
   imageAlt: "Lipstick collection",
   imagePosition: "left",
   heading: "STATEMENT SHADES",
   subheading: "FOR EVERY MOOD",
-  description: "6 new iconic shades which minimizes lines giving your lips a soft appearance.",
+  description:
+    "6 new iconic shades which minimizes lines giving your lips a soft appearance.",
 };
 
 export const cartItems = [
@@ -383,7 +385,7 @@ export const cartItems = [
     quantity: 2,
     price: 50,
     currency: "$",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
   },
 
   {
@@ -393,42 +395,42 @@ export const cartItems = [
     quantity: 1,
     price: 50,
     currency: "$",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
   },
 ];
 
 export const productData = [
   {
     productId: "893234",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 1",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "2",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 2",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "3",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 3",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "4",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "4",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",
@@ -442,6 +444,30 @@ export const states = [
   { label: "Karnataka", value: "karnataka" },
 ];
 
+export const searchSuggestions = ['Blush', 'Foundation', 'Highlighters'];
+
+export const productSuggestions = [
+  {
+    productId: '1',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '2',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '1',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '2',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+]
 // FAQ data with IDs for scrolling
 export const frequentlyAskedData = [
   {
@@ -479,7 +505,7 @@ export const frequentlyAskedData = [
       "Once your order has been shipped, you will receive a confirmation email with a tracking number. You can track your order through the link provided in the email or by logging into your account on our website and checking the order status.",
     category: "frequently-asked",
   },
-]
+];
 
 export const ordersData = [
   {
@@ -505,7 +531,8 @@ export const ordersData = [
   },
   {
     id: "return-exchange-product",
-    question: "CAN I RETURN OR EXCHANGE A PRODUCT THAT WAS PURCHASED ON SALE OR WITH A DISCOUNT CODE?",
+    question:
+      "CAN I RETURN OR EXCHANGE A PRODUCT THAT WAS PURCHASED ON SALE OR WITH A DISCOUNT CODE?",
     answer:
       "Yes, products purchased on sale or with a discount code are eligible for return or exchange within our standard 30-day return window. However, final sale items marked as non-returnable are not eligible for return or exchange.",
     category: "orders",
@@ -517,7 +544,7 @@ export const ordersData = [
       "To initiate a return or exchange, log into your account, go to your order history, select the order containing the item you wish to return, and follow the return instructions. You'll receive a return shipping label and detailed instructions via email.",
     category: "orders",
   },
-]
+];
 
 export const shippingData = [
   {
@@ -541,7 +568,7 @@ export const shippingData = [
       "We offer free standard shipping on orders over $50 within the continental US. International orders and expedited shipping options have additional fees.",
     category: "shipping",
   },
-]
+];
 
 export const returnsData = [
   {
@@ -565,7 +592,7 @@ export const returnsData = [
       "Once we receive your return, it takes 3-5 business days to process. Refunds are issued to the original payment method and may take an additional 5-10 business days to appear on your statement.",
     category: "returns",
   },
-]
+];
 
 export const paymentsData = [
   {
@@ -589,7 +616,7 @@ export const paymentsData = [
       "Currently, we only support one payment method per order. If you wish to use multiple payment methods, you'll need to place separate orders.",
     category: "payments",
   },
-]
+];
 
 export const productInfoData = [
   {
@@ -613,7 +640,7 @@ export const productInfoData = [
       "Most products should be stored in a cool, dry place away from direct sunlight. Some products, particularly those containing vitamin C or probiotics, may have specific storage requirements, which will be indicated on the packaging.",
     category: "product-info",
   },
-]
+];
 export const filterTabs = ["Price", "Notes", "Brands", "Features", "Discount"];
 
 export const filterOptions: Record<string, string[]> = {
@@ -629,7 +656,7 @@ export const filterOptions: Record<string, string[]> = {
   Features: ["Long Lasting", "Travel Size", "Refillable"],
   Discount: ["10% and above", "25% and above", "50% and above"],
 };
-export const orderData = [
+export const allOrderData = [
   {
     orderId: "ABCD12345678",
     price: 100,
@@ -761,53 +788,71 @@ export const dots = [
   },
 ];
 
-export const billingAddress= [
+export const billingAddress = [
   {
     id: "Billing Address",
-    value:''
-  }
-]
+    value: "",
+  },
+];
 
-export const address = [{
-  id:'1',
-  title:"Utkarsh Pai",
-    description:'20, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,',
+export const address = [
+  {
+    id: "1",
+    title: "Utkarsh Pai",
+    description:
+      "20, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,",
     phone: "XXX4398238",
     isDefault: true,
   },
   {
-    id:'2',
-    title:"Apple",
-      description:'25, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,',
-      phone: "XXX4398238",
-      isDefault: false,
-  },
-  {
-    id:'3',
-    title:"Robin Hood",
-      description:'30, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,',
-      phone: "XXX4398238",
-      isDefault: false,
-  },
-  {
-    id:'4',
-  title:"Kantilal Kantilal",
-    description:'20, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,',
+    id: "2",
+    title: "Apple",
+    description:
+      "25, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,",
     phone: "XXX4398238",
     isDefault: false,
-  },]
+  },
+  {
+    id: "3",
+    title: "Robin Hood",
+    description:
+      "30, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,",
+    phone: "XXX4398238",
+    isDefault: false,
+  },
+  {
+    id: "4",
+    title: "Kantilal Kantilal",
+    description:
+      "20, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,",
+    phone: "XXX4398238",
+    isDefault: false,
+  },
+];
 
-  export const shippingMethodsFromBackend = [
-    {
-      id: "Standard Delivery",
-      title: "Delivery within 3-4 business days",
-      description:"Delivery within 3-4 business days",
-      extraInfo: '0'
-    },
-    {
-      id: "Express Delivery",
-      title: "One day delivery",
-      description:"One day delivery",
-      extraInfo: '200'
-    },
-  ];
+export const shippingMethodsFromBackend = [
+  {
+    id: "Standard Delivery",
+    title: "Delivery within 3-4 business days",
+    description: "Delivery within 3-4 business days",
+    extraInfo: "0",
+  },
+  {
+    id: "Express Delivery",
+    title: "One day delivery",
+    description: "One day delivery",
+    extraInfo: "200",
+  },
+];
+
+export const orderStatus = {
+  isDelivered: true,
+  steps: [
+    { header: "Order Placed", text: "8th Oct’23, 8:00 AM" },
+    { header: "Order Shipped", text: "Shipped by EE-Kart" },
+    { header: "Order reached your nearest hub", text: " " },
+    { header: "Out for delivery", text: "OTP: 2398" },
+    { header: "Delivered", text: "Estimated delivery: 12th Oct’23" },
+  ],
+  currentStep: 3,
+};

@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import { FaStar, FaRegStar } from "react-icons/fa";

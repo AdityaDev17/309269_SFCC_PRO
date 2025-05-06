@@ -1,11 +1,14 @@
-.layout{
-    height: 600px;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.layout {
+  height: 600px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* display: grid;
+  place-items: center;
+  gap: 0; */
 }
-.text{
-    padding: 5px 0;
+.text {
+  padding: 5px 0;
 }

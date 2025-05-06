@@ -38,7 +38,7 @@ const GetTheLookBanner = () => {
           >
             <CardHeader>
               <Image
-                src="/images/carousel-image3.svg"
+                src="/images/look1.png"
                 alt="Look 1"
                 width={325}
                 height={422}
@@ -53,7 +53,7 @@ const GetTheLookBanner = () => {
           >
             <CardHeader>
               <Image
-                src="/images/lookbanner-img2.svg"
+                src="/images/look2.png"
                 alt="Look 2"
                 width={325}
                 height={422}
@@ -68,7 +68,7 @@ const GetTheLookBanner = () => {
           >
             <CardHeader>
               <Image
-                src="/images/carousel-image6.svg"
+                src="/images/look3.png"
                 alt="Look 3"
                 width={325}
                 height={422}

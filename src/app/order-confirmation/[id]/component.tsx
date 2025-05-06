@@ -118,6 +118,13 @@ const OrderConfimation = () => {
           totalRowTop={true}
           isButton={false}
           isPaymentImage={false}
+          total={orderDetails?.orderTotal.toString()}
+          totalAmt={orderDetails?.productTotal.toString()}
+          totalSavings="0"
+          subTotal={orderDetails?.productSubTotal.toString()}
+          delivery="Free"
+          tax={orderDetails?.taxTotal.toString()}
+          currency={orderDetails?.currency}
         />
       </section>
     </section>

@@ -33,7 +33,6 @@ const EditPassword = ({onUpdateClicked}:any) => {
   return (
     <div className={styles.layout}>
       <div className={styles.profileText}>Password</div>
-      <div className={styles.section}>
         <div className={styles.sectionForm}>
           <div>
             <div className={styles.fontColor}>Current Password*</div>
@@ -63,7 +62,6 @@ const EditPassword = ({onUpdateClicked}:any) => {
             />
           </div>
         </div>
-      </div>
       <div className={styles.buttonContainer}>
       <Button
         disabled={handleDisable()}

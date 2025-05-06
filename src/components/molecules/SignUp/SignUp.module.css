@@ -1,12 +1,11 @@
 .layout {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 20px;
 }
 .row {
-  display: flex;
-  flex-direction: row;
-  gap: 75px;
+  display: grid;
+  grid-auto-flow: column;
+  column-gap: 7px;
 }
 .fontColor {
   font-size: 14px;
@@ -28,16 +27,11 @@
   width: 325px;
 }
 .policy {
-    font-size: 14px;
-    font-weight: 400;
-  }
-.row{
-    display: flex;
-    flex-direction: row;
-    gap: 7px;
+  font-size: 14px;
+  font-weight: 400;
 }
-.selectBox{
-    width: 325px;
-    border:1px solid #B3B2B5;
-    color: #75757A;
+.selectBox {
+  width: 325px;
+  border: 1px solid #b3b2b5;
+  color: #75757a;
 }

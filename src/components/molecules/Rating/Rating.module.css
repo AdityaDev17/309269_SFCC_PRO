@@ -2,15 +2,16 @@
     text-align: center;
 }
 .layout{
-    display: flex;
-    flex-direction: column;
-    gap:10px;
+    display: grid;
+    gap:15px;
+    justify-content: center;
 }
 .textArea{
     width: 300px;
 }
 .rating{
-    display: flex;
+    display: grid;
     align-items: center;
     justify-content: center;
+    grid-auto-flow: column;
 }

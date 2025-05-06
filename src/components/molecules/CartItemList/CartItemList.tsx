@@ -1,9 +1,10 @@
-'use client';
-import React, { useEffect, useState } from 'react';
-import styles from './CartItemList.module.css';
-import Typography from '../../atomic/Typography/Typography';
-import QuantitySelector from '../../atomic/QuantitySelector/QuantitySelector';
-import Image from 'next/image';
+"use client";
+import React, { useEffect, useState } from "react";
+import styles from "./CartItemList.module.css";
+import Typography from "../../atomic/Typography/Typography";
+import QuantitySelector from "../../atomic/QuantitySelector/QuantitySelector";
+import Image from "next/image";
+import { Button } from "@/components/atomic/Button/Button";
 
 interface CartItem {
   id: string;
@@ -22,162 +23,219 @@ interface CartItemListProps {
   miniCart?: boolean;
   orderQuantity?: boolean;
   isWhiteBackground?: boolean;
+  button1?: boolean;
+  button2?: boolean;
 }
 
-const CartItemList = ({ cartItems, onDeleteItem, onUpdateQuantity, miniCart, orderQuantity , isWhiteBackground}: CartItemListProps) => {
-   const [isMobile, setIsMobile] = useState(false);
-  
-    const checkMobileView = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-      useEffect(() => {
-        checkMobileView();
-        window.addEventListener("resize", checkMobileView);
-        return () => window.removeEventListener("resize", checkMobileView);
-      }, []);
+const CartItemList = ({
+  cartItems,
+  onDeleteItem,
+  onUpdateQuantity,
+  miniCart,
+  orderQuantity,
+  isWhiteBackground,
+  button1,
+  button2,
+}: CartItemListProps) => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  const checkMobileView = () => {
+    setIsMobile(window.innerWidth < 768);
+  };
+  useEffect(() => {
+    checkMobileView();
+    window.addEventListener("resize", checkMobileView);
+    return () => window.removeEventListener("resize", checkMobileView);
+  }, []);
   return (
     <div>
-  {cartItems.map((item) => (
-  <div key={item.id} className={`${styles.bagContent} ${isWhiteBackground ? styles.whiteBackground : ''}`}>
-    <div className={styles.cartItem}>
-      <div className={styles.productImageWrapper}>
-        <Image
-          src={item.productImage}
-          alt="cart Image"
-          width={140}
-          height={140}
-          className={styles.productImage}
-          loading='eager'
-        />
-      </div>
-
-      <div style={{ flex: 1 }}>
-        <Typography type="Body" variant={2} fontWeight="semibold" label={item.name} />
-        {item.description && (
-          <Typography type="Body" variant={2} fontWeight="semibold" label={item.description} />
-        )}
-
-        <div className={styles.quantity}>
-          {!isMobile && (
-            <Typography
-              type="Body"
-              variant={2}
-              label={orderQuantity ? `Quantity: ${item.quantity}` : 'Quantity'}
-              color="#4f4b53"
-            />
-          )}
-
-          {orderQuantity && (
-            <div className={styles.orderPrice}>
-              <Typography
-                type="Label"
-                variant={3}
-                label={`${item.currency} ${item.price}`}
+      {cartItems.map((item) => (
+        <div
+          key={item.id}
+          className={`${styles.bagContent} ${isWhiteBackground ? styles.whiteBackground : ""}`}
+        >
+          <div className={styles.cartItem}>
+            <div className={styles.productImageWrapper}>
+              <Image
+                src={item.productImage}
+                alt="cart Image"
+                width={140}
+                height={140}
+                className={styles.productImage}
+                loading="eager"
               />
             </div>
-          )}
 
-          {miniCart && (
-            <div className={styles.miniCartControls}>
-              <div className={styles.miniCartLeft}>
-                <QuantitySelector
-                  updateQuantity={true}
-                  onQuantityChange={(newQty) => onUpdateQuantity?.(item.id, newQty)}
-                  qty={item.quantity}
-                />
-                <Image
-                  src="/images/delete.svg"
-                  alt="Delete"
-                  onClick={() => onDeleteItem?.(item.id)}
-                  className={styles.deleteIcon}
-                  width={24}
-                  height={24}
-                />
-              </div>
+            <div style={{ flex: 1 }}>
               <Typography
-                type="Label"
-                variant={3}
-                label={`${item.currency} ${item.quantity * item.price}`}
-                color="#4f4b53"
+                type="Body"
+                variant={2}
+                fontWeight="semibold"
+                label={item.name}
               />
-            </div>
-          )}
+              {item.description && (
+                <Typography
+                  type="Body"
+                  variant={2}
+                  fontWeight="semibold"
+                  label={item.description}
+                />
+              )}
 
-          {!miniCart && !orderQuantity &&  (
-            <div className={styles.fullCartControls}>
-              {!isMobile && (
-                <div className={styles.fullCartLeft}>
-                  <QuantitySelector
-                    updateQuantity={true}
-                    onQuantityChange={(newQty) => onUpdateQuantity?.(item.id, newQty)}
-                    qty={item.quantity}
+              <div className={styles.quantity}>
+                {!isMobile && (
+                  <Typography
+                    type="Body"
+                    variant={2}
+                    label={
+                      orderQuantity ? `Quantity: ${item.quantity}` : "Quantity"
+                    }
+                    color="#4f4b53"
                   />
-                  <button className={styles.wishlistBtn}>Move to Wishlist</button>
-                  <div className={styles.deleteWrapper}>
-                    <Image
-                      src="/images/delete.svg"
-                      alt="Delete"
-                      onClick={() => onDeleteItem?.(item.id)}
-                      className={styles.deleteIcon}
-                      width={24}
-                      height={24}
+                )}
+
+                {orderQuantity && (
+                  <div className={styles.miniCartControls}>
+                    <div className={styles.miniCartLeft}>
+                      <Typography
+                        type="Label"
+                        variant={3}
+                        label={`${item.currency} ${item.price}`}
+                      />
+                    </div>
+                    <div className={styles.orderButtons}>
+                      {button1 && (
+                        <Button>
+                          <Typography
+                            type="Body"
+                            variant={2}
+                            label="BUY NOW"
+                            fontWeight="regular"
+                          />
+                        </Button>
+                      )}
+                      {button2 && !isMobile && (
+                        <Button>
+                          <Typography
+                            type="Body"
+                            variant={2}
+                            label="WRITE REVIEW"
+                            fontWeight="regular"
+                          />
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {miniCart && (
+                  <div className={styles.miniCartControls}>
+                    <div className={styles.miniCartLeft}>
+                      <QuantitySelector
+                        updateQuantity={true}
+                        onQuantityChange={(newQty) =>
+                          onUpdateQuantity?.(item.id, newQty)
+                        }
+                        qty={item.quantity}
+                      />
+                      <Image
+                        src="/images/delete.png"
+                        alt="Delete"
+                        onClick={() => onDeleteItem?.(item.id)}
+                        className={styles.deleteIcon}
+                        width={24}
+                        height={24}
+                      />
+                    </div>
+                    <Typography
+                      type="Label"
+                      variant={3}
+                      label={`${item.currency} ${item.quantity * item.price}`}
+                      color="#4f4b53"
                     />
                   </div>
-                </div>
-              )}
+                )}
+
+                {!miniCart && !orderQuantity && (
+                  <div className={styles.fullCartControls}>
+                    {!isMobile && (
+                      <div className={styles.fullCartLeft}>
+                        <QuantitySelector
+                          updateQuantity={true}
+                          onQuantityChange={(newQty) =>
+                            onUpdateQuantity?.(item.id, newQty)
+                          }
+                          qty={item.quantity}
+                        />
+                        <button className={styles.wishlistBtn}>
+                          Move to Wishlist
+                        </button>
+                        <div className={styles.deleteWrapper}>
+                          <Image
+                            src="/images/delete.png"
+                            alt="Delete"
+                            onClick={() => onDeleteItem?.(item.id)}
+                            className={styles.deleteIcon}
+                            width={24}
+                            height={24}
+                            priority
+                          />
+                        </div>
+                      </div>
+                    )}
+                    <Typography
+                      type="Label"
+                      variant={3}
+                      label={`${item.currency} ${item.price}`}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          {isMobile && !miniCart && !orderQuantity && (
+            <div>
               <Typography
-                type="Label"
-                variant={3}
-                label={`${item.currency} ${item.price}`}
+                type="Body"
+                variant={2}
+                label={"Quantity"}
+                color="#4f4b53"
               />
+              <div className={styles.mobileCartLeft}>
+                <QuantitySelector
+                  updateQuantity={true}
+                  onQuantityChange={(newQty) =>
+                    onUpdateQuantity?.(item.id, newQty)
+                  }
+                  qty={item.quantity}
+                />
+                <button className={styles.wishlistBtn}>Move to Wishlist</button>
+                <div className={styles.deleteWrapper}>
+                  <Image
+                    src="/images/delete.png"
+                    alt="Delete"
+                    onClick={() => onDeleteItem?.(item.id)}
+                    className={styles.deleteIcon}
+                    width={24}
+                    height={24}
+                  />
+                </div>
+              </div>
             </div>
           )}
         </div>
-      </div>
+      ))}
     </div>
-    {isMobile && !miniCart && !orderQuantity &&(
-      <div>
-        <Typography
-            type="Body"
-            variant={2}
-            label={'Quantity'}
-            color="#4f4b53"
-          />
-      <div className={styles.mobileCartLeft}>
-        <QuantitySelector
-          updateQuantity={true}
-          onQuantityChange={(newQty) => onUpdateQuantity?.(item.id, newQty)}
-          qty={item.quantity}
-        />
-        <button className={styles.wishlistBtn}>Move to Wishlist</button>
-        <div className={styles.deleteWrapper}>
-          <Image
-            src="/images/delete.svg"
-            alt="Delete"
-            onClick={() => onDeleteItem?.(item.id)}
-            className={styles.deleteIcon}
-            width={24}
-            height={24}
-          />
-        </div>
-      </div>
-      </div>
-    )}
-  </div>
-))}
-
-     </div>
   );
 };
 
 export default CartItemList;
 
-
 /**
  * ## CartItemList
  *
- * The `CartItemList` component displays a list of items in the user's shopping cart. It supports different layouts 
- * and behaviors based on context (e.g., full cart, mini cart, or order summary view). The component is responsive 
+ * The `CartItemList` component displays a list of items in the user's shopping cart. It supports different layouts
+ * and behaviors based on context (e.g., full cart, mini cart, or order summary view). The component is responsive
  * and adapts to mobile and desktop layouts dynamically.
  *
  * ### Props

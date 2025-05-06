@@ -62,7 +62,7 @@ const Cart = () => {
             </div>
             <div className={styles.redeemImage}>
               <Image
-                src={"/images/redeem.svg"}
+                src={"/images/redeem.png"}
                 alt={"redeem"}
                 width={113}
                 height={125}

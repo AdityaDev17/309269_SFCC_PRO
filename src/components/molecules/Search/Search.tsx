@@ -54,14 +54,14 @@ const Search = ({
     <div className={`${styles.wrapper} ${className}`}>
       {isMobile ? (
         <SearchBarButton
-          aria-label="Close"
+          label="Close"
           clickHandler={onClose}
         >
           <ChevronLeft strokeWidth={1.2} color="grey" />
         </SearchBarButton>
       ) : (
         <SearchBarButton
-          aria-label="Search"
+          label="Search"
           clickHandler={onSearch}
         >
           <SearchIcon strokeWidth={1.2} color="grey" />
@@ -79,7 +79,7 @@ const Search = ({
 
       {inputValue && (
         <SearchBarButton
-          aria-label="Clear search"
+          label="Clear search"
           clickHandler={handleClear}
         >
           <X strokeWidth={2} color="grey" />
@@ -90,7 +90,7 @@ const Search = ({
 
       {showMic && (
         <SearchBarButton
-          aria-label="Voice search"
+          label="Voice search"
           clickHandler={onMicClick}
         >
           <Mic strokeWidth={1.8} color="grey" />

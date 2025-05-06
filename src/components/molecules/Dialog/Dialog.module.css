@@ -80,15 +80,15 @@
 
 .DialogHeader {
     color: hsl(var(--foreground));
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-auto-rows: min-content;
     gap: 0.375rem;
-    justify-content: flex-start;
+    justify-items: start;
 }
 
 .DialogFooter {
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+    justify-content: end;
     gap: 0.5rem;
 }
 

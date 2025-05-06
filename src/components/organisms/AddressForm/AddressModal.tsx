@@ -22,108 +22,21 @@ import {
 } from "../../atomic/Select/Select";
 import styles from "./AddressModal.module.css";
 import { Button } from "../../atomic/Button/Button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import clsx, { ClassValue } from "clsx";
 import { states } from "../../../common/constant";
 import CheckBox from "../../atomic/CheckBox/CheckBox";
+import Label from "../../atomic/Label/Label";
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
-
-type AddressType = {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  apartment: string;
-  building: string;
-  street: string;
-  landmark?: string;
-  city: string;
-  state: string;
-  zipcode: string;
-  isDefault?: boolean;
-};
-
-type AddressDialogProps = {
-  className?: string;
-  onAddAddress?: (address: AddressType) => void;
-  onEditAddress?: (address: AddressType) => void;
-  addressToEdit?: AddressType | null;
-  isOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  trigger?: React.ReactNode;
-};
-
-export function AddressDialog({
-  className,
-  onAddAddress,
-  onEditAddress,
-  addressToEdit,
-  isOpen,
-  onOpenChange,
-  trigger,
-}: AddressDialogProps) {
+export function AddressDialog() {
   const [isChecked, setIsChecked] = useState(false);
-  const [formData, setFormData] = useState<AddressType>({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    apartment: "",
-    building: "",
-    street: "",
-    landmark: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    isDefault: false,
-  });
-
-  useEffect(() => {
-    if (addressToEdit) {
-      setFormData(addressToEdit);
-      setIsChecked(addressToEdit.isDefault || false);
-    } else {
-      setFormData({
-        firstName: "",
-        lastName: "",
-        phone: "",
-        apartment: "",
-        building: "",
-        street: "",
-        landmark: "",
-        city: "",
-        state: "",
-        zipcode: "",
-        isDefault: false,
-      });
-      setIsChecked(false);
-    }
-  }, [addressToEdit]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSelectState = (value: string) => {
-    setFormData((prev) => ({ ...prev, state: value }));
-  };
-
-  const handleSubmit = () => {
-    const updatedAddress = {
-      ...formData,
-      isDefault: isChecked,
-    };
-
-    if (addressToEdit) {
-      onEditAddress?.(updatedAddress);
-    } else {
-      onAddAddress?.(updatedAddress);
-    }
-  };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="secondary">ADD NEW ADDRESS</Button>
+      </DialogTrigger>
 
       <DialogContent
         className={cn(styles.DialogContent, styles.AddressDialogContent)}
@@ -131,7 +44,7 @@ export function AddressDialog({
       >
         <DialogHeader className={styles.AddressDialogHeader}>
           <DialogTitle className={styles.AddressDialogTitle}>
-            {addressToEdit ? "Edit Address" : "Add Address"}
+            Add Address
           </DialogTitle>
         </DialogHeader>
 
@@ -145,50 +58,77 @@ export function AddressDialog({
             <fieldset className={styles.Section}>
               <legend>Contact Details:</legend>
               <div className={styles.TwoColumn}>
-                <Input placeholder="First Name*" name="firstName" />
-                <Input placeholder="Last Name" name="lastName" />
+                <div className="formGroup">
+                  <Label htmlFor="firstName">First Name*</Label>
+                  <Input name="firstName" />
+                </div>
+                <div className="formGroup">
+                  <Label htmlFor="lastName">Last Name</Label>
+                  <Input name="lastName" />
+                </div>
+                <div className="formGroup">
+                  <Label htmlFor="phone">Phone No.*</Label>
+                  <Input name="phone" type="tel" className="PhoneInput" />
+                </div>
               </div>
-              <Input
-                placeholder="Phone No.*"
-                name="phone"
-                type="tel"
-                className={styles.PhoneInput}
-              />
             </fieldset>
 
             <fieldset className={styles.Section}>
               <legend>Location Details:</legend>
               <div className={styles.TwoColumn}>
-                <Input placeholder="Apartment, Suite, etc.*" name="apartment" />
-                <Input placeholder="Building no.*" name="building" />
+                <div className="formGroup">
+                  <Label htmlFor="apartment">Apartment, Suite, etc.*</Label>
+                  <Input name="apartment" />
+                </div>
+                <div className="formGroup">
+                  <Label htmlFor="building">Building no.*</Label>
+                  <Input name="building" />
+                </div>
               </div>
               <div className={styles.StreetRow}>
-                <Input
-                  placeholder="Street, Locality name*"
-                  name="street"
-                  className="AddressStreet"
-                />
-              </div>
-              <div className={styles.TwoColumn}>
-                <Input placeholder="Landmark" name="landmark" />
-                <Input placeholder="City*" name="city" />
-              </div>
-              <div className={styles.TwoColumn}>
-                <div className={styles.SelectOutline}>
-                  <Select>
-                    <SelectTrigger>
-                      <SelectValue placeholder="State*" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {states.map((state) => (
-                        <SelectItem key={state.value} value={state.value}>
-                          {state.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                <div className="formGroup">
+                  <Label htmlFor="street">Street, Locality name*</Label>
+                  <Input name="street" className="AddressStreet" />
                 </div>
-                <Input placeholder="ZIP code*" name="zipcode" />
+              </div>
+              <div className={styles.TwoColumn}>
+                <div className="formGroup">
+                  <Label htmlFor="landmark">Landmark</Label>
+                  <Input name="landmark" />
+                </div>
+                <div className="formGroup">
+                  <Label htmlFor="city">City*</Label>
+                  <Input name="city" />
+                </div>
+              </div>
+              <div className={styles.TwoColumn}>
+                <div className="formGroup">
+                  <Label htmlFor="state">State*</Label>
+                  <div className={styles.SelectOutline}>
+                    <Select>
+                      <SelectTrigger>
+                        <SelectValue placeholder="" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {states.map((state) => (
+                          <SelectItem key={state.value} value={state.value}>
+                            {state.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+                <div className="formGroup">
+                  <Label htmlFor="zipcode">ZIP code *</Label>
+                  <Input name="zipcode" />
+                </div>
+                <div className={styles.StreetRow}>
+                  <div className="formGroup">
+                    <Label htmlFor="country">Country name *</Label>
+                    <Input name="country" className="Country" />
+                  </div>
+                </div>
               </div>
             </fieldset>
           </div>
@@ -203,14 +143,16 @@ export function AddressDialog({
             />
             <label>Set as Default</label>
           </div>
-          <DialogClose asChild>
-            <Button>Cancel</Button>
-          </DialogClose>
-          <DialogClose asChild>
-            <Button variant="secondary" type="submit" onClick={handleSubmit}>
-              Save
-            </Button>
-          </DialogClose>
+          <div className={styles.ButtonRow}>
+            <DialogClose asChild>
+              <Button>Cancel</Button>
+            </DialogClose>
+            <DialogClose asChild>
+              <Button variant="secondary" type="submit">
+                Save
+              </Button>
+            </DialogClose>
+          </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>

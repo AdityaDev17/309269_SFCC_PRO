@@ -1,7 +1,7 @@
 "use client";
 import Input from "../../atomic/Input/Input";
 import styles from "./SignUp.module.css";
-import Checkbox from "../../atomic/CheckBox/CheckBox";
+import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 import { Button } from "../../atomic/Button/Button";
 import {
   Select,
@@ -55,7 +55,7 @@ const SignUp = ({ onProceed }: any) => {
     <div className={styles.layout}>
       <div className={styles.header}>CREATE ACCOUNT</div>
       <div
-        style={{ display: passwordScreen ? "none" : "flex" }}
+        style={{ display: passwordScreen ? "none" : "grid" }}
         className={styles.layout}
       >
         <div>
@@ -185,7 +185,7 @@ const SignUp = ({ onProceed }: any) => {
         </Button>
       </div>
       <div
-        style={{ display: passwordScreen ? "flex" : "none" }}
+        style={{ display: passwordScreen ? "grid" : "none" }}
         className={styles.layout}
       >
         <div>
@@ -209,7 +209,7 @@ const SignUp = ({ onProceed }: any) => {
           />
         </div>
         <div className={styles.row}>
-          <Checkbox
+          <CheckBox
             data-testid="checkbox"
             style={{ borderColor: "#4F4B53" }}
             checked={formData.agreeToTerms}

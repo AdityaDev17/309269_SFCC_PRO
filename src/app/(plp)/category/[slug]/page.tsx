@@ -17,7 +17,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../../../../components/molecules/Pagination/Pagination";
-import { getProductsByCategory } from "@/lib/sfcc/products";
+import { getProductsByCategory } from "../../../../lib/sfcc/products";
 import Breadcrumbs from "../../../../components/atomic/Breadcrumbs/Breadcrumbs";
 import { isLargeCard } from "../layoutPattern";
 

@@ -1,9 +1,9 @@
-import Typography from "@/components/atomic/Typography/Typography"
+import Typography from "../../../components/atomic/Typography/Typography"
 import styles from "./ErrorComponent.module.css"
 
 import React from 'react'
 import Image from "next/image";
-import { Button } from "@/components/atomic/Button/Button";
+import { Button } from "../../../components/atomic/Button/Button";
 
 
 interface LayoutProps {
@@ -12,12 +12,12 @@ interface LayoutProps {
     imgWidth:number;
     text1?:string;
     text2?:string;
-    buttonText?:string;
-    onButtonClick?: () => void;
+    buttonText?:string
+    onButtonClick?:() => void;
   }
   
 
-function ErrorComponent({ errImg,imgHeight, imgWidth, text1, text2, buttonText="TRY AGAIN",onButtonClick,}: LayoutProps) {
+function ErrorComponent({ errImg,imgHeight, imgWidth, text1, text2, buttonText="TRY AGAIN", onButtonClick}: LayoutProps) {
   return (
     <div className={styles.layout}>
         <Image 

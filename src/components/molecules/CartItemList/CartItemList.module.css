@@ -1,21 +1,19 @@
 .bagContent {
-  background-color: #FAFAFA;
-  display: flex;
-  flex-direction: column;
+  background-color: #fafafa;
+  display: grid;
   gap: 10px;
   padding: 20px;
-  border-bottom: 1px solid #cccbce;
   overflow-y: auto;
 }
 
 .whiteBackground {
-  background-color: #FFFFFF;
-  border-bottom: none;
+  background-color: #ffffff;
   padding: 0px;
 }
 
 .cartItem {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   gap: 20px;
   padding-bottom: 10px;
   justify-content: space-between;
@@ -47,13 +45,16 @@
 }
 
 .miniCartControls {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 
 .miniCartLeft {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   gap: 10px;
 }
@@ -63,28 +64,33 @@
 }
 
 .fullCartControls {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
   align-items: center;
   justify-content: space-between;
   margin-top: 10px;
-  flex-wrap: wrap;
   gap: 10px;
   align-content: center;
 }
 
 .fullCartLeft {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   gap: 10px;
 }
 .mobileCartLeft {
   display: flex;
   gap: 10px;
-  justify-content: space-between;
   align-items: center;
   padding-bottom: 10px;
 }
 
 .deleteWrapper {
-  display: flex;
+  display: grid;
   align-items: center;
+}
+
+.orderButtons {
+  display: grid;
+  gap: 12px;
 }

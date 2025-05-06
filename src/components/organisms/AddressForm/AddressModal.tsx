@@ -1,7 +1,5 @@
 "use client";
 
-import type React from "react";
-
 import Input from "../../atomic/Input/Input";
 import {
   Dialog,
@@ -29,19 +27,25 @@ import CheckBox from "../../atomic/CheckBox/CheckBox";
 import Label from "../../atomic/Label/Label";
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
-export function AddressDialog() {
+export function AddressDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="secondary">ADD NEW ADDRESS</Button>
+        {/* <Button variant="secondary">ADD NEW ADDRESS</Button> */}
       </DialogTrigger>
 
       <DialogContent
         className={cn(styles.DialogContent, styles.AddressDialogContent)}
-        overlayClassName={styles.dialogOverlay}
       >
+        {/* Header */}
         <DialogHeader className={styles.AddressDialogHeader}>
           <DialogTitle className={styles.AddressDialogTitle}>
             Add Address
@@ -130,10 +134,14 @@ export function AddressDialog() {
                   </div>
                 </div>
               </div>
+              <div>
+                <Input placeholder="Country" name="country" />
+              </div>
             </fieldset>
           </div>
         </DialogDescription>
 
+        {/* Footer (stays fixed) */}
         <DialogFooter className={styles.AddressDialogFooter}>
           <div className={styles.CheckboxRow}>
             <CheckBox
@@ -160,12 +168,12 @@ export function AddressDialog() {
 }
 
 /**
- * ## AddressDialog Component
+ * # AddressDialog Component
  *
  * `AddressDialog` is a composable modal dialog built using Radix UI primitives and custom atomic components.
  * It allows users to input and save a new shipping address, with validations for mandatory fields, structured sections for contact and location, and the option to set the address as default.
  *
- * ### Features:
+ * ## Features:
  * - **Custom Dialog UI**: Built using the `Dialog` component set (Trigger, Content, Header, Title, Description, Footer, Close).
  * - **Atomic Inputs**: Uses project-level `Input`, `Select`, `Button`, and `Checkbox` components for consistency and design coherence.
  * - **Stateful Checkbox**: Includes an internal state (`isChecked`) to track the "Set as Default" checkbox.
@@ -175,7 +183,7 @@ export function AddressDialog() {
  *
  * ---
  *
- * ### Component Hierarchy:
+ * ## Component Hierarchy:
  *
  * ```tsx
  * <Dialog>
@@ -199,7 +207,7 @@ export function AddressDialog() {
  *
  * ---
  *
- * ### Example Usage:
+ * ## Example Usage:
  *
  * ```tsx
  * import { AddressDialog } from "@/components/sections/addressModal/AddressModal";
@@ -215,14 +223,14 @@ export function AddressDialog() {
  *
  * ---
  *
- * ### Accessibility Considerations:
+ * ## Accessibility Considerations:
  * - Inherits focus trapping, ARIA roles, and keyboard navigation from Radix Dialog.
  * - Uses semantic HTML elements (`fieldset`, `legend`, `label`) for better screen reader support.
  * - Dialog closes on ESC key or when clicking the Cancel button.
  *
  * ---
  *
- * ### Styling Notes:
+ * ## Styling Notes:
  * - Modular styles are defined in `AddressModal.module.css`.
  * - Key class hooks:
  *   - `.AddressDialogContent` – Dialog positioning and box styling.
@@ -233,16 +241,18 @@ export function AddressDialog() {
  *
  * ---
  *
- * ### Props:
+ * ## Props:
  * This component does **not** currently accept props. All configuration is internal.
  *
  * ---
  *
- * ### Future Enhancements:
+ * ## Future Enhancements:
  * - Add form validation and controlled input states.
  * - Replace hardcoded state list with dynamic API-based data.
  * - Support for address editing by passing initial values via props.
  *
  * ---
  *
+ * @component
+ * @returns {JSX.Element} A fully styled, interactive address input modal component.
  */

@@ -344,6 +344,7 @@ export const homepageBanners: BannerData[] = [
     buttonLink: "",
   },
 ];
+
 export const homepageProducts: ProductCard[] = [
   {
     productId: "1",
@@ -364,6 +365,16 @@ export const homepageProducts: ProductCard[] = [
     productDesc: "VIEW MORE",
   },
 ];
+
+export const statementBannerData = {
+  imageSrc: "/images/lipstick.svg",
+  imageAlt: "Lipstick collection",
+  imagePosition: "left",
+  heading: "STATEMENT SHADES",
+  subheading: "FOR EVERY MOOD",
+  description:
+    "6 new iconic shades which minimizes lines giving your lips a soft appearance.",
+};
 
 export const cartItems = [
   {
@@ -432,6 +443,203 @@ export const states = [
   { label: "Karnataka", value: "karnataka" },
 ];
 
+export const searchSuggestions = ['Blush', 'Foundation', 'Highlighters'];
+
+export const productSuggestions = [
+  {
+    productId: '1',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '2',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '1',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+  {
+    productId: '2',
+    productTitle: 'Men’s fragrances',
+    productImage: '/images/product.svg'
+  },
+]
+// FAQ data with IDs for scrolling
+export const frequentlyAskedData = [
+  {
+    id: "skin-type",
+    question: "WHAT ARE THE BEST PRODUCTS FOR MY SKIN TYPE?",
+    answer:
+      "To determine the best products for your skin type, start by identifying whether your skin is oily, dry, combination, or sensitive. Our website offers a detailed skin type quiz and personalized recommendations. Additionally, you can filter products by skin type to find the perfect match for your needs.",
+    category: "frequently-asked",
+  },
+  {
+    id: "cruelty-free",
+    question: "ARE YOUR PRODUCTS CRUELTY-FREE AND VEGAN?",
+    answer:
+      "Yes, we are committed to ethical beauty. All our products are cruelty-free, and we offer a wide range of vegan options. Look for the cruelty-free and vegan icons on product pages, or filter your search to find these products easily.",
+    category: "frequently-asked",
+  },
+  {
+    id: "samples",
+    question: "DO YOU OFFER SAMPLES OR TRIAL SIZES?",
+    answer:
+      "We understand the importance of trying before you buy. We offer sample sizes for select products and free samples with every purchase. Keep an eye on our promotions page for sample kits and special offers.",
+    category: "frequently-asked",
+  },
+  {
+    id: "return-policy",
+    question: "WHAT IS YOUR RETURN/EXCHANGE POLICY?",
+    answer:
+      "We want you to be completely satisfied with your purchase. If you are not happy with a product, you can return it within 30 days of receipt for a full refund or exchange. Products must be unused and in their original packaging. For detailed instructions, please visit our Returns & Exchanges page.",
+    category: "frequently-asked",
+  },
+  {
+    id: "track-order",
+    question: "HOW DO I TRACK MY ORDER?",
+    answer:
+      "Once your order has been shipped, you will receive a confirmation email with a tracking number. You can track your order through the link provided in the email or by logging into your account on our website and checking the order status.",
+    category: "frequently-asked",
+  },
+];
+
+export const ordersData = [
+  {
+    id: "place-order",
+    question: "HOW DO I PLACE AN ORDER?",
+    answer:
+      "You can place an order by browsing our website, adding items to your cart, and proceeding to checkout. You'll need to provide shipping information and payment details to complete your purchase.",
+    category: "orders",
+  },
+  {
+    id: "modify-order",
+    question: "CAN I MODIFY OR CANCEL MY ORDER?",
+    answer:
+      "You can modify or cancel your order within 1 hour of placing it by contacting our customer service team. Once an order has been processed, it cannot be modified or canceled.",
+    category: "orders",
+  },
+  {
+    id: "process-time",
+    question: "HOW LONG WILL IT TAKE TO PROCESS MY ORDER?",
+    answer:
+      "Most orders are processed within 1-2 business days. During peak seasons or promotional periods, processing may take up to 3 business days.",
+    category: "orders",
+  },
+  {
+    id: "return-exchange-product",
+    question:
+      "CAN I RETURN OR EXCHANGE A PRODUCT THAT WAS PURCHASED ON SALE OR WITH A DISCOUNT CODE?",
+    answer:
+      "Yes, products purchased on sale or with a discount code are eligible for return or exchange within our standard 30-day return window. However, final sale items marked as non-returnable are not eligible for return or exchange.",
+    category: "orders",
+  },
+  {
+    id: "initiate-return",
+    question: "HOW DO I INITIATE A RETURN OR EXCHANGE?",
+    answer:
+      "To initiate a return or exchange, log into your account, go to your order history, select the order containing the item you wish to return, and follow the return instructions. You'll receive a return shipping label and detailed instructions via email.",
+    category: "orders",
+  },
+];
+
+export const shippingData = [
+  {
+    id: "shipping-options",
+    question: "WHAT ARE YOUR SHIPPING OPTIONS?",
+    answer:
+      "We offer standard shipping (5-7 business days), express shipping (2-3 business days), and overnight shipping (next business day). Shipping options and rates are displayed at checkout.",
+    category: "shipping",
+  },
+  {
+    id: "international-shipping",
+    question: "DO YOU OFFER INTERNATIONAL SHIPPING?",
+    answer:
+      "Yes, we ship to over 50 countries worldwide. International shipping rates and delivery times vary by location and are calculated at checkout.",
+    category: "shipping",
+  },
+  {
+    id: "free-shipping",
+    question: "IS SHIPPING FREE?",
+    answer:
+      "We offer free standard shipping on orders over $50 within the continental US. International orders and expedited shipping options have additional fees.",
+    category: "shipping",
+  },
+];
+
+export const returnsData = [
+  {
+    id: "return-process",
+    question: "HOW DO I RETURN A PRODUCT?",
+    answer:
+      "To return a product, go to your order history, select the order containing the item you wish to return, and follow the return instructions. You'll receive a return shipping label and instructions via email.",
+    category: "returns",
+  },
+  {
+    id: "return-window",
+    question: "WHAT IS THE RETURN WINDOW?",
+    answer:
+      "All returns must be initiated within 30 days of receiving your order. Items must be unused, in their original packaging, and in resalable condition.",
+    category: "returns",
+  },
+  {
+    id: "refund-process",
+    question: "HOW LONG DOES IT TAKE TO PROCESS A REFUND?",
+    answer:
+      "Once we receive your return, it takes 3-5 business days to process. Refunds are issued to the original payment method and may take an additional 5-10 business days to appear on your statement.",
+    category: "returns",
+  },
+];
+
+export const paymentsData = [
+  {
+    id: "payment-methods",
+    question: "WHAT PAYMENT METHODS DO YOU ACCEPT?",
+    answer:
+      "We accept all major credit cards (Visa, Mastercard, American Express, Discover), PayPal, Apple Pay, and Google Pay.",
+    category: "payments",
+  },
+  {
+    id: "payment-security",
+    question: "IS IT SAFE TO ENTER MY CREDIT CARD INFORMATION?",
+    answer:
+      "Yes, our website uses industry-standard SSL encryption to protect your personal and payment information. We do not store your full credit card details on our servers.",
+    category: "payments",
+  },
+  {
+    id: "multiple-payments",
+    question: "CAN I USE MULTIPLE PAYMENT METHODS FOR ONE ORDER?",
+    answer:
+      "Currently, we only support one payment method per order. If you wish to use multiple payment methods, you'll need to place separate orders.",
+    category: "payments",
+  },
+];
+
+export const productInfoData = [
+  {
+    id: "sensitive-skin",
+    question: "ARE YOUR PRODUCTS SUITABLE FOR SENSITIVE SKIN?",
+    answer:
+      "Many of our products are formulated for sensitive skin. Look for products labeled 'For Sensitive Skin' or check the product description for specific information about ingredients and skin type compatibility.",
+    category: "product-info",
+  },
+  {
+    id: "ingredients",
+    question: "DO YOUR PRODUCTS CONTAIN PARABENS OR SULFATES?",
+    answer:
+      "We offer many paraben-free and sulfate-free options. Product descriptions clearly indicate which items are free from these ingredients. You can also use our filter system to search specifically for paraben-free or sulfate-free products.",
+    category: "product-info",
+  },
+  {
+    id: "storage",
+    question: "HOW SHOULD I STORE MY PRODUCTS?",
+    answer:
+      "Most products should be stored in a cool, dry place away from direct sunlight. Some products, particularly those containing vitamin C or probiotics, may have specific storage requirements, which will be indicated on the packaging.",
+    category: "product-info",
+  },
+];
 export const filterTabs = ["Price", "Notes", "Brands", "Features", "Discount"];
 
 export const filterOptions: Record<string, string[]> = {
@@ -447,7 +655,7 @@ export const filterOptions: Record<string, string[]> = {
   Features: ["Long Lasting", "Travel Size", "Refillable"],
   Discount: ["10% and above", "25% and above", "50% and above"],
 };
-export const orderData = [
+export const allOrderData = [
   {
     orderId: "ABCD12345678",
     price: 100,
@@ -579,50 +787,71 @@ export const dots = [
   },
 ];
 
-export const addresses = [
+export const billingAddress = [
   {
-    firstName: "Utkarsh",
-    lastName: "Pai",
-    apartment: "20",
-    building: "Impasse Odette Dijoux",
-    street: "Letellier-la-Forêt",
-    city: "Pinto",
-    state: "France",
-    zipcode: "97459",
+    id: "Billing Address",
+    value: "",
+  },
+];
+
+export const address = [
+  {
+    id: "1",
+    title: "Utkarsh Pai",
+    description:
+      "20, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,",
     phone: "XXX4398238",
     isDefault: true,
   },
   {
-    firstName: "Sharmili",
-    lastName: "K",
-    apartment: "D/12",
-    building: "Chand Society",
-    street: "Jvpd Scheme",
-    city: "Mumbai",
-    state: "Maharashtra",
-    zipcode: "110005",
+    id: "2",
+    title: "Apple",
+    description:
+      "25, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,",
     phone: "XXX4398238",
+    isDefault: false,
   },
   {
-    firstName: "Robin",
-    lastName: "Wood",
-    apartment: "25",
-    building: "Impasse Odette Dijoux",
-    street: "Letellier-la-Forêt",
-    city: "Pinto",
-    state: "France",
-    zipcode: "97459",
+    id: "3",
+    title: "Robin Hood",
+    description:
+      "30, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,",
     phone: "XXX4398238",
+    isDefault: false,
   },
   {
-    firstName: "Kantilal",
-    lastName: "Patel",
-    apartment: "6",
-    building: "Old Mahavir Bldg",
-    street: "Behind Matunga P.o.",
-    city: "Matunga(c.r)",
-    state: "Mumbai",
-    zipcode: "110011",
+    id: "4",
+    title: "Kantilal Kantilal",
+    description:
+      "20, Impasse Odette Dijoux, Letellier-la-Forêt, Pinto, France - 97459,",
     phone: "XXX4398238",
+    isDefault: false,
   },
 ];
+
+export const shippingMethodsFromBackend = [
+  {
+    id: "Standard Delivery",
+    title: "Delivery within 3-4 business days",
+    description: "Delivery within 3-4 business days",
+    extraInfo: "0",
+  },
+  {
+    id: "Express Delivery",
+    title: "One day delivery",
+    description: "One day delivery",
+    extraInfo: "200",
+  },
+];
+
+export const orderStatus = {
+  isDelivered: true,
+  steps: [
+    { header: "Order Placed", text: "8th Oct’23, 8:00 AM" },
+    { header: "Order Shipped", text: "Shipped by EE-Kart" },
+    { header: "Order reached your nearest hub", text: " " },
+    { header: "Out for delivery", text: "OTP: 2398" },
+    { header: "Delivered", text: "Estimated delivery: 12th Oct’23" },
+  ],
+  currentStep: 3,
+};

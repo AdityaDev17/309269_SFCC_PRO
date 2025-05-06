@@ -1,0 +1,28 @@
+.wrapper {
+  display: grid;
+ 
+  padding: clamp(1rem, 5vw, 3rem);
+  gap: clamp(1rem, 3vw, 2rem);
+  margin: 0 auto;
+  container-type: inline-size;
+}
+
+.title {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.button {
+  width: 180px;
+}
+
+.centerWrapper {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  width: 100%;
+  grid-column: 1 / -1;
+}

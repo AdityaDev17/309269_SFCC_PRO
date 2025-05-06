@@ -66,6 +66,7 @@ const Cart = () => {
                 alt={"redeem"}
                 width={113}
                 height={125}
+                priority
               />
             </div>
           </div>

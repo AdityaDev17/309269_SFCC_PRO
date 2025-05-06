@@ -385,7 +385,7 @@ export const cartItems = [
     quantity: 2,
     price: 50,
     currency: "$",
-    productImage: "/images/Tile_3.svg",
+    productImage: "/images/Tile_3.png",
   },
 
   {
@@ -395,42 +395,42 @@ export const cartItems = [
     quantity: 1,
     price: 50,
     currency: "$",
-    productImage: "/images/Tile_3.svg",
+    productImage: "/images/Tile_3.png",
   },
 ];
 
 export const productData = [
   {
     productId: "893234",
-    productImage: "/images/Tile_3.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 1",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "2",
-    productImage: "/images/Tile_3.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 2",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "3",
-    productImage: "/images/Tile_3.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 3",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "4",
-    productImage: "/images/Tile_3.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "4",
-    productImage: "/images/Tile_3.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",

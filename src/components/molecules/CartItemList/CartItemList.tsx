@@ -178,6 +178,7 @@ const CartItemList = ({
                             className={styles.deleteIcon}
                             width={24}
                             height={24}
+                            priority
                           />
                         </div>
                       </div>

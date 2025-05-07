@@ -1,5 +1,8 @@
-
-import { homepageBanners, homepageProducts, statementBannerData } from "../common/constant";
+import {
+  homepageBanners,
+  homepageProducts,
+  statementBannerData,
+} from "../common/constant";
 import styles from "./page.module.css";
 import ProductCard from "../components/molecules/ProductCard/ProductCard";
 import dynamic from "next/dynamic";
@@ -18,7 +21,6 @@ import StatementBanner from "@/components/molecules/StatementBanner/StatementBan
 export const revalidate = 60;
 
 export default async function Home() {
-
   return (
     <div className={styles.homeContainer}>
       <Banner
@@ -30,16 +32,16 @@ export default async function Home() {
       />
 
       <div className={`${styles.cardLayout}`}>
-      {homepageProducts.map((product, index) => (
-        <ProductCard
-          key={index}
-          productId={product.productId}
-          productImage={product.productImage}
-          productTitle={product.productTitle}
-          productDesc={product.productDesc}
-        />
-      ))}
-    </div>
+        {homepageProducts.map((product, index) => (
+          <ProductCard
+            key={index}
+            productId={product.productId}
+            productImage={product.productImage}
+            productTitle={product.productTitle}
+            productDesc={product.productDesc}
+          />
+        ))}
+      </div>
       <GetTheLookBanner />
       <ProductCardBanner />
       <BannerCarousel />
@@ -66,7 +68,6 @@ export default async function Home() {
         backgroundImage={homepageBanners[2]?.backgroundImage}
         alignment={homepageBanners[2]?.alignment}
       />
-   </div>
+    </div>
   );
 }
- 

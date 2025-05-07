@@ -1,11 +1,17 @@
-import Banner from "@/components/molecules/Banner/Banner";
-import BannerCarousel from "@/components/molecules/BannerCarousel/BannerCarousel";
-import GetTheLookBanner from "@/components/molecules/GetTheLookBanner/GetTheLookBanner";
-import ProductCardBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
+
 import { homepageBanners, homepageProducts, statementBannerData } from "../common/constant";
 import styles from "./page.module.css";
 import ProductCard from "../components/molecules/ProductCard/ProductCard";
-import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
+import dynamic from "next/dynamic";
+
+const Banner = dynamic(() => import('../components/molecules/Banner/Banner'))
+const BannerCarousel = dynamic(() => import('../components/molecules/BannerCarousel/BannerCarousel'));
+const ProductCardBanner = dynamic(() => import('../components/molecules/ProductCardBanner/ProductCardBanner'));
+const GetTheLookBanner = dynamic(() => import('../components/molecules/GetTheLookBanner/GetTheLookBanner'));
+const StatementBanner = dynamic(() => import('../components/molecules/StatementBanner/StatementBanner'));
+
+
+
 
 export const revalidate = 60;
 
@@ -19,7 +25,6 @@ export default async function Home() {
         description={homepageBanners[0]?.description}
         backgroundImage={homepageBanners[0]?.backgroundImage}
         alignment={homepageBanners[0]?.alignment}
-        buttonLink={homepageBanners[0]?.buttonLink}
       />
 
       <div className={`${styles.cardLayout}`}>
@@ -50,7 +55,6 @@ export default async function Home() {
         description={homepageBanners[1]?.description}
         backgroundImage={homepageBanners[1]?.backgroundImage}
         alignment={homepageBanners[1]?.alignment}
-        buttonLink={homepageBanners[1]?.buttonLink}
       />
 
       <Banner
@@ -59,7 +63,6 @@ export default async function Home() {
         description={homepageBanners[2]?.description}
         backgroundImage={homepageBanners[2]?.backgroundImage}
         alignment={homepageBanners[2]?.alignment}
-        buttonLink={homepageBanners[2]?.buttonLink}
       />
    </div>
   );

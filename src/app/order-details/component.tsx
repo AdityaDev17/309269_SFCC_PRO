@@ -37,7 +37,7 @@ const Details = () => {
   const [selectedOption, setSelectedOption] = useState("");
   const [textValue, setTextValue] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     console.log("Selected:", selectedOption);
     console.log("Text:", textValue);

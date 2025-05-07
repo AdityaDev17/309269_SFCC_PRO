@@ -67,6 +67,7 @@ const ProductCard = ({
             width={440}
             height={440}
             loading="eager"
+            priority={true}
           />
           {wishListed && (
             <Image

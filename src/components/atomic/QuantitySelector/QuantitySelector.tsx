@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './QuantitySelector.module.css';
 import Typography from '../Typography/Typography';
+import Image from 'next/image';
 
 interface QuantitySelectorProps {
   onQuantityChange: (quantity: number) => void;
@@ -46,27 +47,33 @@ const QuantitySelector = ({ onQuantityChange, updateQuantity, qty }: QuantitySel
     <div className={styles.container}>
       {updateQuantity ? (
         <div className={styles.content}>
-          <img
+          <Image
             className={styles.iconButton}
             onClick={decreaseQuantity}
             src="/images/minusIcon.svg"
             alt="Decrease"
+            width={8}
+            height={8}
           />
           <span className={styles.quantityText}>{quantity}</span>
-          <img
+          <Image
             className={styles.iconButton}
             onClick={increaseQuantity}
             src="/images/addIcon.svg"
             alt="Increase"
+            width={8}
+            height={8}
           />
         </div>
       ) : (
         <div className={styles.content} onClick={toggleDropdown}>
           <Typography type="Body" variant={2} label={quantity.toString()} color="#4f4b53" />
-          <img
+          <Image
             className={styles.downArrowIcon}
-            src="/images/chevronDown.svg"
+            src="/images/chevron.png"
             alt="Chevron down"
+            width={14}
+            height={7}
           />
         </div>
       )}

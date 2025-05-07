@@ -1,28 +1,36 @@
 .footer {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     background-color: #1D1823;
+    container-type: inline-size;
     padding: 0px 40px;
     color:#FFFFFF;
   }
 .logoSection{
-    display: flex;
+    display: grid;
     padding: 36px 0px;
 }
 .containerSection{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 0.3fr;
     justify-content: space-between;
-    flex-wrap: wrap;
     gap:10px;
     padding: 26px 0;
     border-bottom: 1.5px solid #4F4B53;
+    @container (max-width: 700px) {
+        grid-template-columns: 1fr;
+        row-gap: 25px;
+      }
 }
 .container{
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
     justify-content: space-between;
-    flex-wrap: wrap;
-    width: 60%;
-    gap:25px
+    gap:25px;
+    @container (max-width: 700px) {
+        grid-template-columns: 1fr;
+        row-gap: 25px;
+      }
+    
 }
 .subTitle:hover{
     cursor: pointer;
@@ -35,29 +43,31 @@
 }
 .buttonSection{
     border-top: 1px solid #4F4B53;
-    display: flex;
-    flex-direction: column;
+    display: grid;
 }
 .buttonContainer{
     padding: 32px 0;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 0.3fr;
     justify-content: space-between;
     align-items: center;
     gap:10px;
+    @container (max-width: 700px) {
+        grid-template-columns: 1fr;
+        row-gap: 25px;
+    }
 }
 .row{
     padding-top: 15px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap:20px;
     color: #B3B2B5;
     font-weight: 400;
     font-size: 14px;
 }
-.gap{
-    display: flex;
-    flex-direction: row;
-    gap:20px;
-}
+.gap {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: space-evenly;
+    gap: 5px;
+  }

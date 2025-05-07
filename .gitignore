@@ -38,3 +38,6 @@ next-env.d.ts
 public/sitemap.xml
 package-lock.json
 settings.json
+
+# Sentry Config File
+.env.sentry-build-plugin

@@ -105,8 +105,7 @@
 
 .DrawerFooter {
     margin-top: auto; 
-    display: flex; 
-    flex-direction: column; 
+ display: grid;
     gap: 0.5rem; 
     padding-bottom: 1rem;
 }

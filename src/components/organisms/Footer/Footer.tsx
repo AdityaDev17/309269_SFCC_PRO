@@ -11,7 +11,7 @@ const Footer = () => {
       <div className={styles.logoSection}>
         <Image
           className={styles.logo}
-          src="/images/SFCCLogowhite.svg"
+          src="/images/SFCCPROWhite.png"
           alt="Next.js logo"
           width={109}
           height={19}
@@ -126,7 +126,7 @@ export default Footer;
  * ### Example
  *
  * ```tsx
- * import Footer from "@/components/Footer/Footer";
+ * 
  *
  * export default function Page() {
  *   return (

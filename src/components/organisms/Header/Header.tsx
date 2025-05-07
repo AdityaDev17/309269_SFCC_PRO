@@ -248,7 +248,6 @@ const Header: React.FC<HeaderProps> = ({
                   cartItems={[]}
                   triggerType="icon"
                   bagIcon={icon}
-                  onViewBag={() => router.push("/cart")}
                 />
               );
             } else if (label === "Search") {

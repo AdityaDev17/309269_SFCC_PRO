@@ -11,7 +11,7 @@ import {
 import styles from "./FilterDialog.module.css";
 import { Button } from "../../atomic/Button/Button";
 import { useState } from "react";
-import Checkbox from "../../atomic/Checkbox/checkbox";
+import CheckBox from "../../atomic/CheckBox/CheckBox";
 import { filterTabs, filterOptions } from "../../../common/constant";
 
 const tabs = filterTabs;
@@ -87,7 +87,7 @@ export default function PriceFilterDialog() {
             <div className={styles.options}>
               {filterOptions[activeTab].map((label) => (
                 <label key={label} className={styles.checkboxLabel}>
-                  <Checkbox
+                  <CheckBox
                     checked={selectedFilters[activeTab]?.has(label) || false}
                     onCheckedChange={() => toggleFilter(activeTab, label)}
                   />

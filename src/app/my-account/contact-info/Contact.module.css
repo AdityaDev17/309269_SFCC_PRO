@@ -1,0 +1,204 @@
+ .pageBackground {
+    min-height: 100vh;
+    width: 100%;
+    background-image: url('/images/contactbg.svg'); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 1rem;
+    container-type: inline-size;
+  }
+
+ 
+
+
+.contactPreferences {
+    container-type: inline-size;
+    container-name: contactForm;
+    width:660px;
+    height:auto;
+    margin: 0 auto;
+    padding: 4rem 5rem;
+    background: #fff;
+    border-color: #ccc;
+  }
+  
+  .heading {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+  }
+  
+ 
+  .accordionTrigger {
+    width: 100%;
+    text-align: left;
+    padding: 1rem 0;
+    font-size: 0.95rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: none;
+    border: none;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    cursor: pointer;
+  }
+
+ 
+  .accordionContent {
+    padding: 2rem 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  
+  .section {
+    display: grid;
+    gap: 2rem;
+  }
+  
+
+  .checkboxContainer {
+    display: flex;
+    align-items: center;
+    gap: 1rem; 
+  }
+
+  
+  
+  .notificationRow {
+    display:grid;
+    gap: 0.5rem;
+  }
+  
+   
+  .notificationText {
+    font-size: 1rem;
+    color: #555;
+  }
+  
+   .phoneRow {
+    display: flex;
+    gap: 0.75rem;
+  } 
+ 
+  .phoneInput {
+                      
+    width: 56%;            
+    padding: 0.5rem;          
+    font-size: 1rem;          
+    border: 1px solid #ccc;   
+    
+  }
+  
+  .phoneNumber {
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .editButton {
+    background-color: black;
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    align-self: start;
+   
+    
+  }
+  .buttonGroup{
+    display:grid;
+    grid-auto-flow: column;
+    gap:0.5rem;
+  }
+  
+   
+  .selectWrapper {
+    display:grid;
+    gap: 0.5rem;
+    border: 1px solid #ccc; 
+    width:56%;
+    
+  }
+ 
+  
+  .selectLabel {
+    font-size: 1rem;
+    
+  }
+  
+
+  @container contactForm (max-width: 480px) {
+    
+  
+    .heading {
+      font-size: 1.25rem;
+      white-space: nowrap;
+      word-break: break-word;
+      text-align: center;
+    }
+  
+    .accordionContent {
+      padding: 1rem 0.5rem;
+    }
+  
+    .phoneInput,
+    .selectWrapper {
+      width: 100%;
+    }
+  
+     .phoneRow {
+        display: grid;
+        grid-template-columns: unset;
+        grid-auto-flow: row;
+        gap: 0.5rem;
+      }
+    
+      .buttonGroup {
+        
+        display: grid;
+        grid-auto-flow: column;
+        width: 100%;
+        gap: 0.5rem;
+      } 
+      
+    
+      .editButton {
+        width: 50%;
+        
+      }
+  }
+  
+  @container (max-width: 600px) {
+    .pageBackground {
+      display: block;
+      padding: 1rem;
+    }
+  
+    .contactPreferences {
+      max-width: 100%;
+      padding: 2rem 1rem;
+      height: auto;
+      margin-top:1rem;
+    }
+  }
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+   

@@ -18,12 +18,15 @@ interface BannerProps {
   title: string
   buttonText?: string
   subtitle?: string
+  subtitleColor?: string
   description?: string
   backgroundImage?: string
   alignment?:alignmentType;
-  buttonLink?: string
+  buttonLink?: () => void;
   textColor?: string
   subtitleVariant?: number
+  centerImage?: string
+  [key: string]: any;
 }
 
 const Banner: React.FC<BannerProps> = ({
@@ -36,13 +39,16 @@ const Banner: React.FC<BannerProps> = ({
   buttonLink = "#",
   textColor = "white",
   subtitleVariant,
+  centerImage,
+  subtitleColor,
+  ...props
 }) => {
  
   const [horizontal, vertical] = alignment.split("-")
   const alignmentClass = `${styles[`horizontal-${horizontal}`]} ${styles[`vertical-${vertical}`]}`
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper}{...props}>
       <section className={styles.bannerContainer}>
         {backgroundImage && (
           <Image
@@ -52,6 +58,7 @@ const Banner: React.FC<BannerProps> = ({
             width={1440}
             height={740}
             loading="eager"
+            priority={true}
   />
         )}
         <div className={`${styles.textBox} ${alignmentClass}`}>
@@ -63,7 +70,7 @@ const Banner: React.FC<BannerProps> = ({
           
           {buttonText && (
           <div className={styles.buttonContainer}>
-            <Button size="sm" onClick={() => (window.location.href = buttonLink)}>
+            <Button size="sm" onClick={()=>buttonLink}>
               {buttonText}
             </Button>
           </div>

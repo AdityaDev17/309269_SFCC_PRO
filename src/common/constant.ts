@@ -1,3 +1,4 @@
+import { StatementBannerProps } from "../components/molecules/StatementBanner/StatementBanner";
 import { alignmentType } from "../components/molecules/Banner/Banner";
 
 export const productDetails = {
@@ -324,7 +325,7 @@ export const homepageBanners: BannerData[] = [
   {
     title: "SPRING COLLECTION 2024",
     buttonText: "View More",
-    backgroundImage: "/images/heroimageone.svg",
+    backgroundImage: "/images/heroimageone.webp",
     alignment: "center-bottom",
     buttonLink: "",
   },
@@ -348,25 +349,25 @@ export const homepageBanners: BannerData[] = [
 export const homepageProducts: ProductCard[] = [
   {
     productId: "1",
-    productImage: "images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "EXQUISITE COLLECTION",
     productDesc: "VIEW MORE",
   },
   {
     productId: "2",
-    productImage: "images/Product_2.svg",
+    productImage: "/images/Tile_4.png",
     productTitle: "ENCHANTING LOOK",
     productDesc: "VIEW MORE",
   },
   {
     productId: "3",
-    productImage: "images/Product_3.svg",
+    productImage: "/images/Tile_6.png",
     productTitle: "REVISIT YOUR CHOICES",
     productDesc: "VIEW MORE",
   },
 ];
 
-export const statementBannerData = {
+export const statementBannerData : StatementBannerProps = {
   imageSrc: "/images/lipstick.svg",
   imageAlt: "Lipstick collection",
   imagePosition: "left",
@@ -384,7 +385,7 @@ export const cartItems = [
     quantity: 2,
     price: 50,
     currency: "$",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
   },
 
   {
@@ -394,42 +395,42 @@ export const cartItems = [
     quantity: 1,
     price: 50,
     currency: "$",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
   },
 ];
 
 export const productData = [
   {
     productId: "893234",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 1",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "2",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 2",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "3",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 3",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "4",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",
   },
   {
     productId: "4",
-    productImage: "/images/product.svg",
+    productImage: "/images/Tile_3.png",
     productTitle: "Product 4",
     bagPrice: "200",
     currency: "$",

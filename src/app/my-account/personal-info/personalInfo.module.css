@@ -1,7 +1,7 @@
 .wrapper {
     padding: clamp(1rem, 5vw, 3rem);
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: auto; 
     gap: clamp(1rem, 3vw, 2rem);
     container-type: inline-size;
     container-name: personalInfo;
@@ -17,7 +17,7 @@
   .gridLayout {
     display: grid;
     grid-template-columns: 60% 1px 40%;
-    align-items: flex-start;
+    align-items: start;
     margin-bottom: 50px;
   }
  
@@ -39,8 +39,8 @@
   
   @container personalInfo (max-width: 600px) {
     .gridLayout {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 100%;
       gap: 2rem;
     }
   

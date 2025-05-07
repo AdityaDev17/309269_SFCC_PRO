@@ -1,10 +1,9 @@
 /**
- * ## Captcha Component
+ * ## Captcha
  *
  * The `Captcha` component is a simple, customizable CAPTCHA validator for verifying user input.
  * It is designed to add a lightweight security check against bots or automated interactions.
  *
- * ---
  *
  * ### Features:
  * - **Random CAPTCHA Code**: Automatically generates a 6-character alphanumeric CAPTCHA code.
@@ -12,7 +11,6 @@
  * - **Dynamic Validation Message**: Displays success or error messages based on user input.
  * - **Callback Support**: Triggers `onVerify` callback with the result of the validation.
  *
- * ---
  *
  * ### Props:
  *
@@ -20,14 +18,12 @@
  * |------------|--------------------------|-------------|
  * | `onVerify` | `(isValid: boolean) => void` | Callback triggered after CAPTCHA validation. Receives a boolean indicating if the validation was successful. |
  *
- * ---
  *
  * ### Accessibility Considerations:
  * - Includes `placeholder` in the input field to assist screen readers.
  * - Validation messages are rendered as text updates for clear feedback.
  * - CAPTCHA code is displayed as plain text, making it easy to read.
  *
- * ---
  *
  * ### Challenges & Considerations:
  * - **Security**: Intended for basic protection; not suitable for high-security applications.

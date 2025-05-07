@@ -2,7 +2,7 @@
 /* with reposnsiveness */
    .section {
     width: 100%;
-    display: flex;
+    display: grid;
     justify-content: center;
     box-sizing: border-box;
     height: auto;
@@ -46,6 +46,9 @@
     opacity: 0;
     transform: translateY(20px);
     transition: opacity 2s ease, transform 2s ease;
+
+    display: grid;
+    gap: 1rem;
   }
   
   .text.visible {
@@ -55,8 +58,8 @@
   
   .buttonContainer {
     margin-top: 1.5rem;
-    display: flex;
-    justify-content: flex-start;
+    display: grid;
+    justify-content: start;
   }
   
  

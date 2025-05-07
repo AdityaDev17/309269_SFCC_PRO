@@ -119,7 +119,7 @@ export {
 
 
 /**
- * ## NavigationMenu Component
+ * ## NavigationMenu
  *
  * The `NavigationMenu` component is a set of styled primitives built on top of `@radix-ui/react-navigation-menu` for building accessible and customizable navigation menus in React applications. It includes several subcomponents to structure your navigation, including items, triggers, content areas, indicators, and more.
  *

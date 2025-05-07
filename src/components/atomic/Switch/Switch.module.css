@@ -1,11 +1,12 @@
 .Switch {
-    display: inline-flex; 
+     display: grid;
     height: 1.5rem; 
     width: 2.75rem; 
-    flex-shrink: 0; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: 1fr; 
     cursor: pointer; 
     align-items: center; 
-    justify-content: center; 
+    justify-items: center; 
     border: 1px solid transparent; 
     border-radius: 9999px; 
     transition-property: background-color, border-color; 

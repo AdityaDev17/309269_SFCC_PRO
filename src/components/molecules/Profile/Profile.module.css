@@ -35,7 +35,7 @@
 }
 
 .buttonContainer :global([data-variant="profileUpdate"]){
-  width: 85%;
+  width: 95%;
   height: 36px;
   color: #fff;
   border: none;

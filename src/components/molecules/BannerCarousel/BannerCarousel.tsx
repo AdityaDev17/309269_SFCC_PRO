@@ -1,97 +1,99 @@
-'use client'
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image';
-import styles from './BannerCarousel.module.css'
-import Typography from '../../atomic/Typography/Typography'
-import { Button }  from '../../atomic/Button/Button'
+"use client"
+import { useEffect, useState } from "react"
+import Image from "next/image"
+import styles from "./BannerCarousel.module.css"
+import Typography from "../../atomic/Typography/Typography"
+import { Button } from "../../atomic/Button/Button"
 
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-} from '../../atomic/Card/Card'
-import { bannerData, CardType } from '../../../common/constant';
-
+import { Card, CardHeader, CardContent, CardFooter } from "../../atomic/Card/Card"
+import { bannerData, type CardType } from "../../../common/constant"
 
 const BannerCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % bannerData.length)
     }, 8000)
-    return () => clearInterval(interval)
+
+    
+    const checkMobile = () => {
+      if (typeof window !== "undefined") {
+        setIsMobile(window.innerWidth <= 600)
+      }
+    }
+
+    checkMobile()
+
+    window.addEventListener("resize", checkMobile)
+
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener("resize", checkMobile)
+    }
   }, [])
 
   const currentBanner = bannerData[currentIndex]
 
+  
+  const textCard = currentBanner.find((card) => card.type === "text")
+  const imageCards = currentBanner.filter((card) => card.type === "image")
+
+  
+  const renderCard = (card: CardType, index: number) => {
+    if (card.type === "text") {
+      return (
+        <Card key={index} className={`${styles.card} ${styles.textCard}`} width="100%">
+          <CardHeader>
+            <Typography type="Headline" variant={2} fontWeight="regular" color="black" label={card.title} />
+            <Typography type="Headline" variant={2} fontWeight="regular" color="black" label={card.subtitle} />
+          </CardHeader>
+          <CardContent>
+            <Typography type="Body" variant={2} fontWeight="regular" color="#555" label={card.description} />
+          </CardContent>
+          {card.link && (
+            <CardFooter className={styles.buttonContainer}>
+              <Button variant="link" onClick={() => console.log("Link Clicked")}>
+                VIEW MORE
+              </Button>
+            </CardFooter>
+          )}
+        </Card>
+      )
+    } else {
+      return (
+        <Card key={index} className={`${styles.card} ${styles.imageCard}`} width="100%">
+          <CardHeader>
+            <Image
+              src={card.image ?? "/placeholder.svg"}
+              alt="Banner"
+              width={440}
+              height={600}
+              loading="eager"
+              style={{ width: "100%", height: "auto" }}
+            />
+          </CardHeader>
+        </Card>
+      )
+    }
+  }
+
   return (
     <div className={styles.carouselWrapper}>
-      <div className={styles.cardsContainer}>
-        {currentBanner.map((card: CardType, index: number) => (
-          <Card key={index} className={styles.card} width="100%">
-            {card.type === 'text' ? (
-              <div className={styles.textCard}>
-                <CardHeader>
-                  <Typography
-                    type="Headline"
-                    variant={2}
-                    fontWeight="regular"
-                    color="black"
-                    label={card.title}
-                  />
-                  <Typography
-                    type="Headline"
-                    variant={2}
-                    fontWeight="regular"
-                    color="black"
-                    label={card.subtitle}
-                  />
-                </CardHeader>
-                <CardContent>
-                  <Typography
-                    type="Body"
-                    variant={2}
-                    fontWeight="regular"
-                    color="#555"
-                    label={card.description}
-                  />
-                </CardContent>
-                {card.link && (
-                  <CardFooter className={styles.buttonContainer}>
-                    <Button
-                      variant="link"
-                      onClick={() => console.log('Link Clicked')}
-                    >
-                      VIEW MORE
-                    </Button>
-                  </CardFooter>
-                )}
-              </div>
-            ) : (
-              <CardHeader>
-                <Image
-                  src={card.image ?? '/placeholder.svg'} 
-                  alt="Banner"
-                  width={440} 
-                  height={600} 
-                  loading="eager"
-                />
-              </CardHeader>
-            )}
-          </Card>
-        ))}
-      </div>
+      {isMobile ? (
+        <div className={styles.mobileLayout}>
+          {textCard && <div className={styles.textCardContainer}>{renderCard(textCard, 0)}</div>}
+          <div className={styles.imagesContainer}>{imageCards.map((card, index) => renderCard(card, index + 1))}</div>
+        </div>
+      ) : (
+        
+        <div className={styles.cardsContainer}>{currentBanner.map((card, index) => renderCard(card, index))}</div>
+      )}
 
       <div className={styles.pagination}>
         {bannerData.map((_, index: number) => (
-          <div
-            key={index}
-            className={`${styles.dot} ${
-              index === currentIndex ? styles.active : ''
-            }`}
-          />
+          <div key={index} className={`${styles.dot} ${index === currentIndex ? styles.active : ""}`} />
         ))}
       </div>
     </div>
@@ -99,6 +101,7 @@ const BannerCarousel = () => {
 }
 
 export default BannerCarousel
+
 
 /**
  * ## BannerCarousel

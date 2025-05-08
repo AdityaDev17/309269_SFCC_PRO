@@ -1,10 +1,10 @@
 .Checkbox {
-    height: 1.125rem; 
-    width: 1.125rem; 
+    height: 18px; 
+    width: 18px; 
     flex-shrink: 0;
-    border-radius: 0.125rem; 
-    background-color: #FFFFFF;
-    border: 0.094rem solid #4F4B53;
+    border-radius: 2px; 
+    background-color: var(--colors-white);
+    border: 0.094rem solid var(--grey-grey-700);
     outline: none;
     cursor: pointer;
     padding: 0;
@@ -16,13 +16,12 @@
   }
   
   .Checkbox[data-state="checked"] {
-    background-color: #4F4B53;   
-    color: #FFFFFF;   
+    background-color: var(--grey-grey-700);   
+    color: var(--colors-white);   
   }
   
   .CheckboxIndicator {
-    display: flex;      
-    align-items: center;       
-    justify-content: center; 
+    display: grid;
+    place-items: center; 
     color: currentColor;
   }

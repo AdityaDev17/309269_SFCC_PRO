@@ -57,7 +57,7 @@ const Breadcrumbs: React.FC<BreadcrumbWrapperProps> = ({
 export default Breadcrumbs
 
 /**
- * ## Breadcrumb Components
+ * ## Breadcrumb
  *
  * A collection of accessible and composable breadcrumb navigation components used to indicate 
  * the current page’s location within a navigational hierarchy.

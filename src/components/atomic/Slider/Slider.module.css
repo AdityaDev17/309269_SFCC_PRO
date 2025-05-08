@@ -1,16 +1,16 @@
-/* slider.module.css */
 
 .Slider {
     position: relative;
-    display: flex;
+    display:grid;
     width: 50%;
     touch-action: none;
     user-select: none;
-    align-items: center;
+    place-items:center;
   }
   
   .Slider[data-orientation='vertical'] {
-    flex-direction: column;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     width: 40px;
     height: 100px;
   }
@@ -19,7 +19,7 @@
     position: relative;
     height: 5px; 
     width: 70%;
-    flex-grow: 1;
+    grid-column: span 1; 
     overflow: hidden;
     border-radius: 9999px;
     background-color: gray; 

@@ -78,7 +78,7 @@ const EditPassword = ({onUpdateClicked}:any) => {
 export default EditPassword;
 
 /**
- * ## EditPassword Component
+ * ## EditPassword
  *
  * The `EditPassword` component provides a controlled form for users to update their password securely.
  *

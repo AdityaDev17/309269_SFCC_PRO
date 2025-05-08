@@ -81,8 +81,7 @@ export default ErrorComponent
  * ### Usage Example
  *
  * ```tsx
- * import ErrorComponent from "@/components/molecules/ErrorComponent/ErrorComponent";
- *
+ * 
  * <ErrorComponent
  *   errImg="/assets/404.svg"
  *   imgHeight={300}
@@ -92,5 +91,4 @@ export default ErrorComponent
  *   buttonText="Go Home"
  * />
  * ```
- <img src={errImg} alt="404" style={{marginBottom:"20px"}}/>changed to <Image/>
  */

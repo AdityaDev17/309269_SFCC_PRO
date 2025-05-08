@@ -1,15 +1,19 @@
 "use client";
+import { usePathname } from "next/navigation";
 import styles from "./myAccount.module.css";
-import AccountBreadcrumb from "./AccountBreadcrumb";
 import Tile from "../../components/atomic/Tile/Tile";
 import Banner from "../../components/molecules/Banner/Banner";
+import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 
 
 const MyAccount = () => {
   return (
     <div className={styles.wrapper}>
       
-      <AccountBreadcrumb/>
+      <Breadcrumbs
+        breadcrumbItems={[{ label: "Home", href: "/" }, { label: "My Account" }]}
+        breadcrumbSeparator="/slash.svg"
+      />
 
       <Banner
         title="Hello Jenssa!"
@@ -26,7 +30,7 @@ const MyAccount = () => {
         <Tile label="Payments" href="/my-account/payments" />
         <Tile label="My Subscription" href="/my-account/subscription" />
         <Tile label="Address Book" href="/my-account/address" />
-        <Tile label="Privacy & Security" href="/my-account/security" />
+        <Tile label="Contact & Preferences" href="/my-account/contact-info" />
         <Tile label="Log Out" href="/logout" />
         </div>
 

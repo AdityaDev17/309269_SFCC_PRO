@@ -1,5 +1,5 @@
 .Input {
-  display: flex;
+  display:grid;
   height: 2.5rem;
   width: 100%;
   border: 1px solid #b3b2b5;

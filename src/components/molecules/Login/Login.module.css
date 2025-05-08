@@ -9,9 +9,9 @@
   justify-content: space-between;  
 }
 .fontColor {
-  font-size: 14px;
-  font-weight: 400;
-  color: #4f4b53;
+  font-size: var(--size-font-size-300-m);
+  font-weight: var(--weight-regular);
+  color: var(--grey-grey-700);
 }
 .marginBottom {
   margin-bottom: 8px;
@@ -22,11 +22,11 @@
   column-gap: 7px;         
 }
 .forgotPassword {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: var(--size-font-size-300);
+  font-weight: var(--weight-regular);
 }
 .header {
   text-align: center;
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: var(--weight-semibold);
+  font-size: var(--size-font-size-400);
 }

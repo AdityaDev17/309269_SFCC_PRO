@@ -1,37 +1,37 @@
 .layout {
   display: grid;
-  gap: 20px;
+  gap: var(--space-40);
 }
 .row {
   display: grid;
   grid-auto-flow: column;
-  column-gap: 7px;
+  column-gap: var(--space-16);
 }
 .fontColor {
-  font-size: 14px;
-  font-weight: 400;
-  color: #4f4b53;
+  font-size: var(--size-font-size-300-m);
+  font-weight: var(--weight-regular);
+  color: var(--grey-grey-700);
 }
 .marginBottom {
   margin-bottom: 8px;
 }
 .header {
   text-align: center;
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: var(--weight-semibold);
+  font-size: var(--size-font-size-500-m);
 }
 .buttonStyle {
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
+  font-size: var(--size-font-size-200);
+  font-weight: var(--weight-semibold);
+  color: var(--base-white);
   width: 325px;
 }
 .policy {
-  font-size: 14px;
-  font-weight: 400;
+  font-size: var(--size-font-size-300-m);
+  font-weight: var(--weight-regular);
 }
 .selectBox {
   width: 325px;
-  border: 1px solid #b3b2b5;
-  color: #75757a;
+  border: 1px solid var(--grey-grey-500);
+  color: var( --grey-grey-600);
 }

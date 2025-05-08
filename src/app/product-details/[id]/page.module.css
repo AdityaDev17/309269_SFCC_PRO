@@ -1,19 +1,19 @@
 /* Page Styles */
 .layout {
-  padding: clamp(15px, 5vw, 40px);
+  padding: clamp(var(--space-32), 5vw, var(--space-56));
   display: grid;
   grid-template-columns: 1fr;
-  gap: 15px;
+  gap: var(--space-32);
 }
 .productCarouselSection {
   display: grid;
   grid-template-rows: 0.1fr 1fr;
-  gap: 20px;
+  gap: var(--space-40);
   text-align: center;
-  padding-top: 25px;
+  padding-top: var(--space-44);
 }
 .bannerLayout {
-  padding-top: 25px;
+  padding-top: var(--space-44);
 }
 /* Page Styles End */
 
@@ -25,14 +25,14 @@
   container-type: inline-size;
 }
 .select {
-  background-color: #fff;
+  background-color: var(--colors-white);
   border: solid;
   border-width: 1px;
-  border-color: #cccbce;
-  color: #000;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 16px;
+  border-color: var(--grey-grey-400);
+  color:var( --base-black);
+  font-size: var(--size-font-size-200-m);
+  font-weight: var(--weight-semibold);
+  line-height: var(--space-44);
 }
 .firstLayout {
   display: grid;
@@ -51,30 +51,30 @@
   }
 }
 .title {
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 26px;
+  font-size: var(--size-font-size-500-m);
+  font-weight: var(--weight-semibold);
+  line-height: var(--line-height-lh-400);
   padding-bottom: 21.5px;
 }
 .price {
-  font-size: 28px;
-  font-weight: 600;
-  line-height: 37px;
-  color: #3b3944;
+  font-size: var(  --size-font-size-500);
+  font-weight:  var(--weight-semibold);
+  line-height: var(--line-height-lh-500);
+  color: var(--grey-grey-800);
   padding-bottom: 21.5px;
 }
 .desc {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 22px;
-  color: #4f4b53;
-  padding-bottom: 20px;
+  font-size: var(--size-font-size-300-m);
+  font-weight: var(--weight-regular);
+  line-height: var(--line-height-lh-300);
+  color:var(--grey-grey-700);
+  padding-bottom: var( --space-40);
 }
 .button {
   width: 100%;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 16px;
+  font-size: var(--size-font-size-200-m);
+  font-weight: var(--weight-semibold);
+  line-height: var(--line-height-lh-100);
 }
 .accordion {
   width: 100%;
@@ -93,10 +93,10 @@
 .buttonContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding-bottom: 20px;
+  gap: var(--space-24);
+  padding-bottom: var(--space-40);
 }
 .varientSection {
-  padding-bottom: 20px;
+  padding-bottom: var(--space-40);
 }
 /* Component Styles End*/

@@ -20,8 +20,8 @@
   
   .BreadcrumbLink {
     transition: color 0.3s ease;
-    font-size: 12px;
-    font-weight: 600;
+    font-size: var(--size-font-size-200);
+    font-weight: var(--weight-semibold);
     color: hsl(var(--muted-foreground));
   }
   
@@ -30,9 +30,9 @@
   }
   
   .BreadcrumbPage {
-    font-size: 12px;
-    font-weight: 400;
-    color: #4F4B53;
+    font-size: var(--size-font-size-200);
+    font-weight: var(--weight-regular);
+    color: var(--grey-grey-700);
   }
 
   .BreadcrumbSeparator {

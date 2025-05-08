@@ -3,7 +3,7 @@
 }
 .layout{
     display: grid;
-    gap:15px;
+    gap:var(--space-32);
     justify-content: center;
 }
 .textArea{

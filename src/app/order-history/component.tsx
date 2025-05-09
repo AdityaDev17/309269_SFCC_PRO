@@ -57,8 +57,8 @@ const Filter = ({ isMobile }: { isMobile: boolean }) => {
 						</DrawerHeader>
 
 						<div className={styles.filterList}>
-							{filters.map((filter, index) => (
-								<div key={index} className={styles.filterItem}>
+							{filters.map((filter) => (
+								<div key={filter} className={styles.filterItem}>
 									<span>{filter}</span>
 									<ChevronRight size={20} />
 								</div>
@@ -107,11 +107,13 @@ const ImageGrid = ({
 			{productData.length === 1 ? (
 				<Image src="./images/product.svg" alt="product" fill loading="eager" />
 			) : (
+				// eslint-disable-next-line react/no-array-index-key
 				visibleImages.map((src, index) => {
+					// eslint-disable-next-line react/no-array-index-key
 					const isOverlay = index === 3 && productData.length > 4;
 
 					return (
-						<div key={index} className={styles.imageWrapper}>
+						<div key={src.productId} className={styles.imageWrapper}>
 							<Image
 								src="./images/product.svg"
 								alt="product"
@@ -246,8 +248,8 @@ const OrderCardContainer = () => {
 		<>
 			{!isMobile && <Filter isMobile={false} />}
 			<div className={styles.orderCardContainer}>
-				{currentItems.map((order, idx) => (
-					<OrderCard key={idx} orderData={order} />
+				{currentItems.map((order) => (
+					<OrderCard key={order.orderId} orderData={order} />
 				))}
 			</div>
 

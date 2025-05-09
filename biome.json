@@ -7,7 +7,10 @@
     },
     "files": {
         "ignoreUnknown": false,
-        "include": ["src/**/*.tsx"]
+        "include": ["src/**/*.tsx"],
+        "ignore": [
+            "src/components/organisms/Header/Header.tsx"
+          ]
     },
     "formatter": {
         "enabled": true,

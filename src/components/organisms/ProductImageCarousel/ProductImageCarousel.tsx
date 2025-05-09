@@ -5,139 +5,163 @@ import styles from "./ProductImageCarousel.module.css";
 
 type Alignment = "center" | "alignStart" | "alignEnd";
 interface LayoutProps {
-  productData: {
-    productId: string; 
-    productImage: string;
-    productTitle?: string;
-    productDesc?: string;
-    price?: string;
-    currency?: string;
-    wishListed?: boolean;
-    bagPrice?: string;
-  }[];
-  width?: string | number;
-  alignment?: Alignment;
-  moveToBag?: boolean;
-  withPagination?:boolean;
-  onCardClick?: (productId: string) => void;
-  onButtonClick?: (productId: string) => void;
-  onMoveToBag?: (productId: string) => void;
+	productData: {
+		productId: string;
+		productImage: string;
+		productTitle?: string;
+		productDesc?: string;
+		price?: string;
+		currency?: string;
+		wishListed?: boolean;
+		bagPrice?: string;
+	}[];
+	width?: string | number;
+	alignment?: Alignment;
+	moveToBag?: boolean;
+	withPagination?: boolean;
+	onCardClick?: (productId: string) => void;
+	onButtonClick?: (productId: string) => void;
+	onMoveToBag?: (productId: string) => void;
 }
 
-
 const ProductImageCarousel = ({
-  productData,
-  width,
-  alignment,
-  moveToBag,
-  withPagination,
-  onCardClick,
-  onButtonClick,
-  onMoveToBag
+	productData,
+	width,
+	alignment,
+	moveToBag,
+	withPagination,
+	onCardClick,
+	onButtonClick,
+	onMoveToBag,
 }: LayoutProps) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+	const scrollRef = useRef<HTMLDivElement>(null);
+	const [activeIndex, setActiveIndex] = useState(0);
 
-  const cardsPerPage = 4;
-  const totalGroups = Math.ceil(productData.length / cardsPerPage);
+	const cardsPerPage = 4;
+	const totalGroups = Math.ceil(productData.length / cardsPerPage);
 
-  const visibleItems = withPagination
-    ? productData.slice(activeIndex * cardsPerPage, (activeIndex + 1) * cardsPerPage)
-    : productData;
+	const visibleItems = withPagination
+		? productData.slice(
+				activeIndex * cardsPerPage,
+				(activeIndex + 1) * cardsPerPage,
+			)
+		: productData;
 
-  useEffect(() => {
-    if (!withPagination || !scrollRef.current) return;
+	useEffect(() => {
+		if (!withPagination || !scrollRef.current) return;
 
-    const container = scrollRef.current;
+		const container = scrollRef.current;
 
-    const onScroll = () => {
-      const scrollLeft = container.scrollLeft;
-      const cardWidth = container.scrollWidth / productData.length;
-      const newIndex = Math.round(scrollLeft / (cardWidth * cardsPerPage));
-      setActiveIndex(newIndex);
-    };
+		const onScroll = () => {
+			const scrollLeft = container.scrollLeft;
+			const cardWidth = container.scrollWidth / productData.length;
+			const newIndex = Math.round(scrollLeft / (cardWidth * cardsPerPage));
+			setActiveIndex(newIndex);
+		};
 
-    container.addEventListener("scroll", onScroll);
-    return () => container.removeEventListener("scroll", onScroll);
-  }, [productData.length, withPagination]);
+		container.addEventListener("scroll", onScroll);
+		return () => container.removeEventListener("scroll", onScroll);
+	}, [productData.length, withPagination]);
 
-  const scrollToGroup = (index: number) => {
-    if (scrollRef.current) {
-      const container = scrollRef.current;
-      const cardWidth = container.scrollWidth / productData.length;
-      container.scrollTo({
-        left: index * cardsPerPage * cardWidth,
-        behavior: "smooth",
-      });
-    }
-    setActiveIndex(index);
-  };
+	const scrollToGroup = (index: number) => {
+		if (scrollRef.current) {
+			const container = scrollRef.current;
+			const cardWidth = container.scrollWidth / productData.length;
+			container.scrollTo({
+				left: index * cardsPerPage * cardWidth,
+				behavior: "smooth",
+			});
+		}
+		setActiveIndex(index);
+	};
 
-  return (
-    <div className={styles.layoutContainer}>
-      {withPagination ? (
-        <div className={styles.scrollContainer} ref={scrollRef}>
-          <div className={styles.horizontalRow}>
-            {productData.map((product, index) => (
-                <ProductCard
-                key={index}
-                  productId={product.productId}
-                  productImage={product.productImage}
-                  productTitle={product.productTitle}
-                  productDesc={product.productDesc}
-                  price={product.price}
-                  currency={product.currency}
-                  bagPrice={product.bagPrice}
-                  wishListed={product.wishListed}
-                  width={width}
-                  alignment={alignment}
-                  moveToBag={moveToBag}
-                  onClick={onCardClick ? () => onCardClick(product.productId) : undefined}
-                  onButtonClick={onButtonClick ? () => onButtonClick(product.productId) : undefined}
-                  onMoveToBag={onMoveToBag ? () => onMoveToBag(product.productId) : undefined}
-                />
-            ))}
-          </div>
-        </div>
-      ) : (
-        <div className={styles.cardLayout}>
-          {productData.map((product, index) => (
-            <ProductCard
-              key={index}
-              productId={product.productId}
-              productImage={product.productImage}
-              productTitle={product.productTitle}
-              productDesc={product.productDesc}
-              price={product.price}
-              currency={product.currency}
-              bagPrice={product.bagPrice}
-              wishListed={product.wishListed}
-              width={width}
-              alignment={alignment}
-              moveToBag={moveToBag}
-              onClick={onCardClick ? () => onCardClick(product.productId) : undefined}
-              onButtonClick={onButtonClick ? () => onButtonClick(product.productId) : undefined}
-              onMoveToBag={onMoveToBag ? () => onMoveToBag(product.productId) : undefined}
-            />
-          ))}
-        </div>
-      )}
+	return (
+		<div className={styles.layoutContainer}>
+			{withPagination ? (
+				<div className={styles.scrollContainer} ref={scrollRef}>
+					<div className={styles.horizontalRow}>
+						{productData.map((product) => (
+							<ProductCard
+								key={product.productId}
+								productId={product.productId}
+								productImage={product.productImage}
+								productTitle={product.productTitle}
+								productDesc={product.productDesc}
+								price={product.price}
+								currency={product.currency}
+								bagPrice={product.bagPrice}
+								wishListed={product.wishListed}
+								width={width}
+								alignment={alignment}
+								moveToBag={moveToBag}
+								onClick={
+									onCardClick ? () => onCardClick(product.productId) : undefined
+								}
+								onButtonClick={
+									onButtonClick
+										? () => onButtonClick(product.productId)
+										: undefined
+								}
+								onMoveToBag={
+									onMoveToBag ? () => onMoveToBag(product.productId) : undefined
+								}
+							/>
+						))}
+					</div>
+				</div>
+			) : (
+				<div className={styles.cardLayout}>
+					{productData.map((product) => (
+						<ProductCard
+							key={product.productId}
+							productId={product.productId}
+							productImage={product.productImage}
+							productTitle={product.productTitle}
+							productDesc={product.productDesc}
+							price={product.price}
+							currency={product.currency}
+							bagPrice={product.bagPrice}
+							wishListed={product.wishListed}
+							width={width}
+							alignment={alignment}
+							moveToBag={moveToBag}
+							onClick={
+								onCardClick ? () => onCardClick(product.productId) : undefined
+							}
+							onButtonClick={
+								onButtonClick
+									? () => onButtonClick(product.productId)
+									: undefined
+							}
+							onMoveToBag={
+								onMoveToBag ? () => onMoveToBag(product.productId) : undefined
+							}
+						/>
+					))}
+				</div>
+			)}
 
-      {withPagination && productData?.length > cardsPerPage && (
-        <div className={styles.dotsContainer}>
-          {Array.from({ length: totalGroups }).map((_, idx) => (
-            <span
-              key={idx}
-              className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ""}`}
-              onClick={() => scrollToGroup(idx)}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
+			{withPagination && productData?.length > cardsPerPage && (
+				<div className={styles.dotsContainer}>
+					{Array.from({ length: totalGroups }).map((_, idx) => {
+						const firstProductIndex = idx * cardsPerPage;
+						const productId =
+							productData[firstProductIndex]?.productId ?? `fallback-${idx}`;
+						return (
+							<span
+								key={`dot-${productId}`}
+								role="button"
+								tabIndex={0}
+								className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ""}`}
+								onClick={() => scrollToGroup(idx)}
+							/>
+						);
+					})}
+				</div>
+			)}
+		</div>
+	);
 };
-
 
 export default ProductImageCarousel;
 

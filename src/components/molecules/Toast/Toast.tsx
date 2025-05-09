@@ -34,7 +34,7 @@
  * - Uses CSS Modules via `Toast.module.css`.
  * - Classnames like `Toast`, `ToastDescription`, `ToastActionButton`, and `ToastCancelButton` allow full control of the design.
  *
- * 
+ *
  */
 
 "use client";
@@ -46,25 +46,25 @@ import styles from "./Toast.module.css";
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = "system" } = useTheme();
+	const { theme = "system" } = useTheme();
 
-  return (
-    <Sonner
-      theme={theme as ToasterProps["theme"]}
-      closeButton={true}
-      duration={2500}
-      position="top-right"
-      toastOptions={{
-        classNames: {
-          toast: styles.Toast,
-          content: styles.ToastDescription,
-          actionButton: styles.ToastActionButton,
-          closeButton: styles.ToastCancelButton,
-        },
-      }}
-      {...props}
-    />
-  );
+	return (
+		<Sonner
+			theme={theme as ToasterProps["theme"]}
+			closeButton={true}
+			duration={2500}
+			position="top-right"
+			toastOptions={{
+				classNames: {
+					toast: styles.Toast,
+					content: styles.ToastDescription,
+					actionButton: styles.ToastActionButton,
+					closeButton: styles.ToastCancelButton,
+				},
+			}}
+			{...props}
+		/>
+	);
 };
 
 export { Toaster };

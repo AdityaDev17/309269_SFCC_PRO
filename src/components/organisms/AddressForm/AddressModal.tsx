@@ -1,36 +1,42 @@
 "use client";
 
+import CheckBox from "@/components/atomic/CheckBox/CheckBox";
+import clsx, { type ClassValue } from "clsx";
+import { useState } from "react";
+import { states } from "../../../common/constant";
+import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
-  DialogDescription,
-} from "../../molecules/Dialog/Dialog";
-import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectItem,
+  SelectTrigger,
   SelectValue,
 } from "../../atomic/Select/Select";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../molecules/Dialog/Dialog";
 import styles from "./AddressModal.module.css";
-import { Button } from "../../atomic/Button/Button";
-import { useState } from "react";
-import clsx, { ClassValue } from "clsx";
-import { states } from "../../../common/constant";
-import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
-export function AddressDialog({ open, onOpenChange }: { open: boolean, onOpenChange: (open: boolean) => void,}) {
+export function AddressDialog({
+  open,
+  onOpenChangeAction,
+}: {
+  open: boolean;
+  onOpenChangeAction: (open: boolean) => void;
+}) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChangeAction}>
       <DialogTrigger asChild>
         {/* <Button variant="secondary">ADD NEW ADDRESS</Button> */}
       </DialogTrigger>
@@ -101,7 +107,7 @@ export function AddressDialog({ open, onOpenChange }: { open: boolean, onOpenCha
                 <Input placeholder="ZIP code*" name="zipcode" />
               </div>
               <div>
-              <Input placeholder="Country" name="country" />
+                <Input placeholder="Country" name="country" />
               </div>
             </fieldset>
           </div>
@@ -115,7 +121,8 @@ export function AddressDialog({ open, onOpenChange }: { open: boolean, onOpenCha
               onCheckedChange={(checked) => setIsChecked(!!checked)}
               id="setDefault"
             />
-            <label>Set as Default</label>
+            <input type="checkbox" id="setDefault" />
+            <label htmlFor="setDefault">Set as Default</label>
           </div>
           <DialogClose asChild>
             <Button>Cancel</Button>

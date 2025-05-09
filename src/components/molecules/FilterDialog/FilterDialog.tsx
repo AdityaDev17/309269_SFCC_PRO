@@ -1,62 +1,62 @@
 "use client";
 
+import { useState } from "react";
+import { filterOptions, filterTabs } from "../../../common/constant";
+import { Button } from "../../atomic/Button/Button";
+import CheckBox from "../../atomic/CheckBox/CheckBox";
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+	Dialog,
+	DialogContent,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
 } from "../../molecules/Dialog/Dialog";
 import styles from "./FilterDialog.module.css";
-import { Button } from "../../atomic/Button/Button";
-import { useState } from "react";
-import CheckBox from "../../atomic/CheckBox/CheckBox";
-import { filterTabs, filterOptions } from "../../../common/constant";
 
 const tabs = filterTabs;
 
 export default function PriceFilterDialog() {
-  const [activeTab, setActiveTab] = useState("Price");
-  const [selectedFilters, setSelectedFilters] = useState<
-    Record<string, Set<string>>
-  >({});
+	const [activeTab, setActiveTab] = useState("Price");
+	const [selectedFilters, setSelectedFilters] = useState<
+		Record<string, Set<string>>
+	>({});
 
-  const toggleFilter = (tab: string, option: string) => {
-    setSelectedFilters((prev) => {
-      const current = new Set(prev[tab] || []);
-      if (current.has(option)) {
-        current.delete(option);
-      } else {
-        current.add(option);
-      }
-      return { ...prev, [tab]: current };
-    });
-  };
+	const toggleFilter = (tab: string, option: string) => {
+		setSelectedFilters((prev) => {
+			const current = new Set(prev[tab] || []);
+			if (current.has(option)) {
+				current.delete(option);
+			} else {
+				current.add(option);
+			}
+			return { ...prev, [tab]: current };
+		});
+	};
 
-  const clearFilters = () => {
-    setSelectedFilters({});
-  };
+	const clearFilters = () => {
+		setSelectedFilters({});
+	};
 
-  const applyFilters = () => {
-    console.log("Applied Filters:", selectedFilters);
-    // You can hook this into URL search params or API filters later
-  };
+	const applyFilters = () => {
+		console.log("Applied Filters:", selectedFilters);
+		// You can hook this into URL search params or API filters later
+	};
 
-  return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="secondary" size="sm">
-          Filter
-        </Button>
-      </DialogTrigger>
+	return (
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button variant="secondary" size="sm">
+					Filter
+				</Button>
+			</DialogTrigger>
 
-      <DialogContent className={styles.FilterDialogContent}>
-        <DialogHeader className={styles.FilterDialogHeader}>
-          <DialogTitle className={styles.FilterDialogTitle}>
-            Filters
-          </DialogTitle>
-          {/* <DialogClose className={styles.closeButton}>
+			<DialogContent className={styles.FilterDialogContent}>
+				<DialogHeader className={styles.FilterDialogHeader}>
+					<DialogTitle className={styles.FilterDialogTitle}>
+						Filters
+					</DialogTitle>
+					{/* <DialogClose className={styles.closeButton}>
             {" "}
             <X
               style={{
@@ -65,45 +65,56 @@ export default function PriceFilterDialog() {
               }}
             />{" "}
           </DialogClose> */}
-        </DialogHeader>
+				</DialogHeader>
 
-        <div className={styles.container}>
-          {/* Sidebar Tabs */}
-          <div className={styles.sidebar}>
-            {tabs.map((tab) => (
-              <div
-                key={tab}
-                className={`${styles.tab} ${activeTab === tab ? styles.active : ""}`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </div>
-            ))}
-          </div>
+				<div className={styles.container}>
+					{/* Sidebar Tabs */}
+					<div className={styles.sidebar}>
+						{tabs.map((tab) => (
+							<div
+								key={tab}
+								className={`${styles.tab} ${activeTab === tab ? styles.active : ""}`}
+								onClick={() => setActiveTab(tab)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === " ") {
+										e.preventDefault();
+										setActiveTab(tab);
+									}
+								}}
+							>
+								{tab}
+							</div>
+						))}
+					</div>
 
-          {/* Right Side Options */}
-          <div className={styles.content}>
-            <h3 className={styles.sectionTitle}>{activeTab}</h3>
-            <div className={styles.options}>
-              {filterOptions[activeTab].map((label) => (
-                <label key={label} className={styles.checkboxLabel}>
-                  <CheckBox
-                    checked={selectedFilters[activeTab]?.has(label) || false}
-                    onCheckedChange={() => toggleFilter(activeTab, label)}
-                  />
-                  <span>{label}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-        </div>
-        <DialogFooter className={styles.FilterDialogFooter}>
-          <Button onClick={clearFilters}>CLEAR FILTERS</Button>
-          <Button variant="secondary" onClick={applyFilters}>
-            APPLY FILTERS
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
+					{/* Right Side Options */}
+					<div className={styles.content}>
+						<h3 className={styles.sectionTitle}>{activeTab}</h3>
+						<div className={styles.options}>
+							{filterOptions[activeTab].map((label) => (
+								<label
+									key={label}
+									className={styles.checkboxLabel}
+									htmlFor={label}
+								>
+									<CheckBox
+										checked={selectedFilters[activeTab]?.has(label) || false}
+										onCheckedChange={() => toggleFilter(activeTab, label)}
+										id={label}
+									/>
+									<span>{label}</span>
+								</label>
+							))}
+						</div>
+					</div>
+				</div>
+				<DialogFooter className={styles.FilterDialogFooter}>
+					<Button onClick={clearFilters}>CLEAR FILTERS</Button>
+					<Button variant="secondary" onClick={applyFilters}>
+						APPLY FILTERS
+					</Button>
+				</DialogFooter>
+			</DialogContent>
+		</Dialog>
+	);
 }

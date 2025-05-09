@@ -5,18 +5,18 @@ import styles from "./TextArea.module.css";
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ rows = 4, ...props }, ref) => {
-    return (
-      <textarea className={styles.Textarea} ref={ref} rows={rows} {...props} />
-    );
-  }
+	({ rows = 4, ...props }, ref) => {
+		return (
+			<textarea className={styles.Textarea} ref={ref} rows={rows} {...props} />
+		);
+	},
 );
 Textarea.displayName = "Textarea";
 
 export default Textarea;
 
 /**
- * ## Textarea 
+ * ## Textarea
  *
  * The `Textarea` component is a reusable and styled textarea input field.
  * It provides a customizable text input area with consistent styling,
@@ -45,7 +45,7 @@ export default Textarea;
  *   );
  * }
  * ```
- * 
+ *
  * ### Challenges & Research:
  * - Ensured that the default height accommodates 4 lines of text.
  * - Used `ref` forwarding to maintain compatibility with form handlers.

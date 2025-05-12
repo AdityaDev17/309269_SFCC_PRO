@@ -429,7 +429,7 @@ export const productData = [
     currency: "$",
   },
   {
-    productId: "4",
+    productId: "5",
     productImage: "/images/Tile_3.png",
     productTitle: "Product 4",
     bagPrice: "200",

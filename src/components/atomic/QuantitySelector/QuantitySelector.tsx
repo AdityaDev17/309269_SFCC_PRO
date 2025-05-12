@@ -18,9 +18,9 @@ const QuantitySelector = ({
 	const [isOpen, setIsOpen] = useState(false);
 
 	useEffect(() => {
-		if (typeof qty === "number" && qty !== quantity) {
-			setQuantity(qty);
-		}
+		setQuantity((prev) =>
+			typeof qty === "number" && qty !== prev ? qty : prev,
+		);
 	}, [qty]);
 
 	const toggleDropdown = () => {
@@ -70,7 +70,11 @@ const QuantitySelector = ({
 					/>
 				</div>
 			) : (
-				<div className={styles.content} onClick={toggleDropdown}>
+				<button
+					type="button"
+					className={styles.dropDownContent}
+					onClick={toggleDropdown}
+				>
 					<Typography
 						type="Body"
 						variant={2}
@@ -84,21 +88,25 @@ const QuantitySelector = ({
 						width={14}
 						height={7}
 					/>
-				</div>
+				</button>
 			)}
 
 			{isOpen && !updateQuantity && (
 				<div className={styles.dropdown}>
 					<div className={styles.dropdownList}>
-						{[...Array(10)].map((_, index) => (
-							<div
-								key={index}
-								className={styles.dropdownItem}
-								onClick={() => selectNumber(index + 1)}
-							>
-								{index + 1}
-							</div>
-						))}
+						{[...Array(10)].map((_, index) => {
+							const value = index + 1;
+							return (
+								<button
+									key={value}
+									className={styles.dropdownItem}
+									onClick={() => selectNumber(value)}
+									type="button"
+								>
+									{value}
+								</button>
+							);
+						})}
 					</div>
 				</div>
 			)}

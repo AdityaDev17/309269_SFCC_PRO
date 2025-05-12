@@ -12,7 +12,18 @@
 gap: 10px;
     justify-content: space-between;
     padding: 5px 10px;
-
+	cursor: pointer;
+  }
+  .dropDownContent {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+gap: 75px;
+    justify-content: space-between;
+    padding: 5px 10px;
+	cursor: pointer;
+background: none;
+border: none;
   }
   
   .quantityText {
@@ -55,6 +66,8 @@ gap: 10px;
     text-align: center;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border: none;
+    background:none;
   }
   
   .dropdownItem:hover {

@@ -154,6 +154,12 @@ const ProductImageCarousel = ({
 								tabIndex={0}
 								className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ""}`}
 								onClick={() => scrollToGroup(idx)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === " ") {
+										e.preventDefault();
+										scrollToGroup(idx);
+									}
+								}}
 							/>
 						);
 					})}

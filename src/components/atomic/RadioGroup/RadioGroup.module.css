@@ -6,12 +6,12 @@
   width: 1.125rem; 
   height: 1.125rem; 
   aspect-ratio: 1 / 1; 
-  border-radius: 9999px; 
+  border-radius: var(--border-radius-100); 
   border-width: 1.5px; 
   border-style: solid; 
-  border-color: #4F4B53; 
-  color: #ffffff; 
-  background-color: #ffffff; 
+  border-color: var(--grey-grey-700); 
+  color: var(--colors-white); 
+  background-color: var(--colors-white); 
   outline: none;
 }
 
@@ -28,14 +28,13 @@
 }
 
 .RadioGroupItemIndicator {
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
+  display: grid; 
+  place-items: center;
 }
 
 .Circle {
   height: 0.7rem; 
   width: 0.7rem; 
   fill: currentColor; 
-  color: #4F4B53; 
+  color: var(--grey-grey-700); 
 }

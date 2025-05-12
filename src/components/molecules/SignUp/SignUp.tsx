@@ -1,251 +1,270 @@
 "use client";
-import Input from "../../atomic/Input/Input";
-import styles from "./SignUp.module.css";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
-import { Button } from "../../atomic/Button/Button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../atomic/Select/Select";
 import { useState } from "react";
+import { Button } from "../../atomic/Button/Button";
+import Input from "../../atomic/Input/Input";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "../../atomic/Select/Select";
+import styles from "./SignUp.module.css";
 
-const SignUp = ({ onProceed }: any) => {
-  const [passwordScreen, setpasswordScreen] = useState(false);
-  const [formData, setFormData] = useState({
-    title: "",
-    firstName: "",
-    lastName: "",
-    gender: "",
-    birthDate: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    agreeToTerms: false,
-  });
-  const handleChange = (e: any, name?: any) => {
-    const targetName = e?.target?.name || name;
-    const value = e?.target?.value || e;
+type SignUpFormData = {
+	title: string;
+	firstName: string;
+	lastName: string;
+	gender: string;
+	birthDate: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+	agreeToTerms: boolean;
+};
 
-    setFormData((prevData) => ({
-      ...prevData,
-      [targetName]: value,
-    }));
-  };
+interface SignUpProps {
+	onProceed: (formData: SignUpFormData) => void;
+}
 
-  const handleDisable = () => {
-    if (
-      formData?.birthDate != "" &&
-      formData?.email != "" &&
-      formData?.firstName != "" &&
-      formData?.lastName != "" &&
-      formData?.gender != "" &&
-      formData?.title != ""
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  };
+const SignUp = ({ onProceed }: SignUpProps) => {
+	const [passwordScreen, setpasswordScreen] = useState(false);
+	const [formData, setFormData] = useState({
+		title: "",
+		firstName: "",
+		lastName: "",
+		gender: "",
+		birthDate: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+		agreeToTerms: false,
+	});
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement> | string,
+		name?: string,
+	) => {
+		const targetName = typeof e === "string" ? name : e.target.name;
+		const value = typeof e === "string" ? e : e.target.value;
 
-  return (
-    <div className={styles.layout}>
-      <div className={styles.header}>CREATE ACCOUNT</div>
-      <div
-        style={{ display: passwordScreen ? "none" : "grid" }}
-        className={styles.layout}
-      >
-        <div>
-          <div className={styles.fontColor}>Title*</div>
-          <Select onValueChange={(e) => handleChange(e, "title")}>
-            <SelectTrigger
-              style={{
-                width: "325px",
-                border: "solid",
-                borderWidth: "1px",
-                borderColor: "#B3B2B5",
-                color: "#75757A",
-              }}
-            >
-              <SelectValue placeholder="Select" />
-            </SelectTrigger>
-            <SelectContent
-              style={{
-                width: "325px",
-                borderColor: "#B3B2B5",
-                color: "#75757A",
-              }}
-            >
-              <SelectGroup>
-                <SelectItem value="Mr" data-testid="select-item-1">
-                  Mr
-                </SelectItem>
-                <SelectItem value="Mrs" data-testid="select-item-2">
-                  Mrs
-                </SelectItem>
-                <SelectItem value="Ms" data-testid="select-item-2">
-                  Ms
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <div className={styles.fontColor}>First Name*</div>
-          <Input
-            type="text"
-            name="firstName"
-            value={formData?.firstName || ""}
-            onChange={handleChange}
-            style={{ width: "325px", borderColor: "#B3B2B5" }}
-          />
-        </div>
-        <div>
-          <div className={styles.fontColor}>Last Name*</div>
-          <Input
-            type="text"
-            name="lastName"
-            value={formData?.lastName || ""}
-            onChange={handleChange}
-            style={{ width: "325px", borderColor: "#B3B2B5" }}
-          />
-        </div>
-        <div>
-          <div className={styles.fontColor}>Gender*</div>
-          <Select onValueChange={(e) => handleChange(e, "gender")}>
-            <SelectTrigger
-              style={{
-                width: "325px",
-                border: "solid",
-                borderWidth: "1px",
-                borderColor: "#B3B2B5",
-                color: "#75757A",
-              }}
-            >
-              <SelectValue placeholder="Gender" />
-            </SelectTrigger>
-            <SelectContent
-              style={{
-                width: "325px",
-                borderColor: "#B3B2B5",
-                color: "#75757A",
-              }}
-            >
-              <SelectGroup>
-                <SelectItem value="male" data-testid="select-item-1">
-                  Male
-                </SelectItem>
-                <SelectItem value="female" data-testid="select-item-2">
-                  Female
-                </SelectItem>
-                <SelectItem value="others" data-testid="select-item-2">
-                  Others
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-        <div>
-          <div className={styles.fontColor}>Birth Date*</div>
-          <Input
-            type="date"
-            name="birthDate"
-            value={formData?.birthDate || ""}
-            onChange={handleChange}
-            style={{ width: "325px", borderColor: "#B3B2B5" }}
-          />
-        </div>
-        <div>
-          <div className={styles.fontColor}>Email ID*</div>
-          <Input
-            type="email"
-            name="email"
-            value={formData?.email || ""}
-            onChange={handleChange}
-            style={{ width: "325px", borderColor: "#B3B2B5" }}
-          />
-        </div>
-        <Button
-          variant="secondary"
-          className={styles.buttonStyle}
-          size="lg"
-          disabled={handleDisable()}
-          style={{
-            width: "325px",
-            color: "#FFFFFF",
-            fontSize: "12px",
-            fontWeight: "600",
-          }}
-          onClick={() => setpasswordScreen(true)}
-        >
-          CONTINUE
-        </Button>
-      </div>
-      <div
-        style={{ display: passwordScreen ? "grid" : "none" }}
-        className={styles.layout}
-      >
-        <div>
-          <div className={styles.fontColor}>Password</div>
-          <Input
-            type="password"
-            value={formData?.password || ""}
-            name="password"
-            onChange={handleChange}
-            style={{ width: "325px", borderColor: "#B3B2B5" }}
-          />
-        </div>
-        <div>
-          <div className={styles.fontColor}>Confirm Password</div>
-          <Input
-            type="password"
-            value={formData?.confirmPassword || ""}
-            name="confirmPassword"
-            onChange={handleChange}
-            style={{ width: "325px", borderColor: "#B3B2B5" }}
-          />
-        </div>
-        <div className={styles.row}>
-          <CheckBox
-            data-testid="checkbox"
-            style={{ borderColor: "#4F4B53" }}
-            checked={formData.agreeToTerms}
-            onCheckedChange={(checked: boolean) =>
-              setFormData((prev) => ({ ...prev, agreeToTerms: checked }))
-            }
-          />
-          <div className={styles.policy}>
-            I have read, agreed to T&C & Privacy Policy*
-          </div>
-        </div>
-        <Button
-          variant="secondary"
-          size="lg"
-          style={{
-            width: "325px",
-            color: "#FFFFFF",
-            fontSize: "12px",
-            fontWeight: "600",
-          }}
-          onClick={() => onProceed(formData)}
-          disabled={
-            formData?.password !== formData?.confirmPassword ||
-            !formData.agreeToTerms
-          }
-        >
-          PROCEED
-        </Button>
-      </div>
-    </div>
-  );
+		if (!targetName) return;
+
+		setFormData((prevData) => ({
+			...prevData,
+			[targetName]: value,
+		}));
+	};
+
+	const handleDisable = () => {
+		if (
+			formData?.birthDate !== "" &&
+			formData?.email !== "" &&
+			formData?.firstName !== "" &&
+			formData?.lastName !== "" &&
+			formData?.gender !== "" &&
+			formData?.title !== ""
+		) {
+			return false;
+		}
+	};
+
+	return (
+		<div className={styles.layout}>
+			<div className={styles.header}>CREATE ACCOUNT</div>
+			<div
+				style={{ display: passwordScreen ? "none" : "grid" }}
+				className={styles.layout}
+			>
+				<div>
+					<div className={styles.fontColor}>Title*</div>
+					<Select onValueChange={(e) => handleChange(e, "title")}>
+						<SelectTrigger
+							style={{
+								width: "325px",
+								border: "solid",
+								borderWidth: "1px",
+								borderColor: "#B3B2B5",
+								color: "#75757A",
+							}}
+						>
+							<SelectValue placeholder="Select" />
+						</SelectTrigger>
+						<SelectContent
+							style={{
+								width: "325px",
+								borderColor: "#B3B2B5",
+								color: "#75757A",
+							}}
+						>
+							<SelectGroup>
+								<SelectItem value="Mr" data-testid="select-item-1">
+									Mr
+								</SelectItem>
+								<SelectItem value="Mrs" data-testid="select-item-2">
+									Mrs
+								</SelectItem>
+								<SelectItem value="Ms" data-testid="select-item-2">
+									Ms
+								</SelectItem>
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+				</div>
+				<div>
+					<div className={styles.fontColor}>First Name*</div>
+					<Input
+						type="text"
+						name="firstName"
+						value={formData?.firstName || ""}
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+				<div>
+					<div className={styles.fontColor}>Last Name*</div>
+					<Input
+						type="text"
+						name="lastName"
+						value={formData?.lastName || ""}
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+				<div>
+					<div className={styles.fontColor}>Gender*</div>
+					<Select onValueChange={(e) => handleChange(e, "gender")}>
+						<SelectTrigger
+							style={{
+								width: "325px",
+								border: "solid",
+								borderWidth: "1px",
+								borderColor: "#B3B2B5",
+								color: "#75757A",
+							}}
+						>
+							<SelectValue placeholder="Gender" />
+						</SelectTrigger>
+						<SelectContent
+							style={{
+								width: "325px",
+								borderColor: "#B3B2B5",
+								color: "#75757A",
+							}}
+						>
+							<SelectGroup>
+								<SelectItem value="male" data-testid="select-item-1">
+									Male
+								</SelectItem>
+								<SelectItem value="female" data-testid="select-item-2">
+									Female
+								</SelectItem>
+								<SelectItem value="others" data-testid="select-item-2">
+									Others
+								</SelectItem>
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+				</div>
+				<div>
+					<div className={styles.fontColor}>Birth Date*</div>
+					<Input
+						type="date"
+						name="birthDate"
+						value={formData?.birthDate || ""}
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+				<div>
+					<div className={styles.fontColor}>Email ID*</div>
+					<Input
+						type="email"
+						name="email"
+						value={formData?.email || ""}
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+				<Button
+					variant="secondary"
+					className={styles.buttonStyle}
+					size="lg"
+					disabled={handleDisable()}
+					style={{
+						width: "325px",
+						color: "#FFFFFF",
+						fontSize: "12px",
+						fontWeight: "600",
+					}}
+					onClick={() => setpasswordScreen(true)}
+				>
+					CONTINUE
+				</Button>
+			</div>
+			<div
+				style={{ display: passwordScreen ? "grid" : "none" }}
+				className={styles.layout}
+			>
+				<div>
+					<div className={styles.fontColor}>Password</div>
+					<Input
+						type="password"
+						value={formData?.password || ""}
+						name="password"
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+				<div>
+					<div className={styles.fontColor}>Confirm Password</div>
+					<Input
+						type="password"
+						value={formData?.confirmPassword || ""}
+						name="confirmPassword"
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+				<div className={styles.row}>
+					<CheckBox
+						data-testid="checkbox"
+						style={{ borderColor: "#4F4B53" }}
+						checked={formData.agreeToTerms}
+						onCheckedChange={(checked: boolean) =>
+							setFormData((prev) => ({ ...prev, agreeToTerms: checked }))
+						}
+					/>
+					<div className={styles.policy}>
+						I have read, agreed to T&C & Privacy Policy*
+					</div>
+				</div>
+				<Button
+					variant="secondary"
+					size="lg"
+					style={{
+						width: "325px",
+						color: "#FFFFFF",
+						fontSize: "12px",
+						fontWeight: "600",
+					}}
+					onClick={() => onProceed(formData)}
+					disabled={
+						formData?.password !== formData?.confirmPassword ||
+						!formData.agreeToTerms
+					}
+				>
+					PROCEED
+				</Button>
+			</div>
+		</div>
+	);
 };
 export default SignUp;
 
 /**
- * ## SignUp 
+ * ## SignUp
  *
  * The SignUp component is a two-step registration form that collects user information
  * and validates input before proceeding. It features a clean UI and is built using
@@ -300,4 +319,3 @@ export default SignUp;
  * <SignUp onProceed={handleSignUp} />
  * ```
  */
-

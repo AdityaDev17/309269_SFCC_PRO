@@ -29,7 +29,12 @@ export default function ProductDetails() {
 		desc: item?.value,
 	}));
 
-	const handleSelected = (selected: string) => {
+	type Colors = {
+		name: string;
+		hex: string;
+	};
+
+	const handleSelected = (selected: Colors) => {
 		console.log("Selectedvarient", selected);
 	};
 

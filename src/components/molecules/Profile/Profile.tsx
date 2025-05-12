@@ -11,20 +11,40 @@ import {
 	SelectValue,
 } from "../../atomic/Select/Select";
 import styles from "./Profile.module.css";
-const Profile = ({ userDetails, onUpdateClicked }: any) => {
-	const [initialUserData, setInitailUserDate] = useState(userDetails);
-	const handleChange = (e: any, name?: any) => {
-		let targetName, value;
+type UserDetails = {
+	title: string;
+	lastName: string;
+	firstName: string;
+	birthDate: string;
+	gender: string;
+	email: string;
+};
 
-		if (e?.target) {
-			targetName = e.target.name;
-			value = e.target.value;
-		} else {
+interface ProfileProps {
+	onUpdateClicked: (userDetails: UserDetails) => void;
+	userDetails: UserDetails;
+}
+
+const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
+	const [initialUserData, setInitailUserDate] = useState(userDetails);
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement> | string,
+		name?: keyof UserDetails,
+	) => {
+		let targetName: keyof UserDetails;
+		let value: string;
+
+		if (typeof e === "string" && name) {
 			targetName = name;
 			value = e;
+		} else if ("target" in e && e.target) {
+			targetName = e.target.name as keyof UserDetails;
+			value = e.target.value;
+		} else {
+			return;
 		}
 
-		setInitailUserDate((prevData: any) => ({
+		setInitailUserDate((prevData) => ({
 			...prevData,
 			[targetName]: value,
 		}));

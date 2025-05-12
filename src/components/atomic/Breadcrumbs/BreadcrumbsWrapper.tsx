@@ -44,6 +44,7 @@ const BreadcrumbPage = React.forwardRef<
 	HTMLSpanElement,
 	React.ComponentPropsWithoutRef<"span">
 >(({ ...props }, ref) => (
+	// biome-ignore lint: no-noninteractive-element-to-interactive-role
 	<span
 		ref={ref}
 		role="link"

@@ -39,14 +39,13 @@ const BreadcrumbLink = React.forwardRef<
 	return <Comp ref={ref} className={styles.BreadcrumbLink} {...props} />;
 });
 BreadcrumbLink.displayName = "BreadcrumbLink";
-const divRef = React.useRef<HTMLDivElement>(null);
 
 const BreadcrumbPage = React.forwardRef<
 	HTMLSpanElement,
 	React.ComponentPropsWithoutRef<"span">
 >(({ ...props }, ref) => (
-	<div
-		ref={divRef}
+	<span
+		ref={ref}
 		role="link"
 		aria-disabled="true"
 		aria-current="page"

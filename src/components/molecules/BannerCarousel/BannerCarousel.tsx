@@ -43,46 +43,80 @@ const BannerCarousel = () => {
 	const textCard = currentBanner.find((card) => card.type === "text");
 	const imageCards = currentBanner.filter((card) => card.type === "image");
 
-  
-  const renderCard = (card: CardType, index: number) => {
-    if (card.type === "text") {
-      return (
-        <Card key={index} className={`${styles.card} ${styles.textCard}`} width="100%">
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" ,justifyContent: "center"}}>
-          <CardHeader className={styles.cardHeader}>
-            <Typography type="Headline" variant={2} fontWeight="regular" color="black" label={card.title} />
-            <Typography type="Headline" variant={2} fontWeight="regular" color="black" label={card.subtitle} />
-          </CardHeader>
-          <CardContent className={styles.cardContent}>
-            <Typography type="Body" variant={2} fontWeight="regular" color="#555" label={card.description} />
-          </CardContent>
-          {card.link && (
-            <CardFooter className={styles.buttonContainer}>
-              <Button variant="link" onClick={() => console.log("Link Clicked")}>
-                VIEW MORE
-              </Button>
-            </CardFooter>
-          )}
-          </div>
-        </Card>
-      )
-    } else {
-      return (
-        <Card key={index} className={`${styles.card} ${styles.imageCard}`} width="100%">
-          <CardHeader>
-            <Image
-              src={card.image ?? "/placeholder.svg"}
-              alt="Banner"
-              width={440}
-              height={600}
-              loading="eager"
-              style={{ width: "100%", height: "auto" }}
-            />
-          </CardHeader>
-        </Card>
-      )
-    }
-  }
+	const renderCard = (card: CardType, index: number) => {
+		if (card.type === "text") {
+			return (
+				<Card
+					key={index}
+					className={`${styles.card} ${styles.textCard}`}
+					width="100%"
+				>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							gap: "0.5rem",
+							justifyContent: "center",
+						}}
+					>
+						<CardHeader className={styles.cardHeader}>
+							<Typography
+								type="Headline"
+								variant={2}
+								fontWeight="regular"
+								color="black"
+								label={card.title}
+							/>
+							<Typography
+								type="Headline"
+								variant={2}
+								fontWeight="regular"
+								color="black"
+								label={card.subtitle}
+							/>
+						</CardHeader>
+						<CardContent className={styles.cardContent}>
+							<Typography
+								type="Body"
+								variant={2}
+								fontWeight="regular"
+								color="#555"
+								label={card.description}
+							/>
+						</CardContent>
+						{card.link && (
+							<CardFooter className={styles.buttonContainer}>
+								<Button
+									variant="link"
+									onClick={() => console.log("Link Clicked")}
+								>
+									VIEW MORE
+								</Button>
+							</CardFooter>
+						)}
+					</div>
+				</Card>
+			);
+		}
+		return (
+			<Card
+				key={index}
+				className={`${styles.card} ${styles.imageCard}`}
+				width="100%"
+			>
+				<CardHeader>
+					<Image
+						src={card.image ?? "/placeholder.svg"}
+						alt="Banner"
+						width={440}
+						height={600}
+						loading="eager"
+						style={{ width: "100%", height: "auto" }}
+					/>
+				</CardHeader>
+			</Card>
+		);
+	};
 
 	return (
 		<div className={styles.carouselWrapper}>

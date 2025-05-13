@@ -51,41 +51,50 @@ const BannerCarousel = () => {
 					className={`${styles.card} ${styles.textCard}`}
 					width="100%"
 				>
-					<CardHeader>
-						<Typography
-							type="Headline"
-							variant={2}
-							fontWeight="regular"
-							color="black"
-							label={card.title}
-						/>
-						<Typography
-							type="Headline"
-							variant={2}
-							fontWeight="regular"
-							color="black"
-							label={card.subtitle}
-						/>
-					</CardHeader>
-					<CardContent>
-						<Typography
-							type="Body"
-							variant={2}
-							fontWeight="regular"
-							color="#555"
-							label={card.description}
-						/>
-					</CardContent>
-					{card.link && (
-						<CardFooter className={styles.buttonContainer}>
-							<Button
-								variant="link"
-								onClick={() => console.log("Link Clicked")}
-							>
-								VIEW MORE
-							</Button>
-						</CardFooter>
-					)}
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							gap: "0.5rem",
+							justifyContent: "center",
+						}}
+					>
+						<CardHeader className={styles.cardHeader}>
+							<Typography
+								type="Headline"
+								variant={2}
+								fontWeight="regular"
+								color="black"
+								label={card.title}
+							/>
+							<Typography
+								type="Headline"
+								variant={2}
+								fontWeight="regular"
+								color="black"
+								label={card.subtitle}
+							/>
+						</CardHeader>
+						<CardContent className={styles.cardContent}>
+							<Typography
+								type="Body"
+								variant={2}
+								fontWeight="regular"
+								color="#555"
+								label={card.description}
+							/>
+						</CardContent>
+						{card.link && (
+							<CardFooter className={styles.buttonContainer}>
+								<Button
+									variant="link"
+									onClick={() => console.log("Link Clicked")}
+								>
+									VIEW MORE
+								</Button>
+							</CardFooter>
+						)}
+					</div>
 				</Card>
 			);
 		}

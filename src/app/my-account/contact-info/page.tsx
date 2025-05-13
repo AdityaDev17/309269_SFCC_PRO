@@ -17,8 +17,8 @@ import {
 } from "@/components/molecules/Accordion/AccordionWrapper";
 import React, { useState } from "react";
 
-import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
-import styles from "./Contact.module.css";
+import styles from './Contact.module.css'; 
+import Breadcrumbs from '../../../components/atomic/Breadcrumbs/Breadcrumbs';
 
 const ContactInfoPage = () => {
 	const [isEditable, setIsEditable] = useState(false);

@@ -137,12 +137,12 @@ export function AddressDialog({
 }
 
 /**
- * # AddressDialog Component
+ * ## AddressDialog Component
  *
  * `AddressDialog` is a composable modal dialog built using Radix UI primitives and custom atomic components.
  * It allows users to input and save a new shipping address, with validations for mandatory fields, structured sections for contact and location, and the option to set the address as default.
  *
- * ## Features:
+ * ### Features:
  * - **Custom Dialog UI**: Built using the `Dialog` component set (Trigger, Content, Header, Title, Description, Footer, Close).
  * - **Atomic Inputs**: Uses project-level `Input`, `Select`, `Button`, and `Checkbox` components for consistency and design coherence.
  * - **Stateful Checkbox**: Includes an internal state (`isChecked`) to track the "Set as Default" checkbox.
@@ -150,9 +150,8 @@ export function AddressDialog({
  * - **Responsive Layout**: Modular CSS (`AddressModal.module.css`) defines a clean, two-column responsive layout with proper spacing.
  * - **Pre-defined State List**: Offers a sample list of states in a dropdown using `SelectItem` components.
  *
- * ---
  *
- * ## Component Hierarchy:
+ * ### Component Hierarchy:
  *
  * ```tsx
  * <Dialog>
@@ -174,12 +173,10 @@ export function AddressDialog({
  * </Dialog>
  * ```
  *
- * ---
  *
- * ## Example Usage:
+ * ### Example Usage:
  *
  * ```tsx
- * import { AddressDialog } from "@/components/sections/addressModal/AddressModal";
  *
  * export default function Page() {
  *   return (
@@ -190,16 +187,14 @@ export function AddressDialog({
  * }
  * ```
  *
- * ---
  *
- * ## Accessibility Considerations:
+ * ### Accessibility Considerations:
  * - Inherits focus trapping, ARIA roles, and keyboard navigation from Radix Dialog.
  * - Uses semantic HTML elements (`fieldset`, `legend`, `label`) for better screen reader support.
  * - Dialog closes on ESC key or when clicking the Cancel button.
  *
- * ---
  *
- * ## Styling Notes:
+ * ### Styling Notes:
  * - Modular styles are defined in `AddressModal.module.css`.
  * - Key class hooks:
  *   - `.AddressDialogContent` – Dialog positioning and box styling.
@@ -208,20 +203,14 @@ export function AddressDialog({
  *   - `.CheckboxRow` – Layout for checkbox and label.
  *   - `.ScrollableContent` – Scrollable inner section.
  *
- * ---
- *
- * ## Props:
+ * ### Props:
  * This component does **not** currently accept props. All configuration is internal.
  *
- * ---
  *
- * ## Future Enhancements:
+ * ### Future Enhancements:
  * - Add form validation and controlled input states.
  * - Replace hardcoded state list with dynamic API-based data.
  * - Support for address editing by passing initial values via props.
  *
- * ---
- *
- * @component
- * @returns {JSX.Element} A fully styled, interactive address input modal component.
+ * 
  */

@@ -37,7 +37,6 @@ export default Textarea;
  *
  * ### Usage Example:
  * ```tsx
- * import Textarea from "./Textarea";
  *
  * function App() {
  *   return (

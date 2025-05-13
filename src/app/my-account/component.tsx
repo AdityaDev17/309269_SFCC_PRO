@@ -1,9 +1,9 @@
 "use client";
-import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
-import { usePathname } from "next/navigation";
+import styles from "./myAccount.module.css";
 import Tile from "../../components/atomic/Tile/Tile";
 import Banner from "../../components/molecules/Banner/Banner";
-import styles from "./myAccount.module.css";
+import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
+
 
 const MyAccount = () => {
 	return (

@@ -193,7 +193,7 @@ export default MiniCart;
  * ### Example
  *
  * ```tsx
- * import MiniCart, { CartItem } from "@/components/organisms/MiniCart/MiniCart";
+ * 
  *
  * const cartData: CartItem[] = [
  *   {

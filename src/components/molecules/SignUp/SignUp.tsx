@@ -310,7 +310,6 @@ export default SignUp;
  * ### Usage Example
  *
  * ```tsx
- * import SignUp from "@/components/molecules/SignUp/SignUp";
  *
  * const handleSignUp = (formData) => {
  *   console.log("User submitted form:", formData);

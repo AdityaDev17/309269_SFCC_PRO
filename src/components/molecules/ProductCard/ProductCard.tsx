@@ -199,7 +199,6 @@ export default ProductCard;
  * and optional action buttons. It supports responsive behavior and can be used across product listings, wishlists,
  * and other commerce-related views.
  *
- * ---
  *
  * ### Props
  *
@@ -245,7 +244,6 @@ export default ProductCard;
  * #### `onMoveToBag?: (productId: string) => void`
  * - Optional. Callback fired when the "Move to Bag" button is clicked.
  *
- * ---
  *
  * ### Behavior
  *
@@ -261,7 +259,6 @@ export default ProductCard;
  *   - On **desktop**, shows `bagPrice` and "Move to Bag" button side by side.
  *   - On **mobile**, the same layout is stacked with adjusted styles for smaller screens.
  *
- * ---
  *
  * ### Styling (CSS Modules: `ProductCard.module.css`)
  *
@@ -273,7 +270,6 @@ export default ProductCard;
  * - `priceButtonRow` / `pricemobileButtonRow`: Footer layout containers (desktop/mobile).
  * - `moveToBagButton` / `moveToBagMobileButton`: Button styles for "Move to Bag".
  *
- * ---
  *
  * ### Dependencies
  *
@@ -282,7 +278,6 @@ export default ProductCard;
  * - `Button`: Used for "Move to Bag" and linked description.
  * - `next/image`: Optimized image rendering.
  *
- * ---
  *
  * ### Example Usage
  *
@@ -303,8 +298,6 @@ export default ProductCard;
  *   onMoveToBag={(id) => console.log("Moved to bag:", id)}
  * />
  * ```
- *
- * ---
  *
  * ### Notes
  *

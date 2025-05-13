@@ -132,7 +132,6 @@ export default Login;
  * ### Usage Example
  *
  * ```tsx
- * import Login from "@/components/molecules/Login/Login";
  *
  * const handleLogin = (credentials) => {
  *   console.log("User logged in with:", credentials);

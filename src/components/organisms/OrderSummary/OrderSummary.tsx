@@ -236,7 +236,7 @@ export default OrderSummary;
  * ### Example
  *
  * ```tsx
- * import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
+ * 
  *
  * export default function Page() {
  *   return (

@@ -429,7 +429,7 @@ export const productData = [
     currency: "$",
   },
   {
-    productId: "4",
+    productId: "5",
     productImage: "/images/Tile_3.png",
     productTitle: "Product 4",
     bagPrice: "200",
@@ -707,7 +707,16 @@ export const allOrderData = [
   },
 ];
 
-export const mockUserDetails = {
+export interface UserDetails {
+  title: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  gender: string;
+  email: string;
+}
+
+export const mockUserDetails: UserDetails = {
   title: "Mr.",
   firstName: "Utkarsh",
   lastName: "Pai",

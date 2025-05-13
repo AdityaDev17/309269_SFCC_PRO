@@ -1,43 +1,41 @@
 import React from "react";
-import styles from './Typography.module.css';
+import styles from "./Typography.module.css";
 
 type TypographyType = "Headline" | "Body" | "Label";
 type FontWeight = "light" | "regular" | "medium" | "semibold" | "bold";
 
 interface TypographyBlockProps {
-  type: TypographyType;
-  variant: number;
-  color?: string;
-  fontWeight?: FontWeight;
-  label?: string;
-  textDecoration?: "none" | "line-through";
+	type: TypographyType;
+	variant: number;
+	color?: string;
+	fontWeight?: FontWeight;
+	label?: string;
+	textDecoration?: "none" | "line-through";
 }
 
-const Typography= ({
-  type,
-  variant,
-  color = "black",
-  fontWeight = "regular",
-  label,
-  textDecoration = "none",
-}:TypographyBlockProps) => {
-    const className = `${styles[type.toLowerCase() + variant]} ${styles[fontWeight]}`;
+const Typography = ({
+	type,
+	variant,
+	color = "black",
+	fontWeight = "regular",
+	label,
+	textDecoration = "none",
+}: TypographyBlockProps) => {
+	const className = `${styles[type.toLowerCase() + variant]} ${styles[fontWeight]}`;
 
-
-  return (
-    <div className={className} style={{ color, textDecoration }}>
-      {label || `${type} ${variant}`}
-    </div>
-  );
+	return (
+		<div className={className} style={{ color, textDecoration }}>
+			{label || `${type} ${variant}`}
+		</div>
+	);
 };
 
 export default Typography;
 
-
 /**
  * ## Typography
  *
- * The `Typography` component is a flexible text rendering component that can be used to display different types of text, such as headlines, body text, and labels. 
+ * The `Typography` component is a flexible text rendering component that can be used to display different types of text, such as headlines, body text, and labels.
  * It supports customization through various props, including font weight, color, text decoration, and variant selection.
  *
  * ### Props
@@ -46,20 +44,20 @@ export default Typography;
  *   - `"Headline"`: For larger, more prominent text.
  *   - `"Body"`: For regular body text.
  *   - `"Label"`: For smaller text typically used for labels or captions.
- * 
+ *
  * - **variant** (`number`): Specifies the variant or size of the typography. Different numeric values (e.g., `1`, `2`, etc.) correspond to different predefined styles.
- * 
+ *
  * - **color** (`string`, optional): The color of the text. This can be any valid CSS color (e.g., `"red"`, `"#333"`, `"rgba(0, 0, 0, 0.8)"`). Defaults to `"black"`.
- * 
+ *
  * - **fontWeight** (`"light" | "regular" | "medium" | "semibold" | "bold"`, optional): The weight of the font. Available values:
  *   - `"light"`
  *   - `"regular"` (default)
  *   - `"medium"`
  *   - `"semibold"`
  *   - `"bold"`
- * 
+ *
  * - **label** (`string`, optional): If provided, this value will be displayed as the text content. If not provided, the text will default to a combination of the `type` and `variant` values.
- * 
+ *
  * - **textDecoration** (`"none" | "line-through"`, optional): Specifies the text decoration style. Available values:
  *   - `"none"`: No text decoration (default).
  *   - `"line-through"`: The text will have a line through it, often used for indicating strikethrough text.

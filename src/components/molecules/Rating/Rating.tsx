@@ -1,85 +1,95 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+import type React from "react";
+import { useState } from "react";
+import { FaRegStar, FaStar } from "react-icons/fa";
 import { Button } from "../../atomic/Button/Button";
-import { FaStar, FaRegStar } from "react-icons/fa";
-import styles from "./Rating.module.css"
 import Textarea from "../../atomic/Textarea/TextArea";
+import styles from "./Rating.module.css";
 
 type RatingComponentProps = {
-  header?: string;
-  headerClassName?: string;
-  filledStarColor?: string;
-  starBorderColor?: string;
-  starBgColor?: string;
-  maxRating?: number;
-  initialRating?: number;
-  onRatingChange?: (rating: number) => void;
-  handleReview?: (review: string) => void;
+	header?: string;
+	headerClassName?: string;
+	filledStarColor?: string;
+	starBorderColor?: string;
+	starBgColor?: string;
+	maxRating?: number;
+	initialRating?: number;
+	onRatingChange?: (rating: number) => void;
+	handleReview?: (review: string) => void;
 };
 
 const RatingComponent: React.FC<RatingComponentProps> = ({
-  header = "Rate and Review",
-  headerClassName = styles.header, // default to CSS module class
-  maxRating = 5,
-  initialRating = 0,
-  onRatingChange,
-  handleReview,
-  filledStarColor = "#000000",   // yellow-400
-  starBorderColor = "#a1a1aa",    // gray-400
-  starBgColor = "white",
+	header = "Rate and Review",
+	headerClassName = styles.header, // default to CSS module class
+	maxRating = 5,
+	initialRating = 0,
+	onRatingChange,
+	handleReview,
+	filledStarColor = "#000000", // yellow-400
+	starBorderColor = "#a1a1aa", // gray-400
+	starBgColor = "white",
 }) => {
-  const [rating, setRating] = useState(initialRating);
-  const [hoverRating, setHoverRating] = useState<number | null>(null);
+	const [rating, setRating] = useState(initialRating);
+	const [hoverRating, setHoverRating] = useState<number | null>(null);
 
-  const handleClick = (index: number) => {
-    const newRating = index + 1;
-    setRating(newRating);
-    if (onRatingChange) {
-      onRatingChange(newRating);
-    }
-  };
+	const handleClick = (index: number) => {
+		const newRating = index + 1;
+		setRating(newRating);
+		if (onRatingChange) {
+			onRatingChange(newRating);
+		}
+	};
 
-  const handleReviewChange=(e:any)=>{
-    if (handleReview) {
-        handleReview(e.target.value);
-    }
-  }
+	const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (handleReview) {
+			handleReview(e.target.value);
+		}
+	};
 
-  return (
-    <div className={styles.layout} >
-      <div className={`${styles.header} ${headerClassName}`}>{header}</div>
-      <div className={styles.rating}>
-        {Array.from({ length: maxRating }).map((_, index) => {
-          const isFilled = index < (hoverRating ?? rating);
-          const iconStyle = {
-            width: "24px",
-            height: "24px",
-            color: isFilled ? filledStarColor : starBorderColor,
-          };
+	return (
+		<div className={styles.layout}>
+			<div className={`${styles.header} ${headerClassName}`}>{header}</div>
+			<div className={styles.rating}>
+				{Array.from({ length: maxRating }).map((_, index) => {
+					const isFilled = index < (hoverRating ?? rating);
+					const _index = index;
+					const iconStyle = {
+						width: "24px",
+						height: "24px",
+						color: isFilled ? filledStarColor : starBorderColor,
+					};
 
-          return (
-            <Button
-              key={index}
-              size="sm"
-              style={{
-                backgroundColor: starBgColor,
-                padding: "10px",
-                border: "none",
-              }}
-              onClick={() => handleClick(index)}
-              onMouseEnter={() => setHoverRating(index + 1)}
-              onMouseLeave={() => setHoverRating(null)}
-            >
-              {isFilled ? <FaStar style={iconStyle} /> : <FaRegStar style={iconStyle} />}
-            </Button>
-          );
-        })}
-      </div>
-      <div>
-      <Textarea placeholder="Write your review here"  className={styles.textArea} onChange={(e)=>handleReviewChange(e)}/>
-      </div>
-    </div>
-  );
+					return (
+						<Button
+							key={_index}
+							size="sm"
+							style={{
+								backgroundColor: starBgColor,
+								padding: "10px",
+								border: "none",
+							}}
+							onClick={() => handleClick(index)}
+							onMouseEnter={() => setHoverRating(index + 1)}
+							onMouseLeave={() => setHoverRating(null)}
+						>
+							{isFilled ? (
+								<FaStar style={iconStyle} />
+							) : (
+								<FaRegStar style={iconStyle} />
+							)}
+						</Button>
+					);
+				})}
+			</div>
+			<div>
+				<Textarea
+					placeholder="Write your review here"
+					className={styles.textArea}
+					onChange={() => handleReviewChange}
+				/>
+			</div>
+		</div>
+	);
 };
 
 export default RatingComponent;
@@ -120,7 +130,7 @@ export default RatingComponent;
  * #### starBgColor?: string
  * Sets the background color behind each star. Defaults to white.
  *
- * 
+ *
  * ### Example Usage
  * ```tsx
  * <RatingComponent
@@ -134,4 +144,3 @@ export default RatingComponent;
  * />
  * ```
  */
-

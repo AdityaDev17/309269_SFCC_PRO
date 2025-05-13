@@ -1,79 +1,87 @@
-'use client'
-import styles from "./EditPassword.module.css";
-import  Input  from "../../atomic/Input/Input";
-import { Button } from "../../atomic/Button/Button";
+"use client";
 import { useState } from "react";
+import { Button } from "../../atomic/Button/Button";
+import Input from "../../atomic/Input/Input";
+import styles from "./EditPassword.module.css";
 
-const EditPassword = ({onUpdateClicked}:any) => {
-  const [userPassword, setUserPassword] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-  const handleChange = (e: any) => {
-    let name = e?.target?.name;
-    setUserPassword((prevData: any) => ({
-      ...prevData,
-      [name]: e?.target?.value,
-    }));
-  };
-  const handleDisable = () => {
-    if (
-      userPassword?.confirmPassword != "" &&
-      userPassword?.currentPassword != "" &&
-      userPassword?.newPassword != "" &&
-      userPassword?.confirmPassword === userPassword?.newPassword
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-  console.log("24343", userPassword);
-  return (
-    <div className={styles.layout}>
-      <div className={styles.profileText}>Password</div>
-        <div className={styles.sectionForm}>
-          <div>
-            <div className={styles.fontColor}>Current Password*</div>
-            <Input
-              type="password"
-              name="currentPassword"
-              onChange={handleChange}
-              style={{ width: "325px", borderColor: "#B3B2B5" }}
-            />
-          </div>
-          <div>
-            <div className={styles.fontColor}>New Password*</div>
-            <Input
-              type="password"
-              name="newPassword"
-              onChange={handleChange}
-              style={{ width: "325px", borderColor: "#B3B2B5" }}
-            />
-          </div>
-          <div>
-            <div className={styles.fontColor}>Confirm Password*</div>
-            <Input
-              type="password"
-              name="confirmPassword"
-              onChange={handleChange}
-              style={{ width: "325px", borderColor: "#B3B2B5" }}
-            />
-          </div>
-        </div>
-      <div className={styles.buttonContainer}>
-      <Button
-        disabled={handleDisable()}
-        variant="profileUpdate"
-        className={styles.updateButton}
-        onClick={() => onUpdateClicked(userPassword)}
-      >
-        UPDATE
-      </Button>
-      </div>
-    </div>
-  );
+type UserPassword = {
+	currentPassword: string;
+	newPassword: string;
+	confirmPassword: string;
+};
+
+interface EditPasswordProps {
+	onUpdateClicked: (userPassword: UserPassword) => void;
+}
+
+const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
+	const [userPassword, setUserPassword] = useState({
+		currentPassword: "",
+		newPassword: "",
+		confirmPassword: "",
+	});
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const name = e?.target?.name;
+		setUserPassword((prevData) => ({
+			...prevData,
+			[name]: e?.target?.value,
+		}));
+	};
+	const handleDisable = () => {
+		if (
+			userPassword?.confirmPassword !== "" &&
+			userPassword?.currentPassword !== "" &&
+			userPassword?.newPassword !== "" &&
+			userPassword?.confirmPassword === userPassword?.newPassword
+		) {
+			return false;
+		}
+	};
+	console.log("24343", userPassword);
+	return (
+		<div className={styles.layout}>
+			<div className={styles.profileText}>Password</div>
+			<div className={styles.sectionForm}>
+				<div>
+					<div className={styles.fontColor}>Current Password*</div>
+					<Input
+						type="password"
+						name="currentPassword"
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+				<div>
+					<div className={styles.fontColor}>New Password*</div>
+					<Input
+						type="password"
+						name="newPassword"
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+				<div>
+					<div className={styles.fontColor}>Confirm Password*</div>
+					<Input
+						type="password"
+						name="confirmPassword"
+						onChange={handleChange}
+						style={{ width: "325px", borderColor: "#B3B2B5" }}
+					/>
+				</div>
+			</div>
+			<div className={styles.buttonContainer}>
+				<Button
+					disabled={handleDisable()}
+					variant="profileUpdate"
+					className={styles.updateButton}
+					onClick={() => onUpdateClicked(userPassword)}
+				>
+					UPDATE
+				</Button>
+			</div>
+		</div>
+	);
 };
 export default EditPassword;
 
@@ -108,4 +116,3 @@ export default EditPassword;
  *
  * - Styles are handled via the `EditPassword.module.css` CSS module.
  */
-

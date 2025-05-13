@@ -1,170 +1,190 @@
-"use client"
+"use client";
+import { useState } from "react";
+import { Button } from "../../atomic/Button/Button";
+import Input from "../../atomic/Input/Input";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
 } from "../../atomic/Select/Select";
 import styles from "./Profile.module.css";
-import Input from "../../atomic/Input/Input";
-import { Button } from "../../atomic/Button/Button";
-import { useState } from "react";
-const Profile = ({ userDetails, onUpdateClicked }: any) => {
-  const [initialUserData, setInitailUserDate] = useState(userDetails);
-  const handleChange = (e: any, name?: any) => {
-    let targetName, value;
+type UserDetails = {
+	title: string;
+	lastName: string;
+	firstName: string;
+	birthDate: string;
+	gender: string;
+	email: string;
+};
 
-    if (e?.target) {
-      targetName = e.target.name;
-      value = e.target.value;
-    } else {
-      targetName = name;
-      value = e;
-    }
+interface ProfileProps {
+	onUpdateClicked: (userDetails: UserDetails) => void;
+	userDetails: UserDetails;
+}
 
-    setInitailUserDate((prevData: any) => ({
-      ...prevData,
-      [targetName]: value,
-    }));
-  };
+const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
+	const [initialUserData, setInitailUserDate] = useState(userDetails);
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement> | string,
+		name?: keyof UserDetails,
+	) => {
+		let targetName: keyof UserDetails;
+		let value: string;
 
-  const isDisabled =
-    JSON.stringify(userDetails) === JSON.stringify(initialUserData);
-  return (
-    <div className={styles.layout}>
-      <div className={styles.profileText}>Profile</div>
-      <div className={styles.section}>
-        <div className={styles.sectionForm}>
-          <div>
-            <div className={styles.fontColor}>Title*</div>
-            <Select onValueChange={(e) => handleChange(e, "title")}>
-              <SelectTrigger
-                style={{
-                  width: "325px",
-                  border: "solid",
-                  borderWidth: "1px",
-                  borderColor: "#B3B2B5",
-                  color: "#75757A",
-                }}
-              >
-                <SelectValue placeholder={initialUserData?.title || "Select"} />
-              </SelectTrigger>
-              <SelectContent
-                style={{
-                  width: "325px",
-                  borderColor: "#B3B2B5",
-                  color: "#75757A",
-                }}
-              >
-                <SelectGroup>
-                  <SelectItem value="Mr" data-testid="select-item-1">
-                    Mr
-                  </SelectItem>
-                  <SelectItem value="Mrs" data-testid="select-item-2">
-                    Mrs
-                  </SelectItem>
-                  <SelectItem value="Ms" data-testid="select-item-2">
-                    Ms
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <div className={styles.fontColor}>Last Name*</div>
-            <Input
-              type="text"
-              name="lastName"
-              value={initialUserData?.lastName}
-              onChange={handleChange}
-              style={{ width: "325px", borderColor: "#B3B2B5" }}
-            />
-          </div>
-          <div>
-            <div className={styles.fontColor}>Birth Date*</div>
-            <Input
-              type="date"
-              name="birthDate"
-              value={initialUserData?.birthDate || ""}
-              onChange={handleChange}
-              style={{ width: "325px", borderColor: "#B3B2B5" }}
-            />
-          </div>
-        </div>
-        <div className={styles.sectionForm}>
-          <div>
-            <div className={styles.fontColor}>First Name*</div>
-            <Input
-              type="text"
-              name="firstName"
-              value={initialUserData?.firstName || ""}
-              onChange={handleChange}
-              style={{ width: "325px", borderColor: "#B3B2B5" }}
-            />
-          </div>
-          <div>
-            <div className={styles.fontColor}>Gender*</div>
-            <Select onValueChange={(e) => handleChange(e, "gender")}>
-              <SelectTrigger
-                style={{
-                  width: "325px",
-                  border: "solid",
-                  borderWidth: "1px",
-                  borderColor: "#B3B2B5",
-                  color: "#75757A",
-                }}
-              >
-                <SelectValue
-                  placeholder={initialUserData?.gender || "Gender"}
-                />
-              </SelectTrigger>
-              <SelectContent
-                style={{
-                  width: "325px",
-                  borderColor: "#B3B2B5",
-                  color: "#75757A",
-                }}
-              >
-                <SelectGroup>
-                  <SelectItem value="male" data-testid="select-item-1">
-                    Male
-                  </SelectItem>
-                  <SelectItem value="female" data-testid="select-item-2">
-                    Female
-                  </SelectItem>
-                  <SelectItem value="others" data-testid="select-item-2">
-                    Others
-                  </SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-          <div>
-            <div className={styles.fontColor}>Email ID*</div>
-            <Input
-              type="email"
-              name="email"
-              value={initialUserData?.email || ""}
-              onChange={handleChange}
-              style={{ width: "325px", borderColor: "#B3B2B5" }}
-            />
-          </div>
-        </div>
-      </div>
-      <div className={styles.buttonContainer}>
-      <Button
-        disabled={isDisabled}
-        variant="profileUpdate"
-        className={styles.updateButton}
-        onClick={() => onUpdateClicked(initialUserData)}
-      >
-        UPDATE
-      </Button>
-      </div>
-    </div>
-  );
+		if (typeof e === "string" && name) {
+			targetName = name;
+			value = e;
+		} else if ("target" in e && e.target) {
+			targetName = e.target.name as keyof UserDetails;
+			value = e.target.value;
+		} else {
+			return;
+		}
+
+		setInitailUserDate((prevData) => ({
+			...prevData,
+			[targetName]: value,
+		}));
+	};
+
+	const isDisabled =
+		JSON.stringify(userDetails) === JSON.stringify(initialUserData);
+	return (
+		<div className={styles.layout}>
+			<div className={styles.profileText}>Profile</div>
+			<div className={styles.section}>
+				<div className={styles.sectionForm}>
+					<div>
+						<div className={styles.fontColor}>Title*</div>
+						<Select onValueChange={(e) => handleChange(e, "title")}>
+							<SelectTrigger
+								style={{
+									width: "325px",
+									border: "solid",
+									borderWidth: "1px",
+									borderColor: "#B3B2B5",
+									color: "#75757A",
+								}}
+							>
+								<SelectValue placeholder={initialUserData?.title || "Select"} />
+							</SelectTrigger>
+							<SelectContent
+								style={{
+									width: "325px",
+									borderColor: "#B3B2B5",
+									color: "#75757A",
+								}}
+							>
+								<SelectGroup>
+									<SelectItem value="Mr" data-testid="select-item-1">
+										Mr
+									</SelectItem>
+									<SelectItem value="Mrs" data-testid="select-item-2">
+										Mrs
+									</SelectItem>
+									<SelectItem value="Ms" data-testid="select-item-2">
+										Ms
+									</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
+					<div>
+						<div className={styles.fontColor}>Last Name*</div>
+						<Input
+							type="text"
+							name="lastName"
+							value={initialUserData?.lastName}
+							onChange={handleChange}
+							style={{ width: "325px", borderColor: "#B3B2B5" }}
+						/>
+					</div>
+					<div>
+						<div className={styles.fontColor}>Birth Date*</div>
+						<Input
+							type="date"
+							name="birthDate"
+							value={initialUserData?.birthDate || ""}
+							onChange={handleChange}
+							style={{ width: "325px", borderColor: "#B3B2B5" }}
+						/>
+					</div>
+				</div>
+				<div className={styles.sectionForm}>
+					<div>
+						<div className={styles.fontColor}>First Name*</div>
+						<Input
+							type="text"
+							name="firstName"
+							value={initialUserData?.firstName || ""}
+							onChange={handleChange}
+							style={{ width: "325px", borderColor: "#B3B2B5" }}
+						/>
+					</div>
+					<div>
+						<div className={styles.fontColor}>Gender*</div>
+						<Select onValueChange={(e) => handleChange(e, "gender")}>
+							<SelectTrigger
+								style={{
+									width: "325px",
+									border: "solid",
+									borderWidth: "1px",
+									borderColor: "#B3B2B5",
+									color: "#75757A",
+								}}
+							>
+								<SelectValue
+									placeholder={initialUserData?.gender || "Gender"}
+								/>
+							</SelectTrigger>
+							<SelectContent
+								style={{
+									width: "325px",
+									borderColor: "#B3B2B5",
+									color: "#75757A",
+								}}
+							>
+								<SelectGroup>
+									<SelectItem value="male" data-testid="select-item-1">
+										Male
+									</SelectItem>
+									<SelectItem value="female" data-testid="select-item-2">
+										Female
+									</SelectItem>
+									<SelectItem value="others" data-testid="select-item-2">
+										Others
+									</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
+					<div>
+						<div className={styles.fontColor}>Email ID*</div>
+						<Input
+							type="email"
+							name="email"
+							value={initialUserData?.email || ""}
+							onChange={handleChange}
+							style={{ width: "325px", borderColor: "#B3B2B5" }}
+						/>
+					</div>
+				</div>
+			</div>
+			<div className={styles.buttonContainer}>
+				<Button
+					disabled={isDisabled}
+					variant="profileUpdate"
+					className={styles.updateButton}
+					onClick={() => onUpdateClicked(initialUserData)}
+				>
+					UPDATE
+				</Button>
+			</div>
+		</div>
+	);
 };
 export default Profile;
 
@@ -195,4 +215,3 @@ export default Profile;
  *
  * - The layout and styles are managed using CSS modules from `Profile.module.css`.
  */
-

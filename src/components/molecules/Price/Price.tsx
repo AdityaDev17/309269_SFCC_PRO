@@ -1,38 +1,38 @@
-import React from 'react';
-import Typography from '../../atomic/Typography/Typography';
-import styles from './Price.module.css';
+import React from "react";
+import Typography from "../../atomic/Typography/Typography";
+import styles from "./Price.module.css";
 
 interface PriceProps {
-  price: number;
-  priceAfterDiscount: number;
-  currency: string;
+	price: number;
+	priceAfterDiscount: number;
+	currency: string;
 }
 
 const Price = ({ price, priceAfterDiscount, currency }: PriceProps) => {
-  return (
-    <div className={styles.priceContainer}>
-      <Typography
-        type="Body" 
-        variant={1} 
-        color="gray" 
-        fontWeight="medium" 
-        textDecoration="line-through" 
-        label={`${currency}${price}`} 
-      />
-      <Typography
-        type="Body" 
-        variant={1} 
-        fontWeight="bold" 
-        label={`${currency}${priceAfterDiscount}`} 
-      />
-    </div>
-  );
+	return (
+		<div className={styles.priceContainer}>
+			<Typography
+				type="Body"
+				variant={1}
+				color="gray"
+				fontWeight="medium"
+				textDecoration="line-through"
+				label={`${currency}${price}`}
+			/>
+			<Typography
+				type="Body"
+				variant={1}
+				fontWeight="bold"
+				label={`${currency}${priceAfterDiscount}`}
+			/>
+		</div>
+	);
 };
 
 export default Price;
 
 /**
- * ## Price 
+ * ## Price
  *
  * The `Price` component is used to display the original price and the discounted price of a product. It shows the original price with a strikethrough and the discounted price in bold.
  *
@@ -53,12 +53,12 @@ export default Price;
  * Here's a simple example of how to use the `Price` component:
  *
  * ```tsx
- *       <Price 
- *         price={100} 
- *         priceAfterDiscount={80} 
- *         currency="$" 
+ *       <Price
+ *         price={100}
+ *         priceAfterDiscount={80}
+ *         currency="$"
  *       />
- *    
+ *
  * ```
  *
  * In this example:
@@ -69,5 +69,3 @@ export default Price;
  * - The `Price` component conditionally renders both the original price and the discounted price based on the props provided.
  * - If no discount is provided, you may set the `priceAfterDiscount` equal to the original `price` to show only one price.
  */
-
-

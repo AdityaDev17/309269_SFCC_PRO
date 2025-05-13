@@ -1,20 +1,20 @@
-import React from "react";
-import styles from "./Tile.module.css";
-import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import type React from "react";
+import styles from "./Tile.module.css";
 
 interface TileProps {
-  label: string;
-  href: string;
+	label: string;
+	href: string;
 }
 
 const Tile: React.FC<TileProps> = ({ label, href }) => {
-  return (
-    <Link href={href} className={styles.tile}>
-      <span>{label}</span>
-      <ChevronRight size={18} data-testid="chevron-icon"/>
-    </Link>
-  );
+	return (
+		<Link href={href} className={styles.tile}>
+			<span>{label}</span>
+			<ChevronRight size={18} data-testid="chevron-icon" />
+		</Link>
+	);
 };
 
 export default Tile;

@@ -67,6 +67,7 @@ export default async function Home() {
 				description={homepageBanners[2]?.description}
 				backgroundImage={homepageBanners[2]?.backgroundImage}
 				alignment={homepageBanners[2]?.alignment}
+				textColor = {homepageBanners[2]?.textColor}
 			/>
 		</div>
 	);

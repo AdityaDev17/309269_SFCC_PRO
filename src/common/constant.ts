@@ -312,6 +312,7 @@ export interface BannerData {
   backgroundImage: string;
   alignment: alignmentType;
   buttonLink: string;
+  textColor?: string;
 }
 
 export interface ProductCard {
@@ -343,6 +344,7 @@ export const homepageBanners: BannerData[] = [
     backgroundImage: "/images/eternal-beauty.svg",
     alignment: "center-bottom",
     buttonLink: "",
+    textColor: "black"
   },
 ];
 

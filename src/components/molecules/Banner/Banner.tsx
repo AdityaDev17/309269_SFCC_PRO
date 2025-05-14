@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import type React from "react";
-import { Button } from "../../atomic/Button/Button";
+import { Button, ButtonProps } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./Banner.module.css";
 export type alignmentType =
@@ -17,6 +17,7 @@ export type alignmentType =
 interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
 	title: string;
 	buttonText?: string;
+	buttonColor?: ButtonProps["variant"];
 	subtitle?: string;
 	subtitleColor?: string;
 	description?: string;
@@ -33,6 +34,7 @@ const Banner: React.FC<BannerProps> = ({
 	subtitle,
 	description,
 	buttonText,
+	buttonColor,
 	backgroundImage,
 	alignment = "center-center",
 	buttonLink = "#",
@@ -89,7 +91,7 @@ const Banner: React.FC<BannerProps> = ({
 
 					{buttonText && (
 						<div className={styles.buttonContainer}>
-							<Button size="sm" onClick={() => buttonLink}>
+							<Button variant={buttonColor}size="sm" onClick={() => buttonLink}>
 								{buttonText}
 							</Button>
 						</div>

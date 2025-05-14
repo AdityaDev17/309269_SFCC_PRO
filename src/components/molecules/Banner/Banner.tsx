@@ -91,7 +91,7 @@ const Banner: React.FC<BannerProps> = ({
 
 					{buttonText && (
 						<div className={styles.buttonContainer}>
-							<Button variant={buttonColor}size="sm" onClick={() => buttonLink}>
+							<Button variant={buttonColor} size="sm" onClick={() => buttonLink}>
 								{buttonText}
 							</Button>
 						</div>

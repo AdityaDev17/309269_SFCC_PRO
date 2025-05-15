@@ -1,38 +1,31 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
-import { Check } from "lucide-react"
-import styles from "./CheckBox.module.css"
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import { Check } from "lucide-react";
+import * as React from "react";
+import styles from "./CheckBox.module.css";
 
 const CheckBox = React.forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
+	React.ElementRef<typeof CheckboxPrimitive.Root>,
+	React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
 >(({ ...props }, ref) => (
-  <CheckboxPrimitive.Root
-    ref={ref}
-    className={styles.Checkbox}
-    {...props}
-  >
-    <CheckboxPrimitive.Indicator
-      className={styles.CheckboxIndicator}
-    >
-      <Check
-        style={{
-          height: '0.875rem',
-          width: '0.875rem',
-        }}
-      />
-    </CheckboxPrimitive.Indicator>
-  </CheckboxPrimitive.Root>
-))
-CheckBox.displayName = CheckboxPrimitive.Root.displayName
+	<CheckboxPrimitive.Root ref={ref} className={styles.Checkbox} {...props}>
+		<CheckboxPrimitive.Indicator className={styles.CheckboxIndicator}>
+			<Check
+				style={{
+					height: "0.875rem",
+					width: "0.875rem",
+				}}
+			/>
+		</CheckboxPrimitive.Indicator>
+	</CheckboxPrimitive.Root>
+));
+CheckBox.displayName = CheckboxPrimitive.Root.displayName;
 
-export default CheckBox
-
+export default CheckBox;
 
 /**
- * ## Checkbox 
+ * ## Checkbox
  *
  * The `Checkbox` component is a styled wrapper around Radix UI's `CheckboxPrimitive.Root`,
  * used to render an accessible and customizable checkbox input.

@@ -1,15 +1,8 @@
-import React from 'react';
-import styles from './Skeleton.module.css'
+import type React from "react";
+import styles from "./Skeleton.module.css";
 
-function Skeleton({
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={styles.Skeleton}
-      {...props}
-    />
-  )
+function Skeleton({ ...props }: React.HTMLAttributes<HTMLDivElement>) {
+	return <div className={styles.Skeleton} {...props} />;
 }
 
-export { Skeleton }
+export { Skeleton };

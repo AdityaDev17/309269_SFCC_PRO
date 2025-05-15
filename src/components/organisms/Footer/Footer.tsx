@@ -1,97 +1,103 @@
 import Image from "next/image";
 import styles from "./Footer.module.css";
 
-import { Icon } from "../../atomic/Icons/Icons";
 import { footerData } from "@/common/constant";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/atomic/Select/Select";
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/atomic/Select/Select";
+import { Icon } from "../../atomic/Icons/Icons";
 const Footer = () => {
-
-  return (
-    <div className={styles.footer}>
-      <div className={styles.logoSection}>
-        <Image
-          className={styles.logo}
-          src="/images/SFCCPROWhite.png"
-          alt="Next.js logo"
-          width={109}
-          height={19}
-          priority
-        />
-      </div>
-      <div className={styles.containerSection}>
-        <div className={styles.container}>
-          {footerData?.map((item) => {
-            return (
-              <div key={item?.title}>
-                <div className={styles.title}>{item?.title}</div>
-                <div className={styles.row}>
-                  {item?.children?.map((subItem) => {
-                    return (
-                      <div className={styles.subTitle} key={subItem?.title}>
-                        <a href={subItem?.link}>{subItem?.title}</a>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-        <div>
-          <div style={{ paddingBottom: "15px" }}>Change Location</div>
-          <Select>
-            <SelectTrigger
-              style={{
-                backgroundColor: "#1D1823",
-                width: "325px",
-                border: "solid",
-                borderWidth: "1px",
-                borderColor: "#B3B2B5",
-                color: "#75757A",
-              }}
-            >
-              <SelectValue placeholder="US" />
-            </SelectTrigger>
-            <SelectContent
-              style={{
-                width: "325px",
-                borderColor: "#B3B2B5",
-                color: "#75757A",
-              }}
-            >
-              <SelectGroup>
-                <SelectItem value="US" data-testid="select-item-1">
-                  US
-                </SelectItem>
-                <SelectItem value="UK" data-testid="select-item-2">
-                  UK
-                </SelectItem>
-                <SelectItem value="Canada" data-testid="select-item-2">
-                  Canada
-                </SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-      </div>
-      <div className={styles.buttonSection}>
-        <div className={styles.buttonContainer}>
-          <div>&copy;2024 SFCC PRO International</div>
-          <div className={styles.gap}>
-            <Icon name="Instagram" />
-            <Icon name="Facebook" />
-            <Icon name="Radix" />
-            <Icon name="Youtube" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className={styles.footer}>
+			<div className={styles.logoSection}>
+				<Image
+					className={styles.logo}
+					src="/images/SFCCPROWhite.png"
+					alt="Next.js logo"
+					width={109}
+					height={19}
+					priority
+				/>
+			</div>
+			<div className={styles.containerSection}>
+				<div className={styles.container}>
+					{footerData?.map((item) => {
+						return (
+							<div key={item?.title}>
+								<div className={styles.title}>{item?.title}</div>
+								<div className={styles.row}>
+									{item?.children?.map((subItem) => {
+										return (
+											<div className={styles.subTitle} key={subItem?.title}>
+												<a href={subItem?.link}>{subItem?.title}</a>
+											</div>
+										);
+									})}
+								</div>
+							</div>
+						);
+					})}
+				</div>
+				<div>
+					<div style={{ paddingBottom: "15px" }}>Change Location</div>
+					<Select>
+						<SelectTrigger
+							style={{
+								backgroundColor: "#1D1823",
+								width: "325px",
+								border: "solid",
+								borderWidth: "1px",
+								borderColor: "#B3B2B5",
+								color: "#75757A",
+							}}
+						>
+							<SelectValue placeholder="US" />
+						</SelectTrigger>
+						<SelectContent
+							style={{
+								width: "325px",
+								borderColor: "#B3B2B5",
+								color: "#75757A",
+							}}
+						>
+							<SelectGroup>
+								<SelectItem value="US" data-testid="select-item-1">
+									US
+								</SelectItem>
+								<SelectItem value="UK" data-testid="select-item-2">
+									UK
+								</SelectItem>
+								<SelectItem value="Canada" data-testid="select-item-2">
+									Canada
+								</SelectItem>
+							</SelectGroup>
+						</SelectContent>
+					</Select>
+				</div>
+			</div>
+			<div className={styles.buttonSection}>
+				<div className={styles.buttonContainer}>
+					<div>&copy;2024 SFCC PRO International</div>
+					<div className={styles.gap}>
+						<Icon name="Instagram" />
+						<Icon name="Facebook" />
+						<Icon name="Radix" />
+						<Icon name="Youtube" />
+					</div>
+				</div>
+			</div>
+		</div>
+	);
 };
 export default Footer;
 
 /**
- * ## Footer 
+ * ## Footer
  *
  * The `Footer` component displays a structured footer layout for a website, featuring navigation
  * links, social media icons, and a country selection dropdown.
@@ -126,7 +132,7 @@ export default Footer;
  * ### Example
  *
  * ```tsx
- * 
+ *
  *
  * export default function Page() {
  *   return (
@@ -137,4 +143,3 @@ export default Footer;
  * }
  * ```
  */
-

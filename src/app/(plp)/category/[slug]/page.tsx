@@ -61,30 +61,29 @@ export default async function PLPPage({ params }: PageProps) {
         </Select>
       </div>
 
-      <div className={styles.gridContainer}>
-        <div className={styles.grid}>
-          {products.map((product, index) => {
-            return (
-              <div
+      <div className={styles.grid}>
+        {products.map((product, index) => {
+          return (
+            <div
+              key={product.id}
+              className={
+                isLargeCard(index) ? styles.largeCard : styles.mediumCard
+              }
+            >
+              <ProductCard
                 key={product.id}
-                className={
-                  isLargeCard(index) ? styles.largeCard : styles.mediumCard
-                }
-              >
-                <ProductCard
-                  key={product.id}
-                  productImage={product.image}
-                  productTitle={product.name}
-                  alignment="alignStart"
-                  width={"100%"}
-                  price="100"
-                  currency="$"
-                />
-              </div>
-            );
-          })}
-        </div>
+                productImage={product.image}
+                productTitle={product.name}
+                alignment="alignStart"
+                width={"100%"}
+                price="100"
+                currency="$"
+              />
+            </div>
+          );
+        })}
       </div>
+
       <div className={styles.pagination}>
         <Pagination fixedBottom>
           <PaginationContent>

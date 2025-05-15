@@ -1,16 +1,17 @@
-import {
-  homepageBanners,
-  homepageProducts,
-  statementBannerData,
-} from "../common/constant";
-import styles from "./page.module.css";
-import ProductCard from "../components/molecules/ProductCard/ProductCard";
-import dynamic from "next/dynamic";
 import Banner from "@/components/molecules/Banner/Banner";
 import BannerCarousel from "@/components/molecules/BannerCarousel/BannerCarousel";
 import GetTheLookBanner from "@/components/molecules/GetTheLookBanner/GetTheLookBanner";
 import ProductCardBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
 import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
+
+import dynamic from "next/dynamic";
+import {
+  homepageBanners,
+  homepageProducts,
+  statementBannerData,
+} from "../common/constant";
+import ProductCard from "../components/molecules/ProductCard/ProductCard";
+import styles from "./page.module.css";
 import { getHomepageData } from "@/sanity/queries/homepage";
 // const Banner = dynamic(() => import('../components/molecules/Banner/Banner'))
 // const BannerCarousel = dynamic(() => import('../components/molecules/BannerCarousel/BannerCarousel'));

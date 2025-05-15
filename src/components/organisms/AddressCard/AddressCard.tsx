@@ -1,162 +1,167 @@
-import React, { useState } from "react";
-import CheckBox from "../../atomic/CheckBox/CheckBox";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../molecules/Dialog/Dialog";
+import type React from "react";
+import { useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
-import styles from "./AddressCard.module.css";
 import { Button } from "../../atomic/Button/Button";
+import CheckBox from "../../atomic/CheckBox/CheckBox";
 import { RadioGroup, RadioGroupItem } from "../../atomic/RadioGroup/RadioGroup";
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger,
+} from "../../molecules/Dialog/Dialog";
 import { AddressDialog } from "../AddressForm/AddressModal";
+import styles from "./AddressCard.module.css";
 
 type CommonCardType = {
-  id: string;
-  title: string;
-  description: string;
-  phone?: string;
-  extraInfo?: string;
-  isDefault?: boolean;
+	id: string;
+	title: string;
+	description: string;
+	phone?: string;
+	extraInfo?: string;
+	isDefault?: boolean;
 };
 
 type AddressCardProps = {
-  items: CommonCardType[];
-  variant: "address" | "delivery";
-  radioButton?: boolean;
-  isDelete?: boolean;
-  shipping?:boolean;
+	items: CommonCardType[];
+	variant: "address" | "delivery";
+	radioButton?: boolean;
+	isDelete?: boolean;
+	shipping?: boolean;
 };
 
 const AddressCard: React.FC<AddressCardProps> = ({
-  items,
-  variant,
-  radioButton,
-  isDelete,
-  shipping
+	items,
+	variant,
+	radioButton,
+	isDelete,
+	shipping,
 }) => {
-  const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
-  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
-    items.find((item) => item.isDefault)?.id || null
-  );
-  const [defaultAddressId, setDefaultAddressId] = useState<string | null>(
-    items.find((item) => item.isDefault)?.id || null
-  );
+	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
+	const [selectedAddressId, setSelectedAddressId] = useState<string | null>(
+		items.find((item) => item.isDefault)?.id || null,
+	);
+	const [defaultAddressId, setDefaultAddressId] = useState<string | null>(
+		items.find((item) => item.isDefault)?.id || null,
+	);
 
-  const handleRadioChange = (id: string) => {
-    setSelectedAddressId(id);
-  };
+	const handleRadioChange = (id: string) => {
+		setSelectedAddressId(id);
+	};
 
-  const handleSetDefault = (id: string) => {
-    setDefaultAddressId(id);
-    setSelectedAddressId(id);
-  };
+	const handleSetDefault = (id: string) => {
+		setDefaultAddressId(id);
+		setSelectedAddressId(id);
+	};
 
-  return (
-    <RadioGroup
-      value={selectedAddressId ?? ""}
-      onValueChange={(value) => setSelectedAddressId(value)}
-      className={`${styles.cardGrid} ${radioButton ? styles.twoColumnGrid : ""}`}
-    >
-      {items.map((item) => (
-        <div
-          key={item.id}
-          className={`${styles.card} ${selectedAddressId === item.id ? styles.defaultCard : ""}`}
-        >
-          <div className={styles.wrapper}>
-            <h2 className={styles.name}>{item.title}</h2>
-            {radioButton && <RadioGroupItem value={item.id}  onChange={()=>handleRadioChange}/>}
-          </div>
+	return (
+		<RadioGroup
+			value={selectedAddressId ?? ""}
+			onValueChange={(value) => setSelectedAddressId(value)}
+			className={`${styles.cardGrid} ${radioButton ? styles.twoColumnGrid : ""}`}
+		>
+			{items.map((item) => (
+				<div
+					key={item.id}
+					className={`${styles.card} ${selectedAddressId === item.id ? styles.defaultCard : ""}`}
+				>
+					<div className={styles.wrapper}>
+						<h2 className={styles.name}>{item.title}</h2>
+						{radioButton && (
+							<RadioGroupItem
+								value={item.id}
+								onChange={() => handleRadioChange}
+							/>
+						)}
+					</div>
 
-          {item.description && (
-            <p className={styles.address}>{item.description}</p>
-          )}
-          {item.phone && <p className={styles.phone}>Phone No. {item.phone}</p>}
-          {item.extraInfo && (
-            <p className={styles.extraInfo}>{item.extraInfo}</p>
-          )}
+					{item.description && (
+						<p className={styles.address}>{item.description}</p>
+					)}
+					{item.phone && <p className={styles.phone}>Phone No. {item.phone}</p>}
+					{item.extraInfo && (
+						<p className={styles.extraInfo}>{item.extraInfo}</p>
+					)}
 
-          {variant === "address" && (
-            <div className={styles.actions}>
-              {(item.id === selectedAddressId ||
-                item.id === defaultAddressId) &&
-                shipping && (
-                  <div className={styles.checkbox}>
-                    <CheckBox
-                      checked={item.id === defaultAddressId}
-                      onChange={() => handleSetDefault(item.id)}
-                    />
-                    <span>
-                      {item.id === defaultAddressId
-                        ? "Default"
-                        : "Set as Default"}
-                    </span>
-                  </div>
-                )}
+					{variant === "address" && (
+						<div className={styles.actions}>
+							{(item.id === selectedAddressId ||
+								item.id === defaultAddressId) &&
+								shipping && (
+									<div className={styles.checkbox}>
+										<CheckBox
+											checked={item.id === defaultAddressId}
+											onChange={() => handleSetDefault(item.id)}
+										/>
+										<span>
+											{item.id === defaultAddressId
+												? "Default"
+												: "Set as Default"}
+										</span>
+									</div>
+								)}
 
-              {!shipping && (
-                <div className={styles.checkbox}>
-                  <CheckBox
-                    checked={item.id === defaultAddressId}
-                    onChange={() => handleSetDefault(item.id)}
-                  />
-                  <span>
-                    {item.id === defaultAddressId
-                      ? "Default"
-                      : "Set as Default"}
-                  </span>
-                </div>
-              )}
-              <div className={styles.iconGroup}>
-                <FaPen
-                  className={styles.icon}
-                  onClick={() => setIsAddressDialogOpen(true)}
-                />
-                <AddressDialog
-                  open={isAddressDialogOpen}
-                  onOpenChange={(open) => setIsAddressDialogOpen(open)}
-                />
-                {isDelete && (
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <FaTrash className={styles.icon} />
-                    </DialogTrigger>
-                    <DialogContent className={styles.dialogContent}>
-                      <DialogHeader className={styles.dialogHeader}>
-                        <DialogTitle className={styles.dialogTitle}>
-                          Delete Confirmation
-                        </DialogTitle>
-                      </DialogHeader>
-                      <DialogDescription className={styles.dialogDescription}>
-                        Are you sure you want to delete this address?
-                      </DialogDescription>
-                      <DialogFooter className={styles.dialogFooter}>
-                        <DialogClose asChild>
-                          <Button>Cancel</Button>
-                        </DialogClose>
-                        <DialogClose asChild>
-                          <Button variant="secondary">Delete</Button>
-                        </DialogClose>
-                      </DialogFooter>
-                    </DialogContent>
-                  </Dialog>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-      ))}
-    </RadioGroup>
-  );
+							{!shipping && (
+								<div className={styles.checkbox}>
+									<CheckBox
+										checked={item.id === defaultAddressId}
+										onChange={() => handleSetDefault(item.id)}
+									/>
+									<span>
+										{item.id === defaultAddressId
+											? "Default"
+											: "Set as Default"}
+									</span>
+								</div>
+							)}
+							<div className={styles.iconGroup}>
+								<FaPen
+									className={styles.icon}
+									onClick={() => setIsAddressDialogOpen(true)}
+								/>
+								<AddressDialog
+									open={isAddressDialogOpen}
+									onOpenChange={(open) => setIsAddressDialogOpen(open)}
+								/>
+								{isDelete && (
+									<Dialog>
+										<DialogTrigger asChild>
+											<FaTrash className={styles.icon} />
+										</DialogTrigger>
+										<DialogContent className={styles.dialogContent}>
+											<DialogHeader className={styles.dialogHeader}>
+												<DialogTitle className={styles.dialogTitle}>
+													Delete Confirmation
+												</DialogTitle>
+											</DialogHeader>
+											<DialogDescription className={styles.dialogDescription}>
+												Are you sure you want to delete this address?
+											</DialogDescription>
+											<DialogFooter className={styles.dialogFooter}>
+												<DialogClose asChild>
+													<Button>Cancel</Button>
+												</DialogClose>
+												<DialogClose asChild>
+													<Button variant="secondary">Delete</Button>
+												</DialogClose>
+											</DialogFooter>
+										</DialogContent>
+									</Dialog>
+								)}
+							</div>
+						</div>
+					)}
+				</div>
+			))}
+		</RadioGroup>
+	);
 };
 
 export default AddressCard;
-
 
 /**
  * ## AddressCard

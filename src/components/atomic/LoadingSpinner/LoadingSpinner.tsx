@@ -1,17 +1,17 @@
-import { LoaderCircle, LucideProps } from 'lucide-react';
-import styles from './LoadingSpinner.module.css';
+import { LoaderCircle, type LucideProps } from "lucide-react";
+import styles from "./LoadingSpinner.module.css";
 
 export interface IProps extends LucideProps {
-  className?: string;
+	className?: string;
 }
 
 const LoadingSpinner = ({ className, ...props }: IProps) => {
-  return (
-    <LoaderCircle
-      className={`${styles.spinner} ${className ? className : ''}`}
-      {...props}
-    />
-  );
+	return (
+		<LoaderCircle
+			className={`${styles.spinner} ${className ? className : ""}`}
+			{...props}
+		/>
+	);
 };
 
 export default LoadingSpinner;

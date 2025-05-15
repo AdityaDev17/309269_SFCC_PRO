@@ -1,191 +1,193 @@
 "use client";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
 } from "../../atomic/Card/Card";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
-import Image from "next/image";
 
 type Alignment = "center" | "alignStart" | "alignEnd";
 
 interface ProductCardProps {
-  productId?: string;
-  alignment?: Alignment;
-  width?: number | string;
-  productImage: string;
-  productTitle?: string;
-  productDesc?: string;
-  price?: string;
-  currency?: string;
-  moveToBag?: boolean;
-  wishListed?: boolean;
-  bagPrice?: string;
-  onClick?: (productId: string) => void;
-  onButtonClick?: (productId: string) => void;
-  onMoveToBag?: (productId: string) => void;
+	productId?: string;
+	alignment?: Alignment;
+	width?: number | string;
+	productImage: string;
+	productTitle?: string;
+	productDesc?: string;
+	price?: string;
+	currency?: string;
+	moveToBag?: boolean;
+	wishListed?: boolean;
+	bagPrice?: string;
+	onClick?: (productId: string) => void;
+	onButtonClick?: (productId: string) => void;
+	onMoveToBag?: (productId: string) => void;
 }
 const ProductCard = ({
-  productId,
-  alignment = "center",
-  width,
-  productImage,
-  productTitle,
-  productDesc,
-  price,
-  currency,
-  moveToBag,
-  wishListed,
-  bagPrice,
-  onClick,
-  onButtonClick,
-  onMoveToBag,
+	productId,
+	alignment = "center",
+	width,
+	productImage,
+	productTitle,
+	productDesc,
+	price,
+	currency,
+	moveToBag,
+	wishListed,
+	bagPrice,
+	onClick,
+	onButtonClick,
+	onMoveToBag,
 }: ProductCardProps) => {
-  const [isMobile, setIsMobile] = useState(false);
+	const [isMobile, setIsMobile] = useState(false);
 
-  const checkMobileView = () => {
-    setIsMobile(window.innerWidth < 768);
-  };
+	useEffect(() => {
+		const checkMobileView = () => {
+			setIsMobile(window.innerWidth <= 768);
+			console.log(window.innerWidth);
+		};
 
-  useEffect(() => {
-    checkMobileView();
-    window.addEventListener("resize", checkMobileView);
-    return () => window.removeEventListener("resize", checkMobileView);
-  }, []);
-  return (
-    <div>
-      <Card width={width} onClick={() => productId && onClick?.(productId)}>
-        <CardHeader className={styles.imageWrapper}>
-          <Image
-            src={productImage}
-            alt="product"
-            className={styles.productImage}
-            width={440}
-            height={440}
-            loading="eager"
-            priority={true}
-          />
-          {wishListed && (
-            <Image
-              src="/images/whishlist_fill.svg"
-              alt="wishlist"
-              className={styles.wishlistIcon}
-              width={24}
-              height={24}
-            />
-          )}
-        </CardHeader>
+		checkMobileView();
+		window.addEventListener("resize", checkMobileView);
+		return () => window.removeEventListener("resize", checkMobileView);
+	}, []);
 
-        {productTitle && (
-          <CardContent className={`${styles.cardContent} ${styles[alignment]}`}>
-            <Typography
-              type={"Headline"}
-              variant={5}
-              label={productTitle}
-              fontWeight="regular"
-              color="black"
-            />
-            {productDesc && (
-              <div className={styles.spacing}>
-                <Button
-                  variant="link"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    productId && onButtonClick?.(productId);
-                  }}
-                >
-                  <Typography
-                    type={"Body"}
-                    variant={2}
-                    label={productDesc}
-                    fontWeight="medium"
-                    color="black"
-                  />
-                </Button>
-              </div>
-            )}
-            {price && (
-              <div className={styles.spacing}>
-                <Typography
-                  type="Body"
-                  variant={1}
-                  color="gray"
-                  fontWeight="medium"
-                  label={`${currency}${price}`}
-                />
-              </div>
-            )}
-          </CardContent>
-        )}
+	return (
+		<div>
+			<Card width={width} onClick={() => productId && onClick?.(productId)}>
+				<CardHeader className={styles.imageWrapper}>
+					<Image
+						src={productImage}
+						alt="product"
+						className={styles.productImage}
+						width={440}
+						height={440}
+						loading="eager"
+						priority={true}
+					/>
+					{wishListed && (
+						<Image
+							src="/images/whishlist_fill.svg"
+							alt="wishlist"
+							className={styles.wishlistIcon}
+							width={24}
+							height={24}
+						/>
+					)}
+				</CardHeader>
 
-        {!isMobile ? (
-          <CardFooter className={styles.priceButtonRow}>
-            {bagPrice && (
-              <Typography
-                type="Body"
-                variant={1}
-                color="gray"
-                fontWeight="medium"
-                label={`${currency}${bagPrice}`}
-              />
-            )}
-            {moveToBag && (
-              <Button
-                variant="icon"
-                className={styles.moveToBagButton}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  productId && onMoveToBag?.(productId);
-                }}
-              >
-                <Typography
-                  type="Body"
-                  variant={2}
-                  label="Move to Bag"
-                  fontWeight="medium"
-                  color="black"
-                />
-              </Button>
-            )}
-          </CardFooter>
-        ) : (
-          <CardFooter className={styles.pricemobileButtonRow}>
-            {bagPrice && (
-              <Typography
-                type="Body"
-                variant={1}
-                color="gray"
-                fontWeight="medium"
-                label={`${currency}${bagPrice}`}
-              />
-            )}
-            {moveToBag && (
-              <Button
-                variant="icon"
-                className={styles.moveToBagMobileButton}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  productId && onMoveToBag?.(productId);
-                }}
-              >
-                <Typography
-                  type="Body"
-                  variant={2}
-                  label="Move to Bag"
-                  fontWeight="medium"
-                  color="black"
-                />
-              </Button>
-            )}
-          </CardFooter>
-        )}
-      </Card>
-    </div>
-  );
+				{productTitle && (
+					<CardContent className={`${styles.cardContent} ${styles[alignment]}`}>
+						<Typography
+							type={"Headline"}
+							variant={5}
+							label={productTitle}
+							fontWeight="regular"
+							color="black"
+						/>
+						{productDesc && (
+							<div className={styles.spacing}>
+								<Button
+									variant="link"
+									onClick={(e) => {
+										e.stopPropagation();
+										productId && onButtonClick?.(productId);
+									}}
+								>
+									<Typography
+										type={"Body"}
+										variant={2}
+										label={productDesc}
+										fontWeight="medium"
+										color="black"
+									/>
+								</Button>
+							</div>
+						)}
+						{price && (
+							<div className={styles.spacing}>
+								<Typography
+									type="Body"
+									variant={1}
+									color="gray"
+									fontWeight="medium"
+									label={`${currency}${price}`}
+								/>
+							</div>
+						)}
+					</CardContent>
+				)}
+
+				{!isMobile ? (
+					<CardFooter className={styles.priceButtonRow}>
+						{bagPrice && (
+							<Typography
+								type="Body"
+								variant={1}
+								color="gray"
+								fontWeight="medium"
+								label={`${currency}${bagPrice}`}
+							/>
+						)}
+						{moveToBag && (
+							<Button
+								variant="icon"
+								className={styles.moveToBagButton}
+								onClick={(e) => {
+									e.stopPropagation();
+									productId && onMoveToBag?.(productId);
+								}}
+							>
+								<Typography
+									type="Body"
+									variant={2}
+									label="Move to Bag"
+									fontWeight="medium"
+									color="black"
+								/>
+							</Button>
+						)}
+					</CardFooter>
+				) : (
+					<CardFooter className={styles.pricemobileButtonRow}>
+						{bagPrice && (
+							<Typography
+								type="Body"
+								variant={1}
+								color="gray"
+								fontWeight="medium"
+								label={`${currency}${bagPrice}`}
+							/>
+						)}
+						{moveToBag && (
+							<Button
+								variant="icon"
+								className={styles.moveToBagMobileButton}
+								onClick={(e) => {
+									e.stopPropagation();
+									productId && onMoveToBag?.(productId);
+								}}
+							>
+								<Typography
+									type="Body"
+									variant={2}
+									label="Move to Bag"
+									fontWeight="medium"
+									color="black"
+								/>
+							</Button>
+						)}
+					</CardFooter>
+				)}
+			</Card>
+		</div>
+	);
 };
 
 export default ProductCard;
@@ -197,7 +199,6 @@ export default ProductCard;
  * and optional action buttons. It supports responsive behavior and can be used across product listings, wishlists,
  * and other commerce-related views.
  *
- * ---
  *
  * ### Props
  *
@@ -243,7 +244,6 @@ export default ProductCard;
  * #### `onMoveToBag?: (productId: string) => void`
  * - Optional. Callback fired when the "Move to Bag" button is clicked.
  *
- * ---
  *
  * ### Behavior
  *
@@ -259,7 +259,6 @@ export default ProductCard;
  *   - On **desktop**, shows `bagPrice` and "Move to Bag" button side by side.
  *   - On **mobile**, the same layout is stacked with adjusted styles for smaller screens.
  *
- * ---
  *
  * ### Styling (CSS Modules: `ProductCard.module.css`)
  *
@@ -271,7 +270,6 @@ export default ProductCard;
  * - `priceButtonRow` / `pricemobileButtonRow`: Footer layout containers (desktop/mobile).
  * - `moveToBagButton` / `moveToBagMobileButton`: Button styles for "Move to Bag".
  *
- * ---
  *
  * ### Dependencies
  *
@@ -280,7 +278,6 @@ export default ProductCard;
  * - `Button`: Used for "Move to Bag" and linked description.
  * - `next/image`: Optimized image rendering.
  *
- * ---
  *
  * ### Example Usage
  *
@@ -301,8 +298,6 @@ export default ProductCard;
  *   onMoveToBag={(id) => console.log("Moved to bag:", id)}
  * />
  * ```
- *
- * ---
  *
  * ### Notes
  *

@@ -1,43 +1,42 @@
 "use client";
 
+import CheckBox from "@/components/atomic/CheckBox/CheckBox";
+import clsx, { type ClassValue } from "clsx";
+import { useState } from "react";
+import { states } from "../../../common/constant";
+import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
-  DialogDescription,
-} from "../../molecules/Dialog/Dialog";
-import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectItem,
+  SelectTrigger,
   SelectValue,
 } from "../../atomic/Select/Select";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../molecules/Dialog/Dialog";
 import styles from "./AddressModal.module.css";
-import { Button } from "../../atomic/Button/Button";
-import { useState } from "react";
-import clsx, { ClassValue } from "clsx";
-import { states } from "../../../common/constant";
-import CheckBox from "../../atomic/CheckBox/CheckBox";
-import Label from "../../atomic/Label/Label";
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
 export function AddressDialog({
   open,
-  onOpenChange,
+  onOpenChangeAction,
 }: {
   open: boolean;
-  onOpenChange: (open: boolean) => void;
+  onOpenChangeAction: (open: boolean) => void;
 }) {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChangeAction}>
       <DialogTrigger asChild>
         {/* <Button variant="secondary">ADD NEW ADDRESS</Button> */}
       </DialogTrigger>
@@ -62,77 +61,50 @@ export function AddressDialog({
             <fieldset className={styles.Section}>
               <legend>Contact Details:</legend>
               <div className={styles.TwoColumn}>
-                <div className="formGroup">
-                  <Label htmlFor="firstName">First Name*</Label>
-                  <Input name="firstName" />
-                </div>
-                <div className="formGroup">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input name="lastName" />
-                </div>
-                <div className="formGroup">
-                  <Label htmlFor="phone">Phone No.*</Label>
-                  <Input name="phone" type="tel" className="PhoneInput" />
-                </div>
+                <Input placeholder="First Name*" name="firstName" />
+                <Input placeholder="Last Name" name="lastName" />
               </div>
+              <Input
+                placeholder="Phone No.*"
+                name="phone"
+                type="tel"
+                className={styles.PhoneInput}
+              />
             </fieldset>
 
             <fieldset className={styles.Section}>
               <legend>Location Details:</legend>
               <div className={styles.TwoColumn}>
-                <div className="formGroup">
-                  <Label htmlFor="apartment">Apartment, Suite, etc.*</Label>
-                  <Input name="apartment" />
-                </div>
-                <div className="formGroup">
-                  <Label htmlFor="building">Building no.*</Label>
-                  <Input name="building" />
-                </div>
+                <Input placeholder="Apartment, Suite, etc.*" name="apartment" />
+                <Input placeholder="Building no.*" name="building" />
               </div>
               <div className={styles.StreetRow}>
-                <div className="formGroup">
-                  <Label htmlFor="street">Street, Locality name*</Label>
-                  <Input name="street" className="AddressStreet" />
-                </div>
+                <Input
+                  placeholder="Street, Locality name*"
+                  name="street"
+                  className="AddressStreet"
+                />
               </div>
               <div className={styles.TwoColumn}>
-                <div className="formGroup">
-                  <Label htmlFor="landmark">Landmark</Label>
-                  <Input name="landmark" />
-                </div>
-                <div className="formGroup">
-                  <Label htmlFor="city">City*</Label>
-                  <Input name="city" />
-                </div>
+                <Input placeholder="Landmark" name="landmark" />
+                <Input placeholder="City*" name="city" />
               </div>
               <div className={styles.TwoColumn}>
-                <div className="formGroup">
-                  <Label htmlFor="state">State*</Label>
-                  <div className={styles.SelectOutline}>
-                    <Select>
-                      <SelectTrigger>
-                        <SelectValue placeholder="" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {states.map((state) => (
-                          <SelectItem key={state.value} value={state.value}>
-                            {state.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                <div className={styles.SelectOutline}>
+                  <Select>
+                    <SelectTrigger>
+                      <SelectValue placeholder="State*" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {states.map((state) => (
+                        <SelectItem key={state.value} value={state.value}>
+                          {state.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                 </div>
-                <div className="formGroup">
-                  <Label htmlFor="zipcode">ZIP code *</Label>
-                  <Input name="zipcode" />
-                </div>
-                <div className={styles.StreetRow}>
-                  <div className="formGroup">
-                    <Label htmlFor="country">Country name *</Label>
-                    <Input name="country" className="Country" />
-                  </div>
-                </div>
+                <Input placeholder="ZIP code*" name="zipcode" />
               </div>
               <div>
                 <Input placeholder="Country" name="country" />
@@ -149,18 +121,15 @@ export function AddressDialog({
               onCheckedChange={(checked) => setIsChecked(!!checked)}
               id="setDefault"
             />
-            <label>Set as Default</label>
+            <input type="checkbox" id="setDefault" />
+            <label htmlFor="setDefault">Set as Default</label>
           </div>
-          <div className={styles.ButtonRow}>
-            <DialogClose asChild>
-              <Button>Cancel</Button>
-            </DialogClose>
-            <DialogClose asChild>
-              <Button variant="secondary" type="submit">
-                Save
-              </Button>
-            </DialogClose>
-          </div>
+          <DialogClose asChild>
+            <Button>Cancel</Button>
+          </DialogClose>
+          <Button variant="secondary" type="submit">
+            Save
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -168,12 +137,12 @@ export function AddressDialog({
 }
 
 /**
- * # AddressDialog Component
+ * ## AddressDialog Component
  *
  * `AddressDialog` is a composable modal dialog built using Radix UI primitives and custom atomic components.
  * It allows users to input and save a new shipping address, with validations for mandatory fields, structured sections for contact and location, and the option to set the address as default.
  *
- * ## Features:
+ * ### Features:
  * - **Custom Dialog UI**: Built using the `Dialog` component set (Trigger, Content, Header, Title, Description, Footer, Close).
  * - **Atomic Inputs**: Uses project-level `Input`, `Select`, `Button`, and `Checkbox` components for consistency and design coherence.
  * - **Stateful Checkbox**: Includes an internal state (`isChecked`) to track the "Set as Default" checkbox.
@@ -181,9 +150,8 @@ export function AddressDialog({
  * - **Responsive Layout**: Modular CSS (`AddressModal.module.css`) defines a clean, two-column responsive layout with proper spacing.
  * - **Pre-defined State List**: Offers a sample list of states in a dropdown using `SelectItem` components.
  *
- * ---
  *
- * ## Component Hierarchy:
+ * ### Component Hierarchy:
  *
  * ```tsx
  * <Dialog>
@@ -205,12 +173,10 @@ export function AddressDialog({
  * </Dialog>
  * ```
  *
- * ---
  *
- * ## Example Usage:
+ * ### Example Usage:
  *
  * ```tsx
- * import { AddressDialog } from "@/components/sections/addressModal/AddressModal";
  *
  * export default function Page() {
  *   return (
@@ -221,16 +187,14 @@ export function AddressDialog({
  * }
  * ```
  *
- * ---
  *
- * ## Accessibility Considerations:
+ * ### Accessibility Considerations:
  * - Inherits focus trapping, ARIA roles, and keyboard navigation from Radix Dialog.
  * - Uses semantic HTML elements (`fieldset`, `legend`, `label`) for better screen reader support.
  * - Dialog closes on ESC key or when clicking the Cancel button.
  *
- * ---
  *
- * ## Styling Notes:
+ * ### Styling Notes:
  * - Modular styles are defined in `AddressModal.module.css`.
  * - Key class hooks:
  *   - `.AddressDialogContent` – Dialog positioning and box styling.
@@ -239,20 +203,14 @@ export function AddressDialog({
  *   - `.CheckboxRow` – Layout for checkbox and label.
  *   - `.ScrollableContent` – Scrollable inner section.
  *
- * ---
- *
- * ## Props:
+ * ### Props:
  * This component does **not** currently accept props. All configuration is internal.
  *
- * ---
  *
- * ## Future Enhancements:
+ * ### Future Enhancements:
  * - Add form validation and controlled input states.
  * - Replace hardcoded state list with dynamic API-based data.
  * - Support for address editing by passing initial values via props.
  *
- * ---
  *
- * @component
- * @returns {JSX.Element} A fully styled, interactive address input modal component.
  */

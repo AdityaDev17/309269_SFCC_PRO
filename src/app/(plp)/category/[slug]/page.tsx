@@ -1,4 +1,3 @@
-import { getProductsByCategory } from "@/lib/sfcc/products";
 import Breadcrumbs from "../../../../components/atomic/Breadcrumbs/Breadcrumbs";
 import {
 	Select,
@@ -18,6 +17,7 @@ import {
 	PaginationPrevious,
 } from "../../../../components/molecules/Pagination/Pagination";
 import ProductCard from "../../../../components/molecules/ProductCard/ProductCard";
+import { getProductsByCategory } from "../../../../lib/sfcc/products";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
 

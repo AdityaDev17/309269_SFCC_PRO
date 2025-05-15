@@ -1,9 +1,9 @@
 .footer {
     display: grid;
-    background-color: var(--grey-grey-900);
+    background-color:var(--colour-background-footer-dark-1);
     container-type: inline-size;
     padding: 0px var(--space-56);
-    color:var(--base-white);
+    color: var(--colour-text-tertiary);
   }
 .logoSection{
     display: grid;
@@ -15,7 +15,7 @@
     justify-content: space-between;
     gap:var(--space-20);
     padding: 26px 0;
-    border-bottom: 1.5px solid var(--grey-grey-700);
+    border-bottom: 1.5px solid var(--colour-border-subtle);
     @container (max-width: 700px) {
         grid-template-columns: 1fr;
         row-gap: 25px;
@@ -37,12 +37,12 @@
     text-decoration: underline;
 }
 .title{
-    font-weight: var(--weight-semibold);
+    font-weight: var(--font-weight-semibold);
     font-size: var(--size-font-size-300);
     text-transform: uppercase;
 }
 .buttonSection{
-    border-top: 1px solid var( --grey-grey-700);
+     border-top: 1px solid var(--colour-border-subtle);
     display: grid;
 }
 .buttonContainer{
@@ -61,9 +61,9 @@
     padding-top: 15px;
     display: grid;
     gap:var(--space-40);
-    color: var( --grey-grey-500);
-    font-weight: var(--weight-regular);
-    font-size: var(--size-font-size-300);
+    color: var(--colour-link-3);
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-font-size-300);
 }
 .gap {
     display: grid;

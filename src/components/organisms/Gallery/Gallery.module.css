@@ -57,12 +57,12 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: var(--base-white);
-  border:1px solid var(--grey-grey-600);
+  background-color: var(--colour-border-secondary);
+  border:1px solid var(--colour-border-secondary);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .activeDot {
-  background-color: var(--grey-grey-700);
+ background-color: var(--colour-icon-secondary);
 }

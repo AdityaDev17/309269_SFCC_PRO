@@ -39,7 +39,7 @@
 }
 .border{
     height: 152px;
-    background-color: var(--grey-grey-400);
+    background-color: var(--colour-border-tertiary);
     width: 1px;
     margin:0 var(--space-44);
     @container (max-width: 768px) {
@@ -50,15 +50,15 @@
 
 }
 .title{
-    font-size: var(--size-font-size-400);
-    font-weight: var(--weight-semibold);
+    font-size: var(--font-size-font-size-400);
+    font-weight: var(--font-weight-semibold);
     line-height: var(--line-height-lh-400);
 }
 .address{
-    font-size: var(--size-font-size-300-m);
-    font-weight: var(--weight-regular);
-    line-height: var( --line-height-lh-300);
-    color: var(--grey-grey-700);
+    font-size: var(--font-size-font-size-300-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var( --font-line-height-lh-300);
+    color: var(--colour-text-secondary);
     display: grid;
 
 }

@@ -25,13 +25,13 @@
   container-type: inline-size;
 }
 .select {
-  background-color: var(--colors-white);
+  background-color: var(--colour-background-primary);
   border: solid;
   border-width: 1px;
-  border-color: var(--grey-grey-400);
-  color:var( --base-black);
-  font-size: var(--size-font-size-200-m);
-  font-weight: var(--weight-semibold);
+  border-color: var(--colour-border-tertiary);
+  color: var(--colour-text-primary);
+  font-size: var(--font-size-font-size-200-m);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--space-44);
 }
 .firstLayout {
@@ -51,23 +51,23 @@
   }
 }
 .title {
-  font-size: var(--size-font-size-500-m);
-  font-weight: var(--weight-semibold);
-  line-height: var(--line-height-lh-400);
+  font-size: var(--font-size-font-size-500-m);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--font-line-height-lh-400);
   padding-bottom: 21.5px;
 }
 .price {
-  font-size: var(  --size-font-size-500);
-  font-weight:  var(--weight-semibold);
-  line-height: var(--line-height-lh-500);
-  color: var(--grey-grey-800);
+  font-size: var(--font-size-font-size-500);
+  font-weight:  var(--font-weight-semibold);
+  line-height: var(--font-line-height-lh-500);
+  color: var(--colour-title-2);
   padding-bottom: 21.5px;
 }
 .desc {
-  font-size: var(--size-font-size-300-m);
-  font-weight: var(--weight-regular);
-  line-height: var(--line-height-lh-300);
-  color:var(--grey-grey-700);
+  font-size: var(--font-size-font-size-300-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-lh-300);
+  color: var(--colour-text-secondary);
   padding-bottom: var( --space-40);
 }
 .button {

@@ -8,30 +8,30 @@
   column-gap: var(--space-16);
 }
 .fontColor {
-  font-size: var(--size-font-size-300-m);
-  font-weight: var(--weight-regular);
-  color: var(--grey-grey-700);
+  font-size: var(--font-size-font-size-300-m);
+  font-weight: var(--font-weight-regular);
+  color: var(--colour-text-primary);
 }
 .marginBottom {
   margin-bottom: 8px;
 }
 .header {
   text-align: center;
-  font-weight: var(--weight-semibold);
-  font-size: var(--size-font-size-500-m);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-font-size-500-m);
 }
 .buttonStyle {
-  font-size: var(--size-font-size-200);
-  font-weight: var(--weight-semibold);
-  color: var(--base-white);
+  font-size: var(--font-size-font-size-200);
+  font-weight: var(--font-weight-semibold);
+  color: var(--colour-button-label-secondary);
   width: 325px;
 }
 .policy {
-  font-size: var(--size-font-size-300-m);
-  font-weight: var(--weight-regular);
+  font-size: var(--font-size-font-size-300-m);
+  font-weight: var(--font-weight-regular);
 }
 .selectBox {
   width: 325px;
-  border: 1px solid var(--grey-grey-500);
-  color: var( --grey-grey-600);
+  border: 1px solid var(--colour-inputbox-border);
+  color: var(--colour-inputbox-label);
 }

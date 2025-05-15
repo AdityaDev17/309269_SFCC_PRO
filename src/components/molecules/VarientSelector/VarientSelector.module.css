@@ -10,7 +10,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 2px solid var(--base-white);
+  border: 2px solid var(--colour-surface-primary);
   cursor: pointer;
 }
 
@@ -18,7 +18,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 2px solid var(--grey-grey-700);
+  border: 2px solid var(--colour-button-border-secondary);
   cursor: default;
 }
 
@@ -26,7 +26,7 @@
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 2px solid var(--base-white);
+    border: 2px solid var(--colour-surface-primary);
     cursor: default;
   }
 
@@ -34,9 +34,9 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: var(--base-white);
-  font-size: var(--size-font-size-300);
-  font-weight: var( --weight-medium);
+  background-color: var(--colour-surface-primary);
+  font-size: var(--font-size-font-size-300);
+  font-weight: var( --font-weight-medium);
   display: grid;
   align-items: center;
   justify-content: center;
@@ -46,7 +46,7 @@
 
 
 .content {
-  background-color: var(--base-white);
+  background-color: var(--colour-surface-primary);
   box-shadow:
     0 2px 4px rgba(15, 19, 23, 0.1),
     0 8px 24px rgba(15, 19, 23, 0.2);
@@ -58,8 +58,8 @@
 }
 
 .titleColor{
-    font-size: var(--size-font-size-200);
-    font-weight: var(--weight-regular);
-    color: #3B3934;
+    font-size: var(--font-size-font-size-200);
+    font-weight: var(--font-weight-regular);
+    color: var(--colour-title-2);
     padding-top: var(--space-16);
 }

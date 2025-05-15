@@ -25,11 +25,11 @@
   container-type: inline-size;
 }
 .select {
-  background-color: #fff;
+  background-color: var(--colour-background-primary);
   border: solid;
   border-width: 1px;
-  border-color: #cccbce;
-  color: #000;
+  border-color: var(--colour-border-tertiary);
+  color: var(--colour-text-primary);
   font-size: 12px;
   font-weight: 600;
   line-height: 16px;
@@ -60,14 +60,14 @@
   font-size: 28px;
   font-weight: 600;
   line-height: 37px;
-  color: #3b3944;
+  color: var(--colour-title-2);
   padding-bottom: 21.5px;
 }
 .desc {
   font-size: 14px;
   font-weight: 400;
   line-height: 22px;
-  color: #4f4b53;
+  color: var(--colour-text-secondary);
   padding-bottom: 20px;
 }
 .button {

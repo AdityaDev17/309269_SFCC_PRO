@@ -4,66 +4,75 @@ import { useEffect, useState } from "react";
 import styles from "./Gallery.module.css";
 
 interface GalleryProps {
-	images: string[];
+  images: string[];
 }
 
 const Gallery: React.FC<GalleryProps> = ({ images }) => {
-	const [mainImage, setMainImage] = useState(images[0]);
-	const [isMobile, setIsMobile] = useState(false);
-	const [activeIndex, setActiveIndex] = useState(0);
+  const [mainImage, setMainImage] = useState(images?.[0]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
 
-	useEffect(() => {
-		const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-		checkMobile();
-		window.addEventListener("resize", checkMobile);
-		return () => window.removeEventListener("resize", checkMobile);
-	}, []);
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-	useEffect(() => {
-		setMainImage(images[activeIndex]);
-	}, [activeIndex, images]);
+  useEffect(() => {
+    setMainImage(images[activeIndex]);
+  }, [activeIndex, images]);
 
-	if (isMobile) {
-		return (
-			<div className={styles.mobileGallery}>
-				<ProductCard productImage={mainImage} width="100%" />
+  if (isMobile) {
+    return (
+      <div className={styles.mobileGallery}>
+        <ProductCard productImage={mainImage} width="100%" />
 
-				<div className={styles.dotsContainer}>
-					{images.map((img, idx) => (
-						<span
-							key={img}
-							className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ""}`}
-							onClick={() => setActiveIndex(idx)}
-							onKeyDown={() => setActiveIndex(idx)}
-						/>
-					))}
-				</div>
-			</div>
-		);
-	}
+        <div className={styles.dotsContainer}>
+          {images?.map((img, idx) => (
+            <span
+              key={img}
+              className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ""}`}
+              onClick={() => setActiveIndex(idx)}
+              onKeyDown={() => setActiveIndex(idx)}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
-	return (
-		<div className={styles.layoutGallery}>
-			<div className={styles.thumbnails}>
-				{images.map((img) => {
-					const isSelected = img === mainImage;
-					return (
-						<div
-							key={img}
-							onMouseEnter={() => setMainImage(img)}
-							onClick={() => setMainImage(img)}
-							onKeyDown={() => setMainImage(img)}
-							className={`${styles.thumbnailWrapper} ${isSelected ? styles.selected : ""}`}
-						>
-							<ProductCard productImage={img} width="93px" />
-							{isSelected && <div className={styles.overlay} />}
-						</div>
-					);
-				})}
-			</div>
-			<ProductCard productImage={mainImage} width="42vw" />
-		</div>
-	);
+  return (
+    <div className={styles.layoutGallery}>
+      <div className={styles.thumbnails}>
+        {images?.map((img, idx) => {
+          const isSelected = idx === activeIndex;
+          return (
+            <div
+              key={`${img}-${idx}`} // safer key
+              onMouseEnter={() => {
+                setMainImage(img);
+                setActiveIndex(idx);
+              }}
+              onClick={() => {
+                setMainImage(img);
+                setActiveIndex(idx);
+              }}
+              onKeyDown={() => {
+                setMainImage(img);
+                setActiveIndex(idx);
+              }}
+              className={`${styles.thumbnailWrapper} ${isSelected ? styles.selected : ""}`}
+            >
+              <ProductCard productImage={img} width="93px" />
+              {isSelected && <div className={styles.overlay} />}
+            </div>
+          );
+        })}
+      </div>
+      <ProductCard productImage={mainImage} width="42vw" />
+    </div>
+  );
 };
 
 export default Gallery;

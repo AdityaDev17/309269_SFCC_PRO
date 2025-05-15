@@ -22,7 +22,7 @@
     top: 5%;
     left: 5%;
     z-index: 2;
-    color: white;
+    color: var(--colour-background-primary);
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
     white-space: pre-line;
   }
@@ -32,8 +32,8 @@
     position: absolute;
     width: 16px;
     height: 16px;
-    background-color: rgba(255, 255, 255, 0.7);
-    border: 2px solid #fff;
+    background-color: var(--colour-background-primary);
+    border: 2px solid var(--colour-border-tertiary);
     border-radius: 50%;
     cursor: pointer;
     z-index: 3;
@@ -43,7 +43,8 @@
   
   .dot:hover {
     transform: scale(1.2);
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: var(--colour-notification);
+
   }
   
   
@@ -67,7 +68,7 @@
     bottom: 30%;
     left: 30%;
     z-index: 4;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: var(--colour-background-primary);
     padding: 16px;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
     max-width: 350px;
@@ -79,7 +80,7 @@
     right: 10px;
     background: none;
     border: none;
-    font-size: 1.25rem;
+    font-size: var(--font-size-font-size-500-M);
     cursor: pointer;
   }
   

@@ -1,11 +1,17 @@
 "use client";
-import styles from "./myAccount.module.css";
+import { useRouter } from "next/navigation";
+import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
 import Tile from "../../components/atomic/Tile/Tile";
 import Banner from "../../components/molecules/Banner/Banner";
-import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
-
+import styles from "./myAccount.module.css";
 
 const MyAccount = () => {
+	const router = useRouter();
+
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		router.push("/");
+	};
 	return (
 		<div className={styles.wrapper}>
 			<Breadcrumbs
@@ -27,12 +33,12 @@ const MyAccount = () => {
 
 			<div className={styles.tilesGrid}>
 				<Tile label="Personal Information" href="/my-account/personal-info" />
-				<Tile label="Order History" href="/my-account/orders" />
+				<Tile label="Order History" href="/my-account/order-history" />
 				<Tile label="Payments" href="/my-account/payments" />
 				<Tile label="My Subscription" href="/my-account/subscription" />
 				<Tile label="Address Book" href="/my-account/address" />
 				<Tile label="Contact & Preferences" href="/my-account/contact-info" />
-				<Tile label="Log Out" href="/logout" />
+				<Tile label="Log Out" onClick={handleLogout} />
 			</div>
 		</div>
 	);

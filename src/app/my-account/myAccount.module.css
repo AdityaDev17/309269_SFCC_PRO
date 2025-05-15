@@ -1,18 +1,3 @@
-/* .wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    padding: 20px;
-  }
-  
-  
-  
-  .tilesGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-   */
 
    .wrapper {
     display: flex;
@@ -26,7 +11,7 @@
   .tilesGrid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: clamp(16px, 5vw, 20px);
+    gap: clamp(var(--space-xl), 5vw, var(--space-8xl));
   }
   
   @container my-account (max-width: 600px) {
@@ -35,11 +20,4 @@
     }
   }
   
-  .content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    background-color: #f7f7f7;
-    border-radius: 12px;
-    color: #1D1823;
-  }
+  

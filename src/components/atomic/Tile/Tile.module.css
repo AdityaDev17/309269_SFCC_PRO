@@ -4,26 +4,26 @@
     grid-template-columns: 1fr auto;
     align-items: center;
     padding: clamp(12px, 4vw, 16px) clamp(16px, 5vw, 20px);
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: var(--colour-background-primary);
+    border: 1px solid var(--colour-border-tertiary);
     text-decoration: none;
-    color: #1d1823;
+    color: var(--colour-text-primary);
     transition: background-color 0.2s ease;
     cursor: pointer;
-    font-size: clamp(14px, 4vw, 16px);
+    font-size: clamp(var(--font-size-font-size-300-M), 4vw, var(--font-size-font-size-400-M));
   }
   
   
   .tile:hover {
-    background-color: #f0f0f0;
+    background-color: var(--colour-button-background-primary-hover);
   }
   
   .label {
-    font-size: 16px;
-    font-weight: 500;
+    font-size: var(--font-size-font-size-400-M);
+    font-weight: var(--font-weight-medium);
   }
   
   .arrow {
-    font-size: 18px;
+    font-size: var(--font-size-font-size-500-M);
   }
   

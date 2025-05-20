@@ -2,14 +2,14 @@
     padding: clamp(1rem, 5vw, 3rem);
     display: grid;
     grid-template-rows: auto; 
-    gap: clamp(1rem, 3vw, 2rem);
+    gap: clamp(var(--space-xl), 3vw, var(--space-16xl));
     container-type: inline-size;
     container-name: personalInfo;
   }
   
   .header {
-    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-    font-weight: 600;
+    font-size: clamp(var(--font-size-font-size-500-M), 2.5vw, var(--font-size-font-size-600-M));
+    font-weight: var(--font-weight-semibold);
     text-transform: uppercase;
     margin: 0;
   }
@@ -32,7 +32,7 @@
   
   .divider {
     width: 1px;
-    background-color: #d3d3d3;
+    background-color: var(--colour-border-tertiary);
     height: 100%;
     
   }
@@ -41,7 +41,7 @@
     .gridLayout {
       display: grid;
       grid-template-columns: 100%;
-      gap: 2rem;
+      gap: var(--space-20xl);
     }
   
     .divider {

@@ -23,15 +23,15 @@
   }
   
   .textBlock h1 {
-    font-size: clamp(1.5rem, 2vw + 1rem, 2.5rem);
+    font-size: clamp(var(--font-size-font-size-600-M), 2vw + 1rem, var(--font-size-font-size-700));
     font-weight: bold;
     margin: 0 0 10px;
   }
   
   .textBlock p,
   .textBlock span {
-    font-size: clamp(0.875rem, 1vw + 0.5rem, 1rem);
-    color: #555;
+    font-size: clamp(var(--font-size-font-size-300-M), 1vw + 0.5rem, var(--font-size-font-size-400-M));
+    color: var(--colour-text-secondary);
   }
   
   .buttonContainer{

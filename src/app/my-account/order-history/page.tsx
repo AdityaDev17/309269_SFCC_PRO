@@ -1,8 +1,8 @@
 import React from "react";
-import { allOrderData } from "../../common/constant";
-import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
-import Typography from "../../components/atomic/Typography/Typography";
-import ErrorComponent from "../../components/molecules/ErrorComponent/ErrorComponent";
+import { allOrderData } from "../../../common/constant";
+import Breadcrumbs from "../../../components/atomic/Breadcrumbs/Breadcrumbs";
+import Typography from "../../../components/atomic/Typography/Typography";
+import ErrorComponent from "../../../components/molecules/ErrorComponent/ErrorComponent";
 import { OrderCardContainer } from "./component";
 import styles from "./orderHistory.module.css";
 
@@ -23,7 +23,7 @@ function OrderHistory() {
 					<Breadcrumbs
 						breadcrumbItems={[
 							{ label: "Home", href: "/" },
-							{ label: "My Account", href: "/shop" },
+							{ label: "My Account", href: "/my-account" },
 							{ label: "Order History" },
 						]}
 						breadcrumbSeparator="/slash.svg"

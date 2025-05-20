@@ -19,13 +19,13 @@
     height:auto;
     margin: 0 auto;
     padding: 4rem 5rem;
-    background: #fff;
-    border-color: #ccc;
+    background: var(--colour-background-primary);
+    border-color: var(--colour-border-tertiary);
   }
   
   .heading {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: var(--font-size-font-size-600-M);
     font-weight: bold;
     margin-bottom: 2rem;
     text-transform: uppercase;
@@ -36,7 +36,7 @@
     width: 100%;
     text-align: left;
     padding: 1rem 0;
-    font-size: 0.95rem;
+    font-size: var(--font-size-font-size-400-M);
     font-weight: bold;
     text-transform: uppercase;
     background: none;
@@ -50,63 +50,63 @@
  
   .accordionContent {
     padding: 2rem 1rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--colour-border-primary);
   }
   
   
   .section {
     display: grid;
-    gap: 2rem;
+    gap: var(--space-20xl);
   }
   
 
   .checkboxContainer {
     display: flex;
     align-items: center;
-    gap: 1rem; 
+    gap: var(--space-xl);
   }
 
   .checkboxWrapper {
     display: flex;
     align-items: center; 
-    gap: 0.5rem; 
+    gap: var(--space-xs);
   }
   
   
   .notificationRow {
     display:grid;
-    gap: 0.5rem;
+    gap: var(--space-xs);
   }
   
    
   .notificationText {
-    font-size: 1rem;
+    font-size: var(--font-size-font-size-400-M);
     color: #555;
   }
   
    .phoneRow {
     display: flex;
-    gap: 0.75rem;
+    gap: var(--space-md);
   } 
  
   .phoneInput {
                       
     width: 56%;            
     padding: 0.5rem;          
-    font-size: 1rem;          
-    border: 1px solid #ccc;   
+     font-size: var(--font-size-font-size-400-M);
+    border: 1px solid var(--colour-border-tertiary);
     
   }
   
   .phoneNumber {
     font-weight: bold;
-    font-size: 1rem;
+     font-size: var(--font-size-font-size-400-M);
   }
   
   .editButton {
-    background-color: black;
-    color: white;
-    font-size: 0.75rem;
+    background-color: var(--colour-background-overlay);
+    color: var(--colour-background-primary);
+    font-size: var(--font-size-font-size-200);
     padding: 0.4rem 0.8rem;
     border: none;
     cursor: pointer;
@@ -119,21 +119,21 @@
   .buttonGroup{
     display:grid;
     grid-auto-flow: column;
-    gap:0.5rem;
+    gap: var(--space-xs);
   }
   
    
   .selectWrapper {
     display:grid;
-    gap: 0.5rem;
-    border: 1px solid #ccc; 
+    gap: var(--space-xs);
+    border: 1px solid var(--colour-border-tertiary);
     width:56%;
     
   }
  
   
   .selectLabel {
-    font-size: 1rem;
+    font-size: var(--font-size-font-size-400-M);
     
   }
   
@@ -142,7 +142,7 @@
     
   
     .heading {
-      font-size: 1.25rem;
+      font-size: var(--font-size-font-size-500-M);
       white-space: nowrap;
       word-break: break-word;
       text-align: center;
@@ -161,7 +161,7 @@
         display: grid;
         grid-template-columns: unset;
         grid-auto-flow: row;
-        gap: 0.5rem;
+        gap: var(--space-xs);
       }
     
       .buttonGroup {
@@ -169,7 +169,7 @@
         display: grid;
         grid-auto-flow: column;
         width: 100%;
-        gap: 0.5rem;
+        gap: var(--space-xs);
       } 
       
     

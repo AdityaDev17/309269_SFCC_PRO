@@ -22,7 +22,7 @@
     grid-column: span 1; 
     overflow: hidden;
     border-radius: 9999px;
-    background-color: gray; 
+    background-color: var(--colour-background-translucent-tertiary);
   }
   
   .SliderTrack[data-orientation='vertical'] {
@@ -32,7 +32,7 @@
   .SliderRange {
     position: absolute;
     height: 100%;
-    background-color: black;
+    background-color: var(--colour-background-overlay);
     transition: width 0.3s ease; 
   }
   
@@ -45,8 +45,8 @@
     height: 1.25rem;
     width: 1.25rem;
     border-radius: 9999px;
-    border: 2px solid gray;
-    background-color: #ffffff;
+    border: 2px solid var(--colour-background-translucent-tertiary);
+    background-color: var(--colour-background-primary);
     outline: none;
     transition: color 0.3s, background-color 0.3s, border-color 0.3s;
   }

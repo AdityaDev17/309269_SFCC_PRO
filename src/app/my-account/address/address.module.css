@@ -1,15 +1,14 @@
 .wrapper {
   display: grid;
- 
   padding: clamp(1rem, 5vw, 3rem);
-  gap: clamp(1rem, 3vw, 2rem);
+  gap: clamp(var(--space-xl), 3vw, var(--space-16xl));
   margin: 0 auto;
   container-type: inline-size;
 }
 
 .title {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-  font-weight: 600;
+  font-size: clamp(var(--font-size-font-size-500-M), 2.5vw, var(--font-size-font-size-600-M));
+  font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   margin: 0;
 }

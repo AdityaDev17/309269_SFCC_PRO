@@ -142,7 +142,7 @@ export {
  * ```tsx
  *     <Dialog>
  *       <DialogTrigger asChild>
- *         <Button>Delete</Button>
+ *         <Button variant="secondary">Delete</Button>
  *       </DialogTrigger>
  *
  *       <DialogContent>
@@ -152,10 +152,10 @@ export {
  *         </DialogHeader>
  *
  *         <DialogFooter>
- *           <Button variant="outline" asChild>
- *             <DialogClose>Cancel</DialogClose>
+ *           <Button asChild>
+ *             Cancel
  *           </Button>
- *           <Button variant="destructive">Confirm</Button>
+ *           <Button variant="secondary">Delete</Button>
  *         </DialogFooter>
  *       </DialogContent>
  *     </Dialog>

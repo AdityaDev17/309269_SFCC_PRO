@@ -3,6 +3,8 @@ import BannerCarousel from "@/components/molecules/BannerCarousel/BannerCarousel
 import GetTheLookBanner from "@/components/molecules/GetTheLookBanner/GetTheLookBanner";
 import ProductCardBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
 import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
+
+import { getHomepageData } from "@/sanity/queries/homepage";
 import dynamic from "next/dynamic";
 import {
 	homepageBanners,
@@ -11,7 +13,6 @@ import {
 } from "../common/constant";
 import ProductCard from "../components/molecules/ProductCard/ProductCard";
 import styles from "./page.module.css";
-
 // const Banner = dynamic(() => import('../components/molecules/Banner/Banner'))
 // const BannerCarousel = dynamic(() => import('../components/molecules/BannerCarousel/BannerCarousel'));
 // const ProductCardBanner = dynamic(() => import('../components/molecules/ProductCardBanner/ProductCardBanner'));
@@ -21,16 +22,20 @@ import styles from "./page.module.css";
 export const revalidate = 60;
 
 export default async function Home() {
+	const homepageData = await getHomepageData();
+	const banners = homepageData.banners || [];
+	const statementBanner = homepageData.statementBanner;
 	return (
 		<div className={styles.homeContainer}>
-			<Banner
-				title={homepageBanners[0]?.title}
-				buttonText={homepageBanners[0]?.buttonText}
-				description={homepageBanners[0]?.description}
-				backgroundImage={homepageBanners[0]?.backgroundImage}
-				alignment={homepageBanners[0]?.alignment}
-			/>
-
+			{banners[0] && (
+				<Banner
+					title={banners[0]?.title}
+					buttonText={banners[0]?.buttonText}
+					description={banners[0]?.description}
+					backgroundImage={banners[0]?.backgroundImage}
+					alignment={homepageBanners[0]?.alignment}
+				/>
+			)}
 			<div className={`${styles.cardLayout}`}>
 				{homepageProducts.map((product) => (
 					<ProductCard
@@ -45,6 +50,7 @@ export default async function Home() {
 			<GetTheLookBanner />
 			<ProductCardBanner />
 			<BannerCarousel />
+
 			<StatementBanner
 				imageSrc={statementBannerData.imageSrc}
 				imageAlt={statementBannerData.imageAlt}
@@ -53,23 +59,26 @@ export default async function Home() {
 				subheading={statementBannerData.subheading}
 				description={statementBannerData.description}
 			/>
-			<Banner
-				title={homepageBanners[1]?.title}
-				buttonText={homepageBanners[1]?.buttonText}
-				description={homepageBanners[1]?.description}
-				backgroundImage={homepageBanners[1]?.backgroundImage}
-				alignment={homepageBanners[1]?.alignment}
-			/>
-
-			<Banner
-				title={homepageBanners[2]?.title}
-				buttonText={homepageBanners[2]?.buttonText}
-				buttonColor={homepageBanners[2]?.buttonColor}
-				description={homepageBanners[2]?.description}
-				backgroundImage={homepageBanners[2]?.backgroundImage}
-				alignment={homepageBanners[2]?.alignment}
-				textColor = {homepageBanners[2]?.textColor}
-			/>
+			{banners[1] && (
+				<Banner
+					title={homepageBanners[1]?.title}
+					buttonText={homepageBanners[1]?.buttonText}
+					description={homepageBanners[1]?.description}
+					backgroundImage={banners[2]?.backgroundImage}
+					alignment={homepageBanners[1]?.alignment}
+				/>
+			)}
+			{banners[1] && (
+				<Banner
+					title={homepageBanners[2]?.title}
+					buttonText={homepageBanners[2]?.buttonText}
+					buttonColor={homepageBanners[2]?.buttonColor}
+					description={homepageBanners[2]?.description}
+					backgroundImage={banners[1]?.backgroundImage}
+					alignment={homepageBanners[2]?.alignment}
+					textColor = {homepageBanners[2]?.textColor}
+				/>
+			)}
 		</div>
 	);
 }

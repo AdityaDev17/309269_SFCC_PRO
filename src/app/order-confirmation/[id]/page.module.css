@@ -6,7 +6,7 @@
 .detailsSection{
     display: grid;
     grid-template-columns: 1fr 0.4fr;
-    gap:40px;
+    gap:var(--space-56);
     @container (max-width: 768px) {
         grid-template-columns: 1fr;
       }
@@ -14,7 +14,7 @@
 .rootLayer{
     display: grid;
     grid-template-columns: 0.1fr 1fr;
-    gap: 4px;
+    gap: var(--space-8);
 }
 .secondRow{
     display: grid;
@@ -22,7 +22,7 @@
 }
 .main{
     display: grid;
-    gap:20px;
+    gap:var(--space-40);
     container-type: inline-size;
 }
 .addressSection{
@@ -35,34 +35,34 @@
 .row{
     display: grid;
     grid-template-rows: 0.2fr 1fr;
-    gap:8px
+    gap:var(--space-16)
 }
 .border{
     height: 152px;
-    background-color: #CCCBCE;
+    background-color: var(--colour-border-tertiary);
     width: 1px;
-    margin:0 24px;
+    margin:0 var(--space-44);
     @container (max-width: 768px) {
         width: 100%;
         height: 1px;
-        margin: 16px 0;
+        margin: var(--space-32) 0;
     }
 
 }
 .title{
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 26px;
+    font-size: var(--font-size-font-size-400);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-lh-400);
 }
 .address{
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-    color: #4F4B53;
+    font-size: var(--font-size-font-size-300-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var( --font-line-height-lh-300);
+    color: var(--colour-text-secondary);
     display: grid;
 
 }
 
 .pageLayout{
-    padding: 20px 40px;
+    padding: var(--space-40) var(--space-56);
 }

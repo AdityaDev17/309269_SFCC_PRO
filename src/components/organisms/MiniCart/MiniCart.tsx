@@ -193,7 +193,7 @@ export default MiniCart;
  * ### Example
  *
  * ```tsx
- * 
+ *
  *
  * const cartData: CartItem[] = [
  *   {

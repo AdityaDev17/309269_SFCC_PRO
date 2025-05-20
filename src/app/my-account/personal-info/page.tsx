@@ -36,7 +36,7 @@ export default function PersonalInfoPage() {
 				<div className={styles.divider} />
 
 				<div className={styles.column}>
-					<EditPassword onUpdateClicked={()=>handlePasswordUpdate} />
+					<EditPassword onUpdateClicked={() => handlePasswordUpdate} />
 				</div>
 			</div>
 		</div>

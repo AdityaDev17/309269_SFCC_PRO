@@ -3,21 +3,21 @@
   /* display: flex;
   flex-direction: column; */
   display: grid;
-  gap: 20px;
+  gap: var(--space-8xl);
   container-type: inline-size;
 }
 .detailsSection {
   display: grid;
   grid-template-columns: 1fr 0.4fr;
-  gap: 70px;
+  gap: var(--space-28xl);
   @container (max-width: 768px) {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: var(--space-24xl);
   }
 }
 .orderId {
   display: grid;
-  gap: 10px;
+  gap: var(--space-sm);
 }
 .orderItems {
   /* display: grid;
@@ -38,7 +38,7 @@
 .addressSection {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  gap: var(--space-8xl);
   margin-bottom: 20px;
   @container (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -47,13 +47,13 @@
 .row {
   display: grid;
   grid-template-rows: 0.2fr 1fr;
-  gap: 8px;
+  gap: var(--space-xs);
 }
 .address {
-  font-size: 14px;
-  font-weight: 400;
+  font-size:var(--space-lg);
+  font-weight: var(--font-weight-regular);
   line-height: 22px;
-  color: #4f4b53;
+  color: var(--colour-button-border-secondary);
   display: grid;
 }
 
@@ -70,11 +70,11 @@
 .bottom {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--space-8xl);
 }
 .deliverdButtons {
   display: flex;
-  gap: 20px;
+  gap: var(--space-8xl);
 }
 
 .returnDialog {
@@ -84,12 +84,12 @@
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  /* gap: 20px; */
+  /* gap: var(--space-8xl); */
   /* width: 720px; */
   height: auto;
   transform: translate(-50%, -50%);
   border-radius: var(--radius);
-  background-color: #fafafa;
+  background-color: var(--colour-background-secondary);
   /* box-shadow: -1px -1px 6px hsl(var(--foreground) / 0.8); */
   overflow: hidden;
   container-type: inline-size;
@@ -106,14 +106,15 @@
 }
 
 .dialogHeader {
-  background-color: white;
+  background-color: var(--colour-background-primary);
   padding: 3vh 2vw;
-  border-bottom: 1px solid #cccbce;
+  border-bottom: 1px solid var(--colour-border-tertiary);
 }
 .dialogFooter {
-  background-color: white;
+  background-color: var(--colour-background-primary);
   padding: 3vh 2vw;
-  border-top: 1px solid #cccbce;
+  display: flex;
+  border-top: 1px solid var(--colour-border-tertiary);
 }
 .radioContainer {
   padding: 1.5vw;
@@ -124,12 +125,12 @@
 .radioButton {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-sm);
 }
 .dialogOverlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  /* background-color: rgba(0, 0, 0,0.5);
   backdrop-filter: blur(6px);
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 999; */
 }

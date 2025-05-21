@@ -44,11 +44,11 @@ type CategoriesProps = {
 };
 
 interface HeaderProps {
-	isHome?: boolean;
-	logoImages: { default: string; white: string };
-	categories: CategoriesProps[];
-	headerIcons: { label: string; icon: string }[];
-	headerWhiteIcons: { label: string; icon: string }[];
+  isHome?: boolean;
+  logoImages: { default: string; white: string };
+  categories: CategoriesProps[];
+  headerIcons: { label: string; icon: string; link?: string }[];
+  headerWhiteIcons: { label: string; icon: string; link?: string }[];
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -242,7 +242,7 @@ const Header: React.FC<HeaderProps> = ({
 				)}
 
 				<div className={styles.categories}>
-					{iconsToRender.map(({ label, icon }, index) => {
+					{iconsToRender.map(({ label, icon, link }, index) => {
 						if (label === "CartBag") {
 							return (
 								<MiniCart
@@ -262,14 +262,16 @@ const Header: React.FC<HeaderProps> = ({
 							);
 						} else {
 							return (
-								<Image
-									key={index}
-									src={icon}
-									alt={label}
-									width={20}
-									height={20}
-								/>
-							);
+                <Link key={index} href={link ? link : "/"}>
+                  <Image
+                    key={index}
+                    src={icon}
+                    alt={label}
+                    width={20}
+                    height={20}
+                  />
+                </Link>
+              );
 						}
 					})}
 				</div>

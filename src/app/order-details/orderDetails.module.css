@@ -19,19 +19,6 @@
   display: grid;
   gap: var(--space-sm);
 }
-.orderItems {
-  /* display: grid;
-  gap: 27px;
-  grid-template-columns: 1fr 0.5fr;
-  gap: 100px;
-  @container (max-width: 768px) {
-    grid-template-columns: 1fr;
-  } */
-}
-.bottom {
-  /* display: grid;
-  gap: 100px; */
-}
 .custInfo {
   display: flex;
 }

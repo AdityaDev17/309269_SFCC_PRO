@@ -1,6 +1,6 @@
 .layout {
   height: 600px;
-  background-color: white;
+  background-color: var(--colour-background-primary);
   display: flex;
   flex-direction: column;
   justify-content: center;

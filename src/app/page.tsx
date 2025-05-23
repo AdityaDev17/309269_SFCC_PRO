@@ -72,9 +72,11 @@ export default async function Home() {
 				<Banner
 					title={homepageBanners[2]?.title}
 					buttonText={homepageBanners[2]?.buttonText}
+					buttonColor={homepageBanners[2]?.buttonColor}
 					description={homepageBanners[2]?.description}
 					backgroundImage={banners[1]?.backgroundImage}
 					alignment={homepageBanners[2]?.alignment}
+					textColor = {homepageBanners[2]?.textColor}
 				/>
 			)}
 		</div>

@@ -13,7 +13,7 @@ const Tile: React.FC<TileProps> = ({ label, href, onClick }) => {
 	if (href) {
 		return (
 			<Link
-				href={href} 
+				href={href}
 				className={styles.tile}
 				onClick={(e) => {
 					if (onClick) {
@@ -28,7 +28,6 @@ const Tile: React.FC<TileProps> = ({ label, href, onClick }) => {
 		);
 	}
 
-	
 	return (
 		<div
 			className={styles.tile}

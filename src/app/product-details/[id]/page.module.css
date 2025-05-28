@@ -99,4 +99,8 @@
 .varientSection {
   padding-bottom: 20px;
 }
+.cartButton{
+    width:  100%;
+    height: 36px;
+}
 /* Component Styles End*/

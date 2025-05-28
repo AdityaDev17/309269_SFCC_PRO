@@ -32,6 +32,8 @@ interface MiniCartProps {
 	onUpdateQuantity?: (itemId: string, newQuantity: number) => void;
 	triggerType?: "button" | "icon";
 	bagIcon?: string;
+	open?: boolean;
+	onOpenChange?: (open: boolean) => void;
 }
 
 const MiniCart = ({
@@ -40,25 +42,14 @@ const MiniCart = ({
 	onUpdateQuantity,
 	triggerType,
 	bagIcon,
+	open,
+	onOpenChange,
 }: MiniCartProps) => {
 	const router = useRouter();
-	const [open, setOpen] = React.useState(false);
+
 	return (
-		<Drawer open={open} onOpenChange={setOpen} side="right">
+		<Drawer open={open} onOpenChange={onOpenChange} side="right">
 			<DrawerTrigger asChild>
-				{triggerType === "icon" && bagIcon ? (
-					<Image
-						src={bagIcon}
-						alt="Open Cart"
-						width={20}
-						height={20}
-						className={styles.bagIcon}
-					/>
-				) : (
-					<Button variant="secondary" className={styles.cartButton}>
-						Add To Bag
-					</Button>
-				)}
 			</DrawerTrigger>
 			<DrawerContent side="right">
 				<DrawerHeader className={styles.bagHeader}>
@@ -125,7 +116,6 @@ const MiniCart = ({
 									className={styles.viewbag}
 									onClick={() => {
 										router.push("/cart");
-										setOpen(false);
 									}}
 								>
 									VIEW BAG
@@ -193,7 +183,7 @@ export default MiniCart;
  * ### Example
  *
  * ```tsx
- * 
+ *
  *
  * const cartData: CartItem[] = [
  *   {

@@ -11,271 +11,336 @@ import { cartItems } from "../../../common/constant";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import {
-	Drawer,
-	DrawerClose,
-	DrawerContent,
-	DrawerDescription,
-	DrawerFooter,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
 } from "../../molecules/Drawer/Drawer";
 import {
-	NavigationMenu,
-	NavigationMenuContent,
-	NavigationMenuItem,
-	NavigationMenuList,
-	NavigationMenuTrigger,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
 } from "../../molecules/NavigationMenu/NavigationMenu";
 import MiniCart from "../MiniCart/MiniCart";
 import styles from "./Header.module.css";
 import SearchMenu from "./SearchMenu";
+import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { GET_BASKET } from "@/common/schema";
 
 type CategoriesProps = {
-	name: string;
-	image?: {
-		productImageUrl: string;
-		productName: string;
-	}[];
-	subcategory?: {
-		subCategoryName: string;
-		subcategory: string[];
-	}[];
+  name: string;
+  image?: {
+    productImageUrl: string;
+    productName: string;
+  }[];
+  subcategory?: {
+    subCategoryName: string;
+    subcategory: string[];
+  }[];
 };
 
 interface HeaderProps {
-	isHome?: boolean;
-	logoImages: { default: string; white: string };
-	categories: CategoriesProps[];
-	headerIcons: { label: string; icon: string }[];
-	headerWhiteIcons: { label: string; icon: string }[];
+  isHome?: boolean;
+  logoImages: { default: string; white: string };
+  categories: CategoriesProps[];
+  headerIcons: { label: string; icon: string }[];
+  headerWhiteIcons: { label: string; icon: string }[];
 }
+interface CartItems {
+  id: string;
+  name: string;
+  description: string;
+  quantity: number;
+  price: number;
+  currency: string;
+  productImage: string;
+}
+[];
+
+interface CartItemResponse {
+		itemId: string;
+		productName: string;
+		quantity: number;
+		price: number;
+		productImage?: {
+			data?: {
+				imageGroups?: {
+					images?: {
+						link?: string;
+					}[];
+				}[];
+			}[];
+		};
+	}
 
 const Header: React.FC<HeaderProps> = ({
-	isHome = false,
-	logoImages,
-	categories,
-	headerIcons,
-	headerWhiteIcons,
+  isHome = false,
+  logoImages,
+  categories,
+  headerIcons,
+  headerWhiteIcons,
 }) => {
-	const router = useRouter();
-	const [isMobile, setIsMobile] = useState(false);
+  const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItems[]>([]);
 
-	const getImageContainerClass = (length: number) => {
-		if (length === 2) return styles.oneSecondaryImage;
-		if (length === 3) return styles.twoSecondaryImage;
+  const [getCustomerBasket] = useLazyQuery(GET_BASKET, {});
+
+  const getImageContainerClass = (length: number) => {
+    if (length === 2) return styles.oneSecondaryImage;
+    if (length === 3) return styles.twoSecondaryImage;
+  };
+
+  useEffect(() => {
+    const checkMobileView = () => {
+      setIsMobile(window.innerWidth <= 768);
+      console.log(window.innerWidth);
+    };
+
+    checkMobileView();
+    window.addEventListener("resize", checkMobileView);
+    return () => window.removeEventListener("resize", checkMobileView);
+  }, []);
+
+  const iconsToRender = isHome ? headerWhiteIcons : headerIcons;
+
+  const prepareCartItems = (response: CartItemResponse[],currency:string) => {
+		setCartItems(
+			response?.map((item:any) => ({
+				id: item?.itemId,
+				name: item?.itemText,
+				description: "",
+				quantity: item?.quantity,
+				price: item?.price,
+				currency: currency,
+				productImage:
+					item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ??
+					"",
+			})),
+		);
 	};
 
-	useEffect(() => {
-		const checkMobileView = () => {
-			setIsMobile(window.innerWidth <= 768);
-			console.log(window.innerWidth);
-		};
+  const handleCartClick = async () => {
+    const basketId = await sessionStorage.getItem("basketId");
+    if (basketId) {
+      const { data} = await getCustomerBasket({
+        variables: { basketId: basketId },
+		fetchPolicy: 'network-only',
+      });
+      prepareCartItems(data?.getBasket?.productItems,data?.getBasket?.currency);
+    } else {
+		setCartItems([])
+    }
+    setOpen(true);
+  };
 
-		checkMobileView();
-		window.addEventListener("resize", checkMobileView);
-		return () => window.removeEventListener("resize", checkMobileView);
-	}, []);
+  return (
+    <div className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
+      <div className={styles.layout}>
+        <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
+          {isMobile && (
+            <Drawer side="left">
+              <DrawerTrigger asChild>
+                <Image
+                  src={isHome ? "/images/menu_white.svg" : "/images/menu.svg"}
+                  alt="Menu"
+                  className={styles.pointer}
+                  width={24}
+                  height={24}
+                />
+              </DrawerTrigger>
+              <DrawerContent side="left">
+                <DrawerHeader className={styles.menuheader}>
+                  <ChevronLeft size={20} />
+                  <DrawerTitle className={styles.title}>MENU</DrawerTitle>
+                  <DrawerClose className={styles.close} asChild>
+                    <Image
+                      src="/images/expand.svg"
+                      alt="Close"
+                      width={48}
+                      height={48}
+                    />
+                  </DrawerClose>
+                </DrawerHeader>
 
-	const iconsToRender = isHome ? headerWhiteIcons : headerIcons;
+                <div className={styles.categoryList}>
+                  {categories.map((category: any, index) => (
+                    <div
+                      key={index}
+                      className={styles.categoryItem}
+                      onClick={() =>
+                        router.push(
+                          `/${category.name.toLowerCase().replace(/\s+/g, "-")}`
+                        )
+                      }
+                    >
+                      <span>{category.name}</span>
+                      <ChevronRight size={20} />
+                    </div>
+                  ))}
+                </div>
+              </DrawerContent>
+            </Drawer>
+          )}
 
-	return (
-		<div className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
-			<div className={styles.layout}>
-				<div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
-					{isMobile && (
-						<Drawer side="left">
-							<DrawerTrigger asChild>
-								<Image
-									src={isHome ? "/images/menu_white.svg" : "/images/menu.svg"}
-									alt="Menu"
-									className={styles.pointer}
-									width={24}
-									height={24}
-								/>
-							</DrawerTrigger>
-							<DrawerContent side="left">
-								<DrawerHeader className={styles.menuheader}>
-									<ChevronLeft size={20} />
-									<DrawerTitle className={styles.title}>MENU</DrawerTitle>
-									<DrawerClose className={styles.close} asChild>
-										<Image
-											src="/images/expand.svg"
-											alt="Close"
-											width={48}
-											height={48}
-										/>
-									</DrawerClose>
-								</DrawerHeader>
+          <Link href="/" prefetch>
+            <Image
+              src={isHome ? logoImages.white : logoImages.default}
+              alt="Elenor Logo"
+              className={styles.pointer}
+              width={100}
+              height={20}
+            />
+          </Link>
+        </div>
 
-								<div className={styles.categoryList}>
-									{categories.map((category: any, index) => (
-										<div
-											key={index}
-											className={styles.categoryItem}
-											onClick={() =>
-												router.push(
-													`/${category.name.toLowerCase().replace(/\s+/g, "-")}`,
-												)
-											}
-										>
-											<span>{category.name}</span>
-											<ChevronRight size={20} />
-										</div>
-									))}
-								</div>
-							</DrawerContent>
-						</Drawer>
-					)}
+        {!isMobile && (
+          <div
+            className={`${styles.categories} ${isHome ? styles.whiteCategories : ""}`}
+          >
+            {categories.map((category, index) => (
+              <div key={index}>
+                <NavigationMenu key={index}>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      {category.subcategory && category.image ? (
+                        <>
+                          <NavigationMenuTrigger>
+                            <span className={styles.category}>
+                              {category.name}
+                            </span>
+                          </NavigationMenuTrigger>
+                          <NavigationMenuContent>
+                            <section className={styles.overlayContainer}>
+                              <div className={styles.imageContainer}>
+                                <div className={styles.primaryImage}>
+                                  <Image
+                                    src={category.image[0].productImageUrl}
+                                    alt={category.image[0].productName}
+                                    width={325}
+                                    height={317}
+                                  />
+                                </div>
+                                {category.image.length > 1 && (
+                                  <div
+                                    className={getImageContainerClass(
+                                      category.image.length
+                                    )}
+                                  >
+                                    {category.image.map(
+                                      (
+                                        { productImageUrl, productName },
+                                        index
+                                      ) =>
+                                        index !== 0 && (
+                                          <Image
+                                            key={index}
+                                            src={productImageUrl}
+                                            alt={productName}
+                                            width={210}
+                                            height={148}
+                                          />
+                                        )
+                                    )}
+                                  </div>
+                                )}
+                              </div>
 
-					<Link href="/" prefetch>
-						<Image
-							src={isHome ? logoImages.white : logoImages.default}
-							alt="Elenor Logo"
-							className={styles.pointer}
-							width={100}
-							height={20}
-						/>
-					</Link>
-				</div>
+                              <div className={styles.categoryContainer}>
+                                {category.subcategory.map(
+                                  ({ subCategoryName, subcategory }, index) => {
+                                    return (
+                                      <div
+                                        key={index}
+                                        className={styles.subcategoryContainer}
+                                      >
+                                        <Typography
+                                          type="Label"
+                                          variant={3}
+                                          label={subCategoryName}
+                                          fontWeight="bold"
+                                        />
+                                        {subcategory.map(
+                                          (subcategoryName, index) => {
+                                            return (
+                                              <Button
+                                                key={index}
+                                                variant="link"
+                                                style={{ fontWeight: "500" }}
+                                              >
+                                                {subcategoryName}
+                                              </Button>
+                                            );
+                                          }
+                                        )}
+                                      </div>
+                                    );
+                                  }
+                                )}
+                              </div>
+                            </section>
+                          </NavigationMenuContent>
+                        </>
+                      ) : (
+                        <Link href="/SUSTAINABILITY">
+                          <span className={styles.category}>
+                            {category.name}
+                          </span>
+                        </Link>
+                      )}
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+              </div>
+            ))}
+          </div>
+        )}
 
-				{!isMobile && (
-					<div
-						className={`${styles.categories} ${isHome ? styles.whiteCategories : ""}`}
-					>
-						{categories.map((category, index) => (
-							<div key={index}>
-								<NavigationMenu key={index}>
-									<NavigationMenuList>
-										<NavigationMenuItem>
-											{category.subcategory && category.image ? (
-												<>
-													<NavigationMenuTrigger>
-														<span className={styles.category}>
-															{category.name}
-														</span>
-													</NavigationMenuTrigger>
-													<NavigationMenuContent>
-														<section className={styles.overlayContainer}>
-															<div className={styles.imageContainer}>
-																<div className={styles.primaryImage}>
-																	<Image
-																		src={category.image[0].productImageUrl}
-																		alt={category.image[0].productName}
-																		width={325}
-																		height={317}
-																	/>
-																</div>
-																{category.image.length > 1 && (
-																	<div
-																		className={getImageContainerClass(
-																			category.image.length,
-																		)}
-																	>
-																		{category.image.map(
-																			(
-																				{ productImageUrl, productName },
-																				index,
-																			) =>
-																				index !== 0 && (
-																					<Image
-																						key={index}
-																						src={productImageUrl}
-																						alt={productName}
-																						width={210}
-																						height={148}
-																					/>
-																				),
-																		)}
-																	</div>
-																)}
-															</div>
-
-															<div className={styles.categoryContainer}>
-																{category.subcategory.map(
-																	({ subCategoryName, subcategory }, index) => {
-																		return (
-																			<div
-																				key={index}
-																				className={styles.subcategoryContainer}
-																			>
-																				<Typography
-																					type="Label"
-																					variant={3}
-																					label={subCategoryName}
-																					fontWeight="bold"
-																				/>
-																				{subcategory.map(
-																					(subcategoryName, index) => {
-																						return (
-																							<Button
-																								key={index}
-																								variant="link"
-																								style={{ fontWeight: "500" }}
-																							>
-																								{subcategoryName}
-																							</Button>
-																						);
-																					},
-																				)}
-																			</div>
-																		);
-																	},
-																)}
-															</div>
-														</section>
-													</NavigationMenuContent>
-												</>
-											) : (
-												<Link href="/SUSTAINABILITY">
-													<span className={styles.category}>
-														{category.name}
-													</span>
-												</Link>
-											)}
-										</NavigationMenuItem>
-									</NavigationMenuList>
-								</NavigationMenu>
-							</div>
-						))}
-					</div>
-				)}
-
-				<div className={styles.categories}>
-					{iconsToRender.map(({ label, icon }, index) => {
-						if (label === "CartBag") {
-							return (
-								<MiniCart
-									key={index}
-									cartItems={[]}
-									triggerType="icon"
-									bagIcon={icon}
-								/>
-							);
-						} else if (label === "Search") {
-							return (
-								<SearchMenu
-									isMobile={isMobile}
-									keyVal={index}
-									searchIcon={icon}
-								/>
-							);
-						} else {
-							return (
-								<Image
-									key={index}
-									src={icon}
-									alt={label}
-									width={20}
-									height={20}
-								/>
-							);
-						}
-					})}
-				</div>
-			</div>
-		</div>
-	);
+        <div className={styles.categories}>
+          {iconsToRender.map(({ label, icon }, index) => {
+            if (label === "CartBag") {
+              return (
+                <Image
+                  key={index}
+                  src={icon}
+                  alt={label}
+                  width={20}
+                  height={20}
+                  onClick={()=>handleCartClick()}
+                />
+              );
+            } else if (label === "Search") {
+              return (
+                <SearchMenu
+                  isMobile={isMobile}
+                  keyVal={index}
+                  searchIcon={icon}
+                />
+              );
+            } else {
+              return (
+                <Image
+                  key={index}
+                  src={icon}
+                  alt={label}
+                  width={20}
+                  height={20}
+                />
+              );
+            }
+          })}
+        </div>
+        {open && <MiniCart cartItems={cartItems} open={open} onOpenChange={setOpen} />}
+      </div>
+    </div>
+  );
 };
 
 export default Header;

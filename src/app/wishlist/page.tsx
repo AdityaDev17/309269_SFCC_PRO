@@ -1,19 +1,73 @@
 "use client";
-
+import { WISHLIST_DATA } from "@/common/schema";
+import { gql, useQuery } from "@apollo/client";
 import React from "react";
-import ButtonList from "./component";
-import styles from "./wishlist.module.css";
-
 import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "../../components/atomic/Typography/Typography";
 import ErrorComponent from "../../components/molecules/ErrorComponent/ErrorComponent";
-import sonnerToast, { Toaster } from "../../components/molecules/Toast/Toast";
+import { Toaster } from "../../components/molecules/Toast/Toast";
 import ProductImageCarousel from "../../components/organisms/ProductImageCarousel/ProductImageCarousel";
+import ButtonList from "./component";
+import styles from "./wishlist.module.css";
+interface WishlistImage {
+	alt: string;
+	link: string;
+	title: string;
+	disBaseLink: string;
+}
 
-import { categoryList, productData } from "../../common/constant";
+interface ImageGroup {
+	images: WishlistImage[];
+	viewType: string;
+}
+
+interface ProductImageData {
+	id: string;
+	brand: string;
+	currency: string;
+	imageGroups: ImageGroup[];
+	name: string;
+	price: number;
+}
+
+type CustomerProductListItem = {
+	productImage: {
+		data: ProductImageData[];
+	};
+};
 
 function Wishlist() {
-	return productData.length === 0 ? (
+	const { data } = useQuery(WISHLIST_DATA, {
+		variables: { customerId: "ablbs1kXg1lbgRmukUlqYYxKdI" },
+	});
+
+	const wishlistData =
+		data?.getWishlist?.data?.[0]?.customerProductListItems?.map(
+			(item: CustomerProductListItem) => ({
+				productId: item?.productImage?.data[0]?.id,
+				productTitle: item?.productImage?.data[0]?.name,
+				bagPrice: item?.productImage?.data[0]?.price,
+				currency: item?.productImage?.data[0]?.currency,
+				productImage:
+					item?.productImage?.data[0]?.imageGroups[0]?.images[0]?.link,
+			}),
+		);
+
+	const items = data?.getWishlist?.data?.[0]?.customerProductListItems || [];
+
+	const uniqueBrands = items
+		.map(
+			(item: CustomerProductListItem) => item?.productImage?.data?.[0]?.brand,
+		)
+		.filter(
+			(
+				brand: string | undefined,
+				index: number,
+				self: (string | undefined)[],
+			) => brand !== undefined && self.indexOf(brand) === index,
+		);
+
+	return wishlistData?.length === 0 ? (
 		<ErrorComponent
 			errImg="./images/wishlistEmpty.svg"
 			imgHeight={205}
@@ -33,21 +87,23 @@ function Wishlist() {
 				fontWeight="semibold"
 				label="WISHLIST"
 			/>
-			<ButtonList buttonNames={categoryList} />
+			{data && uniqueBrands && <ButtonList buttonNames={uniqueBrands} />}
 
-			<ProductImageCarousel
-				width="100%"
-				productData={productData}
-				alignment="alignStart"
-				withPagination={false}
-				moveToBag={true}
-				onMoveToBag={() => {
-					sonnerToast("Item has been moved to your Bag!", {
-						className: `${styles.Toast} ${styles.ToastSuccess}`,
-						unstyled: true,
-					});
-				}}
-			/>
+			{data && wishlistData && (
+				<ProductImageCarousel
+					width="100%"
+					productData={wishlistData}
+					alignment="alignStart"
+					withPagination={false}
+					moveToBag={false}
+					//   onMoveToBag={() => {
+					//     sonnerToast("Item has been moved to your Bag!", {
+					//       className: `${styles.Toast} ${styles.ToastSuccess}`,
+					//       unstyled: true,
+					//     });
+					//   }}
+				/>
+			)}
 			<Toaster />
 		</div>
 	);

@@ -4,7 +4,7 @@ import "./globals.css";
 import Footer from "../components/organisms/Footer/Footer";
 import HeaderWrapper from "../components/organisms/Header/HeaderWrapper";
 import { WebVitals } from "../web-vitals";
-import { ApolloWrapper } from "./ApolloWrapper";
+import Providers from "./providers";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -32,12 +32,12 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable}`}
 				style={{ width: "100vw" }}
 			>
-				<ApolloWrapper>
+				<Providers>
 					<WebVitals />
 					<HeaderWrapper />
 					{children}
 					<Footer />
-				</ApolloWrapper>
+				</Providers>
 			</body>
 		</html>
 	);

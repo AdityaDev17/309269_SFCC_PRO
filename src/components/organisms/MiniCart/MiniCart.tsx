@@ -49,8 +49,7 @@ const MiniCart = ({
 
 	return (
 		<Drawer open={open} onOpenChange={onOpenChange} side="right">
-			<DrawerTrigger asChild>
-			</DrawerTrigger>
+			<DrawerTrigger asChild></DrawerTrigger>
 			<DrawerContent side="right">
 				<DrawerHeader className={styles.bagHeader}>
 					<div className={styles.bagWrapper}>
@@ -64,7 +63,7 @@ const MiniCart = ({
 							/>
 						</DrawerTitle>
 
-						{cartItems.length > 0 && (
+						{cartItems?.length > 0 && (
 							<Typography
 								type={"Body"}
 								variant={3}
@@ -83,7 +82,7 @@ const MiniCart = ({
 						/>
 					</DrawerClose>
 				</DrawerHeader>
-				{cartItems.length > 0 ? (
+				{cartItems?.length > 0 ? (
 					<>
 						<CartItemList
 							cartItems={cartItems}

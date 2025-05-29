@@ -30,8 +30,9 @@ import {
 import MiniCart from "../MiniCart/MiniCart";
 import styles from "./Header.module.css";
 import SearchMenu from "./SearchMenu";
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
+import { useQuery } from "@tanstack/react-query";
 import { GET_BASKET } from "@/common/schema";
+import { graphqlRequest } from "@/lib/graphqlRequest";
 
 type CategoriesProps = {
   name: string;
@@ -64,20 +65,20 @@ interface CartItems {
 [];
 
 interface CartItemResponse {
-		itemId: string;
-		productName: string;
-		quantity: number;
-		price: number;
-		productImage?: {
-			data?: {
-				imageGroups?: {
-					images?: {
-						link?: string;
-					}[];
-				}[];
-			}[];
-		};
-	}
+  itemId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  productImage?: {
+    data?: {
+      imageGroups?: {
+        images?: {
+          link?: string;
+        }[];
+      }[];
+    }[];
+  };
+}
 
 const Header: React.FC<HeaderProps> = ({
   isHome = false,
@@ -90,8 +91,6 @@ const Header: React.FC<HeaderProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItems[]>([]);
-
-  const [getCustomerBasket] = useLazyQuery(GET_BASKET, {});
 
   const getImageContainerClass = (length: number) => {
     if (length === 2) return styles.oneSecondaryImage;
@@ -111,32 +110,32 @@ const Header: React.FC<HeaderProps> = ({
 
   const iconsToRender = isHome ? headerWhiteIcons : headerIcons;
 
-  const prepareCartItems = (response: CartItemResponse[],currency:string) => {
-		setCartItems(
-			response?.map((item:any) => ({
-				id: item?.itemId,
-				name: item?.itemText,
-				description: "",
-				quantity: item?.quantity,
-				price: item?.price,
-				currency: currency,
-				productImage:
-					item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ??
-					"",
-			})),
-		);
-	};
+  const prepareCartItems = (response: CartItemResponse[], currency: string) => {
+    setCartItems(
+      response?.map((item: any) => ({
+        id: item?.itemId,
+        name: item?.itemText,
+        description: "",
+        quantity: item?.quantity,
+        price: item?.price,
+        currency: currency,
+        productImage:
+          item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ??
+          "",
+      }))
+    );
+  };
 
   const handleCartClick = async () => {
     const basketId = await sessionStorage.getItem("basketId");
     if (basketId) {
-      const { data} = await getCustomerBasket({
-        variables: { basketId: basketId },
-		fetchPolicy: 'network-only',
-      });
-      prepareCartItems(data?.getBasket?.productItems,data?.getBasket?.currency);
+      const response = await graphqlRequest(GET_BASKET, { basketId });
+      prepareCartItems(
+        response?.getBasket?.productItems,
+        response?.getBasket?.currency
+      );
     } else {
-		setCartItems([])
+      setCartItems([]);
     }
     setOpen(true);
   };
@@ -337,7 +336,9 @@ const Header: React.FC<HeaderProps> = ({
             }
           })}
         </div>
-        {open && <MiniCart cartItems={cartItems} open={open} onOpenChange={setOpen} />}
+        {open && (
+          <MiniCart cartItems={cartItems} open={open} onOpenChange={setOpen} />
+        )}
       </div>
     </div>
   );

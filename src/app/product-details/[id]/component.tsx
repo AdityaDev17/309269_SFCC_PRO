@@ -17,7 +17,9 @@ import {
 import Accordion from "@/components/molecules/Accordion/Accordion";
 import VarientSelector from "@/components/molecules/VarientSelector/VarientSelector";
 import Gallery from "@/components/organisms/Gallery/Gallery";
-import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useLazyQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
@@ -49,21 +51,32 @@ export default function ProductDetails() {
 		productImage: string;
 	}
 	[];
-	const params = useParams();
-	const productId = params?.id;
+	const { id } = useParams() as { id: string };
+	const productId = id;
 	const [open, setOpen] = useState(false);
 	const [cartItems, setCartItems] = useState<CartItems[]>([]);
 
-	const [createCart] = useMutation(CREATE_CART, {});
+	const createCart = useMutation({
+		mutationFn: (input: { items: { productId: string; quantity: number }[] }) =>
+			graphqlRequest(CREATE_CART, { input }),
+	});
 
-	const [addItemToBasket] = useMutation(ADD_ITEM_TO_BASKET, {});
+	const addItemToBasket = useMutation({
+		mutationFn: (input: {
+			basketId: string;
+			items: { productId: string; quantity: number }[];
+		}) => graphqlRequest(ADD_ITEM_TO_BASKET, { input }),
+	});
 
-	const [getCustomerProductList] = useLazyQuery(GET_CUSTOMER_PRODUCTLIST, {});
+	// const [getCustomerProductList] = useLazyQuery(GET_CUSTOMER_PRODUCTLIST, {});
 
-	const [addItemToProductList] = useMutation(ADD_ITEM_TO_PRODUCTLIST, {});
+	// const [addItemToProductList] = useMutation(ADD_ITEM_TO_PRODUCTLIST, {});
 
-	const { data } = useQuery(GET_PRODUCT_DETAILS, {
-		variables: { productId: productId },
+	const { data } = useQuery({
+		queryKey: ["Product"],
+		queryFn: () =>
+			graphqlRequest(GET_PRODUCT_DETAILS, { productId: productId }),
+		enabled: !!productId,
 	});
 	type ProductImage = {
 		link: string;
@@ -92,48 +105,47 @@ export default function ProductDetails() {
 	};
 
 	const addItemToProductLists = async () => {
-		const listId = localStorage.getItem("customerListId");
-		await addItemToProductList({
-			variables: {
-				input: {
-					customerId: "cdwXs3wHc2wHaRwrbKkqYYxHgY",
-					items: {
-						productId: "ACNPETS_124",
-						public: false,
-						quantity: 1,
-						priority: 1,
-						type: "product",
-					},
-					listId: listId,
-				},
-			},
-		});
+		// const listId = localStorage.getItem("customerListId");
+		// await addItemToProductList({
+		// 	variables: {
+		// 		input: {
+		// 			customerId: "cdwXs3wHc2wHaRwrbKkqYYxHgY",
+		// 			items: {
+		// 				productId: "ACNPETS_124",
+		// 				public: false,
+		// 				quantity: 1,
+		// 				priority: 1,
+		// 				type: "product",
+		// 			},
+		// 			listId: listId,
+		// 		},
+		// 	},
+		// });
 	};
 
 	const handleAddToWishlist = async () => {
-		const productListId = localStorage?.getItem("customerListId");
-		if (productListId) {
-			addItemToProductLists();
-		} else {
-			const { data, error } = await getCustomerProductList({
-				variables: {
-					customerId: "cdwXs3wHc2wHaRwrbKkqYYxHgY",
-				},
-			});
-
-			if (error) {
-				console.error("Error fetching product lists:", error);
-				return;
-			}
-			localStorage.setItem(
-				"customerListId",
-				data?.getCustomerProductLists?.data?.[0]?.id,
-			);
-			addItemToProductLists();
-		}
+		// const productListId = localStorage?.getItem("customerListId");
+		// if (productListId) {
+		// 	addItemToProductLists();
+		// } else {
+		// 	const { data, error } = await getCustomerProductList({
+		// 		variables: {
+		// 			customerId: "cdwXs3wHc2wHaRwrbKkqYYxHgY",
+		// 		},
+		// 	});
+		// 	if (error) {
+		// 		console.error("Error fetching product lists:", error);
+		// 		return;
+		// 	}
+		// 	localStorage.setItem(
+		// 		"customerListId",
+		// 		data?.getCustomerProductLists?.data?.[0]?.id,
+		// 	);
+		// 	addItemToProductLists();
+		// }
 	};
 
-	const prepareCartItems = (response: CartItemResponse[]) => {
+	const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 		setCartItems(
 			response?.map((item) => ({
 				id: item?.itemId,
@@ -141,7 +153,7 @@ export default function ProductDetails() {
 				description: "",
 				quantity: item?.quantity,
 				price: item?.price,
-				currency: "USD",
+				currency: currency,
 				productImage:
 					item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ??
 					"",
@@ -152,38 +164,23 @@ export default function ProductDetails() {
 	const handleClick = async () => {
 		const basketId = await sessionStorage.getItem("basketId");
 		if (basketId) {
-			const response = await addItemToBasket({
-				variables: {
-					input: {
-						basketId: basketId,
-						items: [
-							{
-								productId: productId,
-								quantity: 1,
-							},
-						],
-					},
-				},
+			const response = await addItemToBasket.mutateAsync({
+				basketId,
+				items: [{ productId, quantity: 1 }],
 			});
-			prepareCartItems(response?.data?.addToCart?.productItems);
-		} else {
-			const response = await createCart({
-				variables: {
-					input: {
-						items: [
-							{
-								productId: productId,
-								quantity: 1,
-							},
-						],
-					},
-				},
-			});
-			prepareCartItems(response?.data?.createCart?.productItems);
-			sessionStorage.setItem(
-				"basketId",
-				response?.data?.createCart?.basketId ?? "",
+			prepareCartItems(
+				response?.addToCart?.productItems,
+				response?.addToCart?.currency,
 			);
+		} else {
+			const response = await createCart.mutateAsync({
+				items: [{ productId, quantity: 1 }],
+			});
+			prepareCartItems(
+				response?.createCart?.productItems,
+				response?.addToCart?.currency,
+			);
+			sessionStorage.setItem("basketId", response?.createCart?.basketId ?? "");
 		}
 		setOpen(true);
 	};

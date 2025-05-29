@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-export const GET_PRODUCT_DETAILS = gql`
+export const GET_PRODUCT_DETAILS = `
   query GetProductDetails($productId: String!) {
     getProductDetails(productId: $productId) {
       name
@@ -19,7 +19,7 @@ export const GET_PRODUCT_DETAILS = gql`
     }
   }
 `;
-export const CREATE_CART = gql`
+export const CREATE_CART = `
   mutation CreateCart($input: CartInput!) {
     createCart(input: $input) {
       basketId
@@ -49,7 +49,7 @@ export const CREATE_CART = gql`
     }
   }
 `;
-export const ADD_ITEM_TO_BASKET = gql`
+export const ADD_ITEM_TO_BASKET = `
   mutation AddToCart($input: AddToCartInput!) {
     addToCart(input: $input) {
       basketId
@@ -75,7 +75,7 @@ export const ADD_ITEM_TO_BASKET = gql`
     }
   }
 `;
-export const GET_CUSTOMER_PRODUCTLIST = gql`
+export const GET_CUSTOMER_PRODUCTLIST = `
   query GetCustomerProductLists($customerId: ID!) {
     getCustomerProductLists(customerId: $customerId) {
       data {
@@ -84,7 +84,7 @@ export const GET_CUSTOMER_PRODUCTLIST = gql`
     }
   }
 `;
-export const ADD_ITEM_TO_PRODUCTLIST = gql`
+export const ADD_ITEM_TO_PRODUCTLIST = `
   mutation AddToWishlist($input: WishlistInput!) {
     addToWishlist(input: $input) {
       id
@@ -95,7 +95,7 @@ export const ADD_ITEM_TO_PRODUCTLIST = gql`
     }
   }
 `;
-export const GET_BASKET = gql`
+export const GET_BASKET = `
   query GetBasket($basketId: ID!) {
     getBasket(basketId: $basketId) {
       basketId

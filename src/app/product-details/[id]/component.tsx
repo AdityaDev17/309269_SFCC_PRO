@@ -1,5 +1,5 @@
 "use client";
-import { cartItems, colorData, productDetails, sizes } from "@/common/constant";
+import { colorData, productDetails, sizes } from "@/common/constant";
 import {
 	ADD_ITEM_TO_BASKET,
 	ADD_ITEM_TO_PRODUCTLIST,
@@ -18,7 +18,6 @@ import Accordion from "@/components/molecules/Accordion/Accordion";
 import VarientSelector from "@/components/molecules/VarientSelector/VarientSelector";
 import Gallery from "@/components/organisms/Gallery/Gallery";
 import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useLazyQuery } from "@apollo/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useState } from "react";
@@ -59,6 +58,7 @@ export default function ProductDetails() {
 	const createCart = useMutation({
 		mutationFn: (input: { items: { productId: string; quantity: number }[] }) =>
 			graphqlRequest(CREATE_CART, { input }),
+		retry: 3,
 	});
 
 	const addItemToBasket = useMutation({
@@ -66,6 +66,7 @@ export default function ProductDetails() {
 			basketId: string;
 			items: { productId: string; quantity: number }[];
 		}) => graphqlRequest(ADD_ITEM_TO_BASKET, { input }),
+		retry: 3,
 	});
 
 	// const [getCustomerProductList] = useLazyQuery(GET_CUSTOMER_PRODUCTLIST, {});
@@ -73,7 +74,7 @@ export default function ProductDetails() {
 	// const [addItemToProductList] = useMutation(ADD_ITEM_TO_PRODUCTLIST, {});
 
 	const { data } = useQuery({
-		queryKey: ["Product"],
+		queryKey: ["Product",productId],
 		queryFn: () =>
 			graphqlRequest(GET_PRODUCT_DETAILS, { productId: productId }),
 		enabled: !!productId,

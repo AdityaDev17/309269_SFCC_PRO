@@ -1,10 +1,8 @@
 import { productData } from "@/common/constant";
-import { GET_PRODUCT_DETAILS } from "@/common/schema";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";
 import Banner from "@/components/molecules/Banner/Banner";
 import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
-import { getClient } from "@/lib/apolloClient";
 import ProductDetails from "./component";
 import styles from "./page.module.css";
 export default async function ProductDetailsPage({
@@ -13,17 +11,6 @@ export default async function ProductDetailsPage({
 	params: Promise<{ id: string }>;
 }) {
 	const { id } = await params;
-	//   const client = getClient();
-
-	//   try {
-	//     const { data } = await client.query({
-	//       query: GET_PRODUCT_DETAILS,
-	//       variables: { productId: id },
-	//     });
-	//     console.log(data);
-	//   } catch (err) {
-	//     console.error(JSON.stringify(err, null, 2));
-	//   }
 
 	return (
 		<section className={styles.layout}>

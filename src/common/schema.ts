@@ -125,7 +125,7 @@ export const GET_BASKET = `
     }
   }
 `;
-export const WISHLIST_DATA = gql`
+export const WISHLIST_DATA = `
     query GetWishlist($customerId: ID!) {
       getWishlist(customerId: $customerId) {
         data {
@@ -151,4 +151,4 @@ export const WISHLIST_DATA = gql`
         }
       }
     }
-  `;
+`;

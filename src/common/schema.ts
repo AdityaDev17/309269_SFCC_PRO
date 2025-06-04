@@ -40,6 +40,46 @@ export const GET_PRODUCT_LIST = `
     }
   }
 `;
+export const GET_ORDER_DETAILS = `
+  query Query($orderId: ID!) {
+    orderInfo(orderId: $orderId) {
+      currency
+      orderNo
+      orderTotal
+      productItems {
+        price
+        productImage {
+          data {
+            imageGroups {
+              images {
+                alt
+                link
+              }
+            }
+          }
+        }
+        quantity
+        productId
+        productName
+      }
+      shipments {
+        shippingAddress {
+          address1
+          city
+          countryCode
+          fullName
+        }
+      }
+      creationDate
+      paymentInstruments {
+        paymentMethodId
+      }
+      taxTotal
+      productSubTotal
+      productTotal
+    }
+  }
+`;
 /*Page Schema Ends*/
 
 /*Basket Schema*/

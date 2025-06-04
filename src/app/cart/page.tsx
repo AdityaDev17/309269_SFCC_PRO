@@ -10,6 +10,7 @@ import Cart from "./component";
 
 export default function CartPage() {
 	const router = useRouter();
+	const basketId=sessionStorage.getItem("basketId")??""
 	return (
 		<section className={styles.container}>
 			<Breadcrumbs
@@ -26,7 +27,7 @@ export default function CartPage() {
 				label="BAG"
 			/>
 
-			<Cart />
+			<Cart basketId={basketId}/>
 			<section className={styles.productCarouselSection}>
 				<Typography
 					type="Body"

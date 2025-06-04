@@ -87,7 +87,7 @@ export default function ProductDetails() {
 		images: ProductImage[];
 	};
 
-	const galleryImages = data?.getProductDetails?.imageGroups
+	const galleryImages = data?.productDetails?.imageGroups &&data?.productDetails?.imageGroups
 		.flatMap((group: ImageGroup) => group?.images ?? [])
 		.map((image: ProductImage) => image?.link);
 
@@ -179,7 +179,7 @@ export default function ProductDetails() {
 			});
 			prepareCartItems(
 				response?.createCart?.productItems,
-				response?.addToCart?.currency,
+				response?.createCart?.currency,
 			);
 			sessionStorage.setItem("basketId", response?.createCart?.basketId ?? "");
 		}
@@ -190,7 +190,7 @@ export default function ProductDetails() {
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
 				<div className={styles.gallery}>
-					{data && galleryImages?.length !== 0 && (
+					{data?.productDetails?.imageGroups!=null && galleryImages?.length !== 0 && (
 						<Gallery images={galleryImages} />
 					)}
 				</div>
@@ -201,13 +201,13 @@ export default function ProductDetails() {
 					/>
 				</div>
 				<div className={styles.productDetails}>
-					<div className={styles.title}>{data?.getProductDetails?.name}</div>
+					<div className={styles.title}>{data?.productDetails?.name}</div>
 					<div className={styles.price}>
-						{data?.getProductDetails?.currency}&nbsp;
-						{data?.getProductDetails?.price}
+						{data?.productDetails?.currency}&nbsp;
+						{data?.productDetails?.price}
 					</div>
 					<div className={styles.desc}>
-						{data?.getProductDetails?.longDescription}
+						{data?.productDetails?.longDescription}
 					</div>
 					<div className={styles.varientSection}>
 						{/* <VarientSelector colors={colorData} onSelected={handleSelected} /> */}

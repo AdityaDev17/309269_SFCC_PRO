@@ -14,6 +14,7 @@ interface CartItem {
 	price: number;
 	currency: string;
 	productImage: string;
+	itemId:string;
 }
 
 interface CartItemListProps {
@@ -52,7 +53,7 @@ const CartItemList = ({
 
 	return (
 		<div>
-			{cartItems.map((item) => (
+			{cartItems?.map((item) => (
 				<div
 					key={item.id}
 					className={`${styles.bagContent} ${isWhiteBackground ? styles.whiteBackground : ""}`}
@@ -137,14 +138,14 @@ const CartItemList = ({
 											<QuantitySelector
 												updateQuantity={true}
 												onQuantityChange={(newQty) =>
-													onUpdateQuantity?.(item.id, newQty)
+													onUpdateQuantity?.(item.itemId, newQty)
 												}
 												qty={item.quantity}
 											/>
 											<Image
 												src="/images/delete.png"
 												alt="Delete"
-												onClick={() => onDeleteItem?.(item.id)}
+												onClick={() => onDeleteItem?.(item.itemId)}
 												className={styles.deleteIcon}
 												width={24}
 												height={24}
@@ -166,7 +167,7 @@ const CartItemList = ({
 												<QuantitySelector
 													updateQuantity={true}
 													onQuantityChange={(newQty) =>
-														onUpdateQuantity?.(item.id, newQty)
+														onUpdateQuantity?.(item.itemId, newQty)
 													}
 													qty={item.quantity}
 												/>
@@ -177,7 +178,7 @@ const CartItemList = ({
 													<Image
 														src="/images/delete.png"
 														alt="Delete"
-														onClick={() => onDeleteItem?.(item.id)}
+														onClick={() => onDeleteItem?.(item.itemId)}
 														className={styles.deleteIcon}
 														width={24}
 														height={24}
@@ -208,7 +209,7 @@ const CartItemList = ({
 								<QuantitySelector
 									updateQuantity={true}
 									onQuantityChange={(newQty) =>
-										onUpdateQuantity?.(item.id, newQty)
+										onUpdateQuantity?.(item.itemId, newQty)
 									}
 									qty={item.quantity}
 								/>
@@ -217,7 +218,7 @@ const CartItemList = ({
 									<Image
 										src="/images/delete.png"
 										alt="Delete"
-										onClick={() => onDeleteItem?.(item.id)}
+										onClick={() => onDeleteItem?.(item.itemId)}
 										className={styles.deleteIcon}
 										width={24}
 										height={24}

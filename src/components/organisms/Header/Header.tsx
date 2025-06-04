@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
-import { cartItems } from "../../../common/constant";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import {
@@ -131,8 +130,8 @@ const Header: React.FC<HeaderProps> = ({
     if (basketId) {
       const response = await graphqlRequest(GET_BASKET, { basketId });
       prepareCartItems(
-        response?.getBasket?.productItems,
-        response?.getBasket?.currency
+        response?.basketInfo?.productItems,
+        response?.basketInfo?.currency
       );
     } else {
       setCartItems([]);

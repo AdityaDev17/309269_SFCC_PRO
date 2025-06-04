@@ -1,24 +1,48 @@
-import { gql } from "@apollo/client";
-
+/*Page Schema*/
 export const GET_PRODUCT_DETAILS = `
-  query GetProductDetails($productId: String!) {
-    getProductDetails(productId: $productId) {
-      name
-      currency
-      longDescription
-      price
-      imageGroups {
-        images {
+  query ProductDetails($productId: String!) {
+  productDetails(productId: $productId) {
+    name
+    currency
+    longDescription
+    price
+    imageGroups {
+      images {
+        alt
+        link
+        title
+        disBaseLink
+      }
+      viewType
+    }
+  }
+}
+`;
+export const GET_PRODUCT_LIST = `
+  query GetProductList($getProductListId: String!) {
+    getProductList(id: $getProductListId) {
+      limit
+      hits {
+        currency
+        hitType
+        image {
           alt
+          disBaseLink
           link
           title
-          disBaseLink
         }
-        viewType
+        orderable
+        price
+        pricePerUnit
+        productId
+        productName
       }
     }
   }
 `;
+/*Page Schema Ends*/
+
+/*Basket Schema*/
 export const CREATE_CART = `
   mutation CreateCart($input: CartInput!) {
     createCart(input: $input) {
@@ -75,29 +99,9 @@ export const ADD_ITEM_TO_BASKET = `
     }
   }
 `;
-export const GET_CUSTOMER_PRODUCTLIST = `
-  query GetCustomerProductLists($customerId: ID!) {
-    getCustomerProductLists(customerId: $customerId) {
-      data {
-        id
-      }
-    }
-  }
-`;
-export const ADD_ITEM_TO_PRODUCTLIST = `
-  mutation AddToWishlist($input: WishlistInput!) {
-    addToWishlist(input: $input) {
-      id
-      priority
-      productId
-      public
-      quantity
-    }
-  }
-`;
 export const GET_BASKET = `
-  query GetBasket($basketId: ID!) {
-    getBasket(basketId: $basketId) {
+ query BasketInfo($basketId: ID!) {
+  basketInfo(basketId: $basketId) {
       basketId
       currency
       productSubTotal
@@ -122,6 +126,41 @@ export const GET_BASKET = `
         }
         productName
       }
+    }
+  }
+`;
+export const UPDATE_BASKET_ITEM = `
+  mutation UpdateBasketItem($input: UpdateBasket!) {
+  updateBasketItem(input: $input) {
+    basketId
+  }
+}`;
+export const DELETE_BASKET_ITEM = `
+mutation RemoveBasketItem($input: RemoveItem!) {
+  removeBasketItem(input: $input) {
+    basketId
+  }
+}`;
+/*Basket Schema Ends*/
+
+/*Customer product List(wishlist) Schema*/
+export const GET_CUSTOMER_PRODUCTLIST = `
+  query GetCustomerProductLists($customerId: ID!) {
+    getCustomerProductLists(customerId: $customerId) {
+      data {
+        id
+      }
+    }
+  }
+`;
+export const ADD_ITEM_TO_PRODUCTLIST = `
+  mutation AddToWishlist($input: WishlistInput!) {
+    addToWishlist(input: $input) {
+      id
+      priority
+      productId
+      public
+      quantity
     }
   }
 `;
@@ -152,3 +191,24 @@ export const WISHLIST_DATA = `
       }
     }
 `;
+/*Customer product List(wishlist) Schema Ends*/
+
+/*Access Token Schema */
+export const GET_ACCESS_TOKEN = `
+  mutation GetAccessToken($input: AccessTokenInput!) {
+    getAccessToken(input: $input) {
+      access_token
+      id_token
+      refresh_token
+      expires_in
+      refresh_token_expires_in
+      token_type
+      usid
+      customer_id
+      enc_user_id
+      idp_access_token
+      idp_refresh_token
+    }
+  }
+`;
+/*Access Token Schema Ends*/

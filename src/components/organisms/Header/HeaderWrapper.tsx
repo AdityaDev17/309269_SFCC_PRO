@@ -1,166 +1,98 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import React from "react";
+import { usePathname } from "next/navigation";
 import Header from "./Header";
+import { useQuery } from "@tanstack/react-query";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { GET_CATEGORIES } from "@/common/schema";
+interface Subcategory {
+  id: string;
+  name: string;
+  description?: string;
+  onlineSubCategoriesCount?: number;
+  parentCategoryId?: string;
+  c_enableCompare?: boolean;
+  c_showInMenu?: boolean;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  description?: string;
+  onlineSubCategoriesCount?: number;
+  parentCategoryId?: string;
+  parentCategoryTree?: { id: string; name: string }[];
+  c_enableCompare?: boolean;
+  c_showInMenu?: boolean;
+  subcategories?: {
+    data?: {
+      categories?: Subcategory[];
+    }[];
+  };
+}
 
 const HeaderWrapper = () => {
-	const pathname = usePathname();
-	const isHome = pathname === "/";
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
-	//   const categories = [
-	//   'MAKEUP',
-	//   'SKINCARE',
-	//   'FRAGRANCE',
-	//   'SUSTAINABILITY',
-	//   'SUBSCRIPTION',
-	//   'GLAM GUIDE',
-	//   'MORE',
-	// ];
+  const { data } = useQuery({
+    queryKey: ["Categories"],
+    queryFn: () => graphqlRequest(GET_CATEGORIES, { id: "root" }),
+    enabled: true,
+  });
 
-	const categories = [
-		{
-			name: "MAKEUP",
-			image: [
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-			],
-			subcategory: [
-				{
-					subCategoryName: "LIPS",
-					subcategory: ["Lipstick", "Liquid Lipstick", "Lip Liner", "Lip Balm"],
-				},
-				{
-					subCategoryName: "EYE",
-					subcategory: ["Eyeliner", "Eyebrow", "Eye Shadow", "Mascara"],
-				},
-				{
-					subCategoryName: "COMPLEXION",
-					subcategory: ["Blush", "Foundation", "Highlighter"],
-				},
-			],
-		},
-		{
-			name: "SKINCARE",
-			image: [
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-			],
-			subcategory: [
-				{
-					subCategoryName: "CLEANSER",
-					subcategory: ["Face Wash", "Peels & Scrubs", "Toner"],
-				},
-				{
-					subCategoryName: "MOISTURIZERS",
-					subcategory: [
-						"Face Moisturizer",
-						"Face Oil",
-						"Lotion",
-						"Night Cream",
-					],
-				},
-				{
-					subCategoryName: "SERUMS",
-					subcategory: ["Face Serum"],
-				},
-				{
-					subCategoryName: "UV PROTECTION",
-					subcategory: ["Sunscreen"],
-				},
-			],
-		},
-		{
-			name: "FRAGRANCE",
-			image: [
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-			],
-			subcategory: [
-				{
-					subCategoryName: "COLLECTIONS",
-					subcategory: ["For Men", "For Women"],
-				},
-			],
-		},
-		{
-			name: "SUSTAINABILITY",
-		},
-		{
-			name: "SUBSCRIPTION",
-		},
-		{
-			name: "GLAM GUIDE",
-		},
-		{
-			name: "MORE",
-			image: [
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-			],
-			subcategory: [
-				{
-					subCategoryName: "HANDBAGS",
-					subcategory: ["Top Handles", "Totes", "Mini Bags"],
-				},
-				{
-					subCategoryName: "JEWELLERY",
-					subcategory: ["Necklaces", "Rings", "Earrings", "Bracelets"],
-				},
-				{
-					subCategoryName: "GIFT",
-					subcategory: ["Festive Hampers", "Pink Teddy", "Earrings"],
-				},
-			],
-		},
-	];
+  const categoriesData = data?.categories?.categories || [];
 
-	const headerIcons = [
-		{ label: "Search", icon: "/images/search-normal.png" },
-		{ label: "Whishlist", icon: "/images/wishlist-normal.png" },
-		{ label: "CartBag", icon: "/images/bag-normal.png" },
-		{ label: "Profile", icon: "/images/profile-outline.png" },
-	];
+  const categories = categoriesData.map((category:Category) => {
+    const subcategoryList =
+      category.subcategories?.data?.[0]?.categories?.filter(Boolean) || [];
 
-	const headerWhiteIcons = [
-		{ label: "Search", icon: "/images/searchWhite.png" },
-		{ label: "Whishlist", icon: "/images/wishlistWhite.png" },
-		{ label: "CartBag", icon: "/images/catBagWhite.png" },
-		{ label: "Profile", icon: "/images/profileWhite.png" },
-	];
+    return {
+      name: category.name,
+      image: [
+        {
+          productImageUrl: "/images/default-subcategory.jpg",
+          productName: category.name,
+        },
+      ],
+      subcategory: subcategoryList.length
+        ? [
+            {
+              subCategoryName: category.name,
+              subcategory: subcategoryList.map((sub) => sub.name),
+            },
+          ]
+        : undefined,
+    };
+  });
 
-	return (
-		<Header
-			isHome={isHome}
-			logoImages={{
-				default: "/images/SFCCPRO.png",
-				white: "/images/SFCCPROWhite.png",
-			}}
-			categories={categories}
-			headerIcons={headerIcons}
-			headerWhiteIcons={headerWhiteIcons}
-		/>
-	);
+  const headerIcons = [
+    { label: "Search", icon: "/images/search.svg" },
+    { label: "Whishlist", icon: "/images/whishlist.svg" },
+    { label: "CartBag", icon: "/images/cartBag.svg" },
+    { label: "Profile", icon: "/images/profile.svg" },
+  ];
+
+  const headerWhiteIcons = [
+    { label: "Search", icon: "/images/search-white.svg" },
+    { label: "Whishlist", icon: "/images/whishlist-white.svg" },
+    { label: "CartBag", icon: "/images/cartBag_white.svg" },
+    { label: "Profile", icon: "/images/profile-white.svg" },
+  ];
+
+  return (
+    <Header
+      isHome={isHome}
+      logoImages={{
+        default: "/images/Elenor.svg",
+        white: "/images/Elenor-white.svg",
+      }}
+      categories={categories}
+      headerIcons={headerIcons}
+      headerWhiteIcons={headerWhiteIcons}
+    />
+  );
 };
 
 export default HeaderWrapper;

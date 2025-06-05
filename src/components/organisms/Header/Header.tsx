@@ -139,6 +139,11 @@ const Header: React.FC<HeaderProps> = ({
     setOpen(true);
   };
 
+  const handleItemClick=(name:string)=>{
+    console.log('name',name)
+    router.push(`/category/${name}`)
+  }
+
   return (
     <div className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
       <div className={styles.layout}>
@@ -211,7 +216,7 @@ const Header: React.FC<HeaderProps> = ({
                       {category.subcategory && category.image ? (
                         <>
                           <NavigationMenuTrigger>
-                            <span className={styles.category}>
+                            <span className={styles.category} onClick={()=>handleItemClick(category.name)}>
                               {category.name}
                             </span>
                           </NavigationMenuTrigger>
@@ -258,6 +263,7 @@ const Header: React.FC<HeaderProps> = ({
                                       <div
                                         key={index}
                                         className={styles.subcategoryContainer}
+                                        
                                       >
                                         <Typography
                                           type="Label"
@@ -272,6 +278,7 @@ const Header: React.FC<HeaderProps> = ({
                                                 key={index}
                                                 variant="link"
                                                 style={{ fontWeight: "500" }}
+                                                onClick={()=>handleItemClick(subcategoryName)}
                                               >
                                                 {subcategoryName}
                                               </Button>

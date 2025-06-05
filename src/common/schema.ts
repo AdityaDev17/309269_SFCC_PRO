@@ -80,6 +80,38 @@ export const GET_ORDER_DETAILS = `
     }
   }
 `;
+export const GET_CATEGORIES = `
+  query GetCategories($id: ID!) {
+    categories(id: $id) {
+      categories {
+        id
+        name
+        description
+        onlineSubCategoriesCount
+        parentCategoryId
+        parentCategoryTree {
+          id
+          name
+        }
+        c_enableCompare
+        c_showInMenu
+        subcategories {
+          data {
+            categories {
+              id
+              name
+              description
+              onlineSubCategoriesCount
+              parentCategoryId
+              c_enableCompare
+              c_showInMenu
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 /*Page Schema Ends*/
 
 /*Basket Schema*/

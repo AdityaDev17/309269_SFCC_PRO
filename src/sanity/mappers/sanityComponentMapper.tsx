@@ -2,23 +2,29 @@ import HeroBanner from "@/components/molecules/Banner/Banner";
 import ProductBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
 import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
 
-export function sanityComponentMapper(block: any) {
-  if (!block._type) return null;
+interface BaseSanityBlock {
+	_type: string;
+	variant?: string;
+	[key: string]: unknown;
+}
 
-  switch (block._type) {
-    case "banner":
-      switch (block.variant) {
-        case "hero":
-          return <HeroBanner {...block} />;
-        case "promo":
-          return <ProductBanner {...block} />;
-        case "statement":
-          return <StatementBanner {...block} />;
-        default:
-          return null;
-      }
+export function sanityComponentMapper(block: BaseSanityBlock) {
+	if (!block._type) return null;
 
-    default:
-      return null;
-  }
+	switch (block._type) {
+		case "banner":
+			switch (block.variant) {
+				case "hero":
+					return <HeroBanner {...block} />;
+				case "promo":
+					return <ProductBanner {...block} />;
+				case "statement":
+					return <StatementBanner {...block} />;
+				default:
+					return null;
+			}
+
+		default:
+			return null;
+	}
 }

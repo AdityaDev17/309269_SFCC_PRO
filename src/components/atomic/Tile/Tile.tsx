@@ -5,15 +5,38 @@ import styles from "./Tile.module.css";
 
 interface TileProps {
 	label: string;
-	href: string;
+	href?: string;
+	onClick?: () => void;
 }
 
-const Tile: React.FC<TileProps> = ({ label, href }) => {
+const Tile: React.FC<TileProps> = ({ label, href, onClick }) => {
+	if (href) {
+		return (
+			<Link
+				href={href}
+				className={styles.tile}
+				onClick={(e) => {
+					if (onClick) {
+						e.preventDefault();
+						onClick();
+					}
+				}}
+			>
+				<span>{label}</span>
+				<ChevronRight size={18} data-testid="chevron-icon" />
+			</Link>
+		);
+	}
+
 	return (
-		<Link href={href} className={styles.tile}>
+		<div
+			className={styles.tile}
+			onClick={onClick}
+			onKeyDown={(e) => e.key === "Enter" && onClick?.()}
+		>
 			<span>{label}</span>
 			<ChevronRight size={18} data-testid="chevron-icon" />
-		</Link>
+		</div>
 	);
 };
 

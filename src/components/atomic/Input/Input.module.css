@@ -2,30 +2,29 @@
   display:grid;
   height: 2.5rem;
   width: 100%;
-  border: 1px solid #b3b2b5;
-  background-color: #ffffff;
+  border: 1px solid var(--colour-border-tertiary);
+  background-color: var(--colour-background-primary);
   padding-right: 0.75rem;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   font-size: 0.875rem;
   outline: none;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  color: #4f4b53;
-  font-weight: 500;
+  color: var(--colour-button-border-secondary-hover);
+  font-weight: var(--font-weight-medium);
   padding-left: 0.5rem;
 }
 
 .Input:focus {
-  background-color: #ffffff;
-  border-color: #b3b2b5;
-  color: #4f4b53;
+  background-color: var(--colour-background-primary);
+  border-color: var(--colour-inputbox-border);
+  color: var(--colour-button-border-secondary-hover);
 }
 
 .Input:hover {
-  background-color: #fafafa;
-
-  border-color: #b3b2b5;
-  color: black;
+  background-color: var(--colour-background-secondary);
+  border-color: var(--colour-inputbox-border);
+  color: var(--colour-title-1);
 }
 
 .Input[type="search"]::-webkit-search-decoration,
@@ -36,13 +35,13 @@
 }
 
 .Input:-webkit-autofill {
-  background-color: #ffffff;
-  border: 1px solid #b3b2b5;
-  color: #4f4b53;
+  background-color: var(--colour-background-primary);
+  border: 1px solid var(--colour-inputbox-border);
+  color: var(--colour-button-border-secondary-hover);
 }
 
 .Input::placeholder {
-  color: black;
+  color: var(--colour-title-1);
 }
 
 .Input:focus-visible {
@@ -56,20 +55,20 @@
   cursor: not-allowed;
   opacity: 0.5;
   background-color: #f0f0f0;
-  border-color: #b3b2b5;
+  border-color: var(--colour-inputbox-border);
 }
 
 
 .Input:readonly {
   background-color: #f0f0f0;
-  border-color: #b3b2b5;
+  border-color: var(--colour-inputbox-border);
   color: #6c6c6c;
 }
 
 
 .Input.error {
-  border-color: #f44336;
-  color: #f44336;
+  border-color: var(--colour-label-mandatory-field);
+  color: var(--colour-label-mandatory-field);
 }
 
 

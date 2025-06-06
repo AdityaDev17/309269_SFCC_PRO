@@ -1,5 +1,6 @@
 import { StatementBannerProps } from "../components/molecules/StatementBanner/StatementBanner";
 import { alignmentType } from "../components/molecules/Banner/Banner";
+import { ButtonProps } from "../components/atomic/Button/Button";
 
 export const productDetails = {
   currency: "USD",
@@ -308,10 +309,12 @@ export const orderDetails = {
 export interface BannerData {
   title: string;
   buttonText: string;
+  buttonColor?: ButtonProps["variant"];
   description?: string;
   backgroundImage: string;
   alignment: alignmentType;
   buttonLink: string;
+  textColor?: string;
 }
 
 export interface ProductCard {
@@ -343,6 +346,8 @@ export const homepageBanners: BannerData[] = [
     backgroundImage: "/images/eternal-beauty.svg",
     alignment: "center-bottom",
     buttonLink: "",
+    textColor: "black",
+    buttonColor: "secondary"
   },
 ];
 

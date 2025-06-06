@@ -236,7 +236,7 @@ export default OrderSummary;
  * ### Example
  *
  * ```tsx
- * 
+ *
  *
  * export default function Page() {
  *   return (

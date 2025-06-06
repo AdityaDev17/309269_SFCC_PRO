@@ -1,9 +1,9 @@
 .footer {
     display: grid;
-    background-color: #1D1823;
+    background-color:var(--colour-background-footer-dark-1);
     container-type: inline-size;
-    padding: 0px 40px;
-    color:#FFFFFF;
+    padding: 0px var(--space-56);
+    color: var(--colour-text-tertiary);
   }
 .logoSection{
     display: grid;
@@ -13,9 +13,9 @@
     display: grid;
     grid-template-columns: 1fr 0.3fr;
     justify-content: space-between;
-    gap:10px;
+    gap:var(--space-20);
     padding: 26px 0;
-    border-bottom: 1.5px solid #4F4B53;
+    border-bottom: 1.5px solid var(--colour-border-subtle);
     @container (max-width: 700px) {
         grid-template-columns: 1fr;
         row-gap: 25px;
@@ -37,12 +37,12 @@
     text-decoration: underline;
 }
 .title{
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--size-font-size-300);
     text-transform: uppercase;
 }
 .buttonSection{
-    border-top: 1px solid #4F4B53;
+     border-top: 1px solid var(--colour-border-subtle);
     display: grid;
 }
 .buttonContainer{
@@ -51,7 +51,7 @@
     grid-template-columns: 1fr 0.3fr;
     justify-content: space-between;
     align-items: center;
-    gap:10px;
+    gap:var(--space-20);
     @container (max-width: 700px) {
         grid-template-columns: 1fr;
         row-gap: 25px;
@@ -60,14 +60,14 @@
 .row{
     padding-top: 15px;
     display: grid;
-    gap:20px;
-    color: #B3B2B5;
-    font-weight: 400;
-    font-size: 14px;
+    gap:var(--space-40);
+    color: var(--colour-link-3);
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-font-size-300);
 }
 .gap {
     display: grid;
     grid-auto-flow: column;
     justify-content: space-evenly;
-    gap: 5px;
+    gap: var(--space-12);
   }

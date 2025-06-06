@@ -1,8 +1,8 @@
 .container {
   height: auto;
   width: 100%;
-  background-color: #fafafa;
-  border: 1px solid #cccbce;
+  background-color: var(--colour-background-secondary);
+  border: 1px solid var(--colour-border-tertiary);
   padding: 30px;
 }
 
@@ -81,11 +81,11 @@
   justify-content: center;
   position: relative;
   /* z-index: 100; */
-  background-color: #ffffff;
-  border: 1px solid #4f4b53; /* default gray */
+  background-color: var(--colour-surface-primary);
+  border: 1px solid var(--colour-button-border-secondary); /* default gray */
   border-radius: 50%;
-  font-weight: 600;
-  color: white;
+  font-weight: var(--font-weight-semibold);
+  color: var(--colour-surface-primary);
 }
 .left {
   display: flex;
@@ -98,7 +98,7 @@
 
 /* Completed step (green) */
 .complete .step {
-  background-color: #4f4b53;
+  background-color: var(--colour-icon-secondary);
 }
 
 /* .complete:not(:first-child)::before,
@@ -112,7 +112,7 @@
 .verticalLine {
   width: 0px;
   height: 60px;
-  border-left: 2px dotted #cccbce;
+  border-left: 2px dotted var(--colour-border-tertiary);
   /* background-color: #e2e8f0; */
   position: absolute;
   top: -100%;
@@ -121,5 +121,5 @@
   /* z-index: -1; */
 }
 .complete .verticalLine {
-  border-left: 2px solid #cccbce;
+  border-left: 2px solid var(--colour-border-tertiary);
 }

@@ -1,5 +1,5 @@
 .Switch {
-     display: grid;
+    display: grid;
     height: 1.5rem; 
     width: 2.75rem; 
     grid-template-columns: 1fr; 
@@ -13,7 +13,7 @@
     transition-duration: 0.3s; 
     outline: none; 
     padding: 0;
-    background-color:#ffffff;
+    background-color: var(--colour-background-primary);
   }
   
   
@@ -23,11 +23,11 @@
   }
   
   .Switch[data-state="checked"] {
-    background-color: black;
+    background-color: var(--colour-background-overlay);
   }
   
   .Switch[data-state="unchecked"] {
-    background-color: gray; 
+    background-color: var(--colour-border-disable);
   }
   
   .SwitchThumb {
@@ -36,7 +36,7 @@
     height: 1.25rem; 
     width: 1.25rem; 
     border-radius: 50%; 
-    background-color: #ffffff; 
+    background-color: var(--colour-background-primary);
     box-shadow: 0 1px 3px hsl(var(--background) / 0.50); 
     outline: none; 
     transition-property: transform; 

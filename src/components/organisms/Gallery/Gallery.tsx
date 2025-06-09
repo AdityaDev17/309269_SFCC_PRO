@@ -49,7 +49,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 					const isSelected = idx === activeIndex;
 					return (
 						<div
-							key={`${img}-${idx}`} // safer key
+							key={`${img}`} // safer key
 							onMouseEnter={() => {
 								setMainImage(img);
 								setActiveIndex(idx);

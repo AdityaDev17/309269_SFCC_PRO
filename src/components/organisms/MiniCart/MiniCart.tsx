@@ -49,7 +49,7 @@ const MiniCart = ({
 
 	return (
 		<Drawer open={open} onOpenChange={onOpenChange} side="right">
-			<DrawerTrigger asChild></DrawerTrigger>
+			<DrawerTrigger asChild />
 			<DrawerContent side="right">
 				<DrawerHeader className={styles.bagHeader}>
 					<div className={styles.bagWrapper}>

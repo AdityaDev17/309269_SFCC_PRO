@@ -24,7 +24,7 @@ export interface CartItem {
 	price: number;
 	currency: string;
 	productImage: string;
-	itemId:string;
+	itemId: string;
 }
 
 interface MiniCartProps {

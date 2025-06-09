@@ -31,7 +31,7 @@ export default function ProductDetails() {
 		productName: string;
 		quantity: number;
 		price: number;
-    productId:string;
+		productId: string;
 		productImage?: {
 			data?: {
 				imageGroups?: {
@@ -50,7 +50,7 @@ export default function ProductDetails() {
 		price: number;
 		currency: string;
 		productImage: string;
-    itemId:string
+		itemId: string;
 	}
 	[];
 	const { id } = useParams() as { id: string };
@@ -175,7 +175,7 @@ export default function ProductDetails() {
 		setCartItems(
 			response?.map((item) => ({
 				id: item?.productId,
-        itemId:item?.itemId,
+				itemId: item?.itemId,
 				name: item?.productName,
 				description: "",
 				quantity: item?.quantity,

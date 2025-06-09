@@ -199,7 +199,6 @@ export default function ProductDetails() {
 				response?.addToCart?.productItems,
 				response?.addToCart?.currency,
 			);
-			sonnerToast.success("Added to basket", {});
 		} else {
 			const response = await createCart.mutateAsync({
 				items: [{ productId, quantity: 1 }],
@@ -208,7 +207,6 @@ export default function ProductDetails() {
 				response?.createCart?.productItems,
 				response?.createCart?.currency,
 			);
-			sonnerToast.success("Added to basket", {});
 			sessionStorage.setItem("basketId", response?.createCart?.basketId ?? "");
 		}
 		setOpen(true);

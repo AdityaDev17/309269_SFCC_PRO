@@ -60,6 +60,7 @@ interface CartItems {
   price: number;
   currency: string;
   productImage: string;
+  itemId:string;
 }
 [];
 
@@ -112,12 +113,13 @@ const Header: React.FC<HeaderProps> = ({
   const prepareCartItems = (response: CartItemResponse[], currency: string) => {
     setCartItems(
       response?.map((item: any) => ({
-        id: item?.itemId,
+        id: item?.productId,
         name: item?.itemText,
         description: "",
         quantity: item?.quantity,
         price: item?.price,
         currency: currency,
+        itemId:item?.itemId,
         productImage:
           item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ??
           "",

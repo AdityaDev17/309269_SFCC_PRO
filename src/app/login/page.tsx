@@ -1,4 +1,9 @@
 "use client";
+import { REGISTER } from "@/common/schema";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { gql } from "@apollo/client";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
 import Login from "../../components/molecules/Login/Login";
@@ -6,12 +11,98 @@ import SignUp from "../../components/molecules/SignUp/SignUp";
 import LoginComponent from "./component";
 import styles from "./login.module.css";
 
+type formDataProps = {
+	title: string;
+	firstName: string;
+	lastName: string;
+	gender: string;
+	birthDate: string;
+	email: string;
+	password: string;
+	confirmPassword: string;
+	agreeToTerms: boolean;
+};
+
 const page = () => {
 	const [isLogin, setIsLogin] = useState(true);
+	const router = useRouter();
+	// const [postRegisterMutation] = useMutation(postRegistration);
+	const postRegisterMutation = useMutation({
+		mutationFn: (input: {
+			credential: {
+				password: string;
+				customer: {
+					login: string;
+					lastName: string;
+					email: string;
+					title: string;
+					salutation: string;
+					gender: number;
+					birthday: string;
+					firstName: string;
+				};
+			};
+		}) => graphqlRequest(REGISTER, { input }),
+		retry: 3,
+	});
 
 	const createAccountHandler = () => {
 		setIsLogin(false);
 	};
+
+	const loginClickHandler = (formData: { email: string; password: string }) => {
+		// const authResponse = await loginCustomer()
+		// console.log("Auth response received:", JSON.stringify(authResponse, null, 2))
+		const { email, password } = formData;
+		fetch("/api/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				email,
+				password,
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				Object.entries(data).map(([key, value]) => {
+					sessionStorage.setItem(key, String(value));
+				});
+				router.push("/");
+				const expiryTime = Date.now() + data.expires_in * 1000;
+				sessionStorage.setItem("sfcc_token_expiry", expiryTime.toString());
+			})
+			.catch((error) => console.error("Login error ", error));
+	};
+
+	const signUpHandler = (formData: formDataProps) => {
+		console.log("FormData", formData);
+		const { title, gender, firstName, lastName, birthDate, email, password } =
+			formData;
+		const genderBool = gender === "male" ? 1 : gender === "female" ? 0 : 2;
+
+		postRegisterMutation
+			.mutateAsync({
+				credential: {
+					password: `${password}`,
+					customer: {
+						login: `${email}`,
+						lastName: `${lastName}`,
+						email: `${email}`,
+						title: `${title}`,
+						salutation: `${title}`,
+						gender: genderBool,
+						birthday: `${birthDate}`,
+						firstName: `${firstName}`,
+					},
+				},
+			})
+			.then((response) => response.json())
+			.then((data) => console.log(data))
+			.catch((error) => console.error("Login error ", error));
+	};
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.navigation}>
@@ -25,9 +116,12 @@ const page = () => {
 			</div>
 			<div className={styles.loginContainer}>
 				{isLogin ? (
-					<Login onCreateAccount={createAccountHandler} />
+					<Login
+						onLoginClicked={loginClickHandler}
+						onCreateAccount={createAccountHandler}
+					/>
 				) : (
-					<SignUp />
+					<SignUp onProceed={signUpHandler} />
 				)}
 			</div>
 			<LoginComponent showLogo={isLogin} />

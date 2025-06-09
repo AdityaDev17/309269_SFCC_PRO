@@ -4,6 +4,7 @@ import {
 	ADD_ITEM_TO_BASKET,
 	ADD_ITEM_TO_PRODUCTLIST,
 	CREATE_CART,
+	CREATE_CUSTOMER_PRODUCT_LIST,
 	GET_CUSTOMER_PRODUCTLIST,
 	GET_PRODUCT_DETAILS,
 } from "@/common/schema";
@@ -15,7 +16,7 @@ import {
 	SelectTrigger,
 } from "@/components/atomic/Select/Select";
 import Accordion from "@/components/molecules/Accordion/Accordion";
-import VarientSelector from "@/components/molecules/VarientSelector/VarientSelector";
+import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
 import Gallery from "@/components/organisms/Gallery/Gallery";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -54,6 +55,7 @@ export default function ProductDetails() {
 	const productId = id;
 	const [open, setOpen] = useState(false);
 	const [cartItems, setCartItems] = useState<CartItems[]>([]);
+	const [toast, setToast] = useState(false);
 
 	const createCart = useMutation({
 		mutationFn: (input: { items: { productId: string; quantity: number }[] }) =>
@@ -69,12 +71,28 @@ export default function ProductDetails() {
 		retry: 3,
 	});
 
-	// const [getCustomerProductList] = useLazyQuery(GET_CUSTOMER_PRODUCTLIST, {});
-
-	// const [addItemToProductList] = useMutation(ADD_ITEM_TO_PRODUCTLIST, {});
+	const createCustomerProductList = useMutation({
+		mutationFn: (input: { customerId: string; type: string }) =>
+			graphqlRequest(CREATE_CUSTOMER_PRODUCT_LIST, { input }),
+		retry: 3,
+	});
+	const addItemToProductList = useMutation({
+		mutationFn: (input: {
+			customerId: string;
+			listId: string;
+			items: {
+				productId: string;
+				quantity: number;
+				public: boolean;
+				priority: number;
+				type: string;
+			};
+		}) => graphqlRequest(ADD_ITEM_TO_PRODUCTLIST, { input }),
+		retry: 3,
+	});
 
 	const { data } = useQuery({
-		queryKey: ["Product",productId],
+		queryKey: ["Product", productId],
 		queryFn: () =>
 			graphqlRequest(GET_PRODUCT_DETAILS, { productId: productId }),
 		enabled: !!productId,
@@ -87,8 +105,8 @@ export default function ProductDetails() {
 		images: ProductImage[];
 	};
 
-	const galleryImages = data?.productDetails?.imageGroups &&data?.productDetails?.imageGroups
-		.flatMap((group: ImageGroup) => group?.images ?? [])
+	const galleryImages = data?.productDetails?.imageGroups
+		?.flatMap((group: ImageGroup) => group?.images ?? [])
 		.map((image: ProductImage) => image?.link);
 
 	const accordionData = productDetails?.pageMetaTags?.map((item) => ({
@@ -105,45 +123,50 @@ export default function ProductDetails() {
 		console.log("Selectedvarient", selected);
 	};
 
-	const addItemToProductLists = async () => {
-		// const listId = localStorage.getItem("customerListId");
-		// await addItemToProductList({
-		// 	variables: {
-		// 		input: {
-		// 			customerId: "cdwXs3wHc2wHaRwrbKkqYYxHgY",
-		// 			items: {
-		// 				productId: "ACNPETS_124",
-		// 				public: false,
-		// 				quantity: 1,
-		// 				priority: 1,
-		// 				type: "product",
-		// 			},
-		// 			listId: listId,
-		// 		},
-		// 	},
-		// });
+	const addItemToProductLists = async (listId: string, customerId: string) => {
+		await addItemToProductList.mutateAsync({
+			customerId,
+			listId,
+			items: {
+				productId: productId,
+				public: false,
+				quantity: 1,
+				priority: 1,
+				type: "product",
+			},
+		});
 	};
 
 	const handleAddToWishlist = async () => {
-		// const productListId = localStorage?.getItem("customerListId");
-		// if (productListId) {
-		// 	addItemToProductLists();
-		// } else {
-		// 	const { data, error } = await getCustomerProductList({
-		// 		variables: {
-		// 			customerId: "cdwXs3wHc2wHaRwrbKkqYYxHgY",
-		// 		},
-		// 	});
-		// 	if (error) {
-		// 		console.error("Error fetching product lists:", error);
-		// 		return;
-		// 	}
-		// 	localStorage.setItem(
-		// 		"customerListId",
-		// 		data?.getCustomerProductLists?.data?.[0]?.id,
-		// 	);
-		// 	addItemToProductLists();
-		// }
+		const customerId = sessionStorage.getItem("customer_id") ?? "";
+		const response = await graphqlRequest(GET_CUSTOMER_PRODUCTLIST, {
+			customerId,
+		});
+
+		if (response?.customerProductListsInfo?.data) {
+			const wishLists =
+				response?.customerProductListsInfo?.data?.filter(
+					(list: { type: string }) => list.type === "wish_list",
+				) || [];
+			const isItemInWishlist = wishLists?.[0]?.customerProductListItems?.find(
+				(i: { productId: string }) => i.productId === productId,
+			);
+			if (!isItemInWishlist) {
+				sonnerToast.success("Added to wishlist", {});
+				addItemToProductLists(wishLists?.[0]?.id, customerId);
+			} else {
+				sonnerToast.success("Already in wishlist", {});
+			}
+		} else {
+			const response = await createCustomerProductList.mutateAsync({
+				customerId,
+				type: "wish_list",
+			});
+			addItemToProductLists(
+				response?.createCustomerProductList?.id,
+				customerId,
+			);
+		}
 	};
 
 	const prepareCartItems = (response: CartItemResponse[], currency: string) => {
@@ -173,6 +196,7 @@ export default function ProductDetails() {
 				response?.addToCart?.productItems,
 				response?.addToCart?.currency,
 			);
+			sonnerToast.success("Added to basket", {});
 		} else {
 			const response = await createCart.mutateAsync({
 				items: [{ productId, quantity: 1 }],
@@ -181,6 +205,7 @@ export default function ProductDetails() {
 				response?.createCart?.productItems,
 				response?.createCart?.currency,
 			);
+			sonnerToast.success("Added to basket", {});
 			sessionStorage.setItem("basketId", response?.createCart?.basketId ?? "");
 		}
 		setOpen(true);
@@ -190,9 +215,8 @@ export default function ProductDetails() {
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
 				<div className={styles.gallery}>
-					{data?.productDetails?.imageGroups!=null && galleryImages?.length !== 0 && (
-						<Gallery images={galleryImages} />
-					)}
+					{data?.productDetails?.imageGroups != null &&
+						galleryImages?.length !== 0 && <Gallery images={galleryImages} />}
 				</div>
 				<div className={styles.accordion}>
 					<Accordion
@@ -255,6 +279,7 @@ export default function ProductDetails() {
 			{open && (
 				<MiniCart cartItems={cartItems} open={open} onOpenChange={setOpen} />
 			)}
+			<Toaster />
 		</section>
 	);
 }

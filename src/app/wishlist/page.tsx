@@ -1,5 +1,6 @@
 "use client";
 import { WISHLIST_DATA } from "@/common/schema";
+import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
@@ -9,7 +10,6 @@ import { Toaster } from "../../components/molecules/Toast/Toast";
 import ProductImageCarousel from "../../components/organisms/ProductImageCarousel/ProductImageCarousel";
 import ButtonList from "./component";
 import styles from "./wishlist.module.css";
-import { graphqlRequest } from "@/lib/graphqlRequest";
 interface WishlistImage {
 	alt: string;
 	link: string;
@@ -38,14 +38,16 @@ type CustomerProductListItem = {
 };
 
 function Wishlist() {
-	const customerId="ablbs1kXg1lbgRmukUlqYYxKdI"
-	
+	const customerId = "ablbs1kXg1lbgRmukUlqYYxKdI";
+
 	const { data } = useQuery({
-			queryKey: ["Wishlist",customerId],
-			queryFn: () =>
-				graphqlRequest(WISHLIST_DATA, { customerId: "ablbs1kXg1lbgRmukUlqYYxKdI" }),
-			enabled: !!customerId,
-		});
+		queryKey: ["Wishlist", customerId],
+		queryFn: () =>
+			graphqlRequest(WISHLIST_DATA, {
+				customerId: "ablbs1kXg1lbgRmukUlqYYxKdI",
+			}),
+		enabled: !!customerId,
+	});
 
 	const wishlistData =
 		data?.getWishlist?.data?.[0]?.customerProductListItems?.map(

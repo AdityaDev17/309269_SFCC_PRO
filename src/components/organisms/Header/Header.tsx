@@ -143,6 +143,12 @@ const Header: React.FC<HeaderProps> = ({
     console.log('name',name)
     router.push(`/category/${name}`)
   }
+   const handleIconClick=(name:string)=>{
+    if(name==='Profile')
+    {
+      router.push(`/login`)
+    }
+  }
 
   return (
     <div className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
@@ -337,6 +343,7 @@ const Header: React.FC<HeaderProps> = ({
                   alt={label}
                   width={20}
                   height={20}
+                  onClick={()=>handleIconClick(label)}
                 />
               );
             }

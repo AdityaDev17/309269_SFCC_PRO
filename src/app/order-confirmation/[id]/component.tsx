@@ -4,7 +4,6 @@ import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";
-import { gql } from "@apollo/client";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";

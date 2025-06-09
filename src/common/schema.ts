@@ -112,6 +112,22 @@ export const GET_CATEGORIES = `
     }
   }
 `;
+export const REGISTER = `
+    mutation RegisterCustomerHandler($input: RegisterInput!) {
+        registerCustomerHandler(input: $input) {
+            authType
+            creationDate
+            customerId
+            customerNo
+            email
+            enabled
+            firstName
+            lastModified
+            lastName
+            login
+        }
+    }
+`;
 /*Page Schema Ends*/
 
 /*Basket Schema*/
@@ -217,14 +233,25 @@ mutation RemoveBasketItem($input: RemoveItem!) {
 
 /*Customer product List(wishlist) Schema*/
 export const GET_CUSTOMER_PRODUCTLIST = `
-  query GetCustomerProductLists($customerId: ID!) {
-    getCustomerProductLists(customerId: $customerId) {
-      data {
-        id
+  query CustomerProductListsInfo($customerId: ID!) {
+  customerProductListsInfo(customerId: $customerId) {
+    data {
+      id
+      type
+      customerProductListItems {
+        productId
       }
     }
   }
+}
 `;
+export const CREATE_CUSTOMER_PRODUCT_LIST = `
+  mutation CreateCustomerProductList($input: CreateCustomerProductList!) {
+  createCustomerProductList(input: $input) {
+    id
+    type
+  }
+}`;
 export const ADD_ITEM_TO_PRODUCTLIST = `
   mutation AddToWishlist($input: WishlistInput!) {
     addToWishlist(input: $input) {

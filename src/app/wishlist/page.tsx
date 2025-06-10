@@ -44,7 +44,7 @@ function Wishlist() {
 		queryKey: ["Wishlist", customerId],
 		queryFn: () =>
 			graphqlRequest(WISHLIST_DATA, {
-				customerId
+				customerId,
 			}),
 		enabled: !!customerId,
 	});

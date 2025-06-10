@@ -1,0 +1,253 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "options": {
+          "source": "title"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "price",
+        "type": "number"
+      },
+      {
+        "initialValue": "USD",
+        "name": "currency",
+        "type": "string"
+      },
+      {
+        "name": "longDescription",
+        "type": "text"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "of": [
+                  {
+                    "fields": [
+                      {
+                        "name": "image",
+                        "type": "image"
+                      }
+                    ],
+                    "type": "object"
+                  }
+                ],
+                "name": "images",
+                "type": "array"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "imageGroups",
+        "type": "array"
+      },
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "id",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "type": "text"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "metaTags",
+        "type": "array"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "publishedAt",
+        "type": "datetime"
+      }
+    ],
+    "name": "product",
+    "type": "document"
+  },
+  {
+    "fields": [
+      {
+        "name": "title",
+        "type": "string"
+      },
+      {
+        "name": "buttonText",
+        "type": "string"
+      },
+      {
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "name": "backgroundImage",
+        "type": "image"
+      },
+      {
+        "options": {
+          "list": [
+            "left-top",
+            "center",
+            "right-bottom"
+          ]
+        },
+        "name": "alignment",
+        "type": "string"
+      },
+      {
+        "name": "order",
+        "type": "number"
+      }
+    ],
+    "name": "banner",
+    "type": "document",
+    "title": "Homepage Banner"
+  },
+  {
+    "fields": [
+      {
+        "of": [
+          {
+            "fields": [
+              {
+                "name": "title",
+                "type": "string"
+              },
+              {
+                "name": "description",
+                "type": "text"
+              },
+              {
+                "name": "buttonText",
+                "type": "string"
+              },
+              {
+                "options": {
+                  "list": [
+                    "left",
+                    "center",
+                    "right"
+                  ]
+                },
+                "name": "alignment",
+                "type": "string",
+                "title": "Text Alignment"
+              },
+              {
+                "options": {
+                  "hotspot": true
+                },
+                "name": "backgroundImage",
+                "type": "image"
+              }
+            ],
+            "type": "object"
+          }
+        ],
+        "name": "banners",
+        "type": "array"
+      },
+      {
+        "fields": [
+          {
+            "name": "imageSrc",
+            "type": "image",
+            "title": "Image"
+          },
+          {
+            "name": "imageAlt",
+            "type": "string",
+            "title": "Image Alt Text"
+          },
+          {
+            "options": {
+              "list": [
+                "left",
+                "right"
+              ]
+            },
+            "name": "imagePosition",
+            "type": "string"
+          },
+          {
+            "name": "heading",
+            "type": "string"
+          },
+          {
+            "name": "subheading",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "text"
+          }
+        ],
+        "name": "statementBanner",
+        "type": "object"
+      }
+    ],
+    "name": "homepage",
+    "type": "document",
+    "title": "Homepage Content"
+  }
+]

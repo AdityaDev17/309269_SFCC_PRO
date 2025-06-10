@@ -150,6 +150,10 @@ const Header: React.FC<HeaderProps> = ({
     {
       router.push(`/login`)
     }
+    else if(name==="Whishlist")
+    {
+      router.push(`/wishlist`)
+    }
   }
 
   return (

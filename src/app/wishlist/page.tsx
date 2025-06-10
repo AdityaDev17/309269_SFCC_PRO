@@ -38,13 +38,13 @@ type CustomerProductListItem = {
 };
 
 function Wishlist() {
-	const customerId = "ablbs1kXg1lbgRmukUlqYYxKdI";
+	const customerId = sessionStorage.getItem("customer_id") ?? "";
 
 	const { data } = useQuery({
 		queryKey: ["Wishlist", customerId],
 		queryFn: () =>
 			graphqlRequest(WISHLIST_DATA, {
-				customerId: "ablbs1kXg1lbgRmukUlqYYxKdI",
+				customerId
 			}),
 		enabled: !!customerId,
 	});

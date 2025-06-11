@@ -2,7 +2,7 @@
     display: grid;
     background-color:var(--colour-background-footer-dark-1);
     container-type: inline-size;
-    padding: 0px var(--space-56);
+    padding: 0px 40px;
     color: var(--colour-text-tertiary);
   }
 .logoSection{
@@ -13,7 +13,7 @@
     display: grid;
     grid-template-columns: 1fr 0.3fr;
     justify-content: space-between;
-    gap:var(--space-20);
+    gap:10px;
     padding: 26px 0;
     border-bottom: 1.5px solid var(--colour-border-subtle);
     @container (max-width: 700px) {
@@ -51,7 +51,7 @@
     grid-template-columns: 1fr 0.3fr;
     justify-content: space-between;
     align-items: center;
-    gap:var(--space-20);
+    gap:10px;
     @container (max-width: 700px) {
         grid-template-columns: 1fr;
         row-gap: 25px;
@@ -60,7 +60,7 @@
 .row{
     padding-top: 15px;
     display: grid;
-    gap:var(--space-40);
+    gap:20px;
     color: var(--colour-link-3);
     font-weight: var(--font-weight-regular);
     font-size: var(--font-size-font-size-300);
@@ -69,5 +69,5 @@
     display: grid;
     grid-auto-flow: column;
     justify-content: space-evenly;
-    gap: var(--space-12);
+    gap: 5px;
   }

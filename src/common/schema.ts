@@ -131,6 +131,19 @@ export const REGISTER = `
 /*Page Schema Ends*/
 
 /*Basket Schema*/
+export const MERGE_BASKET = `mutation MergeBasket {
+  mergeBasket {
+    basketId
+  }
+}`;
+export const GET_CUSTOMER_BASKET=`
+  query CustomerBasketInfo($customerId: ID!) {
+  customerBasketInfo(customerId: $customerId) {
+    baskets {
+      basketId
+    }
+  }
+}`
 export const CREATE_CART = `
   mutation CreateCart($input: CartInput!) {
     createCart(input: $input) {
@@ -311,3 +324,4 @@ export const GET_ACCESS_TOKEN = `
   }
 `;
 /*Access Token Schema Ends*/
+

@@ -1,7 +1,8 @@
 "use client";
-import { REGISTER } from "@/common/schema";
+import { GET_CUSTOMER_BASKET, MERGE_BASKET, REGISTER } from "@/common/schema";
 import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useMutation } from "@tanstack/react-query";
+import { gql } from "@apollo/client";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
@@ -22,7 +23,7 @@ type formDataProps = {
 	agreeToTerms: boolean;
 };
 
-const page = () => {
+const Page = () => {
 	const [isLogin, setIsLogin] = useState(true);
 	const router = useRouter();
 	// const [postRegisterMutation] = useMutation(postRegistration);
@@ -43,6 +44,11 @@ const page = () => {
 			};
 		}) => graphqlRequest(REGISTER, { input }),
 		retry: 3,
+	});
+
+	const mergeBasketMutation = useMutation({
+		mutationFn: () => graphqlRequest(MERGE_BASKET),
+		retry: 2,
 	});
 
 	const createAccountHandler = () => {
@@ -72,12 +78,31 @@ const page = () => {
 				Object.entries(data).map(([key, value]) => {
 					sessionStorage.setItem(key, String(value));
 				});
-
-				const customerType = data.idp_access_token ? "registered" : "guest";
-				sessionStorage.setItem("customer_type", customerType);
-				router.push("/");
+				// const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
+				//   customerId: data?.customer_id,
+				// });
+				// console.log("Active Basket", response);
+				// sessionStorage.setItem("basketId",response?.customerBasketInfo?.baskets?.[0]?.basketId)
+				// router.push("/");
 				const expiryTime = Date.now() + data.expires_in * 1000;
 				sessionStorage.setItem("sfcc_token_expiry", expiryTime.toString());
+				router.push("/");
+			})
+			.then(async () => {
+				try {
+					await mergeBasketMutation.mutateAsync();
+				} catch (err) {
+					console.log(err);
+				}
+
+				const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
+					customerId: sessionStorage?.getItem("customer_id"),
+				});
+				console.log("Active Basket", response);
+				sessionStorage.setItem(
+					"basketId",
+					response?.customerBasketInfo?.baskets?.[0]?.basketId,
+				);
 			})
 			.catch((error) => console.error("Login error ", error));
 	};
@@ -135,4 +160,4 @@ const page = () => {
 	);
 };
 
-export default page;
+export default Page;

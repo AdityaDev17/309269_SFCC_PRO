@@ -29,8 +29,8 @@ import {
 import MiniCart from "../MiniCart/MiniCart";
 import styles from "./Header.module.css";
 import SearchMenu from "./SearchMenu";
-import { useQuery } from "@tanstack/react-query";
-import { GET_BASKET } from "@/common/schema";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { DELETE_BASKET_ITEM, GET_BASKET, UPDATE_BASKET_ITEM } from "@/common/schema";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 
 type CategoriesProps = {
@@ -91,6 +91,7 @@ const Header: React.FC<HeaderProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItems[]>([]);
+  const basketId = sessionStorage.getItem("basketId") ?? "";
 
   const getImageContainerClass = (length: number) => {
     if (length === 2) return styles.oneSecondaryImage;
@@ -127,14 +128,17 @@ const Header: React.FC<HeaderProps> = ({
     );
   };
 
-  const handleCartClick = async () => {
-    const basketId = await sessionStorage.getItem("basketId");
-    if (basketId) {
-      const response = await graphqlRequest(GET_BASKET, { basketId });
+  const getBasketDetails=async()=>{
+    const response = await graphqlRequest(GET_BASKET, { basketId:basketId });
       prepareCartItems(
         response?.basketInfo?.productItems,
         response?.basketInfo?.currency
-      );
+    );
+  }
+
+  const handleCartClick = async () => {
+    if (basketId) {
+      await getBasketDetails()
     } else {
       setCartItems([]);
     }
@@ -155,6 +159,47 @@ const Header: React.FC<HeaderProps> = ({
       router.push(`/wishlist`)
     }
   }
+  const updateBasketMutation = useMutation({
+		mutationFn: (input: {
+			basketId: string;
+			itemId: string;
+			quantity: number;
+		}) => graphqlRequest(UPDATE_BASKET_ITEM, { input }),
+		retry: 3,
+	});
+	const removeBasketMutation = useMutation({
+		mutationFn: (input: { basketId: string; itemId: string }) =>
+			graphqlRequest(DELETE_BASKET_ITEM, { input }),
+		retry: 3,
+	});
+
+	const handleUpdateQuantity = async (itemId: string, newQuantity: number) => {
+		console.log("id", itemId, newQuantity);
+		try {
+			const response = await updateBasketMutation.mutateAsync({
+				basketId,
+				itemId,
+				quantity: newQuantity,
+			});
+			await getBasketDetails()
+			console.log("Update response:", response);
+		} catch (error) {
+			console.error("Error updating basket item:", error);
+		}
+	};
+	const handleDeleteItem = async (itemId: string) => {
+		console.log("id", itemId);
+		try {
+			const response = await removeBasketMutation.mutateAsync({
+				basketId,
+				itemId,
+			});
+			await getBasketDetails()
+			console.log("Remove response:", response);
+		} catch (error) {
+			console.error("Error removing basket item:", error);
+		}
+	};
 
   return (
     <div className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
@@ -356,7 +401,7 @@ const Header: React.FC<HeaderProps> = ({
           })}
         </div>
         {open && (
-          <MiniCart cartItems={cartItems} open={open} onOpenChange={setOpen} />
+          <MiniCart cartItems={cartItems} open={open} onOpenChange={setOpen} onDeleteItem={handleDeleteItem} onUpdateQuantity={handleUpdateQuantity}/>
         )}
       </div>
     </div>

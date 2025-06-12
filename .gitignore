@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
  
 # dependencies
-/node_modules
+**/node_modules/
 /.pnp
 .pnp.js
  
@@ -13,10 +13,13 @@
 /.next/
 /.vscode/
 /out/
- 
+
+#sanity studio
+studio-C4force/dist/
+studio-C4force/.sanity/
+
 # production
 /build
-/studio-C4force/dist
  
 # misc
 .DS_Store

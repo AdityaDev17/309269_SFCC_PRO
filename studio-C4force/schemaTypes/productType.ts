@@ -1,79 +1,21 @@
-import {defineField, defineType} from 'sanity'
-
-export const productType = defineType({
+// schemas/product.ts
+export default {
   name: 'product',
   title: 'Product',
   type: 'document',
   fields: [
-    defineField({
-      name: 'title',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'slug',
-      type: 'slug',
-      options: {source: 'title'},
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'price',
-      type: 'number',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'currency',
-      type: 'string',
-      initialValue: 'USD',
-    }),
-    defineField({
-      name: 'longDescription',
-      type: 'text',
-    }),
-    defineField({
-      name: 'imageGroups',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'images',
-              type: 'array',
-              of: [
-                {
-                  type: 'object',
-                  fields: [
-                    {
-                      name: 'image',
-                      type: 'image',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'metaTags',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {name: 'id', type: 'string'},
-            {name: 'value', type: 'text'},
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'publishedAt',
-      type: 'datetime',
-      initialValue: () => new Date().toISOString(),
-      validation: (rule) => rule.required(),
-    }),
+    { name: 'sku', title: 'SKU', type: 'string', validation: Rule => Rule.required() },
+    { name: 'productId', title: 'Product ID', type: 'string', validation: Rule => Rule.required() },
+    { name: 'title', title: 'Product Title', type: 'string', validation: Rule => Rule.required() },
+    { name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title', maxLength: 96 } },
+    { name: 'description', title: 'Description', type: 'text' },
+    { name: 'category', title: 'Category', type: 'string' }, 
+    { name: 'price', title: 'Price', type: 'number', validation: Rule => Rule.required() },
+    { name: 'currency', title: 'Currency', type: 'string' },
+    { name: 'orderable', title: 'Orderable/In Stock', type: 'boolean' },
+    { name: 'variants', title: 'Variants', type: 'string' },
+    { name: 'image', title: 'Image', type: 'image', options: { hotspot: true, },},
+    { name: 'lastModified', title: 'Last Modified Date', type: 'datetime' },
+    { name: 'importedAt', title: 'Imported At', type: 'datetime', readOnly: true },
   ],
-})
+};

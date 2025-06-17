@@ -43,6 +43,10 @@ const Page = () => {
 				};
 			};
 		}) => graphqlRequest(REGISTER, { input }),
+		onSuccess:(data,variables)=>{
+			// console.log(data,variables);
+			loginClickHandler({email:variables.credential.customer.email,password:variables.credential.password})
+		},
 		retry: 3,
 	});
 
@@ -99,10 +103,17 @@ const Page = () => {
 					customerId: sessionStorage?.getItem("customer_id"),
 				});
 				console.log("Active Basket", response);
-				sessionStorage.setItem(
-					"basketId",
-					response?.customerBasketInfo?.baskets?.[0]?.basketId,
-				);
+				// sessionStorage.setItem(
+				// 	"basketId",
+				// 	response?.customerBasketInfo?.baskets?.[0]?.basketId,
+				// );
+				const basketId = response?.customerBasketInfo?.baskets?.[0]?.basketId;
+
+				if (basketId) {
+					sessionStorage.setItem("basketId", basketId);
+				} else {
+					sessionStorage.removeItem("basketId");
+				}
 			})
 			.catch((error) => console.error("Login error ", error));
 	};

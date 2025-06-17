@@ -50,7 +50,7 @@ const ProductCard = ({
 	useEffect(() => {
 		const checkMobileView = () => {
 			setIsMobile(window.innerWidth <= 768);
-			console.log(window.innerWidth);
+			// console.log(window.innerWidth);
 		};
 
 		checkMobileView();

@@ -93,12 +93,13 @@ export default function ProductDetails() {
 		retry: 3,
 	});
 
-	const { data } = useQuery({
+	const { data,isFetching,isLoading } = useQuery({
 		queryKey: ["Product", productId],
 		queryFn: () =>
 			graphqlRequest(GET_PRODUCT_DETAILS, { productId: productId }),
 		enabled: !!productId,
 	});
+  console.log({isFetching,isLoading});
 	type ProductImage = {
 		link: string;
 	};
@@ -278,7 +279,7 @@ export default function ProductDetails() {
 				</div>
 			</div>
 			{open && (
-				<MiniCart cartItems={cartItems} open={open} onOpenChange={setOpen} />
+				<MiniCart cartItem={cartItems} open={open} onOpenChange={setOpen} />
 			)}
 			<Toaster />
 		</section>

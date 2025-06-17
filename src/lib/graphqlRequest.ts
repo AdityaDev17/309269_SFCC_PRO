@@ -66,7 +66,7 @@ const fetchToken = async (isRefresh = false): Promise<string | null> => {
     sessionStorage.setItem("customer_type", customerType);
  
     console.log("Token fetched successfully");
-    console.log(tokenData.access_token);
+    // console.log(tokenData.access_token);
     return tokenData.access_token;
   } catch (error) {
     console.error("Error fetching token:", error);

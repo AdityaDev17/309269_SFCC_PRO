@@ -5,6 +5,7 @@ import Footer from "../components/organisms/Footer/Footer";
 import HeaderWrapper from "../components/organisms/Header/HeaderWrapper";
 import { WebVitals } from "../web-vitals";
 import Providers from "./providers";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -37,6 +38,7 @@ export default function RootLayout({
 					<HeaderWrapper />
 					{children}
 					<Footer />
+					<ReactQueryDevtools initialIsOpen={true} position='bottom'></ReactQueryDevtools>
 				</Providers>
 			</body>
 		</html>

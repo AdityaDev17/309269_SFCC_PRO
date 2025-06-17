@@ -43,9 +43,11 @@ const Page = () => {
 				};
 			};
 		}) => graphqlRequest(REGISTER, { input }),
-		onSuccess:(data,variables)=>{
-			// console.log(data,variables);
-			loginClickHandler({email:variables.credential.customer.email,password:variables.credential.password})
+		onSuccess: async(data, variables) => {
+			loginClickHandler({
+				email: variables.credential.customer.email,
+				password: variables.credential.password,
+			},"registration");
 		},
 		retry: 3,
 	});
@@ -59,7 +61,7 @@ const Page = () => {
 		setIsLogin(false);
 	};
 
-	const loginClickHandler = (formData: { email: string; password: string }) => {
+	const loginClickHandler = (formData: { email: string; password: string },call:string="login") => {
 		// const authResponse = await loginCustomer()
 		// console.log("Auth response received:", JSON.stringify(authResponse, null, 2))
 		const usid = sessionStorage.getItem("usid")
@@ -93,12 +95,15 @@ const Page = () => {
 				router.push("/");
 			})
 			.then(async () => {
-				try {
-					await mergeBasketMutation.mutateAsync();
-				} catch (err) {
-					console.log(err);
-				}
 
+				if(call==="login"){
+					try {
+						await mergeBasketMutation.mutateAsync();
+					} catch (err) {
+						console.log(err);
+					}
+				}
+				
 				const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
 					customerId: sessionStorage?.getItem("customer_id"),
 				});
@@ -111,9 +116,7 @@ const Page = () => {
 
 				if (basketId) {
 					sessionStorage.setItem("basketId", basketId);
-				} else {
-					sessionStorage.removeItem("basketId");
-				}
+				} 
 			})
 			.catch((error) => console.error("Login error ", error));
 	};

@@ -136,26 +136,26 @@ const HeaderWrapper = () => {
 	];
 
 	const headerIcons = [
-    { label: "Search", icon: "/images/search-normal.png" },
-    {
-      label: "Whishlist",
-      icon: "/images/wishlist-normal.png",
-      link: "/wishlist",
-    },
-    { label: "CartBag", icon: "/images/bag-normal.png" },
-    { label: "Profile", icon: "/images/profile-outline.png" },
-  ];
+		{ label: "Search", icon: "/images/search-normal.png" },
+		{
+			label: "Whishlist",
+			icon: "/images/wishlist-normal.png",
+			link: "/wishlist",
+		},
+		{ label: "CartBag", icon: "/images/bag-normal.png" },
+		{ label: "Profile", icon: "/images/profile-outline.png" },
+	];
 
 	const headerWhiteIcons = [
-    { label: "Search", icon: "/images/searchWhite.png" },
-    {
-      label: "Whishlist",
-      icon: "/images/wishlistWhite.png",
-      link: "/wishlist"
-    },
-    { label: "CartBag", icon: "/images/catBagWhite.png" },
-    { label: "Profile", icon: "/images/profileWhite.png" },
-  ];
+		{ label: "Search", icon: "/images/searchWhite.png" },
+		{
+			label: "Whishlist",
+			icon: "/images/wishlistWhite.png",
+			link: "/wishlist",
+		},
+		{ label: "CartBag", icon: "/images/catBagWhite.png" },
+		{ label: "Profile", icon: "/images/profileWhite.png" },
+	];
 
 	return (
 		<Header

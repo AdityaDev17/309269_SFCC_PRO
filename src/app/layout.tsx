@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { DisableDraftMode } from "@/components/DisableDraftMode";
+import { VisualEditing } from "next-sanity";
+import { draftMode } from "next/headers";
 import Footer from "../components/organisms/Footer/Footer";
 import HeaderWrapper from "../components/organisms/Header/HeaderWrapper";
 import { WebVitals } from "../web-vitals";
-import { VisualEditing } from "next-sanity";
-import { draftMode } from "next/headers";
-import { DisableDraftMode } from "@/components/DisableDraftMode";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -38,10 +38,10 @@ export default async function RootLayout({
 				<HeaderWrapper />
 				{children}
 				{(await draftMode()).isEnabled && (
-				<>
-					<VisualEditing />
-					<DisableDraftMode />
-				</>
+					<>
+						<VisualEditing />
+						<DisableDraftMode />
+					</>
 				)}
 				<Footer />
 			</body>

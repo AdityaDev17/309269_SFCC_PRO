@@ -5,126 +5,126 @@ import { Button, type ButtonProps } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./Banner.module.css";
 export type alignmentType =
-  | "left-top"
-  | "left-center"
-  | "left-bottom"
-  | "center-top"
-  | "center-center"
-  | "center-bottom"
-  | "right-top"
-  | "right-center"
-  | "right-bottom";
+	| "left-top"
+	| "left-center"
+	| "left-bottom"
+	| "center-top"
+	| "center-center"
+	| "center-bottom"
+	| "right-top"
+	| "right-center"
+	| "right-bottom";
 interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
-  title: string;
-  buttonText?: string;
-  buttonColor?: ButtonProps["variant"];
-  subtitle?: string;
-  subtitleColor?: string;
-  description?: string;
-  backgroundImage?: string;
-  videoUrl?: string;
-  alignment?: alignmentType;
-  buttonLink?: () => void;
-  textColor?: string;
-  subtitleVariant?: number;
-  centerImage?: string;
+	title: string;
+	buttonText?: string;
+	buttonColor?: ButtonProps["variant"];
+	subtitle?: string;
+	subtitleColor?: string;
+	description?: string;
+	backgroundImage?: string;
+	videoUrl?: string;
+	alignment?: alignmentType;
+	buttonLink?: () => void;
+	textColor?: string;
+	subtitleVariant?: number;
+	centerImage?: string;
 }
 
 const Banner: React.FC<BannerProps> = ({
-  title,
-  subtitle,
-  description,
-  buttonText,
-  buttonColor,
-  backgroundImage,
-  videoUrl,
-  alignment = "center-center",
-  buttonLink = "#",
-  textColor = "white",
-  subtitleVariant,
-  centerImage,
-  subtitleColor,
-  ...props
+	title,
+	subtitle,
+	description,
+	buttonText,
+	buttonColor,
+	backgroundImage,
+	videoUrl,
+	alignment = "center-center",
+	buttonLink = "#",
+	textColor = "white",
+	subtitleVariant,
+	centerImage,
+	subtitleColor,
+	...props
 }) => {
-  const [horizontal, vertical] = alignment.split("-");
-  const alignmentClass = `${styles[`horizontal-${horizontal}`]} ${styles[`vertical-${vertical}`]}`;
+	const [horizontal, vertical] = alignment.split("-");
+	const alignmentClass = `${styles[`horizontal-${horizontal}`]} ${styles[`vertical-${vertical}`]}`;
 
-  return (
-    <div className={styles.wrapper}>
-      <section className={styles.bannerContainer}>
-        {videoUrl ? (
-          <video
-            className={styles.bannerImage}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            poster={backgroundImage}
-          >
-            <source src={videoUrl} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        ) : backgroundImage ? (
-          <Image
-            src={backgroundImage}
-            alt="Banner"
-            className={styles.bannerImage}
-            width={1440}
-            height={740}
-            loading="eager"
-            priority={true}
-          />
-        ) : null}
-        <div className={`${styles.textBox} ${alignmentClass}`}>
-          <Typography
-            type="Headline"
-            variant={2}
-            fontWeight="medium"
-            label={title}
-            color={textColor}
-          />
+	return (
+		<div className={styles.wrapper}>
+			<section className={styles.bannerContainer}>
+				{videoUrl ? (
+					<video
+						className={styles.bannerImage}
+						autoPlay
+						muted
+						loop
+						playsInline
+						preload="auto"
+						poster={backgroundImage}
+					>
+						<source src={videoUrl} type="video/mp4" />
+						Your browser does not support the video tag.
+					</video>
+				) : backgroundImage ? (
+					<Image
+						src={backgroundImage}
+						alt="Banner"
+						className={styles.bannerImage}
+						width={1440}
+						height={740}
+						loading="eager"
+						priority={true}
+					/>
+				) : null}
+				<div className={`${styles.textBox} ${alignmentClass}`}>
+					<Typography
+						type="Headline"
+						variant={2}
+						fontWeight="medium"
+						label={title}
+						color={textColor}
+					/>
 
-          {subtitle && (
-            <Typography
-              type="Headline"
-              variant={subtitleVariant ?? 2}
-              fontWeight="medium"
-              label={subtitle}
-              color={textColor}
-            />
-          )}
+					{subtitle && (
+						<Typography
+							type="Headline"
+							variant={subtitleVariant ?? 2}
+							fontWeight="medium"
+							label={subtitle}
+							color={textColor}
+						/>
+					)}
 
-          {description && (
-            <Typography
-              type="Body"
-              variant={3}
-              label={description}
-              color={textColor}
-            />
-          )}
+					{description && (
+						<Typography
+							type="Body"
+							variant={3}
+							label={description}
+							color={textColor}
+						/>
+					)}
 
-          {buttonText && (
-            <div className={styles.buttonContainer}>
-              <Button
-                variant={buttonColor}
-                size="sm"
-                onClick={() => {
-                  if (typeof buttonLink === "string") {
-                    window.location.href = buttonLink;
-                  } else if (typeof buttonLink === "function") {
-                    buttonLink();
-                  }
-                }}
-              >
-                {buttonText}
-              </Button>
-            </div>
-          )}
-        </div>
-      </section>
-    </div>
-  );
+					{buttonText && (
+						<div className={styles.buttonContainer}>
+							<Button
+								variant={buttonColor}
+								size="sm"
+								onClick={() => {
+									if (typeof buttonLink === "string") {
+										window.location.href = buttonLink;
+									} else if (typeof buttonLink === "function") {
+										buttonLink();
+									}
+								}}
+							>
+								{buttonText}
+							</Button>
+						</div>
+					)}
+				</div>
+			</section>
+		</div>
+	);
 };
 
 export default Banner;

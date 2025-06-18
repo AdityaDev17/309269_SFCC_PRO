@@ -35,7 +35,7 @@ export default async function Home() {
 
       {banners[1] && (
         <Banner
-          title={banners[1]?.title}
+          title={banners[2]?.title}
           buttonText={homepageBanners[0]?.buttonText}
           description={banners[2]?.description}
           videoUrl={banners[2]?.videoUrl}

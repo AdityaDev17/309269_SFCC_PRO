@@ -1,30 +1,23 @@
 "use client";
 
 import {
+	GET_CUSTOMER_ADDRESS,
+	GET_SHIPPING_ADDRESS_FROM_BASKET,
+	GET_SHIPPING_METHOD,
 	UPDATE_SHIPPING_ADDRESS,
-	getCustomerAddress,
-	getShippingMethod,
-	// getShippingAdressFromBasket,
-	updateShippingMethod,
+	UPDATE_SHIPPING_METHOD,
 } from "@/common/schema";
-
 import {
 	RadioGroup,
 	RadioGroupItem,
 } from "@/components/atomic/RadioGroup/RadioGroup";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { gql } from "graphql-request";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import {
-	address,
-	billingAddress,
-	shippingMethodsFromBackend,
-} from "../../common/constant";
 import { Button } from "../../components/atomic/Button/Button";
 import CheckBox from "../../components/atomic/CheckBox/CheckBox";
 import Typography from "../../components/atomic/Typography/Typography";
-import Accordion from "../../components/molecules/Accordion/Accordion";
 import AddressCard, {
 	type AddressData,
 } from "../../components/organisms/AddressCard/AddressCard";
@@ -34,26 +27,6 @@ import {
 } from "../../components/organisms/AddressForm/AddressModal";
 import OrderSummary from "../../components/organisms/OrderSummary/OrderSummary";
 import styles from "./shipping.module.css";
-
-const getShippingAdressFromBasket = gql`
-  query BasketInfo($basketId: ID!) {
-    basketInfo(basketId: $basketId) {
-      shipments {
-        shippingAddress {
-          address1
-          city
-          countryCode
-          firstName
-          fullName
-          id
-          lastName
-          postalCode
-          stateCode
-        }
-      }
-    }
-  }
-`;
 
 type CommonCardType = {
 	id: string;
@@ -120,6 +93,7 @@ type UpdateShippingMethodInput = {
 	id: string | null;
 };
 const Shipping = () => {
+	const router = useRouter();
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 	const [selectedShippingMethod, setSelectedShippingMethod] = useState<
 		string | null
@@ -130,22 +104,22 @@ const Shipping = () => {
 	const basketId = sessionStorage.getItem("basketId");
 	const customerId = sessionStorage.getItem("customer_id");
 	const customerType = sessionStorage.getItem("customer_type");
-	const token = sessionStorage.getItem("access_token");
 
 	const { data: shippingMethodData } = useQuery({
 		queryKey: ["GetShippingMethod", basketId],
-		queryFn: () => graphqlRequest(getShippingMethod, { basketId }),
+		queryFn: () => graphqlRequest(GET_SHIPPING_METHOD, { basketId }),
 	});
 
 	const { data: customerAddressData, refetch: refetchAddresses } = useQuery({
 		queryKey: ["GetCustomerAddress", customerId],
-		queryFn: () => graphqlRequest(getCustomerAddress, { customerId }),
+		queryFn: () => graphqlRequest(GET_CUSTOMER_ADDRESS, { customerId }),
 		enabled: customerType === "registered" && !!customerId,
 	});
 
 	const { data: shippingAddressData, refetch: refetchShipping } = useQuery({
 		queryKey: ["GetShippingAddressFromBasket", basketId],
-		queryFn: () => graphqlRequest(getShippingAdressFromBasket, { basketId }),
+		queryFn: () =>
+			graphqlRequest(GET_SHIPPING_ADDRESS_FROM_BASKET, { basketId }),
 	});
 
 	const updateShippingAddressMutation = useMutation({
@@ -155,7 +129,7 @@ const Shipping = () => {
 
 	const updateShippingMethodMutation = useMutation({
 		mutationFn: (input: UpdateShippingMethodInput) =>
-			graphqlRequest(updateShippingMethod, { input }),
+			graphqlRequest(UPDATE_SHIPPING_METHOD, { input }),
 	});
 
 	const shippingAdresses =
@@ -250,6 +224,7 @@ const Shipping = () => {
 				basketId,
 				id: selectedShippingMethod,
 			});
+			router.push("/payment");
 		} catch (error) {
 			console.error("Error updating shipping method:", error);
 		}
@@ -328,9 +303,18 @@ const Shipping = () => {
 				</div>
 
 				<div className={styles.summary}>
-					<OrderSummary
+					{/* <OrderSummary
 						reverseOrder={true}
 						buttonText="CHECKOUT"
+						onButtonClick={handleCheckout}
+					/> */}
+					<OrderSummary
+						reverseOrder={true}
+						isButton={true}
+						total={shippingAddressData?.basketInfo?.productTotal}
+						currency={shippingAddressData?.basketInfo?.currency}
+						subTotal={shippingAddressData?.basketInfo?.productSubTotal}
+						buttonText="PROCEED TO PAYMENT"
 						onButtonClick={handleCheckout}
 					/>
 				</div>

@@ -83,7 +83,7 @@ const OrderSummary = ({
 						type={"Body"}
 						variant={2}
 						fontWeight="regular"
-						label={`${currency}${subTotal}`}
+						label={`${currency} ${subTotal}`}
 						color="#4F4B53"
 					/>
 				</div>
@@ -99,7 +99,7 @@ const OrderSummary = ({
 						type={"Body"}
 						variant={2}
 						fontWeight="regular"
-						label={delivery}
+						label={delivery ? delivery : "0"}
 						color="#4F4B53"
 					/>
 				</div>
@@ -115,7 +115,7 @@ const OrderSummary = ({
 						type={"Body"}
 						variant={2}
 						fontWeight="regular"
-						label={tax}
+						label={tax ? tax : "0"}
 						color="#4F4B53"
 					/>
 				</div>
@@ -133,7 +133,7 @@ const OrderSummary = ({
 								type={"Body"}
 								variant={2}
 								fontWeight="medium"
-								label={`${currency}${total}`}
+								label={`${currency} ${total}`}
 							/>
 						</>
 					) : (
@@ -149,7 +149,7 @@ const OrderSummary = ({
 								type={"Label"}
 								variant={3}
 								fontWeight="medium"
-								label={`${currency}${total}`}
+								label={`${currency} ${total}`}
 							/>
 						</>
 					)}

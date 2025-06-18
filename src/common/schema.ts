@@ -136,14 +136,14 @@ export const MERGE_BASKET = `mutation MergeBasket {
     basketId
   }
 }`;
-export const GET_CUSTOMER_BASKET=`
+export const GET_CUSTOMER_BASKET = `
   query CustomerBasketInfo($customerId: ID!) {
   customerBasketInfo(customerId: $customerId) {
     baskets {
       basketId
     }
   }
-}`
+}`;
 export const CREATE_CART = `
   mutation CreateCart($input: CartInput!) {
     createCart(input: $input) {
@@ -325,8 +325,6 @@ export const GET_ACCESS_TOKEN = `
 `;
 /*Access Token Schema Ends*/
 
-
-
 export const GET_CUSTOMER = `
     query Customer($customerId: ID!) {
   customer(customerId: $customerId) {
@@ -348,30 +346,6 @@ export const LOGOUT_CUSTOMER = `
       customer_id
       enc_user_id
       idp_access_token
-    }
-  }
-`;
-
-
-export const GET_CUSTOMER_ADDRESS = `
-  query GetCustomerAddress($customerId: ID!) {
-    getCustomerAddress(customerId: $customerId) {
-      addresses {
-        addressId
-        address1
-        address2
-        city
-        countryCode
-        creationDate
-        firstName
-        fullName
-        lastModified
-        lastName
-        phone
-        postalCode
-        preferred
-        stateCode
-      }
     }
   }
 `;
@@ -416,8 +390,7 @@ mutation RemoveCustomerAddress($input: InputCustomerAddress!) {
     stateCode
   }
 }
-  `
-
+  `;
 
 export const CREATE_CUSTOMER_ADDRESS = `
   mutation CreateCustomerAddress($input: InputCustomerAddress!) {
@@ -479,10 +452,9 @@ mutation UpdateShippingAddress($input: InputCustomerAddress!) {
 	}
   }`;
 
+// graphql/shipping.ts
 
-  // graphql/shipping.ts
-
-export const getShippingMethod = `
+export const GET_SHIPPING_METHOD = `
   query GetShippingMethod($basketId: ID!) {
     getShippingMethod(basketId: $basketId) {
       applicableShippingMethods {
@@ -495,8 +467,7 @@ export const getShippingMethod = `
     }
   }
 `;
-
-export const getCustomerAddress = `
+export const GET_CUSTOMER_ADDRESS = `
   query GetCustomerAddress($customerId: ID!) {
     getCustomerAddress(customerId: $customerId) {
       addresses {
@@ -519,9 +490,12 @@ export const getCustomerAddress = `
   }
 `;
 
-export const getShippingAdressFromBasket = `
+export const GET_SHIPPING_ADDRESS_FROM_BASKET = `
   query BasketInfo($basketId: ID!) {
     basketInfo(basketId: $basketId) {
+      productSubTotal,
+  	  productTotal,
+	  currency
       shipments {
         shippingAddress {
           address1
@@ -539,14 +513,9 @@ export const getShippingAdressFromBasket = `
   }
 `;
 
-
-
-export const updateShippingMethod = `
+export const UPDATE_SHIPPING_METHOD = `
   mutation UpdateShippingMethod($input: InputShippingMethod!) {
     updateShippingMethod(input: $input) {
-      adjustedMerchandizeTotalTax
-      adjustedShippingTotalTax
-      agentBasket
       basketId
       billingAddress {
         address1

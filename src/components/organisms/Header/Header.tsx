@@ -29,8 +29,8 @@ import {
 import MiniCart from "../MiniCart/MiniCart";
 import styles from "./Header.module.css";
 import SearchMenu from "./SearchMenu";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { DELETE_BASKET_ITEM, GET_BASKET, UPDATE_BASKET_ITEM } from "@/common/schema";
+import { useQuery } from "@tanstack/react-query";
+import { GET_BASKET } from "@/common/schema";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 
 type CategoriesProps = {
@@ -91,7 +91,6 @@ const Header: React.FC<HeaderProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItems[]>([]);
-  // const [basketId,setBasketId] = "";
 
   const getImageContainerClass = (length: number) => {
     if (length === 2) return styles.oneSecondaryImage;
@@ -103,6 +102,7 @@ const Header: React.FC<HeaderProps> = ({
       setIsMobile(window.innerWidth <= 768);
       console.log(window.innerWidth);
     };
+
     checkMobileView();
     window.addEventListener("resize", checkMobileView);
     return () => window.removeEventListener("resize", checkMobileView);
@@ -127,19 +127,14 @@ const Header: React.FC<HeaderProps> = ({
     );
   };
 
-  const getBasketDetails=async()=>{
-    const basketId = sessionStorage.getItem("basketId") ?? "";
-    const response = await graphqlRequest(GET_BASKET, { basketId });
+  const handleCartClick = async () => {
+    const basketId = await sessionStorage.getItem("basketId");
+    if (basketId) {
+      const response = await graphqlRequest(GET_BASKET, { basketId });
       prepareCartItems(
         response?.basketInfo?.productItems,
         response?.basketInfo?.currency
-    );
-  }
-
-  const handleCartClick = async () => {
-    const basketId = sessionStorage.getItem("basketId") ?? "";
-    if (basketId) {
-      await getBasketDetails()
+      );
     } else {
       setCartItems([]);
     }
@@ -153,56 +148,18 @@ const Header: React.FC<HeaderProps> = ({
    const handleIconClick=(name:string)=>{
     if(name==='Profile')
     {
-      router.push(`/login`)
+      const customerType = sessionStorage.getItem("customer_type");
+    if (customerType === "registered") {
+      router.push("/my-account");
+    } else {
+      router.push("/login");
     }
+  }
     else if(name==="Whishlist")
     {
       router.push(`/wishlist`)
     }
   }
-  // const updateBasketMutation = useMutation({
-	// 	mutationFn: (input: {
-	// 		basketId: string;
-	// 		itemId: string;
-	// 		quantity: number;
-	// 	}) => graphqlRequest(UPDATE_BASKET_ITEM, { input }),
-	// 	retry: 3,
-	// });
-	// const removeBasketMutation = useMutation({
-	// 	mutationFn: (input: { basketId: string; itemId: string }) =>
-	// 		graphqlRequest(DELETE_BASKET_ITEM, { input }),
-	// 	retry: 3,
-	// });
-
-	// const handleUpdateQuantity = async (itemId: string, newQuantity: number) => {
-	// 	console.log("id", itemId, newQuantity);
-  //   const basketId = sessionStorage.getItem("basketId") ?? "";
-	// 	try {
-	// 		const response = await updateBasketMutation.mutateAsync({
-	// 			basketId,
-	// 			itemId,
-	// 			quantity: newQuantity,
-	// 		});
-	// 		await getBasketDetails()
-	// 		console.log("Update response:", response);
-	// 	} catch (error) {
-	// 		console.error("Error updating basket item:", error);
-	// 	}
-	// };
-	// const handleDeleteItem = async (itemId: string) => {
-	// 	console.log("id", itemId);
-  //   const basketId = sessionStorage.getItem("basketId") ?? "";
-	// 	try {
-	// 		const response = await removeBasketMutation.mutateAsync({
-	// 			basketId,
-	// 			itemId,
-	// 		});
-	// 		await getBasketDetails()
-	// 		console.log("Remove response:", response);
-	// 	} catch (error) {
-	// 		console.error("Error removing basket item:", error);
-	// 	}
-	// };
 
   return (
     <div className={`${styles.header} ${isHome ? styles.homeHeader : ""}`}>
@@ -276,10 +233,7 @@ const Header: React.FC<HeaderProps> = ({
                       {category.subcategory && category.image ? (
                         <>
                           <NavigationMenuTrigger>
-                            <span
-                              className={styles.category}
-                              onClick={() => handleItemClick(category.name)}
-                            >
+                            <span className={styles.category} onClick={()=>handleItemClick(category.name)}>
                               {category.name}
                             </span>
                           </NavigationMenuTrigger>
@@ -326,6 +280,7 @@ const Header: React.FC<HeaderProps> = ({
                                       <div
                                         key={index}
                                         className={styles.subcategoryContainer}
+                                        
                                       >
                                         <Typography
                                           type="Label"
@@ -340,11 +295,7 @@ const Header: React.FC<HeaderProps> = ({
                                                 key={index}
                                                 variant="link"
                                                 style={{ fontWeight: "500" }}
-                                                onClick={() =>
-                                                  handleItemClick(
-                                                    subcategoryName
-                                                  )
-                                                }
+                                                onClick={()=>handleItemClick(subcategoryName)}
                                               >
                                                 {subcategoryName}
                                               </Button>
@@ -384,7 +335,7 @@ const Header: React.FC<HeaderProps> = ({
                   alt={label}
                   width={20}
                   height={20}
-                  onClick={() => handleCartClick()}
+                  onClick={()=>handleCartClick()}
                 />
               );
             } else if (label === "Search") {
@@ -392,7 +343,6 @@ const Header: React.FC<HeaderProps> = ({
                 <SearchMenu
                   isMobile={isMobile}
                   keyVal={index}
-                  key={index}
                   searchIcon={icon}
                 />
               );
@@ -404,18 +354,14 @@ const Header: React.FC<HeaderProps> = ({
                   alt={label}
                   width={20}
                   height={20}
-                  onClick={() => handleIconClick(label)}
+                  onClick={()=>handleIconClick(label)}
                 />
               );
             }
           })}
         </div>
         {open && (
-          <MiniCart
-            cartItem={cartItems}
-            open={open}
-            onOpenChange={setOpen}
-          />
+          <MiniCart cartItem={cartItems} open={open} onOpenChange={setOpen} />
         )}
       </div>
     </div>

@@ -2,7 +2,7 @@
   padding: clamp(15px, 5vw, 40px);
   display: grid;
   grid-template-columns: 1fr;
-  gap: 15px;
+  gap: var(--space-xl);
 }
 
 .componentLayout {
@@ -12,14 +12,14 @@
 }
 .firstLayout {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 0.75fr 0.4fr;
   grid-template-areas:
     "TitleWrapper OrderSummary"
     "AddressCard OrderSummary"
     "BillCheck OrderSummary"
     "Accordion OrderSummary"
     "ShippingMethod OrderSummary";
-  gap: 20px;
+    gap: var(--space-8xl);
   @container (max-width: 700px) {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -29,7 +29,7 @@
       "Accordion"
       "ShippingMethod"
       "OrderSummary";
-    row-gap: 25px;
+      row-gap: var(--space-12xl);
   }
 }
 .tittleWrapper {
@@ -53,7 +53,7 @@
 .shippingmethod {
   grid-area: ShippingMethod;
   display: grid;
-  gap: 15px;
+  gap: var(--space-xl);
   
 }
 .summary {
@@ -63,7 +63,52 @@
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 5px;
+  gap: var(--space-4xs);
   grid-area: BillCheck;
   padding: 5px;
+}
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(var(--space-xl), 2vw, 2rem);
+}
+
+
+
+@container (max-width: 700px) {
+  .cardGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.card {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border: 1px solid var(--colour-border-tertiary);
+  padding: 1rem;
+  background: var(--colour-surface-primary);
+  gap: var(--space-xs);
+  transition: background 0.3s;
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  border-bottom: 1px solid var(--colour-border-tertiary);
+  padding: 0 4px;
+}
+
+.name {
+  font-weight: var( --font-weight-semibold);
+  font-size: var(--font-size-font-size-400-M);
+  margin-top: 5px;
+  margin-bottom: 0.25rem;
+  padding-bottom: 1rem;
+}
+
+.address {
+  font-size: var(--font-size-font-size-300);
+  color: var(--colour-icon-secondary);
+  margin-top: 0.25rem;
+  margin-bottom: 30px;
+  line-height: 1.4;
 }

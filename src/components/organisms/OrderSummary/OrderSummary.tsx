@@ -3,7 +3,21 @@ import React from "react";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./OrderSummary.module.css";
-
+type OrderSummaryProps = {
+	reverseOrder?: boolean;
+	totalRowTop?: boolean;
+	isButton?: boolean;
+	isPaymentImage?: boolean;
+	totalAmt?: string;
+	currency?: string;
+	subTotal?: string;
+	delivery?: string;
+	tax?: string;
+	total?: string;
+	totalSavings?: string;
+	buttonText?: string;
+	onButtonClick?: () => void;
+};
 const OrderSummary = ({
 	reverseOrder = false,
 	totalRowTop = false,
@@ -17,7 +31,8 @@ const OrderSummary = ({
 	total = "",
 	totalSavings = "",
 	buttonText = "CONTINUE",
-}) => {
+	onButtonClick,
+}: OrderSummaryProps) => {
 	const paymentImages = [
 		"/images/pay1.svg",
 		"/images/pay2.svg",
@@ -160,7 +175,11 @@ const OrderSummary = ({
 				)}
 				{isButton && (
 					<div className={styles.summaryButton}>
-						<Button variant="secondary" className={styles.button}>
+						<Button
+							variant="secondary"
+							className={styles.button}
+							onClick={onButtonClick}
+						>
 							{buttonText}
 						</Button>
 					</div>

@@ -325,3 +325,336 @@ export const GET_ACCESS_TOKEN = `
 `;
 /*Access Token Schema Ends*/
 
+
+
+export const GET_CUSTOMER = `
+    query Customer($customerId: ID!) {
+  customer(customerId: $customerId) {
+    firstName
+  }
+}
+  `;
+
+export const LOGOUT_CUSTOMER = `
+  mutation LogoutCustomer($input: LogoutCustomerInput!) {
+    logoutCustomer(input: $input) {
+      access_token
+      id_token
+      refresh_token
+      expires_in
+      refresh_token_expires_in
+      token_type
+      usid
+      customer_id
+      enc_user_id
+      idp_access_token
+    }
+  }
+`;
+
+
+export const GET_CUSTOMER_ADDRESS = `
+  query GetCustomerAddress($customerId: ID!) {
+    getCustomerAddress(customerId: $customerId) {
+      addresses {
+        addressId
+        address1
+        address2
+        city
+        countryCode
+        creationDate
+        firstName
+        fullName
+        lastModified
+        lastName
+        phone
+        postalCode
+        preferred
+        stateCode
+      }
+    }
+  }
+`;
+
+export const UPDATE_ADDRESS = `
+  mutation UpdateCustomerAddress($input: InputCustomerAddress!) {
+    updateCustomerAddress(input: $input) {
+      addressId
+      address1
+      address2
+      city
+      countryCode
+      creationDate
+      firstName
+      fullName
+      lastModified
+      lastName
+      phone
+      postalCode
+      preferred
+      stateCode
+    }
+  }
+`;
+
+export const DELETE_ADDRESS = `
+mutation RemoveCustomerAddress($input: InputCustomerAddress!) {
+  removeCustomerAddress(input: $input) {
+    addressId
+    address1
+    address2
+    city
+    countryCode
+    creationDate
+    firstName
+    fullName
+    lastModified
+    lastName
+    phone
+    postalCode
+    preferred
+    stateCode
+  }
+}
+  `
+
+
+export const CREATE_CUSTOMER_ADDRESS = `
+  mutation CreateCustomerAddress($input: InputCustomerAddress!) {
+    createCustomerAddress(input: $input) {
+      addressId
+      address1
+      address2
+      city
+      countryCode
+      creationDate
+      firstName
+      fullName
+      lastModified
+      lastName
+      phone
+      postalCode
+      preferred
+      stateCode
+    }
+  }
+`;
+export const UPDATE_CUSTOMER_ADDRESS = `
+  mutation UpdateCustomerAddress($input: InputCustomerAddress!) {
+    updateCustomerAddress(input: $input) {
+      addressId
+      address1
+      address2
+      city
+      countryCode
+      creationDate
+      firstName
+      fullName
+      lastModified
+      lastName
+      phone
+      postalCode
+      preferred
+      stateCode
+    }
+  }
+`;
+
+export const UPDATE_SHIPPING_ADDRESS = `
+mutation UpdateShippingAddress($input: InputCustomerAddress!) {
+	updateShippingAddress(input: $input) {
+	  shipments {
+		shippingAddress {
+		  address1
+		  city
+		  countryCode
+		  firstName
+		  fullName
+		  id
+		  lastName
+		  postalCode
+		  stateCode
+		}
+	  }
+	}
+  }`;
+
+
+  // graphql/shipping.ts
+
+export const getShippingMethod = `
+  query GetShippingMethod($basketId: ID!) {
+    getShippingMethod(basketId: $basketId) {
+      applicableShippingMethods {
+        description
+        id
+        name
+        price
+      }
+      defaultShippingMethodId
+    }
+  }
+`;
+
+export const getCustomerAddress = `
+  query GetCustomerAddress($customerId: ID!) {
+    getCustomerAddress(customerId: $customerId) {
+      addresses {
+        addressId
+        address1
+        address2
+        city
+        countryCode
+        creationDate
+        firstName
+        fullName
+        lastModified
+        lastName
+        phone
+        postalCode
+        preferred
+        stateCode
+      }
+    }
+  }
+`;
+
+export const getShippingAdressFromBasket = `
+  query BasketInfo($basketId: ID!) {
+    basketInfo(basketId: $basketId) {
+      shipments {
+        shippingAddress {
+          address1
+          city
+          countryCode
+          firstName
+          fullName
+          id
+          lastName
+          postalCode
+          stateCode
+        }
+      }
+    }
+  }
+`;
+
+
+
+export const updateShippingMethod = `
+  mutation UpdateShippingMethod($input: InputShippingMethod!) {
+    updateShippingMethod(input: $input) {
+      adjustedMerchandizeTotalTax
+      adjustedShippingTotalTax
+      agentBasket
+      basketId
+      billingAddress {
+        address1
+        city
+        countryCode
+        firstName
+        fullName
+        id
+        lastName
+        postalCode
+        stateCode
+      }
+      channelType
+      creationDate
+      currency
+      customerInfo {
+        customerId
+        email
+      }
+      lastModified
+      merchandizeTotalTax
+      orderTotal
+      productItems {
+        adjustedTax
+        basePrice
+        bonusProductLineItem
+        gift
+        itemId
+        itemText
+        price
+        priceAdjustments {
+          appliedDiscount {
+            amount
+            percentage
+            type
+          }
+          creationDate
+          custom
+          itemText
+          lastModified
+          manual
+          price
+          priceAdjustmentId
+          promotionId
+        }
+        priceAfterOrderDiscount
+        priceAfterItemDiscount
+        productId
+        productName
+        quantity
+        shipmentId
+        tax
+        taxBasis
+        taxClassId
+        taxRate
+      }
+      shipments {
+        adjustedMerchandizeTotalTax
+        adjustedShippingTotalTax
+        gift
+        merchandizeTotalTax
+        productSubTotal
+        productTotal
+        shipmentId
+        shipmentTotal
+        shippingAddress {
+          address1
+          city
+          countryCode
+          firstName
+          fullName
+          id
+          lastName
+          postalCode
+          stateCode
+        }
+        shippingMethod {
+          description
+          id
+          name
+          price
+        }
+        shippingStatus
+        shippingTotal
+        shippingTotalTax
+        taxTotal
+      }
+      shippingItems {
+        adjustedTax
+        basePrice
+        itemId
+        itemText
+        price
+        priceAfterItemDiscount
+        shipmentId
+        tax
+        taxBasis
+        taxClassId
+        taxRate
+      }
+      shippingTotal
+      shippingTotalTax
+      taxRoundedAtGroup
+      taxTotal
+      taxation
+      temporaryBasket
+      productSubTotal
+      productTotal
+    }
+  }
+`;

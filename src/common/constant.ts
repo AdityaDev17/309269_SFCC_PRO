@@ -721,14 +721,14 @@ export interface UserDetails {
   email: string;
 }
 
-export const mockUserDetails: UserDetails = {
-  title: "Mr.",
-  firstName: "Utkarsh",
-  lastName: "Pai",
-  birthDate: "1985-12-04",
-  gender: "Male",
-  email: "utkarshpai@abc.com",
-};
+// export const mockUserDetails: UserDetails = {
+//   title: "Mr.",
+//   firstName: "Utkarsh",
+//   lastName: "Pai",
+//   birthDate: "1985-12-04",
+//   gender: "Male",
+//   email: "utkarshpai@abc.com",
+// };
 
 export type CardType = {
   type: "text" | "image";

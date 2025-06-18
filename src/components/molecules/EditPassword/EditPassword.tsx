@@ -6,7 +6,7 @@ import styles from "./EditPassword.module.css";
 
 type UserPassword = {
 	currentPassword: string;
-	newPassword: string;
+	password: string;
 	confirmPassword: string;
 };
 
@@ -17,7 +17,7 @@ interface EditPasswordProps {
 const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 	const [userPassword, setUserPassword] = useState({
 		currentPassword: "",
-		newPassword: "",
+		password: "",
 		confirmPassword: "",
 	});
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,8 +31,8 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 		if (
 			userPassword?.confirmPassword !== "" &&
 			userPassword?.currentPassword !== "" &&
-			userPassword?.newPassword !== "" &&
-			userPassword?.confirmPassword === userPassword?.newPassword
+			userPassword?.password !== "" &&
+			userPassword?.confirmPassword === userPassword?.password
 		) {
 			return false;
 		}
@@ -47,6 +47,7 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 					<Input
 						type="password"
 						name="currentPassword"
+						value={userPassword.currentPassword}
 						onChange={handleChange}
 						style={{ width: "325px", borderColor: "#B3B2B5" }}
 					/>
@@ -55,7 +56,8 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 					<div className={styles.fontColor}>New Password*</div>
 					<Input
 						type="password"
-						name="newPassword"
+						name="password"
+						value={userPassword.password}
 						onChange={handleChange}
 						style={{ width: "325px", borderColor: "#B3B2B5" }}
 					/>
@@ -65,6 +67,7 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 					<Input
 						type="password"
 						name="confirmPassword"
+						value={userPassword.confirmPassword}
 						onChange={handleChange}
 						style={{ width: "325px", borderColor: "#B3B2B5" }}
 					/>

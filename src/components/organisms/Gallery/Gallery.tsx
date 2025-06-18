@@ -31,7 +31,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 				<div className={styles.dotsContainer}>
 					{images?.map((img, idx) => (
 						<span
-							key={img+idx}
+							key={img}
 							className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ""}`}
 							onClick={() => setActiveIndex(idx)}
 							onKeyDown={() => setActiveIndex(idx)}
@@ -49,7 +49,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 					const isSelected = idx === activeIndex;
 					return (
 						<div
-							key={`${img+idx}`} // safer key
+							key={`${img + idx}`} // safer key
 							onMouseEnter={() => {
 								setMainImage(img);
 								setActiveIndex(idx);

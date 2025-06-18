@@ -1,12 +1,12 @@
 .cardGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(1rem, 2vw, 2rem);
+  gap: clamp(var(--space-xl), 2vw, 2rem);
 }
 
 .twoColumnGrid {
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: var(--space-xl);
 }
 
 @container (max-width: 700px) {
@@ -21,45 +21,45 @@
 .card {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  border: 1px solid #ddd;
+  border: 1px solid var(--colour-border-tertiary);
   padding: 1rem;
-  background: #fff;
-  gap: 0.5rem;
+  background: var(--colour-surface-primary);
+  gap: var(--space-xs);
   transition: background 0.3s;
 }
 
 .defaultCard {
-  background-color: #fafafa;
-  border: 1px solid #4f4b53;
+  background-color: var(--colour-background-secondary);
+  border: 1px solid var(--colour-border-primary);
 }
 
 .wrapper {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--colour-border-tertiary);
   padding: 0 4px;
 }
 
 .name {
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: var( --font-weight-semibold);
+  font-size: var(--font-size-font-size-400-M);
   margin-top: 5px;
   margin-bottom: 0.25rem;
   padding-bottom: 1rem;
 }
 
 .address {
-  font-size: 0.875rem;
-  color: #444;
+  font-size: var(--font-size-font-size-300);
+  color: var(--colour-icon-secondary);
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
   line-height: 1.4;
 }
 
 .phone {
-  font-size: 0.875rem;
-  color: #444;
+  font-size: var(--font-size-font-size-300);
+  color:var(--colour-icon-secondary);
   margin-top: 1.5rem;
   margin-bottom: 1rem;
 }
@@ -68,7 +68,7 @@
   display: grid;
   grid-auto-flow: column;
   align-items: center;
-  gap: 1rem;
+  gap: var(--space-xl);
   margin-top: auto;
   margin-bottom: 0.5rem;
 }
@@ -77,10 +77,10 @@
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 0.25rem;
-  font-size: 1rem;
-  font-weight: 500;
-  color: #3b3b3b;
+  gap: var(--space-8xs);
+  font-size: var(--font-size-font-size-400-M);
+  font-weight: var(--font-weight-medium);
+  color:var(--colour-icon-secondary);
 }
 
 
@@ -92,18 +92,18 @@
   display: grid;
   grid-auto-flow: column;
   justify-content: end;
-  gap: 1rem;
+  gap:var(--space-xl);
 }
 
 .icon {
   cursor: pointer;
-  color: #666;
+  color: var(--colour-icon-secondary);
 }
 
 .dialogContent {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background-color: #fff;
+  background-color: var(--colour-surface-primary);
   width: calc(100% - clamp(2rem, 5vw, 4rem));
   max-width: 400px;
   padding: 0;
@@ -120,12 +120,12 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   padding: 1rem 1.5rem;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--colour-border-tertiary);
 }
 
 .dialogTitle {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: var(--font-size-font-size-400);
+  font-weight: var(--font-weight-bold);
   margin: 0;
 }
 
@@ -137,10 +137,10 @@
 
 .dialogDescription {
   padding: 2rem 1.5rem;
-  font-size: 0.95rem;
-  color: #444;
-  border-bottom: 1px solid #ccc;
-  background-color: #fafafa;
+  font-size: var(--font-size-font-size-400-M);
+  color: var(--colour-icon-secondary);
+  border-bottom: 1px solid var(--colour-border-tertiary);
+  background-color: var(--colour-background-secondary);
   padding-bottom: 3.5rem;
 }
 
@@ -148,7 +148,7 @@
   display: grid;
   grid-auto-flow: column;
   justify-content: end;
-  gap: 1rem;
+  gap: var(--space-xl);
   padding: 0.5rem 0.5rem;
 }
 

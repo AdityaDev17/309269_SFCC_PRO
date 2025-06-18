@@ -168,6 +168,7 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 							name="email"
 							value={initialUserData?.email || ""}
 							onChange={handleChange}
+							disabled
 							style={{ width: "325px", borderColor: "#B3B2B5" }}
 						/>
 					</div>

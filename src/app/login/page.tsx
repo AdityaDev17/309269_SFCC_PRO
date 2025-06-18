@@ -43,11 +43,14 @@ const Page = () => {
 				};
 			};
 		}) => graphqlRequest(REGISTER, { input }),
-		onSuccess: async(data, variables) => {
-			loginClickHandler({
-				email: variables.credential.customer.email,
-				password: variables.credential.password,
-			},"registration");
+		onSuccess: async (data, variables) => {
+			loginClickHandler(
+				{
+					email: variables.credential.customer.email,
+					password: variables.credential.password,
+				},
+				"registration",
+			);
 		},
 		retry: 3,
 	});
@@ -61,7 +64,10 @@ const Page = () => {
 		setIsLogin(false);
 	};
 
-	const loginClickHandler = (formData: { email: string; password: string },call:string="login") => {
+	const loginClickHandler = (
+		formData: { email: string; password: string },
+		call = "login",
+	) => {
 		// const authResponse = await loginCustomer()
 		// console.log("Auth response received:", JSON.stringify(authResponse, null, 2))
 		const usid = sessionStorage.getItem("usid")
@@ -84,6 +90,9 @@ const Page = () => {
 				Object.entries(data).map(([key, value]) => {
 					sessionStorage.setItem(key, String(value));
 				});
+				console.log("data");
+				const customerType = data.idp_access_token ? "registered" : "guest";
+				sessionStorage.setItem("customer_type", customerType);
 				// const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
 				//   customerId: data?.customer_id,
 				// });
@@ -95,15 +104,14 @@ const Page = () => {
 				router.push("/");
 			})
 			.then(async () => {
-
-				if(call==="login"){
+				if (call === "login") {
 					try {
 						await mergeBasketMutation.mutateAsync();
 					} catch (err) {
 						console.log(err);
 					}
 				}
-				
+
 				const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
 					customerId: sessionStorage?.getItem("customer_id"),
 				});
@@ -116,7 +124,7 @@ const Page = () => {
 
 				if (basketId) {
 					sessionStorage.setItem("basketId", basketId);
-				} 
+				}
 			})
 			.catch((error) => console.error("Login error ", error));
 	};

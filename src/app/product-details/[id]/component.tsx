@@ -25,6 +25,8 @@ import { useState } from "react";
 import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
 import styles from "./page.module.css";
 
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+
 export default function ProductDetails() {
 	interface CartItemResponse {
 		itemId: string;
@@ -93,13 +95,13 @@ export default function ProductDetails() {
 		retry: 3,
 	});
 
-	const { data,isFetching,isLoading } = useQuery({
+	const { data, isFetching, isLoading } = useQuery({
 		queryKey: ["Product", productId],
 		queryFn: () =>
 			graphqlRequest(GET_PRODUCT_DETAILS, { productId: productId }),
 		enabled: !!productId,
 	});
-  console.log({isFetching,isLoading});
+	console.log({ isFetching, isLoading });
 	type ProductImage = {
 		link: string;
 	};
@@ -217,67 +219,164 @@ export default function ProductDetails() {
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
 				<div className={styles.gallery}>
-					{data?.productDetails?.imageGroups != null &&
-						galleryImages?.length !== 0 && <Gallery images={galleryImages} />}
-				</div>
-				<div className={styles.accordion}>
-					<Accordion
-						items={accordionData}
-						contentStyle={styles.accordionContent}
-					/>
-				</div>
-				<div className={styles.productDetails}>
-					<div className={styles.title}>{data?.productDetails?.name}</div>
-					<div className={styles.price}>
-						{data?.productDetails?.currency}&nbsp;
-						{data?.productDetails?.price}
-					</div>
-					<div className={styles.desc}>
-						{data?.productDetails?.longDescription}
-					</div>
-					<div className={styles.varientSection}>
-						{/* <VarientSelector colors={colorData} onSelected={handleSelected} /> */}
-					</div>
-					<div className={styles.buttonContainer}>
-						<Button onClick={() => handleAddToWishlist()}>
-							ADD TO WISHLIST
-						</Button>
-						<Select>
-							<SelectTrigger
-								data-testid="select-trigger"
+					{isLoading ? (
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "row",
+								gap: "20px",
+								alignItems: "flex-start",
+							}}
+						>
+							<div
 								style={{
-									backgroundColor: "#fff",
-									border: "solid",
-									borderWidth: "1px",
-									borderColor: "#CCCBCE",
-									color: "#000",
-									fontSize: "12px",
-									fontWeight: "600",
-									lineHeight: "16px",
+									display: "flex",
+									flexDirection: "column",
+									gap: "10px",
 								}}
 							>
-								SIZE
-							</SelectTrigger>
-							<SelectContent>
-								{sizes?.map((item) => {
-									return (
-										<SelectItem value={item?.value} key={item?.title}>
-											{item?.title}
-										</SelectItem>
-									);
-								})}
-							</SelectContent>
-						</Select>
-					</div>
-					<Button
-						variant="secondary"
-						className={styles.cartButton}
-						onClick={() => handleClick()}
-					>
-						Add To Bag
-					</Button>
+								{Array.from({ length: 5 }).map((_, i) => (
+									<Skeleton
+										key={`skeleton-${Date.now()}-${Math.random()}`}
+										style={{
+											height: "93px",
+											width: "93px",
+											borderRadius: "0.375rem",
+										}}
+									/>
+								))}
+							</div>
+							<Skeleton
+								style={{
+									width: "100%",
+									height: "518.83px",
+									borderRadius: "0.5rem",
+								}}
+							/>
+						</div>
+					) : (
+						data?.productDetails?.imageGroups != null &&
+						galleryImages?.length !== 0 && <Gallery images={galleryImages} />
+					)}
+				</div>
+				<div className={styles.accordion}>
+					{isLoading ? (
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								gap: "12px",
+							}}
+						>
+							{Array.from({ length: 2 }).map((_, i) => (
+								<Skeleton
+									key={`skeleton-${Date.now()}-${Math.random()}`}
+									style={{
+										height: "52px",
+										width: "100%",
+										borderRadius: "0.375rem",
+									}}
+								/>
+							))}
+						</div>
+					) : (
+						<Accordion
+							items={accordionData}
+							contentStyle={styles.accordionContent}
+						/>
+					)}
+				</div>
+				<div className={styles.productDetails}>
+					{isLoading ? (
+						<div
+							style={{
+								display: "flex",
+								flexDirection: "column",
+								gap: "20px",
+							}}
+						>
+							<Skeleton style={{ width: "80%", height: "32px" }} />
+							<Skeleton
+								style={{ width: "40%", height: "28px", marginTop: "12px" }}
+							/>
+
+							<div>
+								<Skeleton
+									style={{ width: "100%", height: "16px", marginBottom: "8px" }}
+								/>
+								{/* <Skeleton style={{ width: "90%", height: "16px", marginBottom: "8px" }} />  */}
+								<Skeleton style={{ width: "75%", height: "16px" }} />
+							</div>
+
+							<Skeleton style={{ width: "60%", height: "20px" }} />
+
+							<div
+								style={{
+									display: "grid",
+									gridTemplateColumns: "1fr 1fr",
+									gap: "12px",
+								}}
+							>
+								<Skeleton style={{ height: "36px", width: "100%" }} />
+								<Skeleton style={{ height: "36px", width: "100%" }} />
+							</div>
+
+							<Skeleton style={{ height: "36px", width: "100%" }} />
+						</div>
+					) : (
+						<>
+							<div className={styles.title}>{data?.productDetails?.name}</div>
+							<div className={styles.price}>
+								{data?.productDetails?.currency}&nbsp;
+								{data?.productDetails?.price}
+							</div>
+							<div className={styles.desc}>
+								{data?.productDetails?.longDescription}
+							</div>
+							<div className={styles.varientSection}>
+								{/* <VarientSelector colors={colorData} onSelected={handleSelected} /> */}
+							</div>
+							<div className={styles.buttonContainer}>
+								<Button onClick={() => handleAddToWishlist()}>
+									ADD TO WISHLIST
+								</Button>
+								<Select>
+									<SelectTrigger
+										data-testid="select-trigger"
+										style={{
+											backgroundColor: "#fff",
+											border: "solid",
+											borderWidth: "1px",
+											borderColor: "#CCCBCE",
+											color: "#000",
+											fontSize: "12px",
+											fontWeight: "600",
+											lineHeight: "16px",
+										}}
+									>
+										SIZE
+									</SelectTrigger>
+									<SelectContent>
+										{sizes?.map((item) => (
+											<SelectItem value={item?.value} key={item?.title}>
+												{item?.title}
+											</SelectItem>
+										))}
+									</SelectContent>
+								</Select>
+							</div>
+							<Button
+								variant="secondary"
+								className={styles.cartButton}
+								onClick={() => handleClick()}
+							>
+								Add To Bag
+							</Button>
+						</>
+					)}
 				</div>
 			</div>
+
 			{open && (
 				<MiniCart cartItem={cartItems} open={open} onOpenChange={setOpen} />
 			)}

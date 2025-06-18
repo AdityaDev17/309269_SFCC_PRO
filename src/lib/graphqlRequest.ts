@@ -7,7 +7,7 @@ const AUTH_HEADER =
   "Basic NjgyMjQ3NDItNGU2ZC00NWUzLWFjZjctMmI3NWQ1ZDJiZGIwOjc4NlliZ1E1SF9TS2FMbXloOHctNXNUOFF6YThvNnNtQnJTWTBIOG5SRGs=";
  
 // Token helper: fetch and store tokens
-const fetchToken = async (isRefresh = false): Promise<string | null> => {
+export const fetchToken = async (isRefresh = false): Promise<string | null> => {
   const input: any = {
     grantType: isRefresh ? "refresh_token" : "client_credentials",
   };
@@ -75,7 +75,7 @@ const fetchToken = async (isRefresh = false): Promise<string | null> => {
 };
  
 // Validate and return access token
-const getValidToken = async (): Promise<string | null> => {
+  const getValidToken = async (): Promise<string | null> => {
   const expiry = sessionStorage.getItem("sfcc_token_expiry");
   const isExpired = !expiry || Date.now() >= parseInt(expiry, 10);
  

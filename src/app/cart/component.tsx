@@ -6,6 +6,7 @@ import {
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { Button } from "../../components/atomic/Button/Button";
 import Input from "../../components/atomic/Input/Input";
@@ -44,6 +45,7 @@ type CartProps = {
 };
 
 const Cart = ({ basketId }: CartProps) => {
+	const router = useRouter();
 	const { data, refetch } = useQuery({
 		queryKey: ["GetBasket", basketId],
 		queryFn: () => graphqlRequest(GET_BASKET, { basketId: basketId }),
@@ -138,11 +140,12 @@ const Cart = ({ basketId }: CartProps) => {
 				<div className={styles.orderSummarySection}>
 					<OrderSummary
 						totalRowTop={true}
-						isButton={false}
+						isButton={true}
 						totalAmt={data?.basketInfo?.productSubTotal}
 						currency={data?.basketInfo?.currency}
 						subTotal={data?.basketInfo?.productTotal}
 						buttonText="CONTINUE"
+						onButtonClick={() => router.push("/shipping")}
 					/>
 				</div>
 				<div className={styles.redeemWrapper}>

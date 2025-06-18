@@ -5,4 +5,8 @@ export const sanityClient = createClient({
   dataset: process.env.SANITY_DATASET,
   apiVersion: "2024-11-01",
   useCdn: false,
+  token: process.env.SANITY_VIEWER_TOKEN,
+  stega: {
+    studioUrl: process.env.NEXT_PUBLIC_SANITY_STUDIO_URL,
+  },
 });

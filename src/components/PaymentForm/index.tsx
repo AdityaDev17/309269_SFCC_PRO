@@ -30,7 +30,7 @@ const StripePayment = () => {
 
 		if (error) {
 			if (error.type === "card_error" || error.type === "validation_error") {
-        console.log(error.message)
+				console.log(error.message);
 			} else {
 				console.log("An unexpected error occured.");
 			}
@@ -51,16 +51,16 @@ const StripePayment = () => {
 
 	return (
 		<div>
-				<div>
-					<PaymentElement />
-					<Button
-						onClick={(e) => handleSubmit(e)}
-						variant="secondary"
-						style={{ width: "100%", marginTop: "12px" }}
-					>
-						PAY
-					</Button>
-				</div>
+			<div>
+				<PaymentElement />
+				<Button
+					onClick={(e) => handleSubmit(e)}
+					variant="secondary"
+					style={{ width: "100%", marginTop: "12px" }}
+				>
+					PAY
+				</Button>
+			</div>
 		</div>
 	);
 };

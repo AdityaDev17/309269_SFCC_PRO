@@ -227,6 +227,19 @@ export const GET_BASKET = `
         }
         productName
       }
+        shipments {
+        shippingAddress {
+          address1
+          city
+          countryCode
+          firstName
+          fullName
+          id
+          lastName
+          postalCode
+          stateCode
+        }
+      }
     customerInfo {
       customerId
       email

@@ -9,19 +9,6 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import styles from "./page.module.css";
 
-const fetchProductData = async () => {
-	try {
-		const variables = {
-			orderId: "00003602",
-		};
-
-		const response = graphqlRequest(GET_ORDER_DETAILS, variables);
-		return response;
-	} catch (er) {
-		console.log("234", er);
-	}
-};
-
 const OrderConfimation = () => {
 	const { id } = useParams() as { id: string };
 	const orderId = id;
@@ -40,11 +27,11 @@ const OrderConfimation = () => {
 	}
 	const { data, error, isLoading } = useQuery({
 		queryKey: ["OrderDetails", orderId],
-		queryFn: fetchProductData,
+		queryFn: () => graphqlRequest(GET_ORDER_DETAILS, { orderId: orderId }),
 		enabled: !!orderId,
 	});
 
-	const orderDetails = data?.getOrder;
+	const orderDetails = data?.orderInfo;
 	const orderdedItems = orderDetails?.productItems?.map(
 		(item: ProductItem) => ({
 			id: item?.productId,
@@ -53,9 +40,11 @@ const OrderConfimation = () => {
 			quantity: item?.quantity,
 			price: item?.price,
 			currency: orderDetails?.currency,
-			productImage: item?.productImage.data[0].imageGroups[0].images[0].link,
+			productImage:
+				item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link,
 		}),
 	);
+	console.log("343", orderDetails);
 
 	return (
 		<section className={styles.layout}>
@@ -80,7 +69,7 @@ const OrderConfimation = () => {
 								<Typography
 									type="Label"
 									variant={3}
-									fontWeight="bold"
+									fontWeight="semibold"
 									color="black"
 									label={"Delivery Address"}
 								/>
@@ -156,20 +145,22 @@ const OrderConfimation = () => {
 						/>
 					</section>
 				</section>
-				<OrderSummary
-					totalRowTop={true}
-					isButton={false}
-					isPaymentImage={false}
-					total={orderDetails?.orderTotal.toString()}
-					totalAmt={orderDetails?.productTotal.toString()}
-					// totalAmt={orderDetails?.orderTotal.toString()}
-					totalSavings="0"
-					subTotal={orderDetails?.productSubTotal.toString()}
-					// subTotal={orderDetails?.orderTotal.toString()}
-					delivery="Free"
-					tax={orderDetails?.taxTotal.toString()}
-					currency={orderDetails?.currency}
-				/>
+				<section className={styles.orderSummary}>
+					<OrderSummary
+						totalRowTop={true}
+						isButton={false}
+						isPaymentImage={false}
+						total={orderDetails?.orderTotal.toString()}
+						totalAmt={orderDetails?.productTotal.toString()}
+						// totalAmt={orderDetails?.orderTotal.toString()}
+						totalSavings="0"
+						subTotal={orderDetails?.productSubTotal.toString()}
+						// subTotal={orderDetails?.orderTotal.toString()}
+						delivery="Free"
+						tax={orderDetails?.taxTotal.toString()}
+						currency={orderDetails?.currency}
+					/>
+				</section>
 			</section>
 		</section>
 	);

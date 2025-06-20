@@ -17,6 +17,7 @@ export const clearSession = () => {
     "sfcc_token_expiry",
     "refresh_token_expiry",
     "customer_type",
+    "basketId"
   ]
 
   keysToRemove.forEach((key) => {

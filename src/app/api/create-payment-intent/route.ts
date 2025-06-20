@@ -1,27 +1,38 @@
 import { NextRequest } from "next/server";
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-export async function POST(request:NextRequest) {
+export async function POST(request: NextRequest) {
   const basketDetails = await request.json();
   try {
     const customer = await stripe.customers.create({
-      name: "Sanjay Kumar",
+      name: basketDetails?.basketDetails?.basketInfo?.shipments?.[0]
+        ?.shippingAddress?.firstName,
       address: {
-        line1: "510 Townsend St",
-        postal_code: "98140",
-        city: "San Francisco",
-        state: "CA",
-        country: "US",
+        line1:
+          basketDetails?.basketDetails?.basketInfo?.shipments?.[0]
+            ?.shippingAddress?.address1,
+        postal_code:
+          basketDetails?.basketDetails?.basketInfo?.shipments?.[0]
+            ?.shippingAddress?.postalCode,
+        city: basketDetails?.basketDetails?.basketInfo?.shipments?.[0]
+          ?.shippingAddress?.city,
+        state:
+          basketDetails?.basketDetails?.basketInfo?.shipments?.[0]
+            ?.shippingAddress?.stateCode,
+        country:
+          basketDetails?.basketDetails?.basketInfo?.shipments?.[0]
+            ?.shippingAddress?.countryCode,
       },
     });
     const paymentIntent = await stripe.paymentIntents.create({
       currency: basketDetails?.basketDetails?.basketInfo?.currency,
-      amount: basketDetails?.basketDetails?.basketInfo?.productTotal.toFixed(2)
-        .toString()
-        .replace(".", ""),
+      amount: Math.floor(
+        basketDetails?.basketDetails?.basketInfo?.productTotal
+      ),
       automatic_payment_methods: { enabled: true },
       description: "Software development services",
-      customer: customer.id,
+      customer: customer?.id,
+
       metadata: {
         basketId: basketDetails?.basketDetails?.basketInfo?.basketId,
         addPayment: "cart",
@@ -39,7 +50,7 @@ export async function POST(request:NextRequest) {
         },
       }
     );
-  } catch (e:any) {
+  } catch (e: any) {
     return new Response(
       JSON.stringify({
         error: {

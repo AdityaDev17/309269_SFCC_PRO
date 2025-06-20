@@ -154,7 +154,7 @@ const CartItemList = ({
 										<Typography
 											type="Label"
 											variant={3}
-											label={`${item.currency} ${item.quantity * item.price}`}
+											label={`${item.currency} ${item.price}`}
 											color="#4f4b53"
 										/>
 									</div>

@@ -56,7 +56,7 @@ const OrderSummary = ({
 							type={"Label"}
 							variant={3}
 							fontWeight="medium"
-							label={`${currency}${totalAmt}`}
+							label={`${currency} ${totalAmt}`}
 						/>
 					</div>
 					<hr className={styles.topDivider} />

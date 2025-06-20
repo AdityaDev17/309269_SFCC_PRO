@@ -1,14 +1,50 @@
 import {
+	ADD_PAYMENT_INSTRUMENT_TO_BASKET,
+	CREATE_ORDER,
+} from "@/common/schema";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import {
 	PaymentElement,
 	useElements,
 	useStripe,
 } from "@stripe/react-stripe-js";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "../atomic/Button/Button";
 const StripePayment = () => {
+	const router = useRouter();
 	const stripe = useStripe();
 	const elements = useElements();
 	const [isProcessing, setIsProcessing] = useState(false);
+	const basketId = sessionStorage.getItem("basketId") ?? "";
+
+	type PaymentInstrumentInput = {
+		basketId: string;
+		items: {
+			paymentMethodId: string;
+			paymentCard: {
+				cardType: string;
+				expirationMonth: number;
+				expirationYear: number;
+				holder: string;
+				maskedNumber: string;
+			};
+		};
+	};
+
+	type OrderInput = {
+		basketId: string;
+	};
+
+	const addPaymentInstrumentToBasket = useMutation({
+		mutationFn: (input: PaymentInstrumentInput) =>
+			graphqlRequest(ADD_PAYMENT_INSTRUMENT_TO_BASKET, { input }),
+	});
+
+	const createOrder = useMutation({
+		mutationFn: (input: OrderInput) => graphqlRequest(CREATE_ORDER, { input }),
+	});
 
 	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -46,6 +82,28 @@ const StripePayment = () => {
 					paymentMethodId: paymentIntent?.payment_method,
 				}),
 			});
+			const data = await res.json();
+			console.log(data.paymentMethodDetails);
+			await addPaymentInstrumentToBasket.mutateAsync({
+				basketId,
+				items: {
+					paymentMethodId: "CREDIT_CARD",
+					paymentCard: {
+						cardType: "Visa",
+						expirationMonth: data?.paymentMethodDetails?.card?.exp_month,
+						expirationYear: data?.paymentMethodDetails?.card?.exp_year,
+						holder: "kavya",
+						maskedNumber: `**********${data?.paymentMethodDetails?.card?.last4}`,
+					},
+				},
+			});
+			const order = await createOrder.mutateAsync({
+				basketId,
+			});
+			if (order?.createOrder?.orderNo) {
+				sessionStorage.removeItem("basketId");
+				router.push(`/order-confirmation/${order?.createOrder?.orderNo}`);
+			}
 		}
 	};
 

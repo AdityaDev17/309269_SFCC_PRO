@@ -4,7 +4,12 @@ import React from "react";
 import OrderConfimation from "./component";
 import styles from "./page.module.css";
 
-export default function OrderConfirmationPage() {
+export default async function OrderConfirmationPage({
+	params,
+}: {
+	params: Promise<{ id: string }>;
+}) {
+	const { id } = await params;
 	return (
 		<section className={`${styles.layout} ${styles.pageLayout}`}>
 			<Breadcrumbs
@@ -16,7 +21,7 @@ export default function OrderConfirmationPage() {
 			<Banner
 				title="THANK YOU FOR PLACING YOUR ORDER!"
 				textColor="#000"
-				subtitle="Order ID : #64348"
+				subtitle={`Order ID ${id}`}
 				subtitleVariant={5}
 				buttonText="CONTINUE SHOPPING"
 				backgroundImage="/images/orderConfirmationBanner.svg"

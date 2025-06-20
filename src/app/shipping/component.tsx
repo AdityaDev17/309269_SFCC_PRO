@@ -125,13 +125,13 @@ const Shipping = () => {
 	const updateShippingAddressMutation = useMutation({
 		mutationFn: (input: UpdateShippingAddressInput) =>
 			graphqlRequest(UPDATE_SHIPPING_ADDRESS, { input }),
-		    retry:2
+		retry: 2,
 	});
 
 	const updateShippingMethodMutation = useMutation({
 		mutationFn: (input: UpdateShippingMethodInput) =>
 			graphqlRequest(UPDATE_SHIPPING_METHOD, { input }),
-		    retry:2
+		retry: 2,
 	});
 
 	const shippingAdresses =

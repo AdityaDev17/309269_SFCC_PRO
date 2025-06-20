@@ -16,12 +16,11 @@ export async function POST(request:NextRequest) {
     });
     const paymentIntent = await stripe.paymentIntents.create({
       currency: basketDetails?.basketDetails?.basketInfo?.currency,
-      amount: basketDetails?.basketDetails?.basketInfo?.productTotal.toFixed(2)
-        .toString()
-        .replace(".", ""),
+      amount: Math.floor(basketDetails?.basketDetails?.basketInfo?.productTotal),
       automatic_payment_methods: { enabled: true },
       description: "Software development services",
-      customer: customer.id,
+      customer:  basketDetails?.basketDetails?.basketInfo?.customerInfo?.customerId,
+     
       metadata: {
         basketId: basketDetails?.basketDetails?.basketInfo?.basketId,
         addPayment: "cart",

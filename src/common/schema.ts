@@ -113,20 +113,20 @@ export const GET_CATEGORIES = `
   }
 `;
 export const REGISTER = `
-    mutation RegisterCustomerHandler($input: RegisterInput!) {
-        registerCustomerHandler(input: $input) {
-            authType
-            creationDate
-            customerId
-            customerNo
-            email
-            enabled
-            firstName
-            lastModified
-            lastName
-            login
-        }
-    }
+    mutation RegisterCustomer($input: RegisterInput!) {
+  registerCustomer(input: $input) {
+    authType
+    creationDate
+    customerId
+    customerNo
+    email
+    enabled
+    firstName
+    lastModified
+    lastName
+    login
+  }
+}
 `;
 /*Page Schema Ends*/
 
@@ -227,7 +227,11 @@ export const GET_BASKET = `
         }
         productName
       }
+    customerInfo {
+      customerId
+      email
     }
+  }
   }
 `;
 export const UPDATE_BASKET_ITEM = `
@@ -626,4 +630,19 @@ export const UPDATE_SHIPPING_METHOD = `
       productTotal
     }
   }
+`;
+
+export const ADD_PAYMENT_INSTRUMENT_TO_BASKET = `
+mutation AddPaymentInstrumentToBasket($input: AddPaymentInstrument!) {
+  addPaymentInstrumentToBasket(input: $input) {
+    basketId
+  }
+}
+`;
+export const CREATE_ORDER = `
+mutation CreateOrder($input: OrderInput!) {
+  createOrder(input: $input) {
+    orderNo
+  }
+}
 `;

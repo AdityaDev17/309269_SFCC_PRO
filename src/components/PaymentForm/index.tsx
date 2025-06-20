@@ -1,68 +1,126 @@
 import {
-	PaymentElement,
-	useElements,
-	useStripe,
+  PaymentElement,
+  useElements,
+  useStripe,
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { Button } from "../atomic/Button/Button";
+import { useMutation } from "@tanstack/react-query";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { ADD_PAYMENT_INSTRUMENT_TO_BASKET, CREATE_ORDER } from "@/common/schema";
+import { useRouter } from "next/navigation";
 const StripePayment = () => {
-	const stripe = useStripe();
-	const elements = useElements();
-	const [isProcessing, setIsProcessing] = useState(false);
+  const router=useRouter()
+  const stripe = useStripe();
+  const elements = useElements();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const basketId = sessionStorage.getItem("basketId") ?? "";
 
-	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-		e.preventDefault();
-		sessionStorage.setItem("ModeOfPayment", "Credit Card");
+  type PaymentInstrumentInput = {
+    basketId: string;
+    items: {
+      paymentMethodId: string;
+      paymentCard: {
+        cardType: string;
+        expirationMonth: number;
+        expirationYear: number;
+        holder: string;
+        maskedNumber: string;
+      };
+    };
+  };
+   
+  type OrderInput={
+    basketId:string;
+  }
 
-		if (!stripe || !elements) {
-			// Stripe.js has not yet loaded.
-			// Make sure to disable form submission until Stripe.js has loaded.
-			return;
-		}
+  const addPaymentInstrumentToBasket = useMutation({
+    mutationFn: (input: PaymentInstrumentInput) =>
+      graphqlRequest(ADD_PAYMENT_INSTRUMENT_TO_BASKET, { input }),
+  });
 
-		setIsProcessing(true);
+   const createOrder = useMutation({
+    mutationFn: (input: OrderInput) =>
+      graphqlRequest( CREATE_ORDER, { input }),
+  });
 
-		const { error, paymentIntent } = await stripe.confirmPayment({
-			elements,
-			confirmParams: {},
-			redirect: "if_required",
-		});
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    sessionStorage.setItem("ModeOfPayment", "Credit Card");
 
-		if (error) {
-			if (error.type === "card_error" || error.type === "validation_error") {
-        console.log(error.message)
-			} else {
-				console.log("An unexpected error occured.");
-			}
-			setIsProcessing(false);
-		} else paymentIntent && paymentIntent.status === "succeeded";
-		{
-			const res = await fetch("/api/get-card-details", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					paymentMethodId: paymentIntent?.payment_method,
-				}),
-			});
-		}
-	};
+    if (!stripe || !elements) {
+      // Stripe.js has not yet loaded.
+      // Make sure to disable form submission until Stripe.js has loaded.
+      return;
+    }
 
-	return (
-		<div>
-				<div>
-					<PaymentElement />
-					<Button
-						onClick={(e) => handleSubmit(e)}
-						variant="secondary"
-						style={{ width: "100%", marginTop: "12px" }}
-					>
-						PAY
-					</Button>
-				</div>
-		</div>
-	);
+    setIsProcessing(true);
+
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {},
+      redirect: "if_required",
+    });
+
+    if (error) {
+      if (error.type === "card_error" || error.type === "validation_error") {
+        console.log(error.message);
+      } else {
+        console.log("An unexpected error occured.");
+      }
+      setIsProcessing(false);
+    } else paymentIntent && paymentIntent.status === "succeeded";
+    {
+      const res = await fetch("/api/get-card-details", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          paymentMethodId: paymentIntent?.payment_method,
+        }),
+      });
+      const data = await res.json();
+      console.log(data.paymentMethodDetails);
+      await addPaymentInstrumentToBasket.mutateAsync({
+        basketId,
+        items: {
+          paymentMethodId: "CREDIT_CARD",
+          paymentCard: {
+            cardType: "Visa",
+            expirationMonth: data?.paymentMethodDetails?.card?.exp_month,
+            expirationYear: data?.paymentMethodDetails?.card?.exp_year,
+            holder: "kavya",
+            maskedNumber: `**********${data?.paymentMethodDetails?.card?.last4}`,
+          },
+        },
+      });
+      const order=await createOrder.mutateAsync({
+        basketId,
+      });
+      if(order?.createOrder?.orderNo)
+      {
+        sessionStorage.removeItem('basketId')
+        router.push(`/order-confirmation/${order?.createOrder?.orderNo}`)
+      }
+      
+    }
+  };
+
+  return (
+    <div>
+      <div>
+        <PaymentElement />
+        <Button
+          onClick={(e) => handleSubmit(e)}
+          variant="secondary"
+          style={{ width: "100%", marginTop: "12px" }}
+        >
+          PAY
+        </Button>
+      </div>
+    </div>
+  );
 };
 
 export default StripePayment;

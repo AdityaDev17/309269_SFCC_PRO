@@ -32,6 +32,7 @@ export default function CheckoutForm() {
 		queryKey: ["GetBasket", basketId],
 		queryFn: () => graphqlRequest(GET_BASKET, { basketId: basketId }),
 		enabled: !!basketId,
+		retry:2
 	});
 	const [clientSecret, setClientSecret] = useState("");
 	useEffect(() => {

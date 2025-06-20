@@ -6,7 +6,7 @@
 .detailsSection{
     display: grid;
     grid-template-columns: 1fr 0.4fr;
-    gap:var(--space-56);
+    gap:20px;
     @container (max-width: 768px) {
         grid-template-columns: 1fr;
       }
@@ -14,7 +14,7 @@
 .rootLayer{
     display: grid;
     grid-template-columns: 0.1fr 1fr;
-    gap: var(--space-8);
+    gap: 8px;
 }
 .secondRow{
     display: grid;
@@ -64,5 +64,8 @@
 }
 
 .pageLayout{
-    padding: var(--space-40) var(--space-56);
+    padding: 12px 40px;
+}
+.orderSummary{
+    height: fit-content;
 }

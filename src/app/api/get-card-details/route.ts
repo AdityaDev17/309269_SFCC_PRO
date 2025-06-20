@@ -3,7 +3,6 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request:NextRequest) {
   const paymentMethodId = await request.json();
-  console.log('2343',paymentMethodId)
   try {
     const paymentMethodDetails = await stripe.paymentMethods.retrieve(paymentMethodId?.paymentMethodId);
 

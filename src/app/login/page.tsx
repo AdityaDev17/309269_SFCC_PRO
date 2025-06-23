@@ -26,6 +26,10 @@ type formDataProps = {
 const Page = () => {
 	const [isLogin, setIsLogin] = useState(true);
 	const router = useRouter();
+	const [loginError, setLoginError] = useState<string | undefined>(undefined);
+	const clearLoginError = () => {
+		setLoginError(undefined);
+	};
 	// const [postRegisterMutation] = useMutation(postRegistration);
 	const postRegisterMutation = useMutation({
 		mutationFn: (input: {
@@ -70,6 +74,8 @@ const Page = () => {
 	) => {
 		// const authResponse = await loginCustomer()
 		// console.log("Auth response received:", JSON.stringify(authResponse, null, 2))
+		setLoginError(undefined); // Clear previous error
+		let loginSuccess = false; // ✅ flag to track success
 		const usid = sessionStorage.getItem("usid")
 			? sessionStorage.getItem("usid")
 			: "";
@@ -87,6 +93,13 @@ const Page = () => {
 		})
 			.then((response) => response.json())
 			.then((data) => {
+				//  if login failed stop here
+				if (!data?.access_token) {
+					setLoginError("Incorrect email or password.Please try again");
+					loginSuccess = false;
+					return;
+				}
+				loginSuccess = true;
 				Object.entries(data).map(([key, value]) => {
 					sessionStorage.setItem(key, String(value));
 				});
@@ -101,9 +114,13 @@ const Page = () => {
 				// router.push("/");
 				const expiryTime = Date.now() + data.expires_in * 1000;
 				sessionStorage.setItem("sfcc_token_expiry", expiryTime.toString());
-				router.push("/");
+				// router.push("/");
 			})
 			.then(async () => {
+				// Stop here if login failed
+				if (!loginSuccess) {
+					return;
+				}
 				if (call === "login") {
 					try {
 						await mergeBasketMutation.mutateAsync();
@@ -125,8 +142,12 @@ const Page = () => {
 				if (basketId) {
 					sessionStorage.setItem("basketId", basketId);
 				}
+				router.push("/"); //  Only happens after successful login
 			})
-			.catch((error) => console.error("Login error ", error));
+			.catch((error) => {
+				console.error("Login error ", error);
+				setLoginError("Something went wrong. Please try again");
+			});
 	};
 
 	const signUpHandler = (formData: formDataProps) => {
@@ -172,6 +193,8 @@ const Page = () => {
 					<Login
 						onLoginClicked={loginClickHandler}
 						onCreateAccount={createAccountHandler}
+						errorMessage={loginError}
+						clearErrorMessage={clearLoginError}
 					/>
 				) : (
 					<SignUp onProceed={signUpHandler} />

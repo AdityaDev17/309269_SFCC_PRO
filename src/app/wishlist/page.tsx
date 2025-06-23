@@ -2,6 +2,7 @@
 import { WISHLIST_DATA } from "@/common/schema";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import React from "react";
 import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "../../components/atomic/Typography/Typography";
@@ -10,6 +11,7 @@ import { Toaster } from "../../components/molecules/Toast/Toast";
 import ProductImageCarousel from "../../components/organisms/ProductImageCarousel/ProductImageCarousel";
 import ButtonList from "./component";
 import styles from "./wishlist.module.css";
+
 interface WishlistImage {
 	alt: string;
 	link: string;
@@ -39,6 +41,7 @@ type CustomerProductListItem = {
 
 function Wishlist() {
 	const customerId = sessionStorage.getItem("customer_id") ?? "";
+	const router = useRouter();
 
 	const { data } = useQuery({
 		queryKey: ["Wishlist", customerId],
@@ -75,6 +78,11 @@ function Wishlist() {
 			) => brand !== undefined && self.indexOf(brand) === index,
 		);
 
+	// handler for navigating to PDP
+	const handleProductClick = (productId: string) => {
+		router.push(`/product-details/${productId}`);
+	};
+
 	return wishlistData?.length === 0 ? (
 		<ErrorComponent
 			errImg="./images/wishlistEmpty.svg"
@@ -104,6 +112,7 @@ function Wishlist() {
 					alignment="alignStart"
 					withPagination={false}
 					moveToBag={false}
+					onCardClick={handleProductClick}
 					//   onMoveToBag={() => {
 					//     sonnerToast("Item has been moved to your Bag!", {
 					//       className: `${styles.Toast} ${styles.ToastSuccess}`,

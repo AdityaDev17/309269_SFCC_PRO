@@ -8,15 +8,26 @@ import styles from "./Login.module.css";
 interface LoginProps {
 	onLoginClicked: (formData: { email: string; password: string }) => void;
 	onCreateAccount: () => void;
+	errorMessage?: string;
+	clearErrorMessage?: () => void;
 }
 
-const Login = ({ onLoginClicked, onCreateAccount }: LoginProps) => {
+const Login = ({
+	onLoginClicked,
+	onCreateAccount,
+	errorMessage,
+	clearErrorMessage,
+}: LoginProps) => {
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	});
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
+
+		if (clearErrorMessage) {
+			clearErrorMessage(); // ✅ Clear the error as user types
+		}
 		setFormData((prevData) => ({
 			...prevData,
 			[name]: value,
@@ -48,6 +59,9 @@ const Login = ({ onLoginClicked, onCreateAccount }: LoginProps) => {
 					style={{ width: "325px", borderColor: "#B3B2B5" }}
 				/>
 			</div>
+
+			{errorMessage && <p className={styles.errorMsg}>{errorMessage}</p>}
+
 			<div className={styles.row}>
 				<div className={styles.rowGap}>
 					<CheckBox data-testid="checkbox" style={{ borderColor: "#4F4B53" }} />

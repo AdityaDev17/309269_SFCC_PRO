@@ -80,7 +80,7 @@ export default function PLPPage() {
 			{/* Heading for the PLP Page */}
 			<h1 className={styles.pageHeading}>{"Jewellery"} Products</h1>
 
-			<div className={styles.topBar}>
+			<div className={styles.selectBar}>
 				<FilterDialog />
 				<Select defaultValue="recent">
 					<SelectTrigger variant="sort" className={styles.sortSelectTrigger}>

@@ -22,6 +22,7 @@ interface BannerProps extends React.HTMLAttributes<HTMLDivElement> {
 	subtitleColor?: string;
 	description?: string;
 	backgroundImage?: string;
+	videoUrl?: string;
 	alignment?: alignmentType;
 	buttonLink?: () => void;
 	textColor?: string;
@@ -36,6 +37,7 @@ const Banner: React.FC<BannerProps> = ({
 	buttonText,
 	buttonColor,
 	backgroundImage,
+	videoUrl,
 	alignment = "center-center",
 	buttonLink = "#",
 	textColor = "white",
@@ -48,11 +50,24 @@ const Banner: React.FC<BannerProps> = ({
 	const alignmentClass = `${styles[`horizontal-${horizontal}`]} ${styles[`vertical-${vertical}`]}`;
 
 	return (
-		<div className={styles.wrapper} {...props}>
+		<div className={styles.wrapper}>
 			<section className={styles.bannerContainer}>
-				{backgroundImage && (
+				{videoUrl ? (
+					<video
+						className={styles.bannerImage}
+						autoPlay
+						muted
+						loop
+						playsInline
+						preload="auto"
+						poster={backgroundImage}
+					>
+						<source src={videoUrl} type="video/mp4" />
+						Your browser does not support the video tag.
+					</video>
+				) : backgroundImage ? (
 					<Image
-						src={backgroundImage || "/placeholder.svg"}
+						src={backgroundImage}
 						alt="Banner"
 						className={styles.bannerImage}
 						width={1440}
@@ -60,7 +75,7 @@ const Banner: React.FC<BannerProps> = ({
 						loading="eager"
 						priority={true}
 					/>
-				)}
+				) : null}
 				<div className={`${styles.textBox} ${alignmentClass}`}>
 					<Typography
 						type="Headline"
@@ -94,7 +109,13 @@ const Banner: React.FC<BannerProps> = ({
 							<Button
 								variant={buttonColor}
 								size="sm"
-								onClick={() => buttonLink}
+								onClick={() => {
+									if (typeof buttonLink === "string") {
+										window.location.href = buttonLink;
+									} else if (typeof buttonLink === "function") {
+										buttonLink();
+									}
+								}}
 							>
 								{buttonText}
 							</Button>

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import Footer from "../components/organisms/Footer/Footer";
@@ -37,15 +37,15 @@ export default async function RootLayout({
 				style={{ width: "100vw" }}
 			>
 				<Providers>
-				<WebVitals />
-				<HeaderWrapper />
-				{children}
-				{(await draftMode()).isEnabled && (
-					<>
-						<VisualEditing />
-						<DisableDraftMode />
-					</>
-				)}
+					<WebVitals />
+					<HeaderWrapper />
+					{children}
+					{(await draftMode()).isEnabled && (
+						<>
+							<VisualEditing />
+							<DisableDraftMode />
+						</>
+					)}
 				</Providers>
 				<Footer />
 			</body>

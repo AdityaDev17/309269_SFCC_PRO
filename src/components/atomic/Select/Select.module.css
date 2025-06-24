@@ -230,6 +230,7 @@
 .SelectContent {
   position: relative;
   z-index: 1000;
+  background-color: white !important; 
   max-height: 24rem;
   overflow: hidden;
   border: 1px solid var(--colors-black);

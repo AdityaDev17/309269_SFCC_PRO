@@ -64,7 +64,14 @@ const Login = ({
 
 			<div className={styles.row}>
 				<div className={styles.rowGap}>
-					<CheckBox data-testid="checkbox" style={{ borderColor: "#4F4B53" }} />
+					<CheckBox
+					    data-testid="checkbox"
+						style={{
+							border: "1px solid #4F4B53",
+							width: "16px",
+							height: "16px",
+							borderRadius: "2px",
+						}} />
 					<div className={styles.forgotPassword}>Remember Me</div>
 				</div>
 				<div>

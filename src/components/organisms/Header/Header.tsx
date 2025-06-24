@@ -91,6 +91,8 @@ const Header: React.FC<HeaderProps> = ({
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItems[]>([]);
+  const [subTotal, setSubTotal] = useState(0);
+  // const [basketId,setBasketId] = "";
 
   const getImageContainerClass = (length: number) => {
     if (length === 2) return styles.oneSecondaryImage;
@@ -134,10 +136,17 @@ const Header: React.FC<HeaderProps> = ({
       prepareCartItems(
         response?.basketInfo?.productItems,
         response?.basketInfo?.currency
-      );
-    } else {
-      setCartItems([]);
-    }
+    );
+    setSubTotal(response?.basketInfo?.productSubTotal);                                                                                                                             
+  }
+
+  const handleCartClick = async () => {
+    // const basketId = sessionStorage.getItem("basketId") ?? "";
+    // if (basketId) {
+    //   await getBasketDetails()
+    // } else {
+    //   setCartItems([]);
+    // }
     setOpen(true);
   };
 

@@ -1,13 +1,13 @@
 "use client";
 
 import {
+	GET_CUSTOMER,
 	GET_CUSTOMER_ADDRESS,
 	GET_SHIPPING_ADDRESS_FROM_BASKET,
 	GET_SHIPPING_METHOD,
+	UPDATE_CUSTOMER_INFO_IN_BASKET,
 	UPDATE_SHIPPING_ADDRESS,
 	UPDATE_SHIPPING_METHOD,
-	UPDATE_CUSTOMER_INFO_IN_BASKET,
-	GET_CUSTOMER
 } from "@/common/schema";
 import {
 	RadioGroup,
@@ -31,9 +31,9 @@ import OrderSummary from "../../components/organisms/OrderSummary/OrderSummary";
 import styles from "./shipping.module.css";
 
 type CustomerDetails = {
-	basketId: String;
-	email: String;
-}
+	basketId: string;
+	email: string;
+};
 
 type CommonCardType = {
 	id: string;
@@ -135,7 +135,7 @@ const Shipping = () => {
 		queryFn: () => graphqlRequest(GET_CUSTOMER, { customerId }),
 		enabled: !!customerId,
 	});
-	
+
 	const updateShippingAddressMutation = useMutation({
 		mutationFn: (input: UpdateShippingAddressInput) =>
 			graphqlRequest(UPDATE_SHIPPING_ADDRESS, { input }),
@@ -150,9 +150,10 @@ const Shipping = () => {
 
 	const updateCustomerDetailInBasket = useMutation({
 		mutationFn: (input: CustomerDetails) =>
-			graphqlRequest(UPDATE_CUSTOMER_INFO_IN_BASKET, {customerDetailInput: input})
+			graphqlRequest(UPDATE_CUSTOMER_INFO_IN_BASKET, {
+				customerDetailInput: input,
+			}),
 	});
-
 
 	const shippingAdresses =
 		shippingAddressData?.basketInfo?.shipments
@@ -241,13 +242,14 @@ const Shipping = () => {
 			}
 		}
 
-		const emailStoreInBasket = customerType === 'registered' ?  customerDetails?.customer?.email : email;
+		const emailStoreInBasket =
+			customerType === "registered" ? customerDetails?.customer?.email : email;
 
 		// Saving email in the basket
 		const detailsInput: CustomerDetails = {
-			basketId: basketId || '',
-			email: emailStoreInBasket
-		}
+			basketId: basketId || "",
+			email: emailStoreInBasket,
+		};
 		await updateCustomerDetailInBasket.mutateAsync(detailsInput);
 
 		try {

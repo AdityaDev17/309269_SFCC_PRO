@@ -138,7 +138,7 @@ export function AddressDialog({
 	setSelectedAddress,
 	customerType = "registered",
 	email,
-	setEmail
+	setEmail,
 }: {
 	open: boolean;
 	onOpenChangeAction: (open: boolean) => void;
@@ -275,7 +275,7 @@ export function AddressDialog({
 					: await createAddressMutation.mutateAsync(input);
 				await refetch?.();
 			} else {
-				let input: ShippingAddressInput = {
+				const input: ShippingAddressInput = {
 					basketId,
 					address1: street,
 					address2: address,
@@ -333,33 +333,35 @@ export function AddressDialog({
 									value={lastName}
 									onChange={handleChange}
 								/>
-								{ customerType === "guest" && (
-								<>
-									<Input
-									placeholder="Email"
-									name="email"
-									value={email}
-									onChange={handleChange}
-									/>
-									<Input
+								{customerType === "guest" && (
+									<>
+										<Input
+											placeholder="Email"
+											name="email"
+											value={email}
+											onChange={handleChange}
+										/>
+										<Input
+											placeholder="Phone No.*"
+											name="phone"
+											type="tel"
+											className={styles.PhoneInput}
+											value={phone}
+											onChange={handleChange}
+										/>
+									</>
+								)}
+							</div>
+							{customerType === "registered" && (
+								<Input
 									placeholder="Phone No.*"
 									name="phone"
 									type="tel"
 									className={styles.PhoneInput}
 									value={phone}
 									onChange={handleChange}
-									/>
-								</>
-								)}
-							</div>
-							{ customerType === "registered" && <Input
-								placeholder="Phone No.*"
-								name="phone"
-								type="tel"
-								className={styles.PhoneInput}
-								value={phone}
-								onChange={handleChange}
-							/>}
+								/>
+							)}
 						</fieldset>
 
 						{/* Location Details */}

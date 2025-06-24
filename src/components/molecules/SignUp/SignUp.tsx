@@ -95,8 +95,8 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 							style={{
 								width: "325px",
 								color: "#75757A",
-								backgroundColor:'white',
-								border:'1px solid #B3B2B5'
+								backgroundColor: "white",
+								border: "1px solid #B3B2B5",
 							}}
 						>
 							<SelectGroup>

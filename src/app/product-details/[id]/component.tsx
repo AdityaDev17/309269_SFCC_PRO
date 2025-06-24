@@ -18,6 +18,7 @@ import {
 import Accordion from "@/components/molecules/Accordion/Accordion";
 import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
 import Gallery from "@/components/organisms/Gallery/Gallery";
+import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
@@ -28,52 +29,10 @@ import styles from "./page.module.css";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 
 export default function ProductDetails() {
-	interface CartItemResponse {
-		itemId: string;
-		productName: string;
-		quantity: number;
-		price: number;
-		productId: string;
-		productImage?: {
-			data?: {
-				imageGroups?: {
-					images?: {
-						link?: string;
-					}[];
-				}[];
-			}[];
-		};
-	}
-	interface CartItems {
-		id: string;
-		name: string;
-		description: string;
-		quantity: number;
-		price: number;
-		currency: string;
-		productImage: string;
-		itemId: string;
-	}
-	[];
 	const { id } = useParams() as { id: string };
 	const productId = id;
 	const [open, setOpen] = useState(false);
-	const [cartItems, setCartItems] = useState<CartItems[]>([]);
 	const [toast, setToast] = useState(false);
-
-	const createCart = useMutation({
-		mutationFn: (input: { items: { productId: string; quantity: number }[] }) =>
-			graphqlRequest(CREATE_CART, { input }),
-		retry: 3,
-	});
-
-	const addItemToBasket = useMutation({
-		mutationFn: (input: {
-			basketId: string;
-			items: { productId: string; quantity: number }[];
-		}) => graphqlRequest(ADD_ITEM_TO_BASKET, { input }),
-		retry: 3,
-	});
 
 	const createCustomerProductList = useMutation({
 		mutationFn: (input: { customerId: string; type: string }) =>
@@ -174,47 +133,15 @@ export default function ProductDetails() {
 		}
 	};
 
-	const prepareCartItems = (response: CartItemResponse[], currency: string) => {
-		setCartItems(
-			response?.map((item) => ({
-				id: item?.productId,
-				itemId: item?.itemId,
-				name: item?.productName,
-				description: "",
-				quantity: item?.quantity,
-				price: item?.price,
-				currency: currency,
-				productImage:
-					item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ??
-					"",
-			})),
-		);
+	const addToBasketMutation = useMutation({
+		mutationFn: () => addToBasket(productId),
+		onSuccess: () => setOpen(true),
+		retry: 3,
+	});
+	const handleAddToBasket = async () => {
+		const response = await addToBasketMutation.mutateAsync();
+		return response;
 	};
-
-	const handleClick = async () => {
-		const basketId = await sessionStorage.getItem("basketId");
-		if (basketId) {
-			const response = await addItemToBasket.mutateAsync({
-				basketId,
-				items: [{ productId, quantity: 1 }],
-			});
-			prepareCartItems(
-				response?.addToCart?.productItems,
-				response?.addToCart?.currency,
-			);
-		} else {
-			const response = await createCart.mutateAsync({
-				items: [{ productId, quantity: 1 }],
-			});
-			prepareCartItems(
-				response?.createCart?.productItems,
-				response?.createCart?.currency,
-			);
-			sessionStorage.setItem("basketId", response?.createCart?.basketId ?? "");
-		}
-		setOpen(true);
-	};
-
 	return (
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
@@ -368,7 +295,7 @@ export default function ProductDetails() {
 							<Button
 								variant="secondary"
 								className={styles.cartButton}
-								onClick={() => handleClick()}
+								onClick={() => handleAddToBasket()}
 							>
 								Add To Bag
 							</Button>
@@ -377,9 +304,7 @@ export default function ProductDetails() {
 				</div>
 			</div>
 
-			{open && (
-				<MiniCart cartItem={cartItems} open={open} onOpenChange={setOpen} />
-			)}
+			{open && <MiniCart open={open} onOpenChange={setOpen} />}
 			<Toaster />
 		</section>
 	);

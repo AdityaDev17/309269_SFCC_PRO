@@ -1,8 +1,8 @@
 "use client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import CartItemList from "../../molecules/CartItemList/CartItemList";
@@ -70,8 +70,6 @@ const MiniCart = ({
 	const cartItems = data?.cartItems ?? [];
 	const subTotal = data?.subTotal ?? 0;
 
-	const queryClient = useQueryClient();
-
 	const removeBasketMutation = useMutation({
 		mutationFn: (input: { itemId: string }) => handleDeleteItem(input.itemId),
 		onSuccess: () => {
@@ -92,8 +90,10 @@ const MiniCart = ({
 	};
 
 	const updateBasketMutation = useMutation({
-		mutationFn: (input: { itemId: string; quantity: number }) =>
-			handleUpdateQuantity(input.itemId, input.quantity),
+		mutationFn: (input: {
+			itemId: string;
+			quantity: number;
+		}) => handleUpdateQuantity(input.itemId, input.quantity),
 		onSuccess: () => refetch(),
 		retry: 3,
 	});

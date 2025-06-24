@@ -18,13 +18,13 @@ import {
 import Accordion from "@/components/molecules/Accordion/Accordion";
 import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
 import Gallery from "@/components/organisms/Gallery/Gallery";
+import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
 import styles from "./page.module.css";
-import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 
@@ -218,81 +218,81 @@ export default function ProductDetails() {
 
 	const addToBasketMutation = useMutation({
 		mutationFn: () => addToBasket(productId),
-		onSuccess:()=> setOpen(true),
+		onSuccess: () => setOpen(true),
 		retry: 3,
 	});
-	const handleAddToBasket= async()=>{
+	const handleAddToBasket = async () => {
 		const response = await addToBasketMutation.mutateAsync();
 		return response;
-	}
+	};
 
 	return (
-    <section className={styles.componentLayout}>
-      <div className={styles.firstLayout}>
-        <div className={styles.gallery}>
-          {data?.productDetails?.imageGroups != null &&
-            galleryImages?.length !== 0 && <Gallery images={galleryImages} />}
-        </div>
-        <div className={styles.accordion}>
-          <Accordion
-            items={accordionData}
-            contentStyle={styles.accordionContent}
-          />
-        </div>
-        <div className={styles.productDetails}>
-          <div className={styles.title}>{data?.productDetails?.name}</div>
-          <div className={styles.price}>
-            {data?.productDetails?.currency}&nbsp;
-            {data?.productDetails?.price}
-          </div>
-          <div className={styles.desc}>
-            {data?.productDetails?.longDescription}
-          </div>
-          <div className={styles.varientSection}>
-            {/* <VarientSelector colors={colorData} onSelected={handleSelected} /> */}
-          </div>
-          <div className={styles.buttonContainer}>
-            <Button onClick={() => handleAddToWishlist()}>
-              ADD TO WISHLIST
-            </Button>
-            <Select>
-              <SelectTrigger
-                data-testid="select-trigger"
-                style={{
-                  backgroundColor: "#fff",
-                  border: "solid",
-                  borderWidth: "1px",
-                  borderColor: "#CCCBCE",
-                  color: "#000",
-                  fontSize: "12px",
-                  fontWeight: "600",
-                  lineHeight: "16px",
-                }}
-              >
-                SIZE
-              </SelectTrigger>
-              <SelectContent>
-                {sizes?.map((item) => {
-                  return (
-                    <SelectItem value={item?.value} key={item?.title}>
-                      {item?.title}
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
-          </div>
-          <Button
-            variant="secondary"
-            className={styles.cartButton}
-            onClick={() => handleAddToBasket()}
-          >
-            Add To Bag
-          </Button>
-        </div>
-      </div>
-      {open && <MiniCart open={open} onOpenChange={setOpen} />}
-      <Toaster />
-    </section>
-  );
+		<section className={styles.componentLayout}>
+			<div className={styles.firstLayout}>
+				<div className={styles.gallery}>
+					{data?.productDetails?.imageGroups != null &&
+						galleryImages?.length !== 0 && <Gallery images={galleryImages} />}
+				</div>
+				<div className={styles.accordion}>
+					<Accordion
+						items={accordionData}
+						contentStyle={styles.accordionContent}
+					/>
+				</div>
+				<div className={styles.productDetails}>
+					<div className={styles.title}>{data?.productDetails?.name}</div>
+					<div className={styles.price}>
+						{data?.productDetails?.currency}&nbsp;
+						{data?.productDetails?.price}
+					</div>
+					<div className={styles.desc}>
+						{data?.productDetails?.longDescription}
+					</div>
+					<div className={styles.varientSection}>
+						{/* <VarientSelector colors={colorData} onSelected={handleSelected} /> */}
+					</div>
+					<div className={styles.buttonContainer}>
+						<Button onClick={() => handleAddToWishlist()}>
+							ADD TO WISHLIST
+						</Button>
+						<Select>
+							<SelectTrigger
+								data-testid="select-trigger"
+								style={{
+									backgroundColor: "#fff",
+									border: "solid",
+									borderWidth: "1px",
+									borderColor: "#CCCBCE",
+									color: "#000",
+									fontSize: "12px",
+									fontWeight: "600",
+									lineHeight: "16px",
+								}}
+							>
+								SIZE
+							</SelectTrigger>
+							<SelectContent>
+								{sizes?.map((item) => {
+									return (
+										<SelectItem value={item?.value} key={item?.title}>
+											{item?.title}
+										</SelectItem>
+									);
+								})}
+							</SelectContent>
+						</Select>
+					</div>
+					<Button
+						variant="secondary"
+						className={styles.cartButton}
+						onClick={() => handleAddToBasket()}
+					>
+						Add To Bag
+					</Button>
+				</div>
+			</div>
+			{open && <MiniCart open={open} onOpenChange={setOpen} />}
+			<Toaster />
+		</section>
+	);
 }

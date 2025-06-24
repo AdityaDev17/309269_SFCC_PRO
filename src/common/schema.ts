@@ -113,8 +113,8 @@ export const GET_CATEGORIES = `
   }
 `;
 export const REGISTER = `
-    mutation RegisterCustomer($input: RegisterInput!) {
-  registerCustomer(input: $input) {
+    mutation RegisterCustomerHandler($input: RegisterInput!) {
+  registerCustomerHandler(input: $input) {
     authType
     creationDate
     customerId
@@ -656,6 +656,13 @@ export const CREATE_ORDER = `
 mutation CreateOrder($input: OrderInput!) {
   createOrder(input: $input) {
     orderNo
+  }
+}
+`;
+export const UPDATE_ORDER = `
+mutation UpdateOrder($input: updateOrderInput!) {
+  updateOrder(input: $input) {
+    apiResponseType
   }
 }
 `;

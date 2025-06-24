@@ -1,17 +1,19 @@
 "use client";
-import { GET_ORDER_DETAILS } from "@/common/schema";
+import { GET_ORDER_DETAILS, UPDATE_ORDER } from "@/common/schema";
 import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useCallback, useEffect, useRef } from "react";
 import styles from "./page.module.css";
 
 const OrderConfimation = () => {
 	const { id } = useParams() as { id: string };
 	const orderId = id;
+	const hasUpdated = useRef(false);
 	interface ProductItem {
 		productId: string;
 		productName: string;
@@ -31,6 +33,28 @@ const OrderConfimation = () => {
 		enabled: !!orderId,
 	});
 
+	const updateCart = useMutation({
+		mutationFn: (input: { orderNo: string }) =>
+			graphqlRequest(UPDATE_ORDER, { input }),
+		retry: 3,
+	});
+
+	const runUpdate = useCallback(async () => {
+		if (!orderId || hasUpdated.current) return;
+
+		hasUpdated.current = true;
+
+		try {
+			await updateCart.mutateAsync({ orderNo: orderId });
+		} catch (err) {
+			console.error("Update failed:", err);
+		}
+	}, [orderId, updateCart]);
+
+	useEffect(() => {
+		runUpdate();
+	}, [runUpdate]);
+
 	const orderDetails = data?.orderInfo;
 	const orderdedItems = orderDetails?.productItems?.map(
 		(item: ProductItem) => ({
@@ -44,7 +68,6 @@ const OrderConfimation = () => {
 				item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link,
 		}),
 	);
-	console.log("343", orderDetails);
 
 	return (
 		<section className={styles.layout}>

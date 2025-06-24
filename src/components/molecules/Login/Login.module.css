@@ -30,3 +30,9 @@
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-font-size-400);
 }
+
+.errorMsg {
+	color: red;
+	margin: 8px 0;
+	font-size: 14px;
+}

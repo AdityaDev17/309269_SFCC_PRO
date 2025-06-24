@@ -12,7 +12,7 @@
     height: 40px;
     display: flex;
     align-items: center;
-    padding-left: var(--space-56);
+    padding-left: 40px;
 }
 
 .loginImg {

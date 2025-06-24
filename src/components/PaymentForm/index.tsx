@@ -40,10 +40,12 @@ const StripePayment = () => {
 	const addPaymentInstrumentToBasket = useMutation({
 		mutationFn: (input: PaymentInstrumentInput) =>
 			graphqlRequest(ADD_PAYMENT_INSTRUMENT_TO_BASKET, { input }),
+		retry: 2,
 	});
 
 	const createOrder = useMutation({
 		mutationFn: (input: OrderInput) => graphqlRequest(CREATE_ORDER, { input }),
+		retry: 2,
 	});
 
 	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {

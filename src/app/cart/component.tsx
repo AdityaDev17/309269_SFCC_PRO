@@ -1,9 +1,8 @@
 import {
-	DELETE_BASKET_ITEM,
-	GET_BASKET,
-	UPDATE_BASKET_ITEM,
-} from "@/common/schema";
-import { graphqlRequest } from "@/lib/graphqlRequest";
+	getBasketDetail,
+	handleDeleteItem,
+	handleUpdateQuantity,
+} from "@/components/organisms/MiniCart/CartFuntions";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -46,75 +45,51 @@ type CartProps = {
 
 const Cart = ({ basketId }: CartProps) => {
 	const router = useRouter();
-	const { data, refetch } = useQuery({
-		queryKey: ["GetBasket", basketId],
-		queryFn: () => graphqlRequest(GET_BASKET, { basketId: basketId }),
+	const { data, isLoading, refetch } = useQuery({
+		queryKey: ["Basket", basketId],
+		queryFn: () => getBasketDetail(),
 		enabled: !!basketId,
 	});
+	const CartItems = data?.cartItems ?? [];
 
-	const CartItems = data?.basketInfo?.productItems?.map((item: BasketItem) => {
-		const imageGroups = item?.productImage?.data?.[0]?.imageGroups;
-		let productImage = imageGroups?.find((group: ImageGroup) =>
-			group.images?.[0]?.link?.includes("/large/"),
-		)?.images?.[0]?.link;
-		if (!productImage && imageGroups?.length > 0) {
-			for (const group of imageGroups) {
-				if (group.images?.[0]?.link) {
-					productImage = group.images[0].link;
-					break;
-				}
-			}
-		}
-
-		return {
-			id: item?.productId,
-			name: item?.productName,
-			quantity: item?.quantity,
-			price: item?.price,
-			currency: data?.basketInfo?.currency,
-			productImage: productImage || null,
-			itemId: item?.itemId,
-		};
-	});
-	const updateBasketMutation = useMutation({
-		mutationFn: (input: {
-			basketId: string;
-			itemId: string;
-			quantity: number;
-		}) => graphqlRequest(UPDATE_BASKET_ITEM, { input }),
-		retry: 3,
-	});
-	const removeBasketMutation = useMutation({
-		mutationFn: (input: { basketId: string; itemId: string }) =>
-			graphqlRequest(DELETE_BASKET_ITEM, { input }),
+	const removeBasketMutations = useMutation({
+		mutationFn: (input: { itemId: string }) => handleDeleteItem(input.itemId),
+		onSuccess: () => {
+			console.log("hii");
+			refetch();
+		},
 		retry: 3,
 	});
 
-	const handleUpdateQuantity = async (itemId: string, newQuantity: number) => {
-		console.log("id", itemId, newQuantity);
-		try {
-			const response = await updateBasketMutation.mutateAsync({
-				basketId,
-				itemId,
-				quantity: newQuantity,
-			});
-			await refetch();
-			console.log("Update response:", response);
-		} catch (error) {
-			console.error("Error updating basket item:", error);
-		}
-	};
-	const handleDeleteItem = async (itemId: string) => {
+	const onDeleteItem = async (itemId: string) => {
 		console.log("id", itemId);
 		try {
-			const response = await removeBasketMutation.mutateAsync({
-				basketId,
-				itemId,
-			});
-			await refetch();
+			const response = await removeBasketMutations.mutateAsync({ itemId });
 			console.log("Remove response:", response);
 		} catch (error) {
 			console.error("Error removing basket item:", error);
+		}
+	};
+
+	const updateBasketMutations = useMutation({
+		mutationFn: (input: {
+			itemId: string;
+			quantity: number;
+		}) => handleUpdateQuantity(input.itemId, input.quantity),
+		onSuccess: () => refetch(),
+		retry: 3,
+	});
+
+	const onUpdateQuantity = async (itemId: string, newQuantity: number) => {
+		console.log("id", itemId, newQuantity);
+		try {
+			const response = await updateBasketMutations.mutateAsync({
+				itemId,
+				quantity: newQuantity,
+			});
+			console.log("Update response:", response);
+		} catch (error) {
+			console.error("Error updating basket item:", error);
 		}
 	};
 
@@ -133,17 +108,16 @@ const Cart = ({ basketId }: CartProps) => {
 					<CartItemList
 						cartItems={CartItems}
 						isWhiteBackground={true}
-						onUpdateQuantity={handleUpdateQuantity}
-						onDeleteItem={handleDeleteItem}
+						onUpdateQuantity={onUpdateQuantity}
+						onDeleteItem={onDeleteItem}
 					/>
 				</div>
 				<div className={styles.orderSummarySection}>
 					<OrderSummary
 						totalRowTop={true}
-						isButton={true}
-						totalAmt={data?.basketInfo?.productSubTotal}
-						currency={data?.basketInfo?.currency}
-						subTotal={data?.basketInfo?.productTotal}
+						isButton={false}
+						totalAmt={data?.subTotal}
+						subTotal={data?.subTotal}
 						buttonText="CONTINUE"
 						onButtonClick={() => router.push("/shipping")}
 					/>

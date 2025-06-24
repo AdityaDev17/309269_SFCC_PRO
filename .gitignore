@@ -13,7 +13,11 @@
 /.next/
 /.vscode/
 /out/
- 
+
+#sanity studio
+studio-C4force/dist/
+studio-C4force/.sanity/
+
 # production
 /build
  

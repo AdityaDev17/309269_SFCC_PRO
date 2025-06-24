@@ -1,11 +1,11 @@
 .layout {
   display: grid;
-  gap: var(--space-40);
+  gap:20px;
 }
 .row {
   display: grid;
   grid-auto-flow: column;
-  column-gap: var(--space-16);
+  column-gap: 8px;
 }
 .fontColor {
   font-size: var(--font-size-font-size-300-m);

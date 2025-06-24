@@ -138,9 +138,7 @@
 .SelectTrigger {
   display: flex;
   height: 2.5rem;
-  min-width: 180px;
-  max-width: 250px;
-  width: auto;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   border: none;
@@ -161,9 +159,7 @@
 .SelectTrigger-sort {
   display: flex;
   height: 2.5rem;
-  min-width: 180px;
-  max-width: 250px;
-  width: auto;
+  width: 100%;
   align-items: center;
   justify-content: space-between;
   border: 1px solid var(--colors-black);
@@ -235,7 +231,6 @@
   position: relative;
   z-index: 1000;
   max-height: 24rem;
-  min-width: 8rem;
   overflow: hidden;
   border: 1px solid var(--colors-black);
   background-color: var(--colors-white);
@@ -311,29 +306,16 @@
 }
 
 .SelectItem {
-  /* position: relative;
-    display: flex;
-    width: 100%;
-    cursor: default;
-    user-select: none; 
-    align-items: center;
-    border-radius: var(--border-radius-4); 
-    padding-top: var(--space-12); 
-    padding-bottom: var(--space-12); 
-    padding-left: var(--space-48); 
-    padding-right: var(--space-16); 
-    font-size: var(--size-font-size-300); 
-    outline: none;  */
+  position: relative;
   display: flex;
   width: 100%;
-  padding: 12px 16px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.6;
-  color: #333;
-  background-color: white;
   cursor: pointer;
-  border-bottom: 1px solid #eee;
+  user-select: none;
+  align-items: center;
+  border-radius: var(--border-radius-4);
+  padding: 12px 16px;
+  font-size: var(--size-font-size-300);
+  outline: none;
 }
 
 .SelectItem:last-child {
@@ -341,9 +323,9 @@
 }
 
 .SelectItem:focus {
-  /* background-color: var(--grey-grey-100);
-    color: var(--colors-black);
-    font-weight: 600; */
+  background-color: var(--grey-grey-100);
+  color: var(--colors-black);
+  font-weight: 600;
   background-color: #f5f5f5;
 }
 

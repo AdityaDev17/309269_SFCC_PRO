@@ -3,8 +3,8 @@
     width: 18px; 
     flex-shrink: 0;
     border-radius: 2px; 
-    background-color: var(--colors-white);
-    border: 0.094rem solid var(--grey-grey-700);
+    background-color: var(--colour-surface-primary);
+    border: 0.094rem solid var(--colour-button-border-secondary);
     outline: none;
     cursor: pointer;
     padding: 0;
@@ -16,8 +16,8 @@
   }
   
   .Checkbox[data-state="checked"] {
-    background-color: var(--grey-grey-700);   
-    color: var(--colors-white);   
+    background-color: var(--colour-button-border-secondary);   
+    color: var(--colour-surface-primary);   
   }
   
   .CheckboxIndicator {

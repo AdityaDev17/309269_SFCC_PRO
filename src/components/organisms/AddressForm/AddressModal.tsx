@@ -137,6 +137,8 @@ export function AddressDialog({
 	refetch,
 	setSelectedAddress,
 	customerType = "registered",
+	email,
+	setEmail
 }: {
 	open: boolean;
 	onOpenChangeAction: (open: boolean) => void;
@@ -145,6 +147,8 @@ export function AddressDialog({
 	refetch?: RefetchFunction;
 	customerType?: string | null;
 	setSelectedAddress?: (address: AddressData) => void;
+	email: string;
+	setEmail: (email: string) => void;
 }) {
 	// State initialization
 	const [firstName, setFirstName] = useState("");
@@ -218,6 +222,9 @@ export function AddressDialog({
 			case "phone":
 				setPhone(value);
 				break;
+			case "email":
+				setEmail(value);
+				break;
 		}
 	};
 
@@ -268,7 +275,7 @@ export function AddressDialog({
 					: await createAddressMutation.mutateAsync(input);
 				await refetch?.();
 			} else {
-				const input: ShippingAddressInput = {
+				let input: ShippingAddressInput = {
 					basketId,
 					address1: street,
 					address2: address,
@@ -326,15 +333,33 @@ export function AddressDialog({
 									value={lastName}
 									onChange={handleChange}
 								/>
+								{ customerType === "guest" && (
+								<>
+									<Input
+									placeholder="Email"
+									name="email"
+									value={email}
+									onChange={handleChange}
+									/>
+									<Input
+									placeholder="Phone No.*"
+									name="phone"
+									type="tel"
+									className={styles.PhoneInput}
+									value={phone}
+									onChange={handleChange}
+									/>
+								</>
+								)}
 							</div>
-							<Input
+							{ customerType === "registered" && <Input
 								placeholder="Phone No.*"
 								name="phone"
 								type="tel"
 								className={styles.PhoneInput}
 								value={phone}
 								onChange={handleChange}
-							/>
+							/>}
 						</fieldset>
 
 						{/* Location Details */}

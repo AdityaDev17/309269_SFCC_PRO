@@ -107,29 +107,29 @@ export default function ProductDetails() {
 			customerId,
 		});
 
-		if (response?.customerProductListsInfo?.data) {
-			const wishLists =
-				response?.customerProductListsInfo?.data?.filter(
-					(list: { type: string }) => list.type === "wish_list",
-				) || [];
-			const isItemInWishlist = wishLists?.[0]?.customerProductListItems?.find(
+		const wishlist = response?.customerProductListsInfo?.data?.[0];
+		let listId: string;
+		let isItemInWishlist: string | undefined;
+		if (wishlist) {
+			isItemInWishlist = wishlist.customerProductListItems?.find(
 				(i: { productId: string }) => i.productId === productId,
 			);
-			if (!isItemInWishlist) {
-				sonnerToast.success("Added to wishlist", {});
-				addItemToProductLists(wishLists?.[0]?.id, customerId);
-			} else {
-				sonnerToast.success("Already in wishlist", {});
-			}
+			listId = wishlist.id;
 		} else {
-			const response = await createCustomerProductList.mutateAsync({
+			const {
+				createCustomerProductList: { id },
+			} = await createCustomerProductList.mutateAsync({
 				customerId,
 				type: "wish_list",
 			});
-			addItemToProductLists(
-				response?.createCustomerProductList?.id,
-				customerId,
-			);
+			listId = id;
+		}
+
+		if (!isItemInWishlist) {
+			sonnerToast.success("Added to wishlist", {});
+			addItemToProductLists(listId, customerId);
+		} else {
+			sonnerToast.success("Already in wishlist", {});
 		}
 	};
 

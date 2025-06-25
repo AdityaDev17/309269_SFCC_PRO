@@ -233,3 +233,7 @@
     padding: 8px 16px;
   }
 }
+
+.headerIcons {
+  cursor: pointer;
+}

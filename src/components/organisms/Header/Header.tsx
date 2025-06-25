@@ -279,6 +279,7 @@ const Header: React.FC<HeaderProps> = ({
                   width={20}
                   height={20}
                   onClick={()=>handleCartClick()}
+                  className={styles.headerIcons}
                 />
               );
             } else if (label === "Search") {
@@ -298,6 +299,7 @@ const Header: React.FC<HeaderProps> = ({
                   width={20}
                   height={20}
                   onClick={()=>handleIconClick(label)}
+                  className={styles.headerIcons}
                 />
               );
             }

@@ -69,7 +69,7 @@
 }
 
 .Button[data-variant='secondary']:hover {
-    background-color: var(--colour-background-overlay);
+    background-color: var(--colour-icon-secondary);
 }
 
 /* .Button[data-variant='ghost'] {

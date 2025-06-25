@@ -1,9 +1,11 @@
 "use client";
 
 import {
+	GET_CUSTOMER,
 	GET_CUSTOMER_ADDRESS,
 	GET_SHIPPING_ADDRESS_FROM_BASKET,
 	GET_SHIPPING_METHOD,
+	UPDATE_CUSTOMER_INFO_IN_BASKET,
 	UPDATE_SHIPPING_ADDRESS,
 	UPDATE_SHIPPING_METHOD,
 } from "@/common/schema";
@@ -27,6 +29,11 @@ import {
 } from "../../components/organisms/AddressForm/AddressModal";
 import OrderSummary from "../../components/organisms/OrderSummary/OrderSummary";
 import styles from "./shipping.module.css";
+
+type CustomerDetails = {
+	basketId: string;
+	email: string;
+};
 
 type CommonCardType = {
 	id: string;
@@ -99,6 +106,7 @@ const Shipping = () => {
 		string | null
 	>(null);
 	const [selectedAddress, setSelectedAddress] = useState<AddressData>();
+	const [email, setEmail] = useState<string>("");
 
 	//   const customerType = "registered";
 	const basketId = sessionStorage.getItem("basketId");
@@ -122,6 +130,12 @@ const Shipping = () => {
 			graphqlRequest(GET_SHIPPING_ADDRESS_FROM_BASKET, { basketId }),
 	});
 
+	const { data: customerDetails } = useQuery({
+		queryKey: ["GetCustomer", customerId],
+		queryFn: () => graphqlRequest(GET_CUSTOMER, { customerId }),
+		enabled: !!customerId,
+	});
+
 	const updateShippingAddressMutation = useMutation({
 		mutationFn: (input: UpdateShippingAddressInput) =>
 			graphqlRequest(UPDATE_SHIPPING_ADDRESS, { input }),
@@ -132,6 +146,13 @@ const Shipping = () => {
 		mutationFn: (input: UpdateShippingMethodInput) =>
 			graphqlRequest(UPDATE_SHIPPING_METHOD, { input }),
 		retry: 2,
+	});
+
+	const updateCustomerDetailInBasket = useMutation({
+		mutationFn: (input: CustomerDetails) =>
+			graphqlRequest(UPDATE_CUSTOMER_INFO_IN_BASKET, {
+				customerDetailInput: input,
+			}),
 	});
 
 	const shippingAdresses =
@@ -220,6 +241,16 @@ const Shipping = () => {
 				console.error("Error updating shipping address:", error);
 			}
 		}
+
+		const emailStoreInBasket =
+			customerType === "registered" ? customerDetails?.customer?.email : email;
+
+		// Saving email in the basket
+		const detailsInput: CustomerDetails = {
+			basketId: basketId || "",
+			email: emailStoreInBasket,
+		};
+		await updateCustomerDetailInBasket.mutateAsync(detailsInput);
 
 		try {
 			await updateShippingMethodMutation.mutateAsync({
@@ -329,6 +360,8 @@ const Shipping = () => {
 					customerType === "registered" ? refetchAddresses : refetchShipping
 				}
 				customerType={customerType}
+				email={email}
+				setEmail={setEmail}
 			/>
 		</section>
 	);

@@ -128,6 +128,7 @@ export const REGISTER = `
   }
 }
 `;
+
 /*Page Schema Ends*/
 
 /*Basket Schema*/
@@ -343,8 +344,9 @@ export const GET_ACCESS_TOKEN = `
 /*Access Token Schema Ends*/
 
 export const GET_CUSTOMER = `
-    query Customer($customerId: ID!) {
+query Customer($customerId: ID!) {
   customer(customerId: $customerId) {
+    email
     firstName
   }
 }
@@ -666,3 +668,14 @@ mutation UpdateOrder($input: updateOrderInput!) {
   }
 }
 `;
+
+export const UPDATE_CUSTOMER_INFO_IN_BASKET = `
+  mutation UpdateCustomerDetails($customerDetailInput: CustomerDetailInput!) {
+  updateCustomerDetails(customerDetailInput: $customerDetailInput) {
+	customerInfo {
+	  email
+	  customerId
+	}
+  }
+}
+`

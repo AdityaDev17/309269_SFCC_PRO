@@ -36,3 +36,10 @@
 	margin: 8px 0;
 	font-size: 14px;
 }
+
+.checkboxBox {
+	border: 1px solid var(--colour-button-border-secondary);
+	width: 16px;
+	height: 16px;
+	border-radius: 2px;
+}

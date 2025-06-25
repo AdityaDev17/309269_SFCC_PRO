@@ -227,16 +227,20 @@
 }
 
 /* Base styles */
-.SelectContent {
+.SelectContent [data-state="open"]{
   position: relative;
   z-index: 1000;
-  background-color: white !important; 
+  background-color: white ; 
   max-height: 24rem;
   overflow: hidden;
   border: 1px solid var(--colors-black);
   background-color: var(--colors-white);
   color: var(--colors-black);
   box-shadow: 0 2px 4px hsl(var(--colors-black) / 0.1);
+}
+
+.SelectContent[data-state="open"] {
+  background-color: white;
 }
 
 /* Animation based on state */

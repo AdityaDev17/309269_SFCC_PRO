@@ -346,56 +346,8 @@ export const GET_ACCESS_TOKEN = `
 export const GET_CUSTOMER = `
 query Customer($customerId: ID!) {
   customer(customerId: $customerId) {
-    customerId
-    customerNo
     email
     firstName
-    lastName
-    gender
-    birthday
-    creationDate
-    authType
-    phoneMobile
-    phoneHome
-    phoneBusiness
-    addresses {
-      address1
-      addressId
-      city
-      countryCode
-      firstName
-      fullName
-      lastName
-      postalCode
-      salutation
-      stateCode
-    }
-    paymentInstruments {
-      bankRoutingNumber
-      creationDate
-      lastModified
-      maskedGiftCertificateCode
-      paymentBankAccount {
-        driversLicenseStateCode
-        driversLicenseLastDigits
-        holder
-        maskedDriversLicense
-        maskedNumber
-        numberLastDigits
-      }
-      paymentCard {
-        cardType
-        creditCardExpired
-        expirationMonth
-        expirationYear
-        holder
-        maskedNumber
-        numberLastDigits
-      }
-      paymentInstrumentId
-      paymentMethodId
-      uuid
-    }
   }
 }
   `;

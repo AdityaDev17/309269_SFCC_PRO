@@ -5,7 +5,7 @@
 
 .backgroundWrapper {
     height: 670px;
-    background: linear-gradient(to right, #C6C0C4, #CFBAB2, #F6F6F6 , #F0F0F0 , #FEFEFF , white);
+    background: linear-gradient(to right, #C6C0C4, #CFBAB2, #F6F6F6 , #F0F0F0 , #FEFEFF , var(--colour-surface-primary));
 }
 
 .navigation {

@@ -38,7 +38,7 @@
 }
 
 .checkboxBox {
-	border: 1px solid #4F4B53;
+	border: 1px solid var(--colour-button-border-secondary);
 	width: 16px;
 	height: 16px;
 	border-radius: 2px;

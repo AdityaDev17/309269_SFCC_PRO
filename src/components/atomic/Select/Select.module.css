@@ -229,8 +229,7 @@
 /* Base styles */
 .SelectContent [data-state="open"]{
   position: relative;
-  z-index: 1000;
-  background-color: white ; 
+  z-index: 1000; 
   max-height: 24rem;
   overflow: hidden;
   border: 1px solid var(--colors-black);
@@ -240,7 +239,7 @@
 }
 
 .SelectContent[data-state="open"] {
-  background-color: white;
+  background-color: var(--colour-background-primary);
 }
 
 /* Animation based on state */

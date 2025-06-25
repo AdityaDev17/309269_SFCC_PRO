@@ -20,4 +20,18 @@
     }
   }
   
+
+/* Skeleton styles */
+.bannerSkeleton {
+  height: 275px;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.tileSkeleton {
+  height: 80px;
+  width: 100%;
+  border-radius: 0.5rem;
+}
+
   

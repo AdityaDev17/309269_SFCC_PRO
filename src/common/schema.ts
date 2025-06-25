@@ -647,6 +647,67 @@ export const UPDATE_SHIPPING_METHOD = `
   }
 `;
 
+// MyAccount/Personal-info mutations
+export const GET_CUSTOMER_DATA = `
+  query Customer($customerId: ID!) {
+    customer(customerId: $customerId) {
+      firstName
+      lastName
+      email
+      gender
+	    birthday
+      phoneHome
+      addresses {
+        salutation
+      }
+    }
+  }
+`;
+
+export const UPDATE_CUSTOMER = `
+  mutation UpdateCustomer($input: UpdateCustomerInput!) {
+    updateCustomer(input: $input) {
+      firstName
+      lastName
+      email
+      phoneHome
+      gender
+      birthday
+	  
+    }
+  }
+`;
+
+export const UPDATE_PASSWORD = `
+  mutation UpdateCustomerPassword($input: UpdatePasswordInput!) {
+    updatePassword(input: $input)
+  }
+`;
+
+
+export const DELETE_CUSTOMER_ADDRESS = `
+mutation RemoveCustomerAddress($input: InputCustomerAddress!) {
+  removeCustomerAddress(input: $input) {
+    addressId
+    address1
+    address2
+    city
+    countryCode
+    creationDate
+    firstName
+    fullName
+    lastModified
+    lastName
+    phone
+    postalCode
+    preferred
+    stateCode
+  }
+}`;
+
+
+
+
 export const ADD_PAYMENT_INSTRUMENT_TO_BASKET = `
 mutation AddPaymentInstrumentToBasket($input: AddPaymentInstrument!) {
   addPaymentInstrumentToBasket(input: $input) {

@@ -1,9 +1,14 @@
 "use client";
 
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { gql } from "graphql-request";
 import { useState } from "react";
+import {
+	DELETE_CUSTOMER_ADDRESS,
+	GET_CUSTOMER_ADDRESS,
+} from "../../../common/schema";
 import Breadcrumbs from "../../../components/atomic/Breadcrumbs/Breadcrumbs";
 import { Button } from "../../../components/atomic/Button/Button";
 import ErrorComponent from "../../../components/molecules/ErrorComponent/ErrorComponent";
@@ -27,54 +32,10 @@ type AddressType = {
 	isDefault?: boolean;
 };
 
-const GET_CUSTOMER_ADDRESS = `
-query GetCustomerAddress($customerId: ID!) {
-  getCustomerAddress(customerId: $customerId) {
-    addresses {
-      addressId
-      address1
-      address2
-      city
-      countryCode
-      creationDate
-      firstName
-      fullName
-      lastModified
-      lastName
-      phone
-      postalCode
-      preferred
-      stateCode
-    }
-  }
-}
-`;
-
-const DELETE_CUSTOMER_ADDRESS = `
-mutation RemoveCustomerAddress($input: InputCustomerAddress!) {
-  removeCustomerAddress(input: $input) {
-    addressId
-    address1
-    address2
-    city
-    countryCode
-    creationDate
-    firstName
-    fullName
-    lastModified
-    lastName
-    phone
-    postalCode
-    preferred
-    stateCode
-  }
-}`;
-
-const customerId = sessionStorage.getItem("customer_id") ?? "";
-
 const AddressPage = () => {
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 	const [selectedAddress, setSelectedAddress] = useState<AddressData>();
+	const customerId = sessionStorage.getItem("customer_id") ?? "";
 
 	const { data, refetch, isLoading, isError } = useQuery({
 		queryKey: ["GetCustomerAddress", customerId],
@@ -119,11 +80,42 @@ const AddressPage = () => {
 				const status = e?.response?.errors?.extensions?.http?.status;
 				console.log("HTTP status:", status);
 			}
+			await refetch();
 		}
 	};
 
-	if (isLoading) return <div>Loading...</div>;
-	if (isError) return <div>Something went wrong</div>;
+	if (isLoading) {
+		return (
+			<section className={styles.wrapper}>
+				<Breadcrumbs
+					breadcrumbItems={[
+						{ label: "Home", href: "/" },
+						{ label: "My Account", href: "/my-account" },
+						{ label: "Address Book" },
+					]}
+				/>
+				<h1 className={styles.title}>ADDRESS BOOK</h1>
+				<Skeleton className={styles.skeletonAddBtn} />
+
+				<div className={styles.skeletonLayout}>
+					{Array.from({ length: 1 }).map((_, idx) => (
+						<div
+							key={`skeleton-${Date.now()}-${Math.random()}`}
+							className={styles.skeletonAddressCard}
+						>
+							<Skeleton className={styles.skeletonTitle} />
+							<Skeleton className={styles.skeletonAddress} />
+							<Skeleton className={styles.skeletonDesc} />
+							<div className={styles.skeletonButtons}>
+								<Skeleton className={styles.skeletonBtn} />
+								<Skeleton className={styles.skeletonBtn} />
+							</div>
+						</div>
+					))}
+				</div>
+			</section>
+		);
+	}
 
 	return (
 		<section className={styles.wrapper}>

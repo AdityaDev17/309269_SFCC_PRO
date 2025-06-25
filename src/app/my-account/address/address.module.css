@@ -25,3 +25,64 @@
   width: 100%;
   grid-column: 1 / -1;
 }
+
+
+/* skeleton styles */
+
+.skeletonAddressCard {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 16px;
+  width: 388px;
+  /* width:50%; */
+  height: 216px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonLayout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.skeletonTitle {
+  height: 20px;
+  width: 60%;
+  margin-bottom: 10px;
+}
+
+.skeletonAddress {
+  height: 16px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.skeletonDesc {
+  height: 16px;
+  width: 50%;
+  margin-bottom: 8px;
+}
+
+.skeletonButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  align-items: flex-end;
+}
+
+.skeletonBtn {
+  height: 24px;
+  width: 30%;
+}
+
+.skeletonAddBtn {
+  height: 40px;
+	width: 180px;
+	margin-bottom: 30px;
+	border-radius: 6px;
+}
+
+

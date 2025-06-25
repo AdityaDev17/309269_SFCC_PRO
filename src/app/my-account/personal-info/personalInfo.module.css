@@ -53,3 +53,45 @@
     }
   }
   
+  /* Skeleton styles */
+  .skeletonHeader {
+  height: 20px;
+  width: 140px;
+  margin-bottom: 20px;
+}
+
+.skeletonFormColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.skeletonField {
+  height: 36px;
+  width: 325px;
+  border-radius: 6px;
+}
+
+.skeletonFieldTall {
+  height: 40px;
+  width: 325px;
+  border-radius: 6px;
+}
+
+.skeletonFormRow {
+  display: flex;
+  gap: 30px;
+}
+
+.skeletonButton {
+  height: 40px;
+  width: 100%;
+  border-radius: 6px;
+  margin-top: 20px;
+}
+
+.skeletonPasswordFields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

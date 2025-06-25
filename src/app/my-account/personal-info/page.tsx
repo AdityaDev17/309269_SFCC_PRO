@@ -1,6 +1,6 @@
 "use client";
-import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import type { UserDetails } from "../../../common/constant";
+import Breadcrumbs from "../../../components/atomic/Breadcrumbs/Breadcrumbs";
 import EditPassword from "../../../components/molecules/EditPassword/EditPassword";
 import Profile from "../../../components/molecules/Profile/Profile";
 
@@ -11,44 +11,16 @@ import styles from "./PersonalInfo.module.css";
 
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
-
-const GET_CUSTOMER_DATA = `
-  query Customer($customerId: ID!) {
-    customer(customerId: $customerId) {
-      firstName
-      lastName
-      email
-      gender
-	    birthday
-      phoneHome
-      addresses {
-        salutation
-      }
-    }
-  }
-`;
-
-const UPDATE_CUSTOMER = `
-  mutation UpdateCustomer($input: UpdateCustomerInput!) {
-    updateCustomer(input: $input) {
-      firstName
-      lastName
-      email
-      phoneHome
-      gender
-      birthday
-	  
-    }
-  }
-`;
-
-const UPDATE_PASSWORD = `
-  mutation UpdateCustomerPassword($input: UpdatePasswordInput!) {
-    updatePassword(input: $input)
-  }
-`;
+import { useRouter } from "next/navigation";
+import {
+	GET_CUSTOMER_DATA,
+	UPDATE_CUSTOMER,
+	UPDATE_PASSWORD,
+} from "../../../common/schema";
+import { Skeleton } from "../../../components/atomic/Skeleton/Skeleton";
 
 export default function PersonalInfoPage() {
+	const router = useRouter();
 	const customerId = sessionStorage.getItem("customer_id") ?? "";
 
 	const { data, error, isLoading } = useQuery({
@@ -132,12 +104,15 @@ export default function PersonalInfoPage() {
 				const statusCode = e.graphQLErrors?.[0]?.extensions?.http?.status;
 
 				if (statusCode === 204 || statusCode === 200) {
-					sonnerToast("Password updated successfully.", {
-						className: "toast-success-class",
-						unstyled: true,
-					});
+					sonnerToast(
+						"Password updated successfully.Redirecting to login page...",
+						{
+							className: "toast-success-class",
+							unstyled: true,
+						},
+					);
 
-					console.warn("Treated HTTP", statusCode, "as success:", err);
+					router.push("/login");
 				} else {
 					sonnerToast("Something went wrong.", {
 						className: "toast-error-class",
@@ -162,11 +137,70 @@ export default function PersonalInfoPage() {
 	};
 
 	if (isLoading) {
-		return <div>Loading...</div>;
-	}
+		return (
+			<div className={styles.wrapper}>
+				<Breadcrumbs
+					breadcrumbItems={[
+						{ label: "Home", href: "/" },
+						{ label: "My Account", href: "/my-account" },
+						{ label: "Personal Information" },
+					]}
+				/>
+				<h2 className={styles.header}>Personal Information</h2>
 
-	if (error) {
-		return <div>Error fetching data: {error.message}</div>;
+				<div className={styles.gridLayout}>
+					<div className={`${styles.column} ${styles.leftColumn}`}>
+						<div className={styles.layout}>
+							<Skeleton className={styles.skeletonHeader} />
+
+							<div className={styles.skeletonFormRow}>
+								<div className={styles.skeletonFormColumn}>
+									{["Title", "Last Name", "Birth Date"].map((label, idx) => (
+										<div key={`skeleton-${Date.now()}-${Math.random()}`}>
+											<div className={styles.fontColor}>{label}*</div>
+											<Skeleton className={styles.skeletonFieldTall} />
+										</div>
+									))}
+								</div>
+
+								<div className={styles.skeletonFormColumn}>
+									{["First Name", "Gender", "Email ID"].map((label, idx) => (
+										<div key={`skeleton-${Date.now()}-${Math.random()}`}>
+											<div className={styles.fontColor}>{label}*</div>
+											<Skeleton className={styles.skeletonFieldTall} />
+										</div>
+									))}
+								</div>
+							</div>
+
+							<div
+								className={styles.buttonContainer}
+								style={{ marginTop: "20px" }}
+							>
+								<Skeleton className={styles.skeletonButton} />
+							</div>
+						</div>
+					</div>
+
+					<div className={styles.divider} />
+
+					<div className={`${styles.column} ${styles.rightColumn}`}>
+						<Skeleton className={styles.skeletonHeader} />
+						<div className={styles.skeletonPasswordFields}>
+							{["Current Password", "New Password", "Confirm Password"].map(
+								(label, idx) => (
+									<div key={`skeleton-${Date.now()}-${Math.random()}`}>
+										<div className={styles.fontColor}>{label}*</div>
+										<Skeleton className={styles.skeletonFieldTall} />
+									</div>
+								),
+							)}
+							<Skeleton className={styles.skeletonFieldTall} />
+						</div>
+					</div>
+				</div>
+			</div>
+		);
 	}
 
 	return (

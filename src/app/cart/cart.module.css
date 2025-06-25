@@ -89,3 +89,48 @@
   min-width: 113px;
 }
 
+/* skeleton styles */
+
+/* Skeleton styles for Cart Page */
+
+.headingSkeleton {
+	height: 28px;
+	width: 40%;
+}
+
+.cartItemSkeleton {
+	height: 20px;
+	width: 100%;
+	margin-bottom: 12px;
+}
+
+.orderSummarySkeleton {
+	height: 474px;
+	width: 100%;
+}
+
+.redeemTitleSkeleton {
+	height: 24px;
+	width: 30%;
+	margin-bottom: 12px;
+}
+
+.redeemLineSkeleton {
+	height: 14px;
+	width: 100%;
+}
+
+.redeemLineSkeletonShort {
+	height: 14px;
+	width: 80%;
+}
+
+.redeemInputSkeleton {
+	height: 36px;
+	width: 100%;
+}
+
+.redeemButtonSkeleton {
+	height: 36px;
+	width: 80px;
+}

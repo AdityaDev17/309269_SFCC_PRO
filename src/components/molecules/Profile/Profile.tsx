@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import {
@@ -27,6 +27,8 @@ interface ProfileProps {
 
 const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 	const [initialUserData, setInitailUserDate] = useState(userDetails);
+	const [originalData, setOriginalData] = useState(userDetails);
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement> | string,
 		name?: keyof UserDetails,
@@ -50,8 +52,17 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 		}));
 	};
 
+	useEffect(() => {
+		setInitailUserDate(userDetails);
+		setOriginalData(userDetails);
+	}, [userDetails]);
+
+	// const isDisabled =
+	// 	JSON.stringify(userDetails) === JSON.stringify(initialUserData);
+
 	const isDisabled =
-		JSON.stringify(userDetails) === JSON.stringify(initialUserData);
+		JSON.stringify(originalData) === JSON.stringify(initialUserData);
+
 	return (
 		<div className={styles.layout}>
 			<div className={styles.profileText}>Profile</div>

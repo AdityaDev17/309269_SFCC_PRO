@@ -713,3 +713,33 @@ export const UPDATE_CUSTOMER_INFO_IN_BASKET = `
   }
 }
 `
+
+// order-details
+
+export const ORDER_HISTORY = `query OrderHistory($customerId: ID!, $limit: Int, $offset: Int) {
+  getOrderHistory(customerId: $customerId, limit: $limit, offset: $offset) {
+    limit
+    offset
+    total
+    data {
+      orderNo
+      orderTotal
+      productTotal
+      currency
+      productItems {
+        productId
+        productName
+        productImage {
+          data {
+            imageGroups {
+              images {
+                link
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;

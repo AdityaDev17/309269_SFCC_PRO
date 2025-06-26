@@ -156,6 +156,7 @@ const Cart = ({ basketId }: CartProps) => {
 						totalAmt={data?.subTotal}
 						subTotal={data?.subTotal}
 						buttonText="CONTINUE"
+						currency={CartItems?.[0]?.currency}
 						onButtonClick={() => router.push("/shipping")}
 					/>
 				</div>

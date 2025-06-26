@@ -33,7 +33,8 @@ interface CartItems {
 	itemId: string;
 }
 let cartItems: CartItems[];
-let subTotal = 0;
+let subTotal = "";
+let currency =""
 const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 	cartItems = response?.map((item) => ({
 		id: item?.itemId,
@@ -50,14 +51,13 @@ const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 
 export const getBasketDetail = async () => {
 	const basketId = sessionStorage.getItem("basketId") ?? "";
-	console.log(basketId);
 	const response = await graphqlRequest(GET_BASKET, { basketId });
 	prepareCartItems(
 		response?.basketInfo?.productItems,
 		response?.basketInfo?.currency,
 	);
 	subTotal = response?.basketInfo?.productSubTotal;
-	return { cartItems, subTotal };
+	return { cartItems, subTotal};
 };
 
 export const handleDeleteItem = async (itemId: string) => {

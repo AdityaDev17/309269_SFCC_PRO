@@ -288,7 +288,7 @@ const Shipping = () => {
 					<Typography
 						type={"Label"}
 						variant={3}
-						fontWeight="medium"
+						fontWeight="semibold"
 						label="Shipping Address"
 					/>
 					{!(customerType === "guest" && shippingAdresses.length === 1) && (

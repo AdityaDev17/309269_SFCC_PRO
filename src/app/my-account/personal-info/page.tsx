@@ -13,7 +13,7 @@ import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import {
-	GET_CUSTOMER_DATA,
+	GET_CUSTOMER,
 	UPDATE_CUSTOMER,
 	UPDATE_PASSWORD,
 } from "../../../common/schema";

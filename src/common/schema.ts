@@ -346,8 +346,15 @@ export const GET_ACCESS_TOKEN = `
 export const GET_CUSTOMER = `
 query Customer($customerId: ID!) {
   customer(customerId: $customerId) {
-    email
     firstName
+    lastName
+    email
+    gender
+    birthday
+    phoneHome
+    addresses {
+      salutation
+    }
   }
 }
   `;
@@ -390,26 +397,6 @@ export const UPDATE_ADDRESS = `
   }
 `;
 
-export const DELETE_ADDRESS = `
-mutation RemoveCustomerAddress($input: InputCustomerAddress!) {
-  removeCustomerAddress(input: $input) {
-    addressId
-    address1
-    address2
-    city
-    countryCode
-    creationDate
-    firstName
-    fullName
-    lastModified
-    lastName
-    phone
-    postalCode
-    preferred
-    stateCode
-  }
-}
-  `;
 
 export const CREATE_CUSTOMER_ADDRESS = `
   mutation CreateCustomerAddress($input: InputCustomerAddress!) {
@@ -648,21 +635,7 @@ export const UPDATE_SHIPPING_METHOD = `
 `;
 
 // MyAccount/Personal-info mutations
-export const GET_CUSTOMER_DATA = `
-  query Customer($customerId: ID!) {
-    customer(customerId: $customerId) {
-      firstName
-      lastName
-      email
-      gender
-	    birthday
-      phoneHome
-      addresses {
-        salutation
-      }
-    }
-  }
-`;
+
 
 export const UPDATE_CUSTOMER = `
   mutation UpdateCustomer($input: UpdateCustomerInput!) {

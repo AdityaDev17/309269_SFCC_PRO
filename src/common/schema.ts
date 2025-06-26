@@ -15,8 +15,27 @@ export const GET_PRODUCT_DETAILS = `
       }
       viewType
     }
+    variants {
+      orderable
+      price
+      productId
+      variationValues {
+        color
+        size
+      }
+    }
+    variationAttributes {
+      id
+      name
+      values {
+        name
+        orderable
+        value
+      }
+    }
   }
 }
+
 `;
 export const GET_PRODUCT_LIST = `
   query GetProductList($getProductListId: String!) {

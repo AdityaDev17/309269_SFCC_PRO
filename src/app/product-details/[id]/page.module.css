@@ -92,16 +92,30 @@
 }
 .buttonContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 12px;
   padding-bottom: 20px;
 }
+.buttonContainer {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 20px;
+}
+
+.buttonContainer.oneChild {
+  grid-template-columns: 1fr;
+}
+
+.buttonContainer.twoChildren {
+  grid-template-columns: 1fr 1fr;
+}
 .varientSection {
-  padding-bottom: var(--space-40);
+  padding-bottom: 20px;
 }
 .cartButton{
     width:  100%;
     height: 36px;
+    background-color: black;
+    color: white;
 }
 /* Component Styles End*/
 

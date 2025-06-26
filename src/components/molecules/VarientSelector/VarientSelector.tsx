@@ -17,9 +17,9 @@ interface VarinetSelectorProps {
 }
 
 const VarientSelector = ({ colors, onSelected }: VarinetSelectorProps) => {
-	const visibleColors = colors.slice(0, 5);
-	const remainingCount = colors.length - visibleColors.length;
-	const remainingColors = colors.slice(5);
+	const visibleColors = colors?.slice(0, 5);
+	const remainingCount = colors?.length - visibleColors?.length;
+	const remainingColors = colors?.slice(5);
 	const [selected, setSelected] = useState(0);
 
 	const handleSelected = (index: number) => {
@@ -30,7 +30,7 @@ const VarientSelector = ({ colors, onSelected }: VarinetSelectorProps) => {
 	return (
 		<>
 			<div className={styles.container}>
-				{visibleColors.map((color: Colors, index: number) => (
+				{visibleColors?.map((color: Colors, index: number) => (
 					<div
 						className={
 							selected === index ? styles.circleBlack : styles.circleBlackW
@@ -53,7 +53,7 @@ const VarientSelector = ({ colors, onSelected }: VarinetSelectorProps) => {
 						</HoverCardTrigger>
 						<HoverCardContent className={styles.content}>
 							<div className={styles.container}>
-								{remainingColors.map((color: Colors, index: number) => {
+								{remainingColors?.map((color: Colors, index: number) => {
 									const actualIndex = index + 5; // shift index for full list
 									return (
 										<div
@@ -79,7 +79,7 @@ const VarientSelector = ({ colors, onSelected }: VarinetSelectorProps) => {
 					</HoverCard>
 				)}
 			</div>
-			<div className={styles.titleColor}>{colors[selected]?.name}</div>
+			<div className={styles.titleColor}>{colors?.[selected]?.name}</div>
 		</>
 	);
 };

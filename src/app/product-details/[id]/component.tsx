@@ -1,9 +1,7 @@
 "use client";
-import { colorData, productDetails, sizes } from "@/common/constant";
+import { productDetails } from "@/common/constant";
 import {
-	ADD_ITEM_TO_BASKET,
 	ADD_ITEM_TO_PRODUCTLIST,
-	CREATE_CART,
 	CREATE_CUSTOMER_PRODUCT_LIST,
 	GET_CUSTOMER_PRODUCTLIST,
 	GET_PRODUCT_DETAILS,
@@ -14,25 +12,79 @@ import {
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
+	SelectValue,
 } from "@/components/atomic/Select/Select";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import Accordion from "@/components/molecules/Accordion/Accordion";
 import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
+import VarientSelector from "@/components/molecules/VarientSelector/VarientSelector";
 import Gallery from "@/components/organisms/Gallery/Gallery";
 import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
 import styles from "./page.module.css";
 
-import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+type Size = {
+	value: string;
+	title: string;
+};
+
+type ProductImage = {
+	link: string;
+};
+
+type ImageGroup = {
+	images: ProductImage[];
+};
+
+type Colors = {
+	name: string;
+	hex: string;
+};
+
+type VariationAttributes = {
+	id: string;
+	name: string;
+	values: Values[];
+};
+
+type Values = {
+	name: string;
+	orderable: boolean;
+	value: string;
+};
+
+type Varinats = {
+	orderable: string;
+	price: string;
+	productId: string;
+	variationValues: {
+		color: string;
+		size: string;
+	};
+};
+
+type ProductList = {
+	customerId: string;
+	listId: string;
+	items: {
+		productId: string;
+		quantity: number;
+		public: boolean;
+		priority: number;
+		type: string;
+	};
+};
 
 export default function ProductDetails() {
 	const { id } = useParams() as { id: string };
 	const productId = id;
 	const [open, setOpen] = useState(false);
-	const [toast, setToast] = useState(false);
+	const [targetColor, setTargetColor] = useState("");
+	const [targetSize, setTargetSize] = useState("");
 
 	const createCustomerProductList = useMutation({
 		mutationFn: (input: { customerId: string; type: string }) =>
@@ -40,51 +92,53 @@ export default function ProductDetails() {
 		retry: 3,
 	});
 	const addItemToProductList = useMutation({
-		mutationFn: (input: {
-			customerId: string;
-			listId: string;
-			items: {
-				productId: string;
-				quantity: number;
-				public: boolean;
-				priority: number;
-				type: string;
-			};
-		}) => graphqlRequest(ADD_ITEM_TO_PRODUCTLIST, { input }),
+		mutationFn: (input: ProductList) =>
+			graphqlRequest(ADD_ITEM_TO_PRODUCTLIST, { input }),
 		retry: 3,
 	});
 
-	const { data, isFetching, isLoading } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: ["Product", productId],
 		queryFn: () =>
 			graphqlRequest(GET_PRODUCT_DETAILS, { productId: productId }),
 		enabled: !!productId,
 	});
-	console.log({ isFetching, isLoading });
-	type ProductImage = {
-		link: string;
-	};
-
-	type ImageGroup = {
-		images: ProductImage[];
-	};
 
 	const galleryImages = data?.productDetails?.imageGroups
 		?.flatMap((group: ImageGroup) => group?.images ?? [])
 		.map((image: ProductImage) => image?.link);
+
+	const sizes = data?.productDetails?.variationAttributes
+		?.filter((item: VariationAttributes) => item?.id === "size")[0]
+		?.values?.map((item: Values) => ({
+			value: item?.value,
+			title: item?.name,
+		}));
+
+	const colors = data?.productDetails?.variationAttributes
+		?.filter((item: VariationAttributes) => item?.id === "color")[0]
+		?.values?.map((item: Values) => ({
+			name: item?.name,
+			hex: `#${item?.value}`,
+		}));
+
+	const hasInitialized = useRef(false);
+
+	useEffect(() => {
+		if (!hasInitialized.current && colors?.length && sizes?.length) {
+			setTargetColor(colors[0].hex.slice(1));
+			setTargetSize(sizes[0].value);
+			hasInitialized.current = true;
+		}
+	}, [colors, sizes]);
 
 	const accordionData = productDetails?.pageMetaTags?.map((item) => ({
 		title: item?.id.toUpperCase(),
 		desc: item?.value,
 	}));
 
-	type Colors = {
-		name: string;
-		hex: string;
-	};
-
 	const handleSelected = (selected: Colors) => {
-		console.log("Selectedvarient", selected);
+		setTargetColor(selected?.hex.slice(1));
 	};
 
 	const addItemToProductLists = async (listId: string, customerId: string) => {
@@ -134,13 +188,31 @@ export default function ProductDetails() {
 	};
 
 	const addToBasketMutation = useMutation({
-		mutationFn: () => addToBasket(productId),
+		mutationFn: ({ productId }: { productId: string }) =>
+			addToBasket(productId),
 		onSuccess: () => setOpen(true),
 		retry: 3,
 	});
 	const handleAddToBasket = async () => {
-		const response = await addToBasketMutation.mutateAsync();
+		const masterId = data?.productDetails?.variants?.find(
+			(variant: Varinats) =>
+				variant?.variationValues?.color === targetColor &&
+				variant?.variationValues?.size === targetSize,
+		)?.productId;
+		const response = await addToBasketMutation.mutateAsync({
+			productId: masterId ? masterId : productId,
+		});
 		return response;
+	};
+	const handleChange = (
+		e: React.ChangeEvent<HTMLInputElement> | string,
+		name?: string,
+	) => {
+		const targetName = typeof e === "string" ? name : e.target.name;
+		const value = typeof e === "string" ? e : e.target.value;
+
+		if (!targetName) return;
+		setTargetSize(value);
 	};
 	return (
 		<section className={styles.componentLayout}>
@@ -163,23 +235,23 @@ export default function ProductDetails() {
 						galleryImages?.length !== 0 && <Gallery images={galleryImages} />
 					)}
 				</div>
-				<div className={styles.accordion}>
-					{isLoading ? (
-						<div className={styles.accordionSkeletonWrapper}>
-							{Array.from({ length: 2 }).map((_, i) => (
-								<Skeleton
-									key={`skeleton-${Date.now()}-${Math.random()}`}
-									className={styles.accordionSkeleton}
-								/>
-							))}
-						</div>
-					) : (
-						<Accordion
-							items={accordionData}
-							contentStyle={styles.accordionContent}
-						/>
-					)}
-				</div>
+				{/* <div className={styles.accordion}>
+          {isLoading ? (
+            <div className={styles.accordionSkeletonWrapper}>
+              {Array.from({ length: 2 }).map((_, i) => (
+                <Skeleton
+                  key={`skeleton-${Date.now()}-${Math.random()}`}
+                  className={styles.accordionSkeleton}
+                />
+              ))}
+            </div>
+          ) : (
+            <Accordion
+              items={accordionData}
+              contentStyle={styles.accordionContent}
+            />
+          )}
+        </div> */}
 				<div className={styles.productDetails}>
 					{isLoading ? (
 						<div className={styles.productSkeletonWrapper}>
@@ -211,36 +283,47 @@ export default function ProductDetails() {
 								{data?.productDetails?.longDescription}
 							</div>
 							<div className={styles.varientSection}>
-								{/* <VarientSelector colors={colorData} onSelected={handleSelected} /> */}
+								{colors !== undefined && (
+									<VarientSelector
+										colors={colors}
+										onSelected={handleSelected}
+									/>
+								)}
 							</div>
-							<div className={styles.buttonContainer}>
+							<div
+								className={`${styles.buttonContainer} ${
+									sizes ? styles.twoChildren : styles.oneChild
+								}`}
+							>
 								<Button onClick={() => handleAddToWishlist()}>
 									ADD TO WISHLIST
 								</Button>
-								<Select>
-									<SelectTrigger
-										data-testid="select-trigger"
-										style={{
-											backgroundColor: "#fff",
-											border: "solid",
-											borderWidth: "1px",
-											borderColor: "#CCCBCE",
-											color: "#000",
-											fontSize: "12px",
-											fontWeight: "600",
-											lineHeight: "16px",
-										}}
-									>
-										SIZE
-									</SelectTrigger>
-									<SelectContent>
-										{sizes?.map((item) => (
-											<SelectItem value={item?.value} key={item?.title}>
-												{item?.title}
-											</SelectItem>
-										))}
-									</SelectContent>
-								</Select>
+								{sizes !== undefined && (
+									<Select onValueChange={(e) => handleChange(e, "title")}>
+										<SelectTrigger
+											data-testid="select-trigger"
+											style={{
+												backgroundColor: "#fff",
+												border: "solid",
+												borderWidth: "1px",
+												borderColor: "#CCCBCE",
+												color: "#000",
+												fontSize: "12px",
+												fontWeight: "600",
+												lineHeight: "16px",
+											}}
+										>
+											<SelectValue placeholder={`${sizes?.[0]?.title}`} />
+										</SelectTrigger>
+										<SelectContent>
+											{sizes?.map((item: Size) => (
+												<SelectItem value={item?.value} key={item?.title}>
+													{item?.title}
+												</SelectItem>
+											))}
+										</SelectContent>
+									</Select>
+								)}
 							</div>
 							<Button
 								variant="secondary"

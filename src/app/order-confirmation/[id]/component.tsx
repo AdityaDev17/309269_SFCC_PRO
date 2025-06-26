@@ -8,6 +8,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
+import { Skeleton } from "../../../components/atomic/Skeleton/Skeleton";
 import styles from "./page.module.css";
 
 const OrderConfimation = () => {
@@ -81,10 +82,11 @@ const OrderConfimation = () => {
 			<section className={styles.detailsSection}>
 				<section className={styles.main}>
 					<section className={styles.addressSection}>
+						{/* Delivery Address */}
 						<div className={styles.rootLayer}>
 							<Image
 								src={"/images/deliveryAddress.svg"}
-								alt={"redeem"}
+								alt="address"
 								width={24}
 								height={24}
 							/>
@@ -98,23 +100,44 @@ const OrderConfimation = () => {
 								/>
 								<div className={styles.address}>
 									<div>
-										{orderDetails?.shipments[0]?.shippingAddress?.fullName}
+										{isLoading ? (
+											<Skeleton className={styles.skeletonAddressLine} />
+										) : (
+											orderDetails?.shipments[0]?.shippingAddress?.fullName
+										)}
 									</div>
 									<div>
-										{orderDetails?.shipments[0]?.shippingAddress?.address1}
+										{isLoading ? (
+											<Skeleton className={styles.skeletonAddressLineLong} />
+										) : (
+											orderDetails?.shipments[0]?.shippingAddress?.address1
+										)}
 									</div>
-									<div>{orderDetails?.shipments[0]?.shippingAddress?.city}</div>
 									<div>
-										{orderDetails?.shipments[0]?.shippingAddress?.countryCode}
+										{isLoading ? (
+											<Skeleton className={styles.skeletonAddressLineShort} />
+										) : (
+											orderDetails?.shipments[0]?.shippingAddress?.city
+										)}
+									</div>
+									<div>
+										{isLoading ? (
+											<Skeleton className={styles.skeletonCountry} />
+										) : (
+											orderDetails?.shipments[0]?.shippingAddress?.countryCode
+										)}
 									</div>
 								</div>
 							</div>
 						</div>
+
 						<div className={styles.border} />
+
+						{/* Date of Order */}
 						<div className={styles.rootLayer}>
 							<Image
 								src={"/images/date.svg"}
-								alt={"redeem"}
+								alt="date"
 								width={24}
 								height={24}
 							/>
@@ -127,15 +150,22 @@ const OrderConfimation = () => {
 									label={"Date of Order"}
 								/>
 								<div className={styles.address}>
-									{orderDetails?.creationDate?.split("T")[0]}
+									{isLoading ? (
+										<Skeleton className={styles.skeletonOrderDate} />
+									) : (
+										orderDetails?.creationDate?.split("T")[0]
+									)}
 								</div>
 							</div>
 						</div>
+
 						<div className={styles.border} />
+
+						{/* Method of Payment */}
 						<div className={styles.rootLayer}>
 							<Image
 								src={"/images/payment.svg"}
-								alt={"redeem"}
+								alt="payment"
 								width={24}
 								height={24}
 							/>
@@ -148,11 +178,16 @@ const OrderConfimation = () => {
 									label={"Method of Payment"}
 								/>
 								<div className={styles.address}>
-									{orderDetails?.paymentInstruments[0]?.paymentMethodId}
+									{isLoading ? (
+										<Skeleton className={styles.skeletonPayment} />
+									) : (
+										orderDetails?.paymentInstruments[0]?.paymentMethodId
+									)}
 								</div>
 							</div>
 						</div>
 					</section>
+
 					<section className={styles.secondRow}>
 						<Typography
 							type="Label"
@@ -161,28 +196,49 @@ const OrderConfimation = () => {
 							color="black"
 							label={"Product Details"}
 						/>
-						<CartItemList
-							cartItems={orderdedItems}
-							orderQuantity={true}
-							isWhiteBackground={true}
-						/>
+						{isLoading ? (
+							<div style={{ display: "grid", gap: "1rem" }}>
+								{Array.from({ length: 1 }).map((_, i) => (
+									<div
+										key={`skeleton-${Date.now()}-${Math.random()}`}
+										style={{ display: "flex", gap: "1rem",}}
+									>
+										<Skeleton className={styles.skeletonProductImage} />
+										<div className={styles.skeletonProductDetails}>
+											<Skeleton className={styles.skeletonProductTitle} />
+											<Skeleton className={styles.skeletonProductQty} />
+											<Skeleton className={styles.skeletonProductPrice} />
+										</div>
+									</div>
+								))}
+							</div>
+						) : (
+							<CartItemList
+								cartItems={orderdedItems}
+								orderQuantity={true}
+								isWhiteBackground={true}
+							/>
+						)}
 					</section>
 				</section>
+
 				<section className={styles.orderSummary}>
-					<OrderSummary
-						totalRowTop={true}
-						isButton={false}
-						isPaymentImage={false}
-						total={orderDetails?.orderTotal.toString()}
-						totalAmt={orderDetails?.productTotal.toString()}
-						// totalAmt={orderDetails?.orderTotal.toString()}
-						totalSavings="0"
-						subTotal={orderDetails?.productSubTotal.toString()}
-						// subTotal={orderDetails?.orderTotal.toString()}
-						delivery="Free"
-						tax={orderDetails?.taxTotal.toString()}
-						currency={orderDetails?.currency}
-					/>
+					{isLoading ? (
+						<Skeleton className={styles.skeletonOrderSummary} />
+					) : (
+						<OrderSummary
+							totalRowTop={true}
+							isButton={false}
+							isPaymentImage={false}
+							total={orderDetails?.orderTotal.toString()}
+							totalAmt={orderDetails?.productTotal.toString()}
+							totalSavings="0"
+							subTotal={orderDetails?.productSubTotal.toString()}
+							delivery="Free"
+							tax={orderDetails?.taxTotal.toString()}
+							currency={orderDetails?.currency}
+						/>
+					)}
 				</section>
 			</section>
 		</section>

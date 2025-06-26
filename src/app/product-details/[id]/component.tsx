@@ -147,39 +147,16 @@ export default function ProductDetails() {
 			<div className={styles.firstLayout}>
 				<div className={styles.gallery}>
 					{isLoading ? (
-						<div
-							style={{
-								display: "flex",
-								flexDirection: "row",
-								gap: "20px",
-								alignItems: "flex-start",
-							}}
-						>
-							<div
-								style={{
-									display: "flex",
-									flexDirection: "column",
-									gap: "10px",
-								}}
-							>
+						<div className={styles.gallerySkeletonWrapper}>
+							<div className={styles.thumbnailSkeletons}>
 								{Array.from({ length: 5 }).map((_, i) => (
 									<Skeleton
 										key={`skeleton-${Date.now()}-${Math.random()}`}
-										style={{
-											height: "93px",
-											width: "93px",
-											borderRadius: "0.375rem",
-										}}
+										className={styles.thumbnailSkeleton}
 									/>
 								))}
 							</div>
-							<Skeleton
-								style={{
-									width: "100%",
-									height: "518.83px",
-									borderRadius: "0.5rem",
-								}}
-							/>
+							<Skeleton className={styles.mainImageSkeleton} />
 						</div>
 					) : (
 						data?.productDetails?.imageGroups != null &&
@@ -188,21 +165,11 @@ export default function ProductDetails() {
 				</div>
 				<div className={styles.accordion}>
 					{isLoading ? (
-						<div
-							style={{
-								display: "flex",
-								flexDirection: "column",
-								gap: "12px",
-							}}
-						>
+						<div className={styles.accordionSkeletonWrapper}>
 							{Array.from({ length: 2 }).map((_, i) => (
 								<Skeleton
 									key={`skeleton-${Date.now()}-${Math.random()}`}
-									style={{
-										height: "52px",
-										width: "100%",
-										borderRadius: "0.375rem",
-									}}
+									className={styles.accordionSkeleton}
 								/>
 							))}
 						</div>
@@ -215,40 +182,23 @@ export default function ProductDetails() {
 				</div>
 				<div className={styles.productDetails}>
 					{isLoading ? (
-						<div
-							style={{
-								display: "flex",
-								flexDirection: "column",
-								gap: "20px",
-							}}
-						>
-							<Skeleton style={{ width: "80%", height: "32px" }} />
-							<Skeleton
-								style={{ width: "40%", height: "28px", marginTop: "12px" }}
-							/>
+						<div className={styles.productSkeletonWrapper}>
+							<Skeleton className={styles.titleSkeleton} />
+							<Skeleton className={styles.priceSkeleton} />
 
 							<div>
-								<Skeleton
-									style={{ width: "100%", height: "16px", marginBottom: "8px" }}
-								/>
-								{/* <Skeleton style={{ width: "90%", height: "16px", marginBottom: "8px" }} />  */}
-								<Skeleton style={{ width: "75%", height: "16px" }} />
+								<Skeleton className={styles.descLineSkeleton} />
+								<Skeleton className={styles.descLineSkeletonShort} />
 							</div>
 
-							<Skeleton style={{ width: "60%", height: "20px" }} />
+							<Skeleton className={styles.sizeLabelSkeleton} />
 
-							<div
-								style={{
-									display: "grid",
-									gridTemplateColumns: "1fr 1fr",
-									gap: "12px",
-								}}
-							>
-								<Skeleton style={{ height: "36px", width: "100%" }} />
-								<Skeleton style={{ height: "36px", width: "100%" }} />
+							<div className={styles.sizeGridSkeleton}>
+								<Skeleton className={styles.sizeSkeleton} />
+								<Skeleton className={styles.sizeSkeleton} />
 							</div>
 
-							<Skeleton style={{ height: "36px", width: "100%" }} />
+							<Skeleton className={styles.cartButtonSkeleton} />
 						</div>
 					) : (
 						<>

@@ -69,3 +69,70 @@
 .orderSummary{
     height: fit-content;
 }
+
+/* Skeleton styles */
+.skeletonAddressLine {
+  width: 60%;
+  height: 16px;
+}
+
+.skeletonAddressLineLong {
+  width: 70%;
+  height: 16px;
+}
+
+.skeletonAddressLineShort {
+  width: 50%;
+  height: 16px;
+}
+
+.skeletonCountry {
+  width: 30%;
+  height: 16px;
+}
+
+.skeletonOrderDate {
+  width: 40%;
+  height: 16px;
+}
+
+.skeletonPayment {
+  width: 30%;
+  height: 16px;
+}
+
+.skeletonProductImage {
+  width: 150px;
+  height: 150px;
+}
+
+.skeletonProductDetails {
+  margin-top: 5rem;
+   flex: 1;
+  /* display: flex;
+  flex-direction: column;
+  gap: 0.5rem; */
+}
+
+.skeletonProductTitle {
+  width: 50%;
+  height: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.skeletonProductQty {
+  width: 20%;
+  height: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.skeletonProductPrice {
+  width: 35%;
+  height: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.skeletonOrderSummary {
+  width: 100%;
+  height: 320px;
+}

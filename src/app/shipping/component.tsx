@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../components/atomic/Button/Button";
 import CheckBox from "../../components/atomic/CheckBox/CheckBox";
+import { Skeleton } from "../../components/atomic/Skeleton/Skeleton";
 import Typography from "../../components/atomic/Typography/Typography";
 import AddressCard, {
 	type AddressData,
@@ -113,18 +114,27 @@ const Shipping = () => {
 	const customerId = sessionStorage.getItem("customer_id");
 	const customerType = sessionStorage.getItem("customer_type");
 
-	const { data: shippingMethodData } = useQuery({
-		queryKey: ["GetShippingMethod", basketId],
-		queryFn: () => graphqlRequest(GET_SHIPPING_METHOD, { basketId }),
-	});
+	const { data: shippingMethodData, isLoading: isLoadingShippingMethods } =
+		useQuery({
+			queryKey: ["GetShippingMethod", basketId],
+			queryFn: () => graphqlRequest(GET_SHIPPING_METHOD, { basketId }),
+		});
 
-	const { data: customerAddressData, refetch: refetchAddresses } = useQuery({
+	const {
+		data: customerAddressData,
+		refetch: refetchAddresses,
+		isLoading: isLoadingCustomerAddresses,
+	} = useQuery({
 		queryKey: ["GetCustomerAddress", customerId],
 		queryFn: () => graphqlRequest(GET_CUSTOMER_ADDRESS, { customerId }),
 		enabled: customerType === "registered" && !!customerId,
 	});
 
-	const { data: shippingAddressData, refetch: refetchShipping } = useQuery({
+	const {
+		data: shippingAddressData,
+		refetch: refetchShipping,
+		isLoading: isLoadingShippingAddress,
+	} = useQuery({
 		queryKey: ["GetShippingAddressFromBasket", basketId],
 		queryFn: () =>
 			graphqlRequest(GET_SHIPPING_ADDRESS_FROM_BASKET, { basketId }),
@@ -291,23 +301,51 @@ const Shipping = () => {
 					)}
 				</div>
 
+				{/* ADDRESS LIST */}
 				<div className={styles.address}>
-					<AddressCard
-						items={addresses}
-						radioButton={true}
-						refetch={
-							customerType === "registered" ? refetchAddresses : refetchShipping
-						}
-						selectedAddress={selectedAddress}
-						setSelectedAddress={setSelectedAddress}
-					/>
+					{isLoadingCustomerAddresses || isLoadingShippingAddress ? (
+						<div className={styles.skeletonLayout}>
+							{Array.from({ length: 1 }).map((_, idx) => (
+								<div
+									key={`skeleton-${Date.now()}-${Math.random()}`}
+									className={styles.skeletonAddressCard}
+								>
+									<Skeleton className={styles.skeletonTitle} />
+									<Skeleton className={styles.skeletonAddress} />
+									<Skeleton className={styles.skeletonDesc} />
+									<div className={styles.skeletonButtons}>
+										<Skeleton className={styles.skeletonBtn} />
+										<Skeleton className={styles.skeletonBtn} />
+									</div>
+								</div>
+							))}
+						</div>
+					) : addresses.length === 0 ? (
+						<div className={styles.emptyState}>
+							<p>No saved addresses found.</p>
+						</div>
+					) : (
+						<AddressCard
+							items={addresses}
+							radioButton={true}
+							refetch={
+								customerType === "registered"
+									? refetchAddresses
+									: refetchShipping
+							}
+							selectedAddress={selectedAddress}
+							setSelectedAddress={setSelectedAddress}
+						/>
+					)}
 				</div>
 
+				{/* BILLING CHECKBOX */}
 				<div className={styles.billCheck}>
 					<CheckBox />
 					<p>Keep Billing Address same as Shipping Address </p>
 				</div>
 
+				{/* SHIPPING METHODS */}
 				<div className={styles.shippingmethod}>
 					<Typography
 						type={"Label"}
@@ -315,24 +353,55 @@ const Shipping = () => {
 						fontWeight="semibold"
 						label="Shipping Method"
 					/>
-					<RadioGroup
-						className={`${styles.cardGrid}`}
-						value={selectedShippingMethod || undefined}
-						onValueChange={(value) => setSelectedShippingMethod(value)}
-					>
-						{shippingMethods.map((item) => (
-							<div key={item.id} className={styles.card}>
-								<div className={styles.wrapper}>
-									<h2 className={styles.name}>{item.title}</h2>
-									<RadioGroupItem value={item.id} />
+					{isLoadingShippingMethods ? (
+						<div className={styles.skeletonLayout}>
+							{Array.from({ length: 2 }).map((_, idx) => (
+								<div
+									key={`skeleton-${Date.now()}-${Math.random()}`}
+									className={styles.skeletonShippingCard}
+								>
+									<Skeleton className={styles.skeletonTitle} />
+									<Skeleton className={styles.skeletonSubtitle} />
+
+									<div className={styles.skeletonButtons}>
+										<Skeleton className={styles.skeletonBtn} />
+									</div>
 								</div>
-								<div>
-									<p className={styles.address}>{item.description}</p>
-									<p className={styles.extraInfo}>${item.extraInfo}</p>
+							))}
+						</div>
+					) : (
+						<RadioGroup
+							className={styles.cardGrid}
+							value={selectedShippingMethod || undefined}
+							onValueChange={(value) => setSelectedShippingMethod(value)}
+						>
+							{shippingMethods.map((item) => (
+								<div key={item.id} className={styles.card}>
+									<div className={styles.wrapper}>
+										<h2 className={styles.name}>{item.title}</h2>
+										<RadioGroupItem value={item.id} />
+									</div>
+									<div>
+										<p className={styles.address}>{item.description}</p>
+										<p className={styles.extraInfo}>${item.extraInfo}</p>
+									</div>
 								</div>
-							</div>
-						))}
-					</RadioGroup>
+							))}
+						</RadioGroup>
+					)}
+				</div>
+
+				{/* ORDER SUMMARY */}
+				<div className={styles.summary}>
+					{isLoadingShippingAddress || isLoadingShippingMethods ? (
+						<Skeleton className={styles.skeletonSummary} />
+					) : (
+						<OrderSummary
+							reverseOrder={true}
+							buttonText="CHECKOUT"
+							onButtonClick={handleCheckout}
+						/>
+					)}
 				</div>
 
 				<div className={styles.summary}>

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React from "react";
 import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
+import { Skeleton } from "../../components/atomic/Skeleton/Skeleton";
 import Typography from "../../components/atomic/Typography/Typography";
 import ErrorComponent from "../../components/molecules/ErrorComponent/ErrorComponent";
 import { Toaster } from "../../components/molecules/Toast/Toast";
@@ -43,7 +44,7 @@ function Wishlist() {
 	const customerId = sessionStorage.getItem("customer_id") ?? "";
 	const router = useRouter();
 
-	const { data } = useQuery({
+	const { data, isLoading } = useQuery({
 		queryKey: ["Wishlist", customerId],
 		queryFn: () =>
 			graphqlRequest(WISHLIST_DATA, {
@@ -83,7 +84,41 @@ function Wishlist() {
 		router.push(`/product-details/${productId}`);
 	};
 
-	return wishlistData?.length === 0 ? (
+	
+	return isLoading ? (
+		<div className={styles.container}>
+			<Breadcrumbs
+				breadcrumbItems={[{ label: "Home", href: "/" }, { label: "Wishlist" }]}
+				breadcrumbSeparator="/slash.svg"
+			/>
+
+			<Typography
+				type={"Label"}
+				variant={3}
+				fontWeight="semibold"
+				label="WISHLIST"
+			/>
+
+			{/* Filters skeleton */}
+			<Skeleton className={styles.skeletonFilter} />
+
+			{/* Product cards skeletons */}
+			<div className={styles.skeletonProductContainer}>
+				{Array.from({ length: 1 }).map((_, i) => (
+					<div key={`skeleton-${Date.now()}-${Math.random()}`}>
+						<div
+							key={`skeleton-${Date.now()}-${Math.random()}`}
+							className={styles.skeletonProductCard}
+						>
+							<Skeleton className={styles.skeletonProductImage} />
+							<Skeleton className={styles.skeletonProductTitle} />
+							<Skeleton className={styles.skeletonProductPrice} />
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	) : wishlistData?.length === 0 ? (
 		<ErrorComponent
 			errImg="./images/wishlistEmpty.svg"
 			imgHeight={205}
@@ -104,7 +139,6 @@ function Wishlist() {
 				label="WISHLIST"
 			/>
 			{data && uniqueBrands && <ButtonList buttonNames={uniqueBrands} />}
-
 			{data && wishlistData && (
 				<ProductImageCarousel
 					width="100%"

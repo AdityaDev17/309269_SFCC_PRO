@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { Button } from "../../components/atomic/Button/Button";
 import Input from "../../components/atomic/Input/Input";
+import { Skeleton } from "../../components/atomic/Skeleton/Skeleton";
 import Typography from "../../components/atomic/Typography/Typography";
 import CartItemList from "../../components/molecules/CartItemList/CartItemList";
 import OrderSummary from "../../components/organisms/OrderSummary/OrderSummary";
@@ -96,6 +97,42 @@ const Cart = ({ basketId }: CartProps) => {
 	return (
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
+				{isLoading ? (
+					<>
+						<div className={styles.items}>
+							<Skeleton className={styles.headingSkeleton} />
+						</div>
+
+						<div className={styles.cartItemList}>
+							{Array.from({ length: 3 }).map((_, i) => (
+								<Skeleton
+									key={`skeleton-${Date.now()}-${Math.random()}`}
+									className={styles.cartItemSkeleton}
+								/>
+							))}
+						</div>
+
+						<div className={styles.orderSummarySection}>
+							<Skeleton className={styles.orderSummarySkeleton} />
+						</div>
+
+						<div className={styles.redeemWrapper}>
+							<Skeleton className={styles.redeemTitleSkeleton} />
+							<div className={styles.redeemGrid}>
+								<div className={styles.redeemPoints}>
+									<Skeleton className={styles.redeemLineSkeleton} />
+									<Skeleton className={styles.redeemLineSkeleton} />
+									<Skeleton className={styles.redeemLineSkeletonShort} />
+									<div className={styles.inputGrid}>
+										<Skeleton className={styles.redeemInputSkeleton} />
+										<Skeleton className={styles.redeemButtonSkeleton} />
+									</div>
+								</div>
+							</div>
+						</div>
+					</>
+				) : (
+					<>
 				<div className={styles.items}>
 					<Typography
 						type={"Label"}
@@ -167,6 +204,8 @@ const Cart = ({ basketId }: CartProps) => {
 						</div>
 					</div>
 				</div>
+				</>
+				)}
 			</div>
 		</section>
 	);

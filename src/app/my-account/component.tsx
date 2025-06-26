@@ -89,6 +89,9 @@ const MyAccount = () => {
 		}
 	};
 
+	const capitalizeFirstLetter = (str?: string) =>
+		str ? str.charAt(0).toUpperCase() + str.slice(1) : "";
+
 	return (
 		<div className={styles.wrapper}>
 			<Breadcrumbs
@@ -100,13 +103,11 @@ const MyAccount = () => {
 			/>
 
 			{isLoading ? (
-				<Skeleton
-					style={{ height: "275px", width: "1250px", marginBottom: "1rem" }}
-				/>
+				<Skeleton className={styles.bannerSkeleton} />
 			) : (
 				<Banner
-					// title="Hello Jenssa!"
-					title={`Hello ${data?.customer?.firstName || "there"}!`}
+					// title={`Hello ${data?.customer?.firstName || "there"}!`}
+					title={`Hello ${capitalizeFirstLetter(data?.customer?.firstName) || "there"}!`}
 					subtitle="Greetings!"
 					subtitleVariant={5}
 					backgroundImage="/images/myAccount-banner.svg"
@@ -117,14 +118,10 @@ const MyAccount = () => {
 
 			{isLoading ? (
 				<div className={styles.tilesGrid}>
-					{Array.from({ length: 6 }).map((_, i) => (
+					{Array.from({ length: 7 }).map((_, i) => (
 						<Skeleton
 							key={`skeleton-${Date.now()}-${Math.random()}`}
-							style={{
-								height: "80px",
-								width: "100%",
-								borderRadius: "0.5rem",
-							}}
+							className={styles.tileSkeleton}
 						/>
 					))}
 				</div>

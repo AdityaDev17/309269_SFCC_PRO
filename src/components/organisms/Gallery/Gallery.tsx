@@ -70,7 +70,9 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 					);
 				})}
 			</div>
-			<ProductCard productImage={mainImage} width="42vw" />
+			<div style={{minWidth:"42vw"}}>
+			<ProductCard productImage={mainImage} />
+			</div>
 		</div>
 	);
 };

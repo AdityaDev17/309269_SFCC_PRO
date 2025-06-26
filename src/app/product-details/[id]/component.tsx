@@ -119,15 +119,15 @@ export default function ProductDetails() {
 		?.filter((item: VariationAttributes) => item?.id === "color")[0]
 		?.values?.map((item: Values) => ({
 			name: item?.name,
-			hex: `#${item?.value}`,
+			hex: item?.value,
 		}));
 
 	const hasInitialized = useRef(false);
 
 	useEffect(() => {
-		if (!hasInitialized.current && colors?.length && sizes?.length) {
-			setTargetColor(colors[0].hex.slice(1));
-			setTargetSize(sizes[0].value);
+		if (!hasInitialized.current ) {
+			colors &&setTargetColor(colors[0].hex.slice(1));
+			sizes &&setTargetSize(sizes[0].value);
 			hasInitialized.current = true;
 		}
 	}, [colors, sizes]);
@@ -138,7 +138,7 @@ export default function ProductDetails() {
 	}));
 
 	const handleSelected = (selected: Colors) => {
-		setTargetColor(selected?.hex.slice(1));
+		setTargetColor(selected?.hex);
 	};
 
 	const addItemToProductLists = async (listId: string, customerId: string) => {

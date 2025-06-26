@@ -49,3 +49,45 @@
 .bagButton{
     padding:0px 16px;
 }
+/* Skeleton Styles*/
+.productSkeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+.titleSkeleton {
+  width: 80%;
+  height: 32px;
+}
+.priceSkeleton {
+  width: 40%;
+  height: 28px;
+  margin-top: 12px;
+}
+.descLineSkeleton {
+  width: 100%;
+  height: 16px;
+  margin-bottom: 8px;
+}
+.descLineSkeletonShort {
+  width: 75%;
+  height: 16px;
+}
+.sizeLabelSkeleton {
+  width: 60%;
+  height: 20px;
+}
+.sizeGridSkeleton {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.sizeSkeleton {
+  height: 36px;
+  width: 100%;
+}
+.cartButtonSkeleton {
+  height: 36px;
+  width: 100%;
+}

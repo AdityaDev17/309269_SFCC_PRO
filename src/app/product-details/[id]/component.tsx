@@ -26,66 +26,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
 import styles from "./page.module.css";
+import { Colors, ImageGroup, ProductImage, ProductList, Size, Values, VariationAttributes, Variants } from "@/common/type";
 
-type Size = {
-  value: string;
-  title: string;
-  disabled: boolean;
-};
-
-type ProductImage = {
-  link: string;
-};
-
-type ImageGroup = {
-  images: ProductImage[];
-};
-
-type Colors = {
-  name: string;
-  hex: string;
-};
-
-type VariationAttributes = {
-  id: string;
-  name: string;
-  values: Values[];
-};
-
-type Values = {
-  name: string;
-  orderable: boolean;
-  value: string;
-};
-
-type Varinats = {
-  orderable: string;
-  price: string;
-  productId: string;
-  variationValues: {
-    color: string;
-    size: string;
-  };
-};
-
-type ProductList = {
-  customerId: string;
-  listId: string;
-  items: {
-    productId: string;
-    quantity: number;
-    public: boolean;
-    priority: number;
-    type: string;
-  };
-};
-
-type Variant={
-	variationValues:{
-		color:string;
-		size:string;
-	}
-}
 
 export default function ProductDetails() {
   const { id } = useParams() as { id: string };
@@ -124,7 +66,7 @@ export default function ProductDetails() {
     ?.find((item: VariationAttributes) => item?.id === "size")
     ?.values?.map((item: Values) => {
       const hasMatchingVariant = data?.productDetails?.variants?.some(
-        (variant: Varinats) =>
+        (variant: Variants) =>
           variant.variationValues?.color === targetColor &&
           variant.variationValues?.size === item?.value
       );
@@ -218,7 +160,7 @@ export default function ProductDetails() {
   });
   const handleAddToBasket = async () => {
     const masterId = data?.productDetails?.variants?.find(
-      (variant: Varinats) =>
+      (variant: Variants) =>
         variant?.variationValues?.color === targetColor &&
         variant?.variationValues?.size === targetSize
     )?.productId;

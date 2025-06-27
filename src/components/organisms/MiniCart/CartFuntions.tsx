@@ -8,16 +8,24 @@ import {
 import { graphqlRequest } from "@/lib/graphqlRequest";
 
 interface CartItemResponse {
+	productId:string
 	itemId: string;
 	productName: string;
 	quantity: number;
 	price: number;
-	productImage?: {
+	productData?: {
 		data?: {
 			imageGroups?: {
 				images?: {
 					link?: string;
 				}[];
+			}[];
+			variants?: {
+				productId:string;
+				variationValues?: {
+					color?: string;
+					size?:string
+				};
 			}[];
 		}[];
 	};
@@ -31,21 +39,25 @@ interface CartItems {
 	currency: string;
 	productImage: string;
 	itemId: string;
+	color?:string;
+	size?:string;
 }
 let cartItems: CartItems[];
 let subTotal = "";
 let currency =""
 const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 	cartItems = response?.map((item) => ({
-		id: item?.itemId,
+		id: item?.productId,
 		name: item?.productName,
 		description: "",
 		quantity: item?.quantity,
 		price: item?.price,
 		currency: currency,
 		itemId: item?.itemId,
+		color: item?.productData?.data?.[0]?.variants?.find((variation)=>variation?.productId===item?.productId)?.variationValues?.color,
+		size: item?.productData?.data?.[0]?.variants?.find((variation)=>variation?.productId===item?.productId)?.variationValues?.size,
 		productImage:
-			item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ?? "",
+			item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ?? "",
 	}));
 };
 

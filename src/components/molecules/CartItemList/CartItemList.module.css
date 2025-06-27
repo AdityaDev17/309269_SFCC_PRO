@@ -60,6 +60,32 @@
   gap: 10px;
 }
 
+.textColor{
+  font-weight: 400;
+  font-size:14px;
+  display:grid;
+  padding-top: 12px;
+  grid-template-columns: repeat(3, 55px);
+  align-items: center;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+}
+
+.align{
+  text-align: center;
+}
+
+.color{
+  display:grid;
+  grid-template-columns:0.6fr 0.5fr;
+  align-items:center;
+  gap:10px
+}
+
 .deleteIcon {
   cursor: pointer;
 }

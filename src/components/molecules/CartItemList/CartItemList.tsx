@@ -15,6 +15,8 @@ interface CartItem {
 	currency: string;
 	productImage: string;
 	itemId: string;
+	size?: string;
+	color?: string;
 }
 
 interface CartItemListProps {
@@ -77,6 +79,19 @@ const CartItemList = ({
 								fontWeight="semibold"
 								label={item.name}
 							/>
+							<div className={styles.textColor}>
+								<div>Size &nbsp;{Number.parseInt(item?.size ?? "") / 10}</div>
+								<div className={styles.align}>| </div>
+								<div className={styles.color}>
+									Color{" "}
+									<div
+										className={styles.circle}
+										style={{
+											backgroundColor: `${item?.color}`,
+										}}
+									/>
+								</div>
+							</div>
 							{item.description && (
 								<Typography
 									type="Body"

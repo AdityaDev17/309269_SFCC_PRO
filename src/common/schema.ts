@@ -233,7 +233,7 @@ export const GET_BASKET = `
         productId
         quantity
         price
-        productImage {
+        productData {
           data {
             imageGroups {
               images {
@@ -243,6 +243,13 @@ export const GET_BASKET = `
                 disBaseLink
               }
             }
+            variants {
+            productId
+            variationValues {
+              color
+              size
+            }
+          }
           }
         }
         productName
@@ -415,7 +422,6 @@ export const UPDATE_ADDRESS = `
     }
   }
 `;
-
 
 export const CREATE_CUSTOMER_ADDRESS = `
   mutation CreateCustomerAddress($input: InputCustomerAddress!) {
@@ -655,7 +661,6 @@ export const UPDATE_SHIPPING_METHOD = `
 
 // MyAccount/Personal-info mutations
 
-
 export const UPDATE_CUSTOMER = `
   mutation UpdateCustomer($input: UpdateCustomerInput!) {
     updateCustomer(input: $input) {
@@ -676,7 +681,6 @@ export const UPDATE_PASSWORD = `
   }
 `;
 
-
 export const DELETE_CUSTOMER_ADDRESS = `
 mutation RemoveCustomerAddress($input: InputCustomerAddress!) {
   removeCustomerAddress(input: $input) {
@@ -696,9 +700,6 @@ mutation RemoveCustomerAddress($input: InputCustomerAddress!) {
     stateCode
   }
 }`;
-
-
-
 
 export const ADD_PAYMENT_INSTRUMENT_TO_BASKET = `
 mutation AddPaymentInstrumentToBasket($input: AddPaymentInstrument!) {
@@ -731,7 +732,7 @@ export const UPDATE_CUSTOMER_INFO_IN_BASKET = `
 	}
   }
 }
-`
+`;
 
 // order-details
 

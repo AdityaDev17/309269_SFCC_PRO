@@ -35,6 +35,7 @@ import {
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { ORDER_HISTORY } from "@/common/schema";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 const Filter = ({ isMobile }: { isMobile: boolean }) => {
 	const filters = ["3 Months", "6 Months", "2025", "2024", "2023"];
@@ -154,57 +155,62 @@ const OrderCard = ({
 	};
 }) => {
 	const { orderId, price, orderName, items } = orderData;
+	const router = useRouter();
 	return (
-		<div className={styles.orderCard}>
-			<ImageGrid productData={items} />
-			<div className={styles.orderDetails}>
-				<div className={styles.orderDetailsTop}>
-					<div className={styles.orderStatus}>
-						<Typography
-							type="Body"
-							variant={3}
-							fontWeight="semibold"
-							label="Arriving Tomorrow"
-						/>
-					</div>
-					<div className={styles.orderName}>
-						<Typography
-							type="Label"
-							variant={3}
-							fontWeight="semibold"
-							label={orderName}
-						/>
-					</div>
-					<div className={styles.orderId}>
-						<Typography
-							type="Body"
-							variant={2}
-							fontWeight="regular"
-							label={`ORDER ID : ${orderId}`}
-						/>
-					</div>
-				</div>
-				<div className={styles.orderDetailsBottom}>
-					<div className={styles.orderTotal}>
-						<Typography
-							type="Body"
-							variant={3}
-							fontWeight="semibold"
-							label={`Order Total: $${price}`}
-						/>
-					</div>
-					<Button>
-						<Typography
-							type="Body"
-							variant={3}
-							fontWeight="semibold"
-							label="VIEW DETAILS"
-						/>
-					</Button>
-				</div>
-			</div>
-		</div>
-	);
+    <div className={styles.orderCard}>
+      <ImageGrid productData={items} />
+      <div className={styles.orderDetails}>
+        <div className={styles.orderDetailsTop}>
+          <div className={styles.orderStatus}>
+            <Typography
+              type="Body"
+              variant={3}
+              fontWeight="semibold"
+              label="Arriving Tomorrow"
+            />
+          </div>
+          <div className={styles.orderName}>
+            <Typography
+              type="Label"
+              variant={3}
+              fontWeight="semibold"
+              label={orderName}
+            />
+          </div>
+          <div className={styles.orderId}>
+            <Typography
+              type="Body"
+              variant={2}
+              fontWeight="regular"
+              label={`ORDER ID : ${orderId}`}
+            />
+          </div>
+        </div>
+        <div className={styles.orderDetailsBottom}>
+          <div className={styles.orderTotal}>
+            <Typography
+              type="Body"
+              variant={3}
+              fontWeight="semibold"
+              label={`Order Total: $${price}`}
+            />
+          </div>
+          <Button
+            onClick={() => {
+              router.push(`/order-details/${orderId}`);
+            }}
+          >
+            <Typography
+              type="Body"
+              variant={3}
+              fontWeight="semibold"
+              label="VIEW DETAILS"
+            />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
 };
 interface ProductItem {
   productId: string;

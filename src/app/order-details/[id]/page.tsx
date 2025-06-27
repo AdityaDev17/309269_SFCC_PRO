@@ -1,6 +1,6 @@
 import React from "react";
-import Breadcrumbs from "../../components/atomic/Breadcrumbs/Breadcrumbs";
-import Typography from "../../components/atomic/Typography/Typography";
+import Breadcrumbs from "../../../components/atomic/Breadcrumbs/Breadcrumbs";
+import Typography from "../../../components/atomic/Typography/Typography";
 import Details from "./component";
 import styles from "./orderDetails.module.css";
 

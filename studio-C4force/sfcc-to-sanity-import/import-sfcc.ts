@@ -1,8 +1,8 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
 import csv from 'csvtojson';
-import { createClient } from '@sanity/client';
 import slugify from 'slugify';
+import { createClient } from '@sanity/client';
 
 dotenv.config();
 
@@ -17,132 +17,148 @@ interface ProductRow {
   'onlineFlag__default': string;
   variants: string;
   lastModified_date: string;
+  variation_attributes: string;
+  size: string;
+  color: string;
+  product_kind: string;
 }
 
-// Setup Sanity client
 const client = createClient({
   projectId: process.env.SANITY_PROJECT_ID!,
   dataset: process.env.SANITY_DATASET!,
   token: process.env.SANITY_TOKEN!,
   useCdn: false,
-  apiVersion: '2023-10-01',
+  apiVersion: new Date().toISOString().split('T')[0],
 });
 
-// 1. Get Bearer token from SFCC
 async function getBearerToken(): Promise<string> {
-  const { SFCC_AUTH_URL, SFCC_CLIENT_ID, SFCC_CLIENT_SECRET } = process.env;
-
+  const { SFCC_AUTH_URL, SFCC_CLIENT_ID, SFCC_CLIENT_SECRET } = process.env!;
   const authHeader = Buffer.from(`${SFCC_CLIENT_ID}:${SFCC_CLIENT_SECRET}`).toString('base64');
-
-  const response = await axios.post(SFCC_AUTH_URL!, null, {
-    headers: {
-      Authorization: `Basic ${authHeader}`,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
+  const res = await axios.post(SFCC_AUTH_URL!, null, {
+    headers: { Authorization: `Basic ${authHeader}`, 'Content-Type': 'application/x-www-form-urlencoded' },
   });
-
-  return response.data.access_token;
+  return res.data.access_token;
 }
 
-// 2. Fetch CSV feed from SFCC
-async function fetchCSVFeed(token: string): Promise<string> {
-  const response = await axios.get(process.env.SFCC_FEED_URL!, {
+async function fetchCSVFeed(token: string): Promise<ProductRow[]> {
+  const res = await axios.get(process.env.SFCC_FEED_URL!, {
     headers: { Authorization: `Bearer ${token}` },
     responseType: 'text',
   });
-  return response.data;
+  return csv().fromString(res.data);
 }
 
-// 3. Map a row to a Sanity product document
-function mapToSanityDoc(row: ProductRow) {
-  const safeId = slugify(row.ID || row['name__default'] || 'untitled', {
-    lower: true,
-    strict: true,
-  });
-
-  const parsedDate = new Date(row.lastModified_date?.trim());
-  const lastModified = !isNaN(parsedDate.getTime()) ? parsedDate.toISOString() : null;
-
-  return {
-    _id: safeId,
-    _type: 'product',
-    sku: row.SKU,
-    productId: row.ID,
-    title: row['name__default'],
-    slug: { current: safeId },
-    description: row['longDescription__default'],
-    category: row['category-id'],
-    price: parseFloat(row.amount),
-    currency: row.currency,
-    orderable: row['onlineFlag__default'] === 'TRUE',
-    variants: row.variants,
-    lastModified,
-    // image: null, // Optional: populate if you have images later
-  };
+function chunk<T>(arr: T[], size: number): T[][] {
+  return Array.from({ length: Math.ceil(arr.length / size) }, (_, i) => arr.slice(i * size, i * size + size));
 }
 
-// 4. Import to Sanity in batches
-async function importToSanity(data: ProductRow[], batchSize = 200) {
-  let imported = 0;
-  let skipped = 0;
-  let failed = 0;
+async function importToSanity(rows: ProductRow[], batchSize = 250) {
+  const masterProductIds = new Set<string>();
+  const variantToParentMap: Record<string, string> = {};
+  const variantsByMasterId: Record<string, string[]> = {};
 
-  for (let i = 0; i < data.length; i += batchSize) {
-    const batch = data.slice(i, i + batchSize);
+  // Identify master products and their variants
+  for (const row of rows) {
+    if (row.product_kind === 'master' && row.variants) {
+      const masterId = `product-${slugify(row.ID, { lower: true, strict: true })}`;
+      masterProductIds.add(masterId);
+      const variantIds = row.variants.split(';').map(v => slugify(v.trim(), { lower: true, strict: true })).filter(Boolean);
+      variantsByMasterId[masterId] = variantIds.map(v => `variant-${v}`);
+      for (const vid of variantIds) {
+        variantToParentMap[`variant-${vid}`] = masterId;
+      }
+    }
+  }
 
-    const docsToImport = await Promise.all(
-      batch.map(async (row) => {
-        try {
-          const doc = mapToSanityDoc(row);
+  const masterDocs: any[] = [];
+  const variantDocs: any[] = [];
+  const patchVariants: { patch: { id: string; set: { variants: any[] } } }[] = [];
 
-          const existing = await client.fetch(`*[_type == "product" && _id == $id][0]`, {
-            id: doc._id,
-          });
+  for (const row of rows) {
+    const safeId = slugify(row.ID, { lower: true, strict: true });
+    const commonFields = {
+      sku: row.SKU,
+      productId: row.ID,
+      name: row['name__default'],
+      description: row['longDescription__default'],
+      categoryId: row['category-id'],
+      price: parseFloat(row.amount),
+      currency: row.currency,
+      isOnline: row['onlineFlag__default'] === 'TRUE',
+      lastModified: new Date(row.lastModified_date).toISOString(),
+      variationAttributes: row.variation_attributes?.split(';').map(v => v.trim()).filter(Boolean) || [],
+      importedAt: new Date().toISOString(),
+    };
 
-          if (existing?.lastModified === doc.lastModified) {
-            console.log(`Skipped (unchanged): ${doc.title}`);
-            skipped++;
-            return null;
-          }
+    if (row.product_kind === 'master') {
+      masterDocs.push({
+        _id: `product-${safeId}`,
+        _type: 'product',
+        ...commonFields,
+        productKind: 'master',
+      });
+    }
 
-          return doc;
-        } catch (err) {
-          console.error(`Error mapping row ${row.ID}:`, err);
-          failed++;
-          return null;
-        }
-      })
-    );
-
-    const validDocs = docsToImport.filter(Boolean) as any[];
-
-    if (validDocs.length > 0) {
-      await Promise.allSettled(validDocs.map((doc) => client.createOrReplace(doc)));
-
-      validDocs.forEach((doc) => {
-        console.log(`Imported: ${doc.title}`);
-        imported++;
+    if (row.product_kind === 'variant') {
+      const variantId = `variant-${safeId}`;
+      const parentId = variantToParentMap[variantId];
+      if (!parentId || !masterProductIds.has(parentId)) {
+        console.warn(`Skipping orphan variant: ${row.ID} — no valid parent master product.`);
+        continue;
+      }
+      variantDocs.push({
+        _id: variantId,
+        _type: 'variant',
+        ...commonFields,
+        size: row.size,
+        color: row.color,
+        productKind: 'variant',
+        parentProduct: { _type: 'reference', _ref: parentId },
       });
     }
   }
 
-  console.log('\n --- Import Summary ---');
-  console.log(`Imported: ${imported}`);
-  console.log(`Skipped: ${skipped}`);
-  console.log(`Failed: ${failed}`);
+  // Patches to link variants to master after both exist
+  for (const [masterId, variantIds] of Object.entries(variantsByMasterId)) {
+    const refs = variantIds.map(vid => ({ _key: vid, _type: 'reference', _ref: vid }));
+    patchVariants.push({ patch: { id: masterId, set: { variants: refs } } });
+  }
+
+  const applyMutations = async (docs: any[]) => {
+    const batches = chunk(docs, batchSize);
+    for (const b of batches) {
+      await client.mutate(b.map(d => ({ createOrReplace: d })));
+    }
+  };
+
+  const applyPatches = async (patches: any[]) => {
+    const nonNullPatches = patches.filter(Boolean);
+    const batches = chunk(nonNullPatches, batchSize);
+    for (const b of batches) {
+      await client.mutate(b);
+    }
+  };
+
+  console.log(`Importing ${masterDocs.length} master products...`);
+  await applyMutations(masterDocs);
+
+  console.log(`Importing ${variantDocs.length} variants...`);
+  await applyMutations(variantDocs);
+
+  console.log(`Patching ${patchVariants.length} master products with variant references...`);
+  await applyPatches(patchVariants);
+
+  console.log('Import completed successfully!');
 }
 
-// 5. Main
 (async () => {
   try {
     const token = await getBearerToken();
-    const csvData = await fetchCSVFeed(token);
-    const jsonData: ProductRow[] = await csv().fromString(csvData);
-
-    console.log(`Fetched ${jsonData.length} rows from SFCC.`);
-    await importToSanity(jsonData);
-    console.log('Import completed!');
-  } catch (error) {
-    console.error('Import failed:', error);
+    const rows = await fetchCSVFeed(token);
+    console.log(`Fetched ${rows.length} rows.`);
+    await importToSanity(rows);
+  } catch (err) {
+    console.error('Import failed:', err);
+    process.exit(1);
   }
 })();

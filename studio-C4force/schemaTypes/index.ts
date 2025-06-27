@@ -1,6 +1,10 @@
 import banner from './banner'
 import homePage from './homePage'
 import mediaGroup from './mediaGroup'
-import productType from './productType'
+import product from './product'
+import variant from './variant'
+import campaign from './campaign'
 
-export const schemaTypes = [productType, banner, homePage, mediaGroup]
+export const schemaTypes = [product, variant, banner, homePage, mediaGroup, campaign]
+
+export default schemaTypes

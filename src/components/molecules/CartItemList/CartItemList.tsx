@@ -79,7 +79,7 @@ const CartItemList = ({
 								fontWeight="semibold"
 								label={item.name}
 							/>
-							<div className={styles.textColor}>
+							{item?.size && item?.color &&<div className={styles.textColor}>
 								<div>Size &nbsp;{Number.parseInt(item?.size ?? "") / 10}</div>
 								<div className={styles.align}>| </div>
 								<div className={styles.color}>
@@ -91,7 +91,7 @@ const CartItemList = ({
 										}}
 									/>
 								</div>
-							</div>
+							</div>}
 							{item.description && (
 								<Typography
 									type="Body"

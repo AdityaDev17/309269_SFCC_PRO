@@ -91,7 +91,7 @@ export default function ProductDetails() {
   const hasInitialized = useRef(false);
 
   useEffect(() => {
-    if (!hasInitialized.current) {
+    if (!hasInitialized.current && colors?.length) {
       colors && setTargetColor(colors[0].hex);
       hasInitialized.current = true;
     }
@@ -297,7 +297,7 @@ export default function ProductDetails() {
               <Button
                 variant="secondary"
                 className={styles.cartButton}
-				disabled={targetSize===""}
+				disabled={sizes?targetSize==="":false}
                 onClick={() => handleAddToBasket()}
               >
                 Add To Bag

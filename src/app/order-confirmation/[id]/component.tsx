@@ -201,7 +201,7 @@ const OrderConfimation = () => {
 								{Array.from({ length: 1 }).map((_, i) => (
 									<div
 										key={`skeleton-${Date.now()}-${Math.random()}`}
-										style={{ display: "flex", gap: "1rem",}}
+										style={{ display: "flex", gap: "1rem" }}
 									>
 										<Skeleton className={styles.skeletonProductImage} />
 										<div className={styles.skeletonProductDetails}>

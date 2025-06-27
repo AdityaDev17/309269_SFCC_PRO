@@ -11,7 +11,7 @@ export default function PaymentPage() {
 				breadcrumbItems={[
 					{ label: "Home", href: "/" },
 					{ label: "Bag", href: "/cart" },
-					{ label: "Address",href: "/shipping" },
+					{ label: "Address", href: "/shipping" },
 					{ label: "Payment" },
 				]}
 				breadcrumbSeparator="/slash.svg"

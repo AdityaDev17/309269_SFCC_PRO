@@ -22,7 +22,11 @@ import {
 } from "../../../components/molecules/Pagination/Pagination";
 import styles from "./orderHistory.module.css";
 
+import { ORDER_HISTORY } from "@/common/schema";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Drawer } from "vaul";
 // import { allOrderData } from "../../../common/constant";
 import {
@@ -32,10 +36,6 @@ import {
 	DrawerTitle,
 	DrawerTrigger,
 } from "../../../components/molecules/Drawer/Drawer";
-import { graphqlRequest } from "@/lib/graphqlRequest";
-import { ORDER_HISTORY } from "@/common/schema";
-import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 
 const Filter = ({ isMobile }: { isMobile: boolean }) => {
 	const filters = ["3 Months", "6 Months", "2025", "2024", "2023"];
@@ -107,35 +107,40 @@ const ImageGrid = ({
 	const visibleImages = productData.slice(0, 4);
 	const remainingCount = productData.length - 3;
 	return (
-    <div className={styles.imageGrid}>
-      {productData.length === 1 ? (
-        <Image src={productData[0].productImage} alt="product" fill loading="eager" />
-      ) : (
-        // eslint-disable-next-line react/no-array-index-key
-        visibleImages.map((src, index) => {
-          // eslint-disable-next-line react/no-array-index-key
-          const isOverlay = index === 3 && productData.length > 4;
+		<div className={styles.imageGrid}>
+			{productData.length === 1 ? (
+				<Image
+					src={productData[0].productImage}
+					alt="product"
+					fill
+					loading="eager"
+				/>
+			) : (
+				// eslint-disable-next-line react/no-array-index-key
+				visibleImages.map((src, index) => {
+					// eslint-disable-next-line react/no-array-index-key
+					const isOverlay = index === 3 && productData.length > 4;
 
-          return (
-            <div key={src.productId} className={styles.imageWrapper}>
-              <Image
-                src={src.productImage}
-                alt="product"
-                fill
-                style={{ objectFit: "cover" }}
-                loading="eager"
-              />
-              {isOverlay && (
-                <div className={styles.blurOverlay}>
-                  <div className={styles.circle}>{`+${remainingCount}`}</div>
-                </div>
-              )}
-            </div>
-          );
-        })
-      )}
-    </div>
-  );
+					return (
+						<div key={src.productId} className={styles.imageWrapper}>
+							<Image
+								src={src.productImage}
+								alt="product"
+								fill
+								style={{ objectFit: "cover" }}
+								loading="eager"
+							/>
+							{isOverlay && (
+								<div className={styles.blurOverlay}>
+									<div className={styles.circle}>{`+${remainingCount}`}</div>
+								</div>
+							)}
+						</div>
+					);
+				})
+			)}
+		</div>
+	);
 };
 
 const OrderCard = ({
@@ -157,81 +162,81 @@ const OrderCard = ({
 	const { orderId, price, orderName, items } = orderData;
 	const router = useRouter();
 	return (
-    <div className={styles.orderCard}>
-      <ImageGrid productData={items} />
-      <div className={styles.orderDetails}>
-        <div className={styles.orderDetailsTop}>
-          <div className={styles.orderStatus}>
-            <Typography
-              type="Body"
-              variant={3}
-              fontWeight="semibold"
-              label="Arriving Tomorrow"
-            />
-          </div>
-          <div className={styles.orderName}>
-            <Typography
-              type="Label"
-              variant={3}
-              fontWeight="semibold"
-              label={orderName}
-            />
-          </div>
-          <div className={styles.orderId}>
-            <Typography
-              type="Body"
-              variant={2}
-              fontWeight="regular"
-              label={`ORDER ID : ${orderId}`}
-            />
-          </div>
-        </div>
-        <div className={styles.orderDetailsBottom}>
-          <div className={styles.orderTotal}>
-            <Typography
-              type="Body"
-              variant={3}
-              fontWeight="semibold"
-              label={`Order Total: $${price}`}
-            />
-          </div>
-          <Button
-            onClick={() => {
-              router.push(`/order-details/${orderId}`);
-            }}
-          >
-            <Typography
-              type="Body"
-              variant={3}
-              fontWeight="semibold"
-              label="VIEW DETAILS"
-            />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+		<div className={styles.orderCard}>
+			<ImageGrid productData={items} />
+			<div className={styles.orderDetails}>
+				<div className={styles.orderDetailsTop}>
+					<div className={styles.orderStatus}>
+						<Typography
+							type="Body"
+							variant={3}
+							fontWeight="semibold"
+							label="Arriving Tomorrow"
+						/>
+					</div>
+					<div className={styles.orderName}>
+						<Typography
+							type="Label"
+							variant={3}
+							fontWeight="semibold"
+							label={orderName}
+						/>
+					</div>
+					<div className={styles.orderId}>
+						<Typography
+							type="Body"
+							variant={2}
+							fontWeight="regular"
+							label={`ORDER ID : ${orderId}`}
+						/>
+					</div>
+				</div>
+				<div className={styles.orderDetailsBottom}>
+					<div className={styles.orderTotal}>
+						<Typography
+							type="Body"
+							variant={3}
+							fontWeight="semibold"
+							label={`Order Total: $${price}`}
+						/>
+					</div>
+					<Button
+						onClick={() => {
+							router.push(`/order-details/${orderId}`);
+						}}
+					>
+						<Typography
+							type="Body"
+							variant={3}
+							fontWeight="semibold"
+							label="VIEW DETAILS"
+						/>
+					</Button>
+				</div>
+			</div>
+		</div>
+	);
 };
 interface ProductItem {
-  productId: string;
-  productName: string;
+	productId: string;
+	productName: string;
 }
 
 interface Order {
-  orderNo: string;
-  orderTotal: number;
-  productTotal: number;
-  currency: string;
-  productItems: ProductItem[];
+	orderNo: string;
+	orderTotal: number;
+	productTotal: number;
+	currency: string;
+	productItems: ProductItem[];
 }
 
 interface GetOrderHistoryResponse {
-  getOrderHistory: {
-    limit: number;
-    offset: number;
-    total: number;
-    data: Order[];
-  };
+	getOrderHistory: {
+		limit: number;
+		offset: number;
+		total: number;
+		data: Order[];
+	};
 }
 const OrderCardContainer = () => {
 	const [isMobile, setIsMobile] = useState(false);
@@ -248,34 +253,38 @@ const OrderCardContainer = () => {
 
 	const itemsPerPage = 5;
 	const [currentPage, setCurrentPage] = useState(1);
-	const [customerId,setCustomerId] = useState();
+	const [customerId, setCustomerId] = useState();
 	const { data, isLoading } = useQuery({
-    queryKey: ["Orders", currentPage, customerId],
-    queryFn: () =>
-      graphqlRequest(ORDER_HISTORY, {
-        customerId,
-        limit: itemsPerPage,
-        offset: (currentPage-1)* itemsPerPage,
-      }),
-    enabled: !!customerId,
-  });
+		queryKey: ["Orders", currentPage, customerId],
+		queryFn: () =>
+			graphqlRequest(ORDER_HISTORY, {
+				customerId,
+				limit: itemsPerPage,
+				offset: (currentPage - 1) * itemsPerPage,
+			}),
+		enabled: !!customerId,
+	});
 
 	const totalPages = Math.ceil(data?.getOrderHistory?.total / itemsPerPage);
 
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const currentItems = (
-    isLoading ? [] : (data?.getOrderHistory?.data ?? [])
-  ).map((order) => ({
-    orderId: order.orderNo,
-    price: order.orderTotal,
-    orderName: `Order #${order.orderNo}`, // Customize as needed
-    items: order.productItems.map((item) => { console.log(item.productImage.data[0]?.imageGroups?.[0]?.images[0]?.link);return ({
-      productId: item.productId,
-      productTitle: item.productName,
-      productImage: item.productImage.data[0]?.imageGroups?.[0]?.images[0]?.link,
-      currency: order.currency,
-    })}),
-  }));
+		isLoading ? [] : (data?.getOrderHistory?.data ?? [])
+	).map((order) => ({
+		orderId: order.orderNo,
+		price: order.orderTotal,
+		orderName: `Order #${order.orderNo}`, // Customize as needed
+		items: order.productItems.map((item) => {
+			console.log(item.productImage.data[0]?.imageGroups?.[0]?.images[0]?.link);
+			return {
+				productId: item.productId,
+				productTitle: item.productName,
+				productImage:
+					item.productImage.data[0]?.imageGroups?.[0]?.images[0]?.link,
+				currency: order.currency,
+			};
+		}),
+	}));
 
 	const handlePrev = () => {
 		if (currentPage > 1) setCurrentPage(currentPage - 1);

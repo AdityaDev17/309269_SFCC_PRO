@@ -31,25 +31,25 @@ export default async function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable}`}
-        style={{ width: "100vw" }}
-      >
-        <Providers>
-          <WebVitals />
-          <HeaderWrapper />
-          {children}
-          {(await draftMode()).isEnabled && (
-            <>
-              <VisualEditing />
-              <DisableDraftMode />
-            </>
-          )}
-        <ReactQueryDevtools initialIsOpen={false} position="bottom" />
-        </Providers>
-        <Footer />
-      </body>
-    </html>
-  );
+		<html lang="en">
+			<body
+				className={`${geistSans.variable} ${geistMono.variable}`}
+				style={{ width: "100vw" }}
+			>
+				<Providers>
+					<WebVitals />
+					<HeaderWrapper />
+					{children}
+					{(await draftMode()).isEnabled && (
+						<>
+							<VisualEditing />
+							<DisableDraftMode />
+						</>
+					)}
+					<ReactQueryDevtools initialIsOpen={false} position="bottom" />
+				</Providers>
+				<Footer />
+			</body>
+		</html>
+	);
 }

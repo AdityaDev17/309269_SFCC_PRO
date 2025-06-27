@@ -8,7 +8,7 @@ import {
 import { graphqlRequest } from "@/lib/graphqlRequest";
 
 interface CartItemResponse {
-	productId:string
+	productId: string;
 	itemId: string;
 	productName: string;
 	quantity: number;
@@ -21,10 +21,10 @@ interface CartItemResponse {
 				}[];
 			}[];
 			variants?: {
-				productId:string;
+				productId: string;
 				variationValues?: {
 					color?: string;
-					size?:string
+					size?: string;
 				};
 			}[];
 		}[];
@@ -39,12 +39,12 @@ interface CartItems {
 	currency: string;
 	productImage: string;
 	itemId: string;
-	color?:string;
-	size?:string;
+	color?: string;
+	size?: string;
 }
 let cartItems: CartItems[];
 let subTotal = "";
-let currency =""
+const currency = "";
 const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 	cartItems = response?.map((item) => ({
 		id: item?.productId,
@@ -54,8 +54,12 @@ const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 		price: item?.price,
 		currency: currency,
 		itemId: item?.itemId,
-		color: item?.productData?.data?.[0]?.variants?.find((variation)=>variation?.productId===item?.productId)?.variationValues?.color,
-		size: item?.productData?.data?.[0]?.variants?.find((variation)=>variation?.productId===item?.productId)?.variationValues?.size,
+		color: item?.productData?.data?.[0]?.variants?.find(
+			(variation) => variation?.productId === item?.productId,
+		)?.variationValues?.color,
+		size: item?.productData?.data?.[0]?.variants?.find(
+			(variation) => variation?.productId === item?.productId,
+		)?.variationValues?.size,
 		productImage:
 			item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ?? "",
 	}));
@@ -69,7 +73,7 @@ export const getBasketDetail = async () => {
 		response?.basketInfo?.currency,
 	);
 	subTotal = response?.basketInfo?.productSubTotal;
-	return { cartItems, subTotal};
+	return { cartItems, subTotal };
 };
 
 export const handleDeleteItem = async (itemId: string) => {

@@ -50,3 +50,16 @@ export type ProductList = {
     type: string;
   };
 };
+export type ProductItem = {
+  productId: string;
+  productName: string;
+  quantity: number;
+  price: string;
+  productImage: {
+    data: {
+      imageGroups: {
+        images: { link: string }[];
+      }[];
+    }[];
+  };
+}

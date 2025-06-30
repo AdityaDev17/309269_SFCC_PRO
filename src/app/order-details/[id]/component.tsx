@@ -27,35 +27,14 @@ import {
 import OrderSummary from "../../../components/organisms/OrderSummary/OrderSummary";
 import Timeline from "../../../components/organisms/Timeline/Timeline";
 import styles from "./orderDetails.module.css";
+import { ProductItem } from "@/common/type";
 
 const Details = () => {
 	const { isDelivered, steps, currentStep } = orderStatus;
-	// const orderdedItems = orderDetails?.productItems?.map((item) => ({
-	// 	id: item?.productId,
-	// 	name: item?.productName,
-	// 	description: "",
-	// 	quantity: item?.quantity,
-	// 	price: item?.price,
-	// 	currency: orderDetails?.currency,
-	// 	productImage: item?.productImage,
-	// }));
 	// const [selectedOption, setSelectedOption] = useState("");
 	// const [textValue, setTextValue] = useState("");
 	const { id } = useParams() as { id: string };
 	const orderId = id;
-	interface ProductItem {
-		productId: string;
-		productName: string;
-		quantity: number;
-		price: string;
-		productImage: {
-			data: {
-				imageGroups: {
-					images: { link: string }[];
-				}[];
-			}[];
-		};
-	}
 	const { data, error, isLoading } = useQuery({
 		queryKey: ["OrderDetails", orderId],
 		queryFn: () => graphqlRequest(GET_ORDER_DETAILS, { orderId: orderId }),

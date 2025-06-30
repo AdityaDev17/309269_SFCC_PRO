@@ -18,7 +18,7 @@ export default function ShippingPage() {
 			<Typography
 				type={"Label"}
 				variant={3}
-				fontWeight="medium"
+				fontWeight="semibold"
 				label="ADDRESS"
 			/>
 

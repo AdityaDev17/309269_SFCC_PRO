@@ -32,6 +32,8 @@ export interface CartItem {
 	currency: string;
 	productImage: string;
 	itemId: string;
+  size?:string;
+  color?:string;
 }
 
 interface MiniCartProps {

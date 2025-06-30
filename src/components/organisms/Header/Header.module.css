@@ -125,6 +125,11 @@
   gap: 20px;
 }
 
+.primaryImage {
+  width: 325px;
+  height: 317px;
+}
+
 .oneSecondaryImage img {
   width: 325px;
   height: 317px;

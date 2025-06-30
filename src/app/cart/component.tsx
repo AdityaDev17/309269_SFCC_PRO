@@ -134,41 +134,41 @@ const Cart = ({ basketId }: CartProps) => {
 				) : (
 					<>
 						<div className={styles.items}>
-					<Typography
-						type={"Label"}
-						variant={3}
-						fontWeight="semibold"
-						label={`Items in the Bag (${CartItems?.length} items)`}
-					/>
-				</div>
-				<div className={styles.cartItemList}>
-					<CartItemList
-						cartItems={CartItems}
-						isWhiteBackground={true}
-						onUpdateQuantity={onUpdateQuantity}
-						onDeleteItem={onDeleteItem}
-					/>
-				</div>
-				<div className={styles.orderSummarySection}>
-					<OrderSummary
-						totalRowTop={true}
-						isButton={true}
-						totalAmt={data?.subTotal}
-						subTotal={data?.subTotal}
-						buttonText="CONTINUE"
-						currency={CartItems?.[0]?.currency}
-						onButtonClick={() => router.push("/shipping")}
-					/>
-				</div>
-				<div className={styles.redeemWrapper}>
-					<Typography
-						type={"Label"}
-						variant={3}
-						fontWeight="semibold"
-						label="Redeem Points"
-					/>
-					<div className={styles.redeemGrid}>
-						<div className={styles.redeemPoints}>
+							<Typography
+								type={"Label"}
+								variant={3}
+								fontWeight="semibold"
+								label={`Items in the Bag (${CartItems?.length} items)`}
+							/>
+						</div>
+						<div className={styles.cartItemList}>
+							<CartItemList
+								cartItems={CartItems}
+								isWhiteBackground={true}
+								onUpdateQuantity={onUpdateQuantity}
+								onDeleteItem={onDeleteItem}
+							/>
+						</div>
+						<div className={styles.orderSummarySection}>
+							<OrderSummary
+								totalRowTop={true}
+								isButton={true}
+								totalAmt={data?.subTotal}
+								subTotal={data?.subTotal}
+								buttonText="CONTINUE"
+								currency={CartItems?.[0]?.currency}
+								onButtonClick={() => router.push("/shipping")}
+							/>
+						</div>
+						<div className={styles.redeemWrapper}>
+							<Typography
+								type={"Label"}
+								variant={3}
+								fontWeight="semibold"
+								label="Redeem Points"
+							/>
+							<div className={styles.redeemGrid}>
+								<div className={styles.redeemPoints}>
 									<Typography
 										type={"Body"}
 										variant={2}

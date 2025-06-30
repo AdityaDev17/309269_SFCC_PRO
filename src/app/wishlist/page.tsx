@@ -84,7 +84,6 @@ function Wishlist() {
 		router.push(`/product-details/${productId}`);
 	};
 
-	
 	return isLoading ? (
 		<div className={styles.container}>
 			<Breadcrumbs

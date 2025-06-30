@@ -6,6 +6,16 @@ import {
 	GET_CUSTOMER_PRODUCTLIST,
 	GET_PRODUCT_DETAILS,
 } from "@/common/schema";
+import type {
+	Colors,
+	ImageGroup,
+	ProductImage,
+	ProductList,
+	Size,
+	Values,
+	Variants,
+	VariationAttributes,
+} from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
 import {
 	Select,
@@ -27,64 +37,13 @@ import { useEffect, useRef, useState } from "react";
 import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
 import styles from "./page.module.css";
 
-type Size = {
-	value: string;
-	title: string;
-};
-
-type ProductImage = {
-	link: string;
-};
-
-type ImageGroup = {
-	images: ProductImage[];
-};
-
-type Colors = {
-	name: string;
-	hex: string;
-};
-
-type VariationAttributes = {
-	id: string;
-	name: string;
-	values: Values[];
-};
-
-type Values = {
-	name: string;
-	orderable: boolean;
-	value: string;
-};
-
-type Varinats = {
-	orderable: string;
-	price: string;
-	productId: string;
-	variationValues: {
-		color: string;
-		size: string;
-	};
-};
-
-type ProductList = {
-	customerId: string;
-	listId: string;
-	items: {
-		productId: string;
-		quantity: number;
-		public: boolean;
-		priority: number;
-		type: string;
-	};
-};
-
 export default function ProductDetails() {
 	const { id } = useParams() as { id: string };
 	const productId = id;
 	const [open, setOpen] = useState(false);
 	const [targetColor, setTargetColor] = useState("");
 	const [targetSize, setTargetSize] = useState("");
+	const [sizes, setSizes] = useState<Size[]>([]);
 
 	const createCustomerProductList = useMutation({
 		mutationFn: (input: { customerId: string; type: string }) =>
@@ -108,29 +67,40 @@ export default function ProductDetails() {
 		?.flatMap((group: ImageGroup) => group?.images ?? [])
 		.map((image: ProductImage) => image?.link);
 
-	const sizes = data?.productDetails?.variationAttributes
-		?.filter((item: VariationAttributes) => item?.id === "size")[0]
-		?.values?.map((item: Values) => ({
-			value: item?.value,
-			title: item?.name,
-		}));
+	useEffect(() => {
+		const sizes = data?.productDetails?.variationAttributes
+			?.find((item: VariationAttributes) => item?.id === "size")
+			?.values?.map((item: Values) => {
+				const hasMatchingVariant = data?.productDetails?.variants?.some(
+					(variant: Variants) =>
+						variant.variationValues?.color === targetColor &&
+						variant.variationValues?.size === item?.value,
+				);
+
+				return {
+					value: item?.value,
+					title: item?.name,
+					disabled: !hasMatchingVariant,
+				};
+			});
+		setSizes(sizes);
+	}, [data, targetColor]);
 
 	const colors = data?.productDetails?.variationAttributes
 		?.filter((item: VariationAttributes) => item?.id === "color")[0]
 		?.values?.map((item: Values) => ({
 			name: item?.name,
-			hex: `#${item?.value}`,
+			hex: item?.value,
 		}));
 
 	const hasInitialized = useRef(false);
 
 	useEffect(() => {
-		if (!hasInitialized.current && colors?.length && sizes?.length) {
-			setTargetColor(colors[0].hex.slice(1));
-			setTargetSize(sizes[0].value);
+		if (!hasInitialized.current && colors?.length) {
+			colors && setTargetColor(colors[0].hex);
 			hasInitialized.current = true;
 		}
-	}, [colors, sizes]);
+	}, [colors]);
 
 	const accordionData = productDetails?.pageMetaTags?.map((item) => ({
 		title: item?.id.toUpperCase(),
@@ -138,7 +108,7 @@ export default function ProductDetails() {
 	}));
 
 	const handleSelected = (selected: Colors) => {
-		setTargetColor(selected?.hex.slice(1));
+		setTargetColor(selected?.hex);
 	};
 
 	const addItemToProductLists = async (listId: string, customerId: string) => {
@@ -195,7 +165,7 @@ export default function ProductDetails() {
 	});
 	const handleAddToBasket = async () => {
 		const masterId = data?.productDetails?.variants?.find(
-			(variant: Varinats) =>
+			(variant: Variants) =>
 				variant?.variationValues?.color === targetColor &&
 				variant?.variationValues?.size === targetSize,
 		)?.productId;
@@ -313,11 +283,15 @@ export default function ProductDetails() {
 												lineHeight: "16px",
 											}}
 										>
-											<SelectValue placeholder={`${sizes?.[0]?.title}`} />
+											<SelectValue placeholder={"Size"} />
 										</SelectTrigger>
 										<SelectContent>
 											{sizes?.map((item: Size) => (
-												<SelectItem value={item?.value} key={item?.title}>
+												<SelectItem
+													value={item?.value}
+													key={item?.title}
+													disabled={item?.disabled}
+												>
 													{item?.title}
 												</SelectItem>
 											))}
@@ -328,6 +302,7 @@ export default function ProductDetails() {
 							<Button
 								variant="secondary"
 								className={styles.cartButton}
+								disabled={sizes ? targetSize === "" : false}
 								onClick={() => handleAddToBasket()}
 							>
 								Add To Bag

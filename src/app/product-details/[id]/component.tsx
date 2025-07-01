@@ -34,7 +34,7 @@ import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import MiniCart from "../../../components/organisms/MiniCart/MiniCart";
+import MiniCart from "@/components/organisms/MiniCart/MiniCart";
 import styles from "./page.module.css";
 
 export default function ProductDetails() {

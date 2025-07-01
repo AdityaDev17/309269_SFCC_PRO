@@ -70,12 +70,19 @@ export const GET_ORDER_DETAILS = `
       }
       productItems {
         price
-        productImage {
+        productData {
           data {
             imageGroups {
               images {
                 alt
                 link
+              }
+            }
+            variants {
+              productId
+              variationValues {
+                color
+                size
               }
             }
           }

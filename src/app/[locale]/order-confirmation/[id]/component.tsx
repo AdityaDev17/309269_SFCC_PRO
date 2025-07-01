@@ -1,6 +1,7 @@
 "use client";
 import { GET_ORDER_DETAILS, UPDATE_ORDER } from "@/common/schema";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+import type { CartItemResponse } from "@/common/type";
 import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
@@ -15,19 +16,7 @@ const OrderConfimation = () => {
 	const { id } = useParams() as { id: string };
 	const orderId = id;
 	const hasUpdated = useRef(false);
-	interface ProductItem {
-		productId: string;
-		productName: string;
-		quantity: number;
-		price: string;
-		productImage: {
-			data: {
-				imageGroups: {
-					images: { link: string }[];
-				}[];
-			}[];
-		};
-	}
+
 	const { data, error, isLoading } = useQuery({
 		queryKey: ["OrderDetails", orderId],
 		queryFn: () => graphqlRequest(GET_ORDER_DETAILS, { orderId: orderId }),
@@ -58,15 +47,22 @@ const OrderConfimation = () => {
 
 	const orderDetails = data?.orderInfo;
 	const orderdedItems = orderDetails?.productItems?.map(
-		(item: ProductItem) => ({
+		(item: CartItemResponse) => ({
 			id: item?.productId,
 			name: item?.productName,
 			description: "",
 			quantity: item?.quantity,
 			price: item?.price,
+			itemId: item?.itemId,
 			currency: orderDetails?.currency,
+			color: item?.productData?.data?.[0]?.variants?.find(
+				(variation) => variation?.productId === item?.productId,
+			)?.variationValues?.color,
+			size: item?.productData?.data?.[0]?.variants?.find(
+				(variation) => variation?.productId === item?.productId,
+			)?.variationValues?.size,
 			productImage:
-				item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link,
+				item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link,
 		}),
 	);
 

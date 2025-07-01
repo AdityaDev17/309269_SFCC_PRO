@@ -146,10 +146,6 @@ export type CartItemResponse = {
   };
 };
 
-// export type ProductItem = {
-//   productId: string;
-//   productName: string;
-// }
 
 export type Order = {
   orderNo: string;

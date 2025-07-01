@@ -157,7 +157,7 @@ export type Order = {
   productTotal: number;
   currency: string;
   productItems: ProductItem[];
-}
+};
 
 export type GetOrderHistoryResponse = {
   getOrderHistory: {
@@ -166,4 +166,4 @@ export type GetOrderHistoryResponse = {
     total: number;
     data: Order[];
   };
-}
+};

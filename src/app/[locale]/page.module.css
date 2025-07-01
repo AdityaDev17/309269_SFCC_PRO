@@ -1,0 +1,20 @@
+.cardLayout {
+  display: grid;
+  column-gap: 20px;
+  justify-content: center;
+  grid-template-columns: repeat(3,  1fr);
+}
+
+.homeContainer {
+  container-type: inline-size;
+  container-name: layout;
+}
+
+@container layout (max-width: 768px) {
+  .cardLayout {
+    display: grid;
+    column-gap: 10px;
+    justify-content: center;
+    grid-template-columns: repeat(1,  1fr);
+  }
+}

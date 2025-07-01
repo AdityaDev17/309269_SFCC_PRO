@@ -73,7 +73,7 @@ export default function PLPPage() {
 	];
 
 	const previousPage = function() {
-		if(displayedPage == 1) return;
+		if(displayedPage === 1) return;
 		if(activePage !== displayedPage+1) {
 			setDisplayedPage(prevPage => prevPage - 1);
 		}
@@ -81,7 +81,7 @@ export default function PLPPage() {
 	}
 
 	const nextPage = function() {
-		if(displayedPage == totalPages-1) return;
+		if(displayedPage === totalPages-1) return;
 		if(activePage !== displayedPage) {
 			setDisplayedPage(prevPage => prevPage+1);
 		}

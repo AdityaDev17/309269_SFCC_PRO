@@ -286,7 +286,7 @@ const OrderCardContainer = () => {
 		visiblePages.push(currentPage, currentPage + 1);
 	}
 	const goToPage = (page: number) => {
-		setCurrentPage(page);
+		if(page>0 && page<=totalPages) setCurrentPage(page);
 	};
 	return (
 		<>

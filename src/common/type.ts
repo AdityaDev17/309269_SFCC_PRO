@@ -50,3 +50,19 @@ export type ProductList = {
     type: string;
   };
 };
+
+export interface ProductDetails {
+		currency: string;
+		hitType: string;
+		image?: {
+			alt: string;
+			disBaseLink: string;
+			link: string;
+			title: string;
+		};
+		orderable: string;
+		price: string;
+		pricePerUnit: string;
+		productId: string;
+		productName: string;
+	}

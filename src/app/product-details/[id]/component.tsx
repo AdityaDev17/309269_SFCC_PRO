@@ -30,11 +30,11 @@ import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
 import VarientSelector from "@/components/molecules/VarientSelector/VarientSelector";
 import Gallery from "@/components/organisms/Gallery/Gallery";
 import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
+import MiniCart from "@/components/organisms/MiniCart/MiniCart";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import MiniCart from "@/components/organisms/MiniCart/MiniCart";
 import styles from "./page.module.css";
 
 export default function ProductDetails() {
@@ -312,8 +312,8 @@ export default function ProductDetails() {
 				</div>
 			</div>
 
-      {open && <MiniCart open={open} onOpenChange={setOpen} />}
-      <Toaster />
-    </section>
-  );
+			{open && <MiniCart open={open} onOpenChange={setOpen} />}
+			<Toaster />
+		</section>
+	);
 }

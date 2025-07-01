@@ -4,9 +4,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { Button } from "../../atomic/Button/Button";
-import Typography from "../../atomic/Typography/Typography";
-import CartItemList from "../../molecules/CartItemList/CartItemList";
+import { Button } from "@/components/atomic/Button/Button";
+import Typography from "@/components/atomic/Typography/Typography";
+import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import {
 	Drawer,
 	DrawerClose,
@@ -16,48 +16,22 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "../../molecules/Drawer/Drawer";
+} from "@/components/molecules/Drawer/Drawer";
 import {
 	getBasketDetail,
 	handleDeleteItem,
 	handleUpdateQuantity,
-} from "./CartFuntions";
-import styles from "./MiniCart.module.css";
-export interface CartItem {
-	id: string;
-	name: string;
-	description: string;
-	quantity: number;
-	price: number;
-	currency: string;
-	productImage: string;
-	itemId: string;
-	size?: string;
-	color?: string;
-}
+} from "@/components/organisms/MiniCart/CartFuntions";
+import styles from "@/components/organisms/MiniCart/MiniCart.module.css";
+import { CartItem, MiniCartProps } from "@/common/type";
 
-interface MiniCartProps {
-	cartItem?: CartItem[];
-	onDeleteItems?: (itemId: string) => void;
-	onUpdateQuantity?: (itemId: string, newQuantity: number) => void;
-	triggerType?: "button" | "icon";
-	bagIcon?: string;
-	open?: boolean;
-	onOpenChange?: (open: boolean) => void;
-	basketId?: string;
-	subTotals?: number;
-}
+
 
 const MiniCart = ({
-	// cartItem,
-	// onDeleteItems,
-	// onUpdateQuantity,
 	triggerType,
 	bagIcon,
 	open,
 	onOpenChange,
-	// basketId,
-	// subTotals,
 }: MiniCartProps) => {
 	const router = useRouter();
 	const basketId = sessionStorage.getItem("basketId") ?? "";

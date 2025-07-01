@@ -42,6 +42,16 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 		confirmPassword: "",
 		agreeToTerms: false,
 	});
+
+	//  Add state for validation errors
+	const [errors, setErrors] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		password: "",
+		confirmPassword: "",
+	});
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement> | string,
 		name?: string,
@@ -55,19 +65,146 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 			...prevData,
 			[targetName]: value,
 		}));
+
+		//  Clear validation error when user starts typing
+		if (errors[targetName as keyof typeof errors]) {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				[targetName]: "",
+			}));
+		}
 	};
 
-	const handleDisable = () => {
-		if (
-			formData?.birthDate !== "" &&
-			formData?.email !== "" &&
-			formData?.firstName !== "" &&
-			formData?.lastName !== "" &&
-			formData?.gender !== "" &&
-			formData?.title !== ""
-		) {
-			return false;
+	// NEW: Handle field blur (when user leaves a field)
+	const handleBlur = (fieldName: string) => {
+		if (fieldName === "firstName" && !formData.firstName.trim()) {
+			setErrors((prev) => ({ ...prev, firstName: "First Name is mandatory" }));
 		}
+		if (fieldName === "lastName" && !formData.lastName.trim()) {
+			setErrors((prev) => ({ ...prev, lastName: "Last Name is mandatory" }));
+		}
+		if (fieldName === "email") {
+			if (!formData.email.trim()) {
+				setErrors((prev) => ({ ...prev, email: "Email ID is mandatory" }));
+			} else if (!isValidEmail(formData.email)) {
+				setErrors((prev) => ({
+					...prev,
+					email: "Please enter a valid email address",
+				}));
+			}
+		}
+	};
+
+	//  Email validation function
+	const isValidEmail = (email: string) => {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		return emailRegex.test(email);
+	};
+
+	//  Password validation function
+	const validatePassword = (password: string) => {
+		const minLength = password.length >= 8;
+		const hasUppercase = /[A-Z]/.test(password);
+		const hasLowercase = /[a-z]/.test(password);
+		const hasNumber = /\d/.test(password);
+		const hasSpecialChar = /[!@#$%^&*]/.test(password);
+		const noWhitespace = !/\s/.test(password);
+
+		return {
+			isValid:
+				minLength &&
+				hasUppercase &&
+				hasLowercase &&
+				hasNumber &&
+				hasSpecialChar &&
+				noWhitespace,
+			errors: {
+				minLength,
+				hasUppercase,
+				hasLowercase,
+				hasNumber,
+				hasSpecialChar,
+				noWhitespace,
+			},
+		};
+	};
+
+	//  Validation function for Step 1
+	const validateStep = () => {
+		const newErrors = {
+			firstName: "",
+			lastName: "",
+			email: "",
+			password: "",
+			confirmPassword: "",
+		};
+
+		if (!formData.firstName.trim()) {
+			newErrors.firstName = "First Name is mandatory";
+		}
+
+		if (!formData.lastName.trim()) {
+			newErrors.lastName = "Last Name is mandatory";
+		}
+
+		if (!formData.email.trim()) {
+			newErrors.email = "Email ID is mandatory";
+		} else if (!isValidEmail(formData.email)) {
+			newErrors.email = "Please enter a valid email address";
+		}
+
+		setErrors(newErrors);
+		return !newErrors.firstName && !newErrors.lastName && !newErrors.email;
+	};
+
+	//  Updated disable logic for Step 1 (only check mandatory fields)
+	const handleDisable = () => {
+		return !(
+			formData.firstName.trim() &&
+			formData.lastName.trim() &&
+			formData.email.trim() &&
+			isValidEmail(formData.email)
+		);
+	};
+
+	// Handle continue button click with validation
+	const handleContinue = () => {
+		if (validateStep()) {
+			setpasswordScreen(true);
+		}
+	};
+
+	//  Password screen validation
+	const isPasswordValid = () => {
+		if (!formData.password || !formData.confirmPassword) return false;
+
+		const passwordValidation = validatePassword(formData.password);
+		const passwordsMatch = formData.password === formData.confirmPassword;
+
+		return (
+			passwordValidation.isValid && passwordsMatch && formData.agreeToTerms
+		);
+	};
+
+	//  Get password validation message
+	const getPasswordValidationMessage = () => {
+		if (!formData.password) return "";
+
+		const validation = validatePassword(formData.password);
+		if (validation.isValid) return "";
+
+		const messages = [];
+		if (!validation.errors.minLength) messages.push("• At least 8 characters");
+		if (!validation.errors.hasUppercase)
+			messages.push("• At least one uppercase letter");
+		if (!validation.errors.hasLowercase)
+			messages.push("• At least one lowercase letter");
+		if (!validation.errors.hasNumber) messages.push("• At least one number");
+		if (!validation.errors.hasSpecialChar)
+			messages.push("• At least one special character (!@#$%^&*)");
+		if (!validation.errors.noWhitespace) messages.push("• No spaces allowed");
+
+		return messages.join("\n");
 	};
 
 	return (
@@ -120,8 +257,16 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						name="firstName"
 						value={formData?.firstName || ""}
 						onChange={handleChange}
-						style={{ width: "325px", borderColor: "#B3B2B5" }}
+						onBlur={() => handleBlur("firstName")}
+						style={{
+							width: "325px",
+							borderColor: errors.firstName ? "#FF0000" : "#B3B2B5",
+						}}
 					/>
+					{/*  Error message for First Name */}
+					{errors.firstName && (
+						<div className={styles.errorMessage}>{errors.firstName}</div>
+					)}
 				</div>
 				<div>
 					<div className={styles.fontColor}>Last Name*</div>
@@ -130,11 +275,19 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						name="lastName"
 						value={formData?.lastName || ""}
 						onChange={handleChange}
-						style={{ width: "325px", borderColor: "#B3B2B5" }}
+						onBlur={() => handleBlur("lastName")}
+						style={{
+							width: "325px",
+							borderColor: errors.lastName ? "#FF0000" : "#B3B2B5",
+						}}
 					/>
+					{/*  Error message for Last Name */}
+					{errors.lastName && (
+						<div className={styles.errorMessage}>{errors.lastName}</div>
+					)}
 				</div>
 				<div>
-					<div className={styles.fontColor}>Gender*</div>
+					<div className={styles.fontColor}>Gender</div>
 					<Select onValueChange={(e) => handleChange(e, "gender")}>
 						<SelectTrigger
 							style={{
@@ -169,7 +322,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					</Select>
 				</div>
 				<div>
-					<div className={styles.fontColor}>Birth Date*</div>
+					<div className={styles.fontColor}>Birth Date</div>
 					<Input
 						type="date"
 						name="birthDate"
@@ -185,8 +338,16 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						name="email"
 						value={formData?.email || ""}
 						onChange={handleChange}
-						style={{ width: "325px", borderColor: "#B3B2B5" }}
+						onBlur={() => handleBlur("email")}
+						style={{
+							width: "325px",
+							borderColor: errors.email ? "#FF0000" : "#B3B2B5",
+						}}
 					/>
+					{/*  Error message for Email */}
+					{errors.email && (
+						<div className={styles.errorMessage}>{errors.email}</div>
+					)}
 				</div>
 				<Button
 					variant="secondary"
@@ -199,7 +360,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						fontSize: "12px",
 						fontWeight: "600",
 					}}
-					onClick={() => setpasswordScreen(true)}
+					onClick={handleContinue}
 				>
 					CONTINUE
 				</Button>
@@ -215,8 +376,22 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						value={formData?.password || ""}
 						name="password"
 						onChange={handleChange}
-						style={{ width: "325px", borderColor: "#B3B2B5" }}
+						style={{
+							width: "325px",
+							borderColor:
+								formData.password &&
+								!validatePassword(formData.password).isValid
+									? "#FF0000"
+									: "#B3B2B5",
+						}}
 					/>
+					{/*  Password validation message */}
+					{formData.password &&
+						!validatePassword(formData.password).isValid && (
+							<div className={styles.errorMessage}>
+								{getPasswordValidationMessage()}
+							</div>
+						)}
 				</div>
 				<div>
 					<div className={styles.fontColor}>Confirm Password</div>
@@ -227,6 +402,11 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						onChange={handleChange}
 						style={{ width: "325px", borderColor: "#B3B2B5" }}
 					/>
+					{/*  Confirm password validation message */}
+					{formData.confirmPassword &&
+						formData.password !== formData.confirmPassword && (
+							<div className={styles.errorMessage}>Passwords do not match</div>
+						)}
 				</div>
 				<div className={styles.row}>
 					<CheckBox
@@ -252,9 +432,8 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					}}
 					onClick={() => onProceed(formData)}
 					disabled={
-						formData?.password !== formData?.confirmPassword ||
-						!formData.agreeToTerms
-					}
+						!isPasswordValid()
+					} /* Changed to use isPasswordValid function */
 				>
 					PROCEED
 				</Button>

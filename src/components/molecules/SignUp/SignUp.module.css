@@ -35,3 +35,9 @@
   border: 1px solid var(--colour-inputbox-border);
   color: var(--colour-inputbox-label);
 }
+.errorMessage {
+  color: #FF0000;
+  font-size: 12px;
+  margin-top: 4px;
+  white-space: pre-line;
+}

@@ -12,6 +12,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "../../../../components/atomic/Select/Select";
+import { Skeleton } from "../../../../components/atomic/Skeleton/Skeleton";
 import FilterDialog from "../../../../components/molecules/FilterDialog/FilterDialog";
 import {
 	Pagination,
@@ -26,7 +27,6 @@ import ProductCard from "../../../../components/molecules/ProductCard/ProductCar
 import { getProductsByCategory } from "../../../../lib/sfcc/products";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
-import { Skeleton } from "../../../../components/atomic/Skeleton/Skeleton";
 
 export default function PLPPage() {
 	const { slug } = useParams() as { slug: string };
@@ -99,41 +99,47 @@ export default function PLPPage() {
 			<div className={styles.grid}>
 				{isLoading
 					? Array.from({ length: 26 }).map((_, index) => {
-						const isLarge = isLargeCard(index);
-						return (
-						<div
-							key={`skeleton-${Date.now()}-${Math.random()}`}
-							className={isLarge ? styles.largeCard : styles.mediumCard}
-						>
-							{/* Product image skeleton with proper height */}
-							<Skeleton className={isLarge ? styles.skeletonLargeCard : styles.skeletonMediumCard} />
-							<Skeleton className={styles.skeletonTitle} />
-							<Skeleton className={styles.skeletonPrice} />
-						</div>
-						);
-					})
+							const isLarge = isLargeCard(index);
+							return (
+								<div
+									key={`skeleton-${Date.now()}-${Math.random()}`}
+									className={isLarge ? styles.largeCard : styles.mediumCard}
+								>
+									{/* Product image skeleton with proper height */}
+									<Skeleton
+										className={
+											isLarge
+												? styles.skeletonLargeCard
+												: styles.skeletonMediumCard
+										}
+									/>
+									<Skeleton className={styles.skeletonTitle} />
+									<Skeleton className={styles.skeletonPrice} />
+								</div>
+							);
+						})
 					: products.map((product, index) => (
-						<div
-						key={product.productId}
-						className={isLargeCard(index) ? styles.largeCard : styles.mediumCard}
-						>
-						<ProductCard
-							productId={product.productId}
-							productImage={product?.image?.link ?? ""}
-							productTitle={product?.productName}
-							alignment="alignStart"
-							width={"100%"}
-							price="100"
-							currency="$"
-							onClick={() =>
-							router.push(`/product-details/${product.productId}`)
-							}
-						/>
-						</div>
-					))}
-				</div>
-
-
+							<div
+								key={product.productId}
+								className={
+									isLargeCard(index) ? styles.largeCard : styles.mediumCard
+								}
+							>
+								<ProductCard
+									productId={product.productId}
+									productImage={product?.image?.link ?? ""}
+									productTitle={product?.productName}
+									alignment="alignStart"
+									width={"100%"}
+									price="100"
+									currency="$"
+									onClick={() =>
+										router.push(`/product-details/${product.productId}`)
+									}
+								/>
+							</div>
+						))}
+			</div>
 
 			<div className={styles.pagination}>
 				<Pagination fixedBottom>

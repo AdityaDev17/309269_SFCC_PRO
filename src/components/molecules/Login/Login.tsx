@@ -64,10 +64,7 @@ const Login = ({
 
 			<div className={styles.row}>
 				<div className={styles.rowGap}>
-					<CheckBox
-						data-testid="checkbox"
-						className={styles.checkboxBox}
-					/>
+					<CheckBox data-testid="checkbox" className={styles.checkboxBox} />
 					<div className={styles.forgotPassword}>Remember Me</div>
 				</div>
 				<div>

@@ -65,6 +65,9 @@ export const GET_ORDER_DETAILS = `
       currency
       orderNo
       orderTotal
+      customerInfo {
+        email
+      }
       productItems {
         price
         productImage {
@@ -87,6 +90,7 @@ export const GET_ORDER_DETAILS = `
           city
           countryCode
           fullName
+          phone
         }
       }
       creationDate

@@ -69,6 +69,7 @@ export interface HeaderProps {
   categories: CategoriesProps[];
   headerIcons: { label: string; icon: string }[];
   headerWhiteIcons: { label: string; icon: string }[];
+}
 export type ProductItem = {
   productId: string;
   productName: string;

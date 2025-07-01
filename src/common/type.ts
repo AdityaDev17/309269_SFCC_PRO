@@ -50,3 +50,23 @@ export type ProductList = {
     type: string;
   };
 };
+
+type CategoriesProps = {
+  name: string;
+  image?: {
+    productImageUrl: string;
+    productName: string;
+  }[];
+  subcategory?: {
+    subCategoryName: string;
+    subcategory: string[];
+  }[];
+};
+
+export interface HeaderProps {
+  isHome?: boolean;
+  logoImages: { default: string; white: string };
+  categories: CategoriesProps[];
+  headerIcons: { label: string; icon: string }[];
+  headerWhiteIcons: { label: string; icon: string }[];
+}

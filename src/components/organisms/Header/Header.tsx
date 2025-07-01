@@ -7,8 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
-import { Button } from "../../atomic/Button/Button";
-import Typography from "../../atomic/Typography/Typography";
+import { Button } from "@/components/atomic/Button/Button";
+import Typography from "@/components/atomic/Typography/Typography";
 import {
   Drawer,
   DrawerClose,
@@ -18,37 +18,18 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../../molecules/Drawer/Drawer";
+} from "@/components/molecules/Drawer/Drawer";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../../molecules/NavigationMenu/NavigationMenu";
+} from "@/components/molecules/NavigationMenu/NavigationMenu";
 import MiniCart from "../MiniCart/MiniCart";
 import styles from "./Header.module.css";
 import SearchMenu from "./SearchMenu";
-
-type CategoriesProps = {
-  name: string;
-  image?: {
-    productImageUrl: string;
-    productName: string;
-  }[];
-  subcategory?: {
-    subCategoryName: string;
-    subcategory: string[];
-  }[];
-};
-
-interface HeaderProps {
-  isHome?: boolean;
-  logoImages: { default: string; white: string };
-  categories: CategoriesProps[];
-  headerIcons: { label: string; icon: string }[];
-  headerWhiteIcons: { label: string; icon: string }[];
-}
+import { HeaderProps } from "@/common/type";
 
 const getImageContainerClass = (length: number) => {
   if (length === 2) return styles.oneSecondaryImage;

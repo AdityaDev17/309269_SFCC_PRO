@@ -218,7 +218,6 @@ const OrderCard = ({
 		</div>
 	);
 };
-
 const OrderCardContainer = () => {
 	const [isMobile, setIsMobile] = useState(false);
 

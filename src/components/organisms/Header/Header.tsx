@@ -7,8 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type React from "react";
 import { useEffect, useState } from "react";
-import { Button } from "../../atomic/Button/Button";
-import Typography from "../../atomic/Typography/Typography";
+import { Button } from "@/components/atomic/Button/Button";
+import Typography from "@/components/atomic/Typography/Typography";
 import {
   Drawer,
   DrawerClose,
@@ -18,37 +18,24 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../../molecules/Drawer/Drawer";
+} from "@/components/molecules/Drawer/Drawer";
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from "../../molecules/NavigationMenu/NavigationMenu";
+} from "@/components/molecules/NavigationMenu/NavigationMenu";
 import MiniCart from "../MiniCart/MiniCart";
 import styles from "./Header.module.css";
 import SearchMenu from "./SearchMenu";
+import { HeaderProps } from "@/common/type";
 
-type CategoriesProps = {
-  name: string;
-  image?: {
-    productImageUrl: string;
-    productName: string;
-  }[];
-  subcategory?: {
-    subCategoryName: string;
-    subcategory: string[];
-  }[];
+const getImageContainerClass = (length: number) => {
+  if (length === 2) return styles.oneSecondaryImage;
+  if (length === 3) return styles.twoSecondaryImage;
 };
 
-interface HeaderProps {
-  isHome?: boolean;
-  logoImages: { default: string; white: string };
-  categories: CategoriesProps[];
-  headerIcons: { label: string; icon: string }[];
-  headerWhiteIcons: { label: string; icon: string }[];
-}
 
 const Header: React.FC<HeaderProps> = ({
   isHome = false,
@@ -60,18 +47,14 @@ const Header: React.FC<HeaderProps> = ({
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
+  const [showSubCategory, setShowSubCategory] = useState(false);
+  const [subcategoryArr, setSubcategoryArr] = useState([]);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [value, setValue] = useState("");
 
-  const getImageContainerClass = (length: number) => {
-    if (length === 2) return styles.oneSecondaryImage;
-    if (length === 3) return styles.twoSecondaryImage;
-  };
-
+  const checkMobileView = () => setIsMobile(window.innerWidth <= 768);
+  
   useEffect(() => {
-    const checkMobileView = () => {
-      setIsMobile(window.innerWidth <= 768);
-      console.log(window.innerWidth);
-    };
-
     checkMobileView();
     window.addEventListener("resize", checkMobileView);
     return () => window.removeEventListener("resize", checkMobileView);
@@ -79,15 +62,32 @@ const Header: React.FC<HeaderProps> = ({
 
   const iconsToRender = isHome ? headerWhiteIcons : headerIcons;
 
-  const handleCartClick = async () => {
+  const handleCartClick = () => setOpen(true);
 
-    setOpen(true);
-  };
+  const subCatgoryHandler = function(arr: any) {
+    if(!arr?.subcategory[0]?.subcategory) return;
+    setShowSubCategory(true);
+    setSubcategoryArr(arr.subcategory[0].subcategory);
+  }
 
   const handleItemClick=(name:string)=>{
-    console.log('name',name)
-    router.push(`/category/${name}`)
+    router.push(`/category/${name}`);
+    
+    if(!isMobile) {
+      setValue("");
+    } else {
+      setDrawerOpen(false);
+    }
   }
+
+  const previousHandler = function() {
+    if(showSubCategory) {
+      setShowSubCategory(false);
+    } else {
+      setDrawerOpen(false);
+    }
+  }
+
    const handleIconClick=(name:string)=>{
     if(name==='Profile')
     {
@@ -109,7 +109,7 @@ const Header: React.FC<HeaderProps> = ({
       <div className={styles.layout}>
         <div style={{ display: "flex", flexDirection: "row", gap: "5px" }}>
           {isMobile && (
-            <Drawer side="left">
+            <Drawer open={drawerOpen} onOpenChange={setDrawerOpen} side="left">
               <DrawerTrigger asChild>
                 <Image
                   src={isHome ? "/images/menu_white.svg" : "/images/menu.svg"}
@@ -121,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({
               </DrawerTrigger>
               <DrawerContent side="left">
                 <DrawerHeader className={styles.menuheader}>
-                  <ChevronLeft size={20} />
+                  <ChevronLeft size={20} onClick={previousHandler} />
                   <DrawerTitle className={styles.title}>MENU</DrawerTitle>
                   <DrawerClose className={styles.close} asChild>
                     <Image
@@ -134,20 +134,27 @@ const Header: React.FC<HeaderProps> = ({
                 </DrawerHeader>
 
                 <div className={styles.categoryList}>
-                  {categories.map((category: any, index) => (
+                  { !showSubCategory ? categories.map((category: any, index) => (
                     <div
                       key={index}
                       className={styles.categoryItem}
-                      onClick={() =>
-                        router.push(
-                          `/${category.name.toLowerCase().replace(/\s+/g, "-")}`
-                        )
-                      }
+                      onClick={() => subCatgoryHandler(category)}
                     >
                       <span>{category.name}</span>
                       <ChevronRight size={20} />
                     </div>
-                  ))}
+                  ))
+                  : subcategoryArr.map((name: any, index: any) => (
+                    <div
+                      key={index}
+                      className={styles.categoryItem}
+                      onClick={() => handleItemClick(name)}
+                    >
+                      <span>{name}</span>
+                      <ChevronRight size={20} />
+                    </div>
+                  ))
+                }
                 </div>
               </DrawerContent>
             </Drawer>
@@ -170,13 +177,13 @@ const Header: React.FC<HeaderProps> = ({
           >
             {categories.map((category, index) => (
               <div key={index}>
-                <NavigationMenu key={index}>
+                <NavigationMenu key={index} value={value} onValueChange={setValue}>
                   <NavigationMenuList>
                     <NavigationMenuItem>
                       {category.subcategory && category.image ? (
                         <>
                           <NavigationMenuTrigger>
-                            <span className={styles.category} onClick={()=>handleItemClick(category.name)}>
+                            <span className={styles.category}>
                               {category.name}
                             </span>
                           </NavigationMenuTrigger>
@@ -285,6 +292,7 @@ const Header: React.FC<HeaderProps> = ({
             } else if (label === "Search") {
               return (
                 <SearchMenu
+                  key={index}
                   isMobile={isMobile}
                   keyVal={index}
                   searchIcon={icon}

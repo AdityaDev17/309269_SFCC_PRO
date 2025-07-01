@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { VisualEditing } from "next-sanity";
-import { draftMode } from "next/headers";
 import Footer from "@/components/organisms/Footer/Footer";
 import HeaderWrapper from "@/components/organisms/Header/HeaderWrapper";
-import { WebVitals } from "@/web-vitals";
-import Providers from "./providers";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+import { WebVitals } from "@/web-vitals";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { VisualEditing } from "next-sanity";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
+import Providers from "./providers";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -29,40 +29,39 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-  children,
-  params
+	children,
+	params,
 }: Readonly<{
-  children: React.ReactNode;
-  params: Promise<{ locale: string }>;
+	children: React.ReactNode;
+	params: Promise<{ locale: string }>;
 }>) {
-
-const { locale } = await params;
-console.log(hasLocale(routing.locales, locale));
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
-  return (
-    <html lang={locale}>
-      <NextIntlClientProvider locale={locale}>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable}`}
-          style={{ width: "100vw" }}
-        >
-          <Providers>
-            <WebVitals />
-            <HeaderWrapper />
-            {children}
-            {(await draftMode()).isEnabled && (
-              <>
-                <VisualEditing />
-                <DisableDraftMode />
-              </>
-            )}
-            <ReactQueryDevtools initialIsOpen={false} position="bottom" />
-          </Providers>
-          <Footer />
-        </body>
-      </NextIntlClientProvider>
-    </html>
-  );
+	const { locale } = await params;
+	console.log(hasLocale(routing.locales, locale));
+	if (!hasLocale(routing.locales, locale)) {
+		notFound();
+	}
+	return (
+		<html lang={locale}>
+			<NextIntlClientProvider locale={locale}>
+				<body
+					className={`${geistSans.variable} ${geistMono.variable}`}
+					style={{ width: "100vw" }}
+				>
+					<Providers>
+						<WebVitals />
+						<HeaderWrapper />
+						{children}
+						{(await draftMode()).isEnabled && (
+							<>
+								<VisualEditing />
+								<DisableDraftMode />
+							</>
+						)}
+						<ReactQueryDevtools initialIsOpen={false} position="bottom" />
+					</Providers>
+					<Footer />
+				</body>
+			</NextIntlClientProvider>
+		</html>
+	);
 }

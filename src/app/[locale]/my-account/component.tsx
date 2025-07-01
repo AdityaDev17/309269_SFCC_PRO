@@ -1,16 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Tile from "@/components/atomic/Tile/Tile";
 import Banner from "@/components/molecules/Banner/Banner";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import styles from "./myAccount.module.css";
 
 import { fetchToken, graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-import { clearSession, handlePostLogoutTokenRefresh } from "@/lib/sessionUtils";
 import { GET_CUSTOMER, LOGOUT_CUSTOMER } from "@/common/schema";
+import { clearSession, handlePostLogoutTokenRefresh } from "@/lib/sessionUtils";
 
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 

@@ -1,12 +1,9 @@
 "use client";
-import { GET_ORDER_DETAILS } from "@/common/schema";
-import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import type React from "react";
 // import { useState } from "react";
 // import { orderDetails } from "@/common/constant";
 import { orderStatus } from "@/common/constant";
+import { GET_ORDER_DETAILS } from "@/common/schema";
+import type { ProductItem } from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
 import Input from "@/components/atomic/Input/Input";
 import {
@@ -26,8 +23,11 @@ import {
 } from "@/components/molecules/Dialog/Dialog";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import Timeline from "@/components/organisms/Timeline/Timeline";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
+import type React from "react";
 import styles from "./orderDetails.module.css";
-import { ProductItem } from "@/common/type";
 
 const Details = () => {
 	const { isDelivered, steps, currentStep } = orderStatus;

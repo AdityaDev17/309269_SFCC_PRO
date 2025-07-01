@@ -1,13 +1,13 @@
 "use client";
 import { GET_CUSTOMER_BASKET, MERGE_BASKET, REGISTER } from "@/common/schema";
+import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
+import Login from "@/components/molecules/Login/Login";
+import SignUp from "@/components/molecules/SignUp/SignUp";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
-import Login from "@/components/molecules/Login/Login";
-import SignUp from "@/components/molecules/SignUp/SignUp";
 import LoginComponent from "./component";
 import styles from "./login.module.css";
 

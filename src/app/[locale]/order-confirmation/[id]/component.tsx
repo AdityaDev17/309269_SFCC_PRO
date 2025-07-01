@@ -1,5 +1,6 @@
 "use client";
 import { GET_ORDER_DETAILS, UPDATE_ORDER } from "@/common/schema";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
@@ -8,7 +9,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
-import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import styles from "./page.module.css";
 
 const OrderConfimation = () => {

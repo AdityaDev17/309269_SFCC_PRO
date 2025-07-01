@@ -1,6 +1,12 @@
+import {
+	homepageBanners,
+	homepageProducts,
+	statementBannerData,
+} from "@/common/constant";
 import Banner from "@/components/molecules/Banner/Banner";
 import BannerCarousel from "@/components/molecules/BannerCarousel/BannerCarousel";
 import GetTheLookBanner from "@/components/molecules/GetTheLookBanner/GetTheLookBanner";
+import ProductCard from "@/components/molecules/ProductCard/ProductCard";
 import ProductCardBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
 import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
 // const Banner = dynamic(() => import('../components/molecules/Banner/Banner'))
@@ -10,15 +16,9 @@ import StatementBanner from "@/components/molecules/StatementBanner/StatementBan
 // const StatementBanner = dynamic(() => import('../components/molecules/StatementBanner/StatementBanner'));
 import SanityWrapper from "@/sanity/SanityWrapper";
 import { getHomepageData } from "@/sanity/queries/homepage";
-import dynamic from "next/dynamic";
-import {
-	homepageBanners,
-	homepageProducts,
-	statementBannerData,
-} from "@/common/constant";
-import ProductCard from "@/components/molecules/ProductCard/ProductCard";
-import styles from "./page.module.css";
 import { getTranslations } from "next-intl/server";
+import dynamic from "next/dynamic";
+import styles from "./page.module.css";
 export const revalidate = 60;
 
 export default async function Home() {

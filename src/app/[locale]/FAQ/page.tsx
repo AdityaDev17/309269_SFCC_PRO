@@ -1,7 +1,5 @@
 "use client";
 
-import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
-import { useRef, useState } from "react";
 import {
 	frequentlyAskedData,
 	ordersData,
@@ -10,6 +8,8 @@ import {
 	returnsData,
 	shippingData,
 } from "@/common/constant";
+import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
+import { useRef, useState } from "react";
 import { FaqAccordion } from "./FaqAccordion";
 import NeedAssistance from "./NeedAssistance";
 import SearchWithSuggestions from "./SearchWithSuggestions";

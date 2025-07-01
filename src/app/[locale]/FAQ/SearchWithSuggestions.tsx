@@ -2,10 +2,10 @@
 
 import type React from "react";
 
-import { Mic, SearchIcon, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/atomic/Button/Button";
 import Input from "@/components/atomic/Input/Input";
+import { Mic, SearchIcon, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 
 interface FaqItem {

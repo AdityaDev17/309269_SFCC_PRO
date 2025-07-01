@@ -1,10 +1,10 @@
 "use client";
-import { useRouter } from "next/navigation";
-import React from "react";
 import { productData } from "@/common/constant";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";
 import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
+import { useRouter } from "next/navigation";
+import React from "react";
 import styles from "./cart.module.css";
 import Cart from "./component";
 

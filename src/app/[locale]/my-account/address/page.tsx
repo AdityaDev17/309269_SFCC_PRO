@@ -1,21 +1,18 @@
 "use client";
 
-import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
-import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { gql } from "graphql-request";
-import { useState } from "react";
-import {
-	DELETE_CUSTOMER_ADDRESS,
-	GET_CUSTOMER_ADDRESS,
-} from "@/common/schema";
+import { DELETE_CUSTOMER_ADDRESS, GET_CUSTOMER_ADDRESS } from "@/common/schema";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import { Button } from "@/components/atomic/Button/Button";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import ErrorComponent from "@/components/molecules/ErrorComponent/ErrorComponent";
 import AddressCard, {
 	type AddressData,
 } from "@/components/organisms/AddressCard/AddressCard";
 import { AddressDialog } from "@/components/organisms/AddressForm/AddressModal";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { gql } from "graphql-request";
+import { useState } from "react";
 import styles from "./address.module.css";
 
 type AddressType = {

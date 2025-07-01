@@ -9,16 +9,12 @@ import {
 	UPDATE_SHIPPING_ADDRESS,
 	UPDATE_SHIPPING_METHOD,
 } from "@/common/schema";
+import { Button } from "@/components/atomic/Button/Button";
+import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 import {
 	RadioGroup,
 	RadioGroupItem,
 } from "@/components/atomic/RadioGroup/RadioGroup";
-import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { Button } from "@/components/atomic/Button/Button";
-import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import Typography from "@/components/atomic/Typography/Typography";
 import AddressCard, {
@@ -29,6 +25,10 @@ import {
 	updateShippingAddress,
 } from "@/components/organisms/AddressForm/AddressModal";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import styles from "./shipping.module.css";
 
 type CustomerDetails = {

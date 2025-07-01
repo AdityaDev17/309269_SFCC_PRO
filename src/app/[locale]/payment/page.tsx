@@ -1,6 +1,6 @@
-import React from "react";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";
+import React from "react";
 import Payment from "./component";
 import styles from "./payment.module.css";
 

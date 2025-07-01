@@ -1,16 +1,20 @@
 "use client";
+import { GET_ORDER_DETAILS } from "@/common/schema";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import type React from "react";
 // import { useState } from "react";
-import { orderDetails } from "../../common/constant";
-import { orderStatus } from "../../common/constant";
-import { Button } from "../../components/atomic/Button/Button";
-import Input from "../../components/atomic/Input/Input";
+// import { orderDetails } from "../../../common/constant";
+import { orderStatus } from "../../../common/constant";
+import { Button } from "../../../components/atomic/Button/Button";
+import Input from "../../../components/atomic/Input/Input";
 import {
 	RadioGroup,
 	RadioGroupItem,
-} from "../../components/atomic/RadioGroup/RadioGroup";
-import Typography from "../../components/atomic/Typography/Typography";
-import CartItemList from "../../components/molecules/CartItemList/CartItemList";
+} from "../../../components/atomic/RadioGroup/RadioGroup";
+import Typography from "../../../components/atomic/Typography/Typography";
+import CartItemList from "../../../components/molecules/CartItemList/CartItemList";
 import {
 	Dialog,
 	DialogClose,
@@ -19,24 +23,37 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
-} from "../../components/molecules/Dialog/Dialog";
-import OrderSummary from "../../components/organisms/OrderSummary/OrderSummary";
-import Timeline from "../../components/organisms/Timeline/Timeline";
+} from "../../../components/molecules/Dialog/Dialog";
+import OrderSummary from "../../../components/organisms/OrderSummary/OrderSummary";
+import Timeline from "../../../components/organisms/Timeline/Timeline";
 import styles from "./orderDetails.module.css";
+import { ProductItem } from "@/common/type";
 
 const Details = () => {
 	const { isDelivered, steps, currentStep } = orderStatus;
-	const orderdedItems = orderDetails?.productItems?.map((item) => ({
-		id: item?.productId,
-		name: item?.productName,
-		description: "",
-		quantity: item?.quantity,
-		price: item?.price,
-		currency: orderDetails?.currency,
-		productImage: item?.productImage,
-	}));
 	// const [selectedOption, setSelectedOption] = useState("");
 	// const [textValue, setTextValue] = useState("");
+	const { id } = useParams() as { id: string };
+	const orderId = id;
+	const { data, error, isLoading } = useQuery({
+		queryKey: ["OrderDetails", orderId],
+		queryFn: () => graphqlRequest(GET_ORDER_DETAILS, { orderId: orderId }),
+		enabled: !!orderId,
+	});
+	const orderDetails = data?.orderInfo;
+	console.log(orderDetails);
+	const orderdedItems = orderDetails?.productItems?.map(
+		(item: ProductItem) => ({
+			id: item?.productId,
+			name: item?.productName,
+			description: "",
+			quantity: item?.quantity,
+			price: item?.price,
+			currency: orderDetails?.currency,
+			productImage:
+				item?.productImage?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link,
+		}),
+	);
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -57,7 +74,7 @@ const Details = () => {
 					type="Body"
 					variant={2}
 					fontWeight="regular"
-					label={`ORDER ID : ${orderDetails.orderNo}`}
+					label={`ORDER ID : ${orderDetails?.orderNo}`}
 					color="#4F4B53"
 				/>
 
@@ -112,7 +129,7 @@ const Details = () => {
 									type="Body"
 									variant={2}
 									fontWeight="regular"
-									label={orderDetails?.shipments[0]?.shippingAddress?.fullName}
+									label={orderDetails?.shipments[0]?.shippingAddress?.phone}
 								/>
 							</div>
 							<div className={styles.custInfo}>
@@ -126,7 +143,7 @@ const Details = () => {
 									type="Body"
 									variant={2}
 									fontWeight="regular"
-									label={orderDetails?.shipments[0]?.shippingAddress?.fullName}
+									label={orderDetails?.custInfo?.email}
 								/>
 							</div>
 						</div>
@@ -169,6 +186,8 @@ const Details = () => {
 						totalRowTop={true}
 						isButton={false}
 						isPaymentImage={false}
+						subTotal={orderDetails?.productSubTotal}
+						total={orderDetails?.productTotal}
 					/>
 					<div>
 						<Typography

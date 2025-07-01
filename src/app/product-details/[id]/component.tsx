@@ -312,8 +312,8 @@ export default function ProductDetails() {
 				</div>
 			</div>
 
-			{open && <MiniCart open={open} onOpenChange={setOpen} />}
-			<Toaster />
-		</section>
-	);
+      {open && <MiniCart open={open} onOpenChange={setOpen} />}
+      <Toaster />
+    </section>
+  );
 }

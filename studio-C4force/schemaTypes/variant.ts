@@ -12,7 +12,7 @@ export default {
     { name: 'currency', type: 'string', title: 'Currency' },
     { name: 'isOnline', type: 'boolean', title: 'Is Online?' },
     { name: 'size', type: 'string', title: 'Size' },
-    { name: 'color', type: 'string', title: 'Color' },
+    { name: 'colorHex', type: 'string', title: 'Color Hex' },
     { name: 'variationAttributes', type: 'array', of: [{ type: 'string' }], title: 'Variation Attributes' },
     { name: 'lastModified', type: 'datetime', title: 'Last Modified' },
     {

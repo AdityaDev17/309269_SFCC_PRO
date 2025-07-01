@@ -106,15 +106,17 @@ async function importToSanity(rows: ProductRow[], batchSize = 250) {
         console.warn(`Skipping orphan variant: ${row.ID} — no valid parent master product.`);
         continue;
       }
-      variantDocs.push({
-        _id: variantId,
-        _type: 'variant',
-        ...commonFields,
-        size: row.size,
-        color: row.color,
-        productKind: 'variant',
-        parentProduct: { _type: 'reference', _ref: parentId },
-      });
+  
+
+variantDocs.push({
+  _id: variantId,
+  _type: 'variant',
+  ...commonFields,
+  size: row.size,
+  colorHex: row.color,
+  productKind: 'variant',
+  parentProduct: { _type: 'reference', _ref: parentId },
+});
     }
   }
 

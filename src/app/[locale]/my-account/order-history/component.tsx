@@ -28,8 +28,6 @@ import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Drawer } from "vaul";
-
-// import { allOrderData } from "@/common/constant";
 import {
 	DrawerClose,
 	DrawerContent,

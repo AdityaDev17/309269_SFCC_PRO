@@ -83,7 +83,7 @@ const CartItemList = ({
 								<div className={styles.textColor}>
 									<div>
 										Size &nbsp;
-										{Number.parseInt(item?.size, 10).toString().slice(0, 2)}
+										{item?.size}
 									</div>
 									<div className={styles.align}>| </div>
 									<div className={styles.color}>

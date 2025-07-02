@@ -275,6 +275,15 @@ export const GET_BASKET = `
               size
             }
           }
+            variationAttributes {
+              id
+              name
+              values {
+                name
+                orderable
+                value
+              }
+            }
           }
         }
         productName

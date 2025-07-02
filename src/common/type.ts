@@ -143,6 +143,12 @@ export type CartItemResponse = {
           size?: string;
         };
       }[];
+      variationAttributes?: {
+        values?: {
+          name?: string;
+          value?: string;
+        };
+      }[];
     }[];
   };
 };

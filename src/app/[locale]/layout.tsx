@@ -12,6 +12,7 @@ import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import Providers from "./providers";
+import Chat from "@/components/organisms/Chat/Chat";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -57,8 +58,9 @@ export default async function RootLayout({
 								<DisableDraftMode />
 							</>
 						)}
-						<ReactQueryDevtools initialIsOpen={false} position="bottom" />
+						{/* <ReactQueryDevtools initialIsOpen={false} position="bottom" /> */}
 					</Providers>
+					<Chat/>
 					<Footer />
 				</body>
 			</NextIntlClientProvider>

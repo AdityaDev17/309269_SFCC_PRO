@@ -17,7 +17,7 @@ export default function Message({ message }: { message: Message }) {
 			}`}
 		>
 			{sentenceArr.map((sentence) => (
-				<span key={Date.now().toString()} className={styles.sentence}>
+				<span key={sentence} className={styles.sentence}>
 					{sentence}
 				</span>
 			))}

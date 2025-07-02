@@ -1,4 +1,3 @@
-"use client";
 import styles from "./Chat.module.css";
 
 type Message = {
@@ -8,13 +7,18 @@ type Message = {
 };
 
 export default function Message({ message }: { message: Message }) {
+	const sentenceArr = message.text
+		.split("\n")
+		.filter((sentence) => !sentence.includes("https://zzrl"));
 	return (
 		<span
 			className={`${styles.message} ${
 				message.author === "user" ? styles.userMessage : styles.botMessage
 			}`}
 		>
-			{message.text}
+			{sentenceArr.map((sentence) => (
+				<span className={styles.sentence}>{sentence}</span>
+			))}
 		</span>
 	);
 }

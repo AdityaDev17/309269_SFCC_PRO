@@ -37,6 +37,7 @@ const Login = ({
 		if (formData?.email !== "" && formData?.password !== "") {
 			return false;
 		}
+		return true; 
 	};
 	return (
 		<div className={styles.layout}>

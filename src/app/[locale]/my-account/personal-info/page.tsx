@@ -1,12 +1,12 @@
 "use client";
-import type { UserDetails } from "../../../../common/constant";
-import Breadcrumbs from "../../../../components/atomic/Breadcrumbs/Breadcrumbs";
-import EditPassword from "../../../../components/molecules/EditPassword/EditPassword";
-import Profile from "../../../../components/molecules/Profile/Profile";
+import type { UserDetails } from "@/common/constant";
+import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
+import EditPassword from "@/components/molecules/EditPassword/EditPassword";
+import Profile from "@/components/molecules/Profile/Profile";
 
 import sonnerToast, {
 	Toaster,
-} from "../../../../components/molecules/Toast/Toast";
+} from "@/components/molecules/Toast/Toast";
 import styles from "./PersonalInfo.module.css";
 
 import { graphqlRequest } from "@/lib/graphqlRequest";
@@ -16,8 +16,8 @@ import {
 	GET_CUSTOMER,
 	UPDATE_CUSTOMER,
 	UPDATE_PASSWORD,
-} from "../../../../common/schema";
-import { Skeleton } from "../../../../components/atomic/Skeleton/Skeleton";
+} from "@/common/schema";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 
 export default function PersonalInfoPage() {
 	const router = useRouter();

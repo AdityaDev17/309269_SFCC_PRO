@@ -5,16 +5,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Breadcrumbs from "../../../../../components/atomic/Breadcrumbs/Breadcrumbs";
+import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "../../../../../components/atomic/Select/Select";
-import { Skeleton } from "../../../../../components/atomic/Skeleton/Skeleton";
-import FilterDialog from "../../../../../components/molecules/FilterDialog/FilterDialog";
+} from "@/components/atomic/Select/Select";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+import FilterDialog from "@/components/molecules/FilterDialog/FilterDialog";
 import {
 	Pagination,
 	PaginationContent,
@@ -23,9 +23,9 @@ import {
 	PaginationLink,
 	PaginationNext,
 	PaginationPrevious,
-} from "../../../../../components/molecules/Pagination/Pagination";
-import ProductCard from "../../../../../components/molecules/ProductCard/ProductCard";
-import { getProductsByCategory } from "../../../../../lib/sfcc/products";
+} from "@/components/molecules/Pagination/Pagination";
+import ProductCard from "@/components/molecules/ProductCard/ProductCard";
+import { getProductsByCategory } from "@/lib/sfcc/products";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
 import { ProductDetails } from "@/common/type";

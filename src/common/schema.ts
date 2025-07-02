@@ -38,8 +38,10 @@ export const GET_PRODUCT_DETAILS = `
 
 `;
 export const GET_PRODUCT_LIST = `
-  query GetProductList($getProductListId: String!) {
-    getProductList(id: $getProductListId) {
+  query GetProductList($getProductListId: String!
+   $price: String
+   $colors: String) {
+    getProductList(id: $getProductListId, price: $price, colors: $colors) {
       limit
       hits {
         currency
@@ -56,6 +58,17 @@ export const GET_PRODUCT_LIST = `
         productId
         productName
       }
+        refinements {
+        attributeId
+        label
+        values {
+          hitCount
+          label
+          value
+          presentationId
+        }
+      }
+      
     }
   }
 `;

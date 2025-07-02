@@ -1,15 +1,20 @@
 "use client";
 import { GET_PRODUCT_LIST } from "@/common/schema";
-import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useQuery } from "@tanstack/react-query";
+import { useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import Breadcrumbs from "../../../../../components/atomic/Breadcrumbs/Breadcrumbs";
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "@/components/atomic/Select/Select";
-import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
-import FilterDialog from "@/components/molecules/FilterDialog/FilterDialog";
+} from "../../../../../components/atomic/Select/Select";
+import { Skeleton } from "../../../../../components/atomic/Skeleton/Skeleton";
+import FilterDialog from "../../../../../components/molecules/FilterDialog/FilterDialog";
 import {
 	Pagination,
 	PaginationContent,
@@ -18,23 +23,37 @@ import {
 	PaginationLink,
 	PaginationNext,
 	PaginationPrevious,
-} from "@/components/molecules/Pagination/Pagination";
-import ProductCard from "@/components/molecules/ProductCard/ProductCard";
-import { graphqlRequest } from "@/lib/graphqlRequest";
-import { getProductsByCategory } from "@/lib/sfcc/products";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+} from "../../../../../components/molecules/Pagination/Pagination";
+import ProductCard from "../../../../../components/molecules/ProductCard/ProductCard";
+import { getProductsByCategory } from "../../../../../lib/sfcc/products";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
+import { ProductDetails } from "@/common/type";
 
 export default function PLPPage() {
 	const { slug } = useParams() as { slug: string };
 	const router = useRouter();
+
+	const getCategoryName = (slug: string) => {
+		return slug
+			.split("-")
+			.map((word) => word[0].toUpperCase() + word.slice(1))
+			.join(" ");
+	};
+
+	const [selectedFilters, setSelectedFilters] = useState<{
+		price?: string;
+		colors?: string;
+	}>({});
+
+	const categoryName = getCategoryName(slug);
+
 	const fetchProductList = async () => {
 		try {
 			const variables = {
 				getProductListId: slug,
+				price: selectedFilters.price || "",
+				colors: selectedFilters.colors || "",
 			};
 
 			const response = graphqlRequest(GET_PRODUCT_LIST, variables);
@@ -44,45 +63,56 @@ export default function PLPPage() {
 		}
 	};
 	const { data, error, isLoading } = useQuery({
-		queryKey: ["ProductList", slug],
+		queryKey: ["ProductList", slug, selectedFilters],
 		queryFn: fetchProductList,
 		enabled: !!slug,
 	});
 
 	console.log("getProductList", data);
-	interface ProductDetails {
-		currency: string;
-		hitType: string;
-		image?: {
-			alt: string;
-			disBaseLink: string;
-			link: string;
-			title: string;
-		};
-		orderable: string;
-		price: string;
-		pricePerUnit: string;
-		productId: string;
-		productName: string;
-	}
+	
 	const products: ProductDetails[] = data?.getProductList?.hits || [];
+	const refinements = data?.getProductList?.refinements || [];
+
+	const priceFilters =
+		refinements.find((r: { attributeId: string }) => r.attributeId === "price")
+			?.values || [];
+
+	const colorFilters =
+		refinements.find(
+			(r: { attributeId: string }) => r.attributeId === "c_color",
+		)?.values || [];
+
+	const productCount = products.length;
 	// const categoryName = slug
 	//  .split("-")
 	//  .map((word) => word[0].toUpperCase() + word.slice(1))
 	//  .join(" ");
 	const breadcrumbItems = [
 		{ label: "Home", href: "/" },
-		{ label: "Categories", href: "/category" },
-		{ label: "Jewellery" },
+		{ label: categoryName, href: `/category/${slug}` },
 	];
 	return (
 		<div className={styles.container}>
 			<Breadcrumbs breadcrumbItems={breadcrumbItems} />
 			{/* Heading for the PLP Page */}
-			<h1 className={styles.pageHeading}>{"Jewellery"} Products</h1>
+			<h1 className={styles.pageHeading}>
+				{categoryName}{" "}
+				<small className={styles.productCount}>
+					({productCount} {productCount === 1 ? "Product" : "Products"})
+				</small>
+			</h1>
 
-			<div className={styles.topBar}>
-				<FilterDialog />
+			<div className={styles.selectBar}>
+				<FilterDialog
+					priceFilters={priceFilters}
+					colorFilters={colorFilters}
+					onApplyFilters={(filters) => {
+						const rawPrice = filters.Price?.[0];
+						const price = rawPrice ?? "";
+						const colors = filters.Color?.join("|");
+						setSelectedFilters({ price, colors });
+					}}
+				/>
 				<Select defaultValue="recent">
 					<SelectTrigger variant="sort" className={styles.sortSelectTrigger}>
 						<SelectValue placeholder="Select sort option" />
@@ -105,7 +135,7 @@ export default function PLPPage() {
 									key={`skeleton-${Date.now()}-${Math.random()}`}
 									className={isLarge ? styles.largeCard : styles.mediumCard}
 								>
-									{/* Product image skeleton with proper height */}
+									
 									<Skeleton
 										className={
 											isLarge
@@ -131,11 +161,13 @@ export default function PLPPage() {
 									productTitle={product?.productName}
 									alignment="alignStart"
 									width={"100%"}
-									price="100"
+									price={product.price}
 									currency="$"
-									onClick={() =>
-										router.push(`/product-details/${product.productId}`)
-									}
+									onClick={() => {
+										router.push(
+											`/product-details/${product.productId}?slug=${encodeURIComponent(slug)}&name=${encodeURIComponent(product.productName)}`,
+										);
+									}}
 								/>
 							</div>
 						))}

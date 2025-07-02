@@ -177,7 +177,7 @@ const Header: React.FC<HeaderProps> = ({
           >
             {categories.map((category, index) => (
               <div key={index}>
-                <NavigationMenu key={index} value={value} onValueChange={setValue}>
+                <NavigationMenu key={index}>
                   <NavigationMenuList>
                     <NavigationMenuItem>
                       {category.subcategory && category.image ? (

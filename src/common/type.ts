@@ -163,3 +163,96 @@ export type GetOrderHistoryResponse = {
     data: Order[];
   };
 };
+
+export type FilterDialogProps = {
+	priceFilters: { label: string; value: string }[];
+	colorFilters: string[];
+	onApplyFilters: (filters: Record<string, string[]>) => void;
+}
+
+export type ProductDetails = {
+		currency: string;
+		hitType: string;
+		image?: {
+			alt: string;
+			disBaseLink: string;
+			link: string;
+			title: string;
+		};
+		orderable: string;
+		price: string;
+		pricePerUnit: string;
+		productId: string;
+		productName: string;
+	}
+
+
+export type CustomerDetails = {
+	basketId: string;
+	email: string;
+};
+
+export type CommonCardType = {
+	id: string;
+	title: string;
+	description: string;
+	extraInfo?: string;
+};
+export type ShippingAddress = {
+	address1: string;
+	city: string;
+	countryCode: string;
+	firstName: string;
+	fullName: string;
+	id: string;
+	lastName: string;
+	postalCode: string;
+	stateCode: string;
+};
+
+export type Shipment = {
+	shippingAddress: ShippingAddress | null;
+};
+
+export type CustomerAddress = {
+	addressId: string;
+	address1: string;
+	address2: string;
+	city: string;
+	countryCode: string;
+	creationDate: string;
+	firstName: string;
+	fullName: string;
+	lastModified: string;
+	lastName: string;
+	phone: string;
+	postalCode: string;
+	preferred: boolean;
+	stateCode: string;
+};
+
+export type ShippingMethod = {
+	description: string;
+	id: string;
+	name: string;
+	price: string;
+};
+
+export type UpdateShippingAddressInput = {
+	basketId: string | null;
+	address1: string;
+	address2: string | null;
+	city: string;
+	countryCode: string;
+	firstName: string;
+	lastName: string;
+	phone: string;
+	postalCode: string;
+	stateCode: string;
+	useAsBilling: boolean;
+};
+
+export type UpdateShippingMethodInput = {
+	basketId: string | null;
+	id: string | null;
+};

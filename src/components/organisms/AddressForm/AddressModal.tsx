@@ -3,7 +3,7 @@
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import clsx, { type ClassValue } from "clsx";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { states } from "../../../common/constant";
 import { Button } from "../../atomic/Button/Button";
 import CheckBox from "../../atomic/CheckBox/CheckBox";
@@ -162,6 +162,113 @@ export function AddressDialog({
 	const [phone, setPhone] = useState("");
 	const [isDefault, setIsDefault] = useState(false);
 
+	// Validation state
+	const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+
+	// Validation rules - for firstName, lastName, and email
+	const validateField = (name: string, value: string) => {
+		const newErrors = { ...errors };
+
+		switch (name) {
+			case "firstName":
+				if (!value.trim()) {
+					newErrors.firstName = "Please enter your first name";
+				} else {
+					newErrors.firstName = "";
+				}
+				break;
+			case "lastName":
+				if (!value.trim()) {
+					newErrors.lastName = "Please enter your last name";
+				} else {
+					newErrors.firstName = "";
+				}
+				break;
+			case "email":
+				if (customerType === "guest") {
+					if (!value.trim()) {
+						newErrors.email = "Please enter your email address";
+					} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+						newErrors.email = "Please enter a valid email address";
+					} else {
+						newErrors.firstName = "";
+					}
+				}
+				break;
+			case "phone":
+				if (!value.trim()) {
+					newErrors.phone = "Phone number is required";
+				} else {
+					newErrors.phone="";
+				}
+				break;
+			case "apartment":
+				if (!value.trim()) {
+					newErrors.apartment = "Apartment/Suite is required";
+				} else {
+					newErrors.apartment="";
+				}
+				break;
+			case "building":
+				if (!value.trim()) {
+					newErrors.building = "Building number is required";
+				} else {
+					 newErrors.building="";
+				}
+				break;
+			case "city":
+				if (!value.trim()) {
+					newErrors.city = "City is required";
+				} else {
+					newErrors.city="";
+				}
+				break;
+			case "zipcode":
+				if (!value.trim()) {
+					newErrors.zipcode = "ZIP code is required";
+				} else {
+					 newErrors.zipcode="";
+				}
+				break;
+		}
+
+		setErrors(newErrors);
+	};
+
+	// Check if form is valid - validate firstName, lastName, and email
+	const isFormValid = useMemo(() => {
+		const requiredFields = [
+			{ name: "firstName", value: firstName },
+			{ name: "lastName", value: lastName },
+			{ name: "apartment", value: street },
+			{ name: "building", value: address },
+			{ name: "city", value: city },
+			{ name: "zipcode", value: postalCode },
+			{ name: "phone", value: phone },
+		];
+
+		// Add email validation for guest customers
+		if (customerType === "guest") {
+			requiredFields.push({ name: "email", value: email });
+		}
+
+		// Check if all required fields are filled
+		const allFieldsFilled = requiredFields.every(
+			(field) => field.value.trim() !== "",
+		);
+
+		// Check if there are any validation errors
+		const hasErrors = Object.keys(errors).length > 0;
+
+		// For email validation, also check email format
+		if (customerType === "guest" && email) {
+			const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+			return allFieldsFilled && !hasErrors && emailValid;
+		}
+
+		return allFieldsFilled && !hasErrors;
+	}, [firstName, lastName, street, address, city, postalCode, phone, email, customerType, errors]);
+
 	useEffect(() => {
 		if (selectedAddress) {
 			setFirstName(selectedAddress.firstName || "");
@@ -190,10 +297,15 @@ export function AddressDialog({
 		setPostalCode("");
 		setPhone("");
 		setIsDefault(false);
+		setErrors({});
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
+
+		// Validate field on change
+		validateField(name, value);
+
 		switch (name) {
 			case "firstName":
 				setFirstName(value);
@@ -251,6 +363,31 @@ export function AddressDialog({
 
 	const handleSubmit = async () => {
 		console.log("save is clicked");
+
+		// Validate  before submitting
+		const fieldsToValidate = [
+			{ name: "firstName", value: firstName },
+			{ name: "lastName", value: lastName },
+			{ name: "apartment", value: street },
+			{ name: "building", value: address },
+			{ name: "city", value: city },
+			{ name: "zipcode", value: postalCode },
+			{ name: "phone", value: phone },
+		];
+
+		if (customerType === "guest") {
+			fieldsToValidate.push({ name: "email", value: email });
+		}
+
+		for (const field of fieldsToValidate) {
+			validateField(field.name, field.value);
+		};
+
+		if (!isFormValid) {
+			console.log("Form is not valid, cannot submit");
+			return;
+		}
+
 		try {
 			if (customerType === "registered") {
 				const input: CustomerAddressInput = {
@@ -321,46 +458,74 @@ export function AddressDialog({
 						<fieldset className={styles.Section}>
 							<legend>Contact Details:</legend>
 							<div className={styles.TwoColumn}>
-								<Input
-									placeholder="First Name*"
-									name="firstName"
-									value={firstName}
-									onChange={handleChange}
-								/>
-								<Input
-									placeholder="Last Name"
-									name="lastName"
-									value={lastName}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="First Name*"
+										name="firstName"
+										value={firstName}
+										onChange={handleChange}
+										className={errors.firstName ? styles.ErrorInput : ""}
+									/>
+									{errors.firstName && (
+										<div className={styles.ErrorText}>{errors.firstName}</div>
+									)}
+								</div>
+								<div>
+									<Input
+										placeholder="Last Name*"
+										name="lastName"
+										value={lastName}
+										onChange={handleChange}
+										className={errors.lastName ? styles.ErrorInput : ""}
+									/>
+									{errors.lastName && (
+										<div className={styles.ErrorText}>{errors.lastName}</div>
+									)}
+								</div>
 								{customerType === "guest" && (
 									<>
-										<Input
-											placeholder="Email"
-											name="email"
-											value={email}
-											onChange={handleChange}
-										/>
-										<Input
-											placeholder="Phone No.*"
-											name="phone"
-											type="tel"
-											className={styles.PhoneInput}
-											value={phone}
-											onChange={handleChange}
-										/>
+										<div>
+											<Input
+												placeholder="Email*"
+												name="email"
+												value={email}
+												onChange={handleChange}
+												className={errors.email ? styles.ErrorInput : ""}
+											/>
+											{errors.email && (
+												<div className={styles.ErrorText}>{errors.email}</div>
+											)}
+										</div>
+										<div>
+											<Input
+												placeholder="Phone No.*"
+												name="phone"
+												type="tel"
+												className={cn(styles.PhoneInput, errors.phone ? styles.ErrorInput : "")}
+												value={phone}
+												onChange={handleChange}
+											/>
+											{errors.phone && (
+												<div className={styles.ErrorText}>{errors.phone}</div>
+											)}
+										</div>
 									</>
 								)}
 							</div>
 							{customerType === "registered" && (
-								<Input
-									placeholder="Phone No.*"
-									name="phone"
-									type="tel"
-									className={styles.PhoneInput}
-									value={phone}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="Phone No.*"
+										name="phone"
+										type="tel"
+										className={cn(styles.PhoneInput, errors.phone ? styles.ErrorInput : "")}
+										value={phone}
+										onChange={handleChange}
+									/>
+									{errors.phone && (
+										<div className={styles.ErrorText}>{errors.phone}</div>
+									)}
+								</div>
 							)}
 						</fieldset>
 
@@ -368,26 +533,44 @@ export function AddressDialog({
 						<fieldset className={styles.Section}>
 							<legend>Location Details:</legend>
 							<div className={styles.TwoColumn}>
-								<Input
-									placeholder="Apartment, Suite, etc.*"
-									name="apartment"
-									value={street}
-									onChange={handleChange}
-								/>
-								<Input
-									placeholder="Building no.*"
-									name="building"
-									value={address}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="Apartment, Suite, etc.*"
+										name="apartment"
+										value={street}
+										onChange={handleChange}
+										className={errors.apartment ? styles.ErrorInput : ""}
+									/>
+									{errors.apartment && (
+										<div className={styles.ErrorText}>{errors.apartment}</div>
+									)}
+								</div>
+								<div>
+									<Input
+										placeholder="Building no.*"
+										name="building"
+										value={address}
+										onChange={handleChange}
+										className={errors.building ? styles.ErrorInput : ""}
+									/>
+									{errors.building && (
+										<div className={styles.ErrorText}>{errors.building}</div>
+									)}
+								</div>
 							</div>
 							<div className={styles.TwoColumn}>
-								<Input
-									placeholder="City*"
-									name="city"
-									value={city}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="City*"
+										name="city"
+										value={city}
+										onChange={handleChange}
+										className={errors.city ? styles.ErrorInput : ""}
+									/>
+									{errors.city && (
+										<div className={styles.ErrorText}>{errors.city}</div>
+									)}
+								</div>
 								<div className={styles.SelectOutline}>
 									<Select value={state} onValueChange={setState}>
 										<SelectTrigger>
@@ -404,12 +587,18 @@ export function AddressDialog({
 								</div>
 							</div>
 							<div className={styles.TwoColumn}>
-								<Input
-									placeholder="ZIP code*"
-									name="zipcode"
-									value={postalCode}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="ZIP code*"
+										name="zipcode"
+										value={postalCode}
+										onChange={handleChange}
+										className={errors.zipcode ? styles.ErrorInput : ""}
+									/>
+									{errors.zipcode && (
+										<div className={styles.ErrorText}>{errors.zipcode}</div>
+									)}
+								</div>
 								<Input
 									placeholder="Country"
 									name="country"
@@ -437,7 +626,13 @@ export function AddressDialog({
 						<DialogClose asChild>
 							<Button>Cancel</Button>
 						</DialogClose>
-						<Button variant="secondary" type="submit" onClick={handleSubmit}>
+						<Button 
+							variant="secondary" 
+							type="submit" 
+							onClick={handleSubmit}
+							disabled={!isFormValid}
+							className={!isFormValid ? styles.DisabledButton : ""}
+						>
 							{isEditMode ? "Update" : "Save"}
 						</Button>
 					</div>

@@ -152,3 +152,12 @@
    .button {
      width: 168px;
    }
+
+   .ErrorText {
+    color: red;
+    font-size: 0.75rem;
+    margin-top: 4px;
+}
+.ErrorInput {
+  border: 1px solid red;
+}

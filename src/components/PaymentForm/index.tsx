@@ -85,26 +85,31 @@ const StripePayment = () => {
 				}),
 			});
 			const data = await res.json();
-			console.log(data.paymentMethodDetails);
-			await addPaymentInstrumentToBasket.mutateAsync({
-				basketId,
-				items: {
-					paymentMethodId: "CREDIT_CARD",
-					paymentCard: {
-						cardType: "Visa",
-						expirationMonth: data?.paymentMethodDetails?.card?.exp_month,
-						expirationYear: data?.paymentMethodDetails?.card?.exp_year,
-						holder: "kavya",
-						maskedNumber: `**********${data?.paymentMethodDetails?.card?.last4}`,
+			try {
+				const response = await addPaymentInstrumentToBasket.mutateAsync({
+					basketId,
+					items: {
+						paymentMethodId: "CREDIT_CARD",
+						paymentCard: {
+							cardType: "Visa",
+							expirationMonth: data?.paymentMethodDetails?.card?.exp_month,
+							expirationYear: data?.paymentMethodDetails?.card?.exp_year,
+							holder: "kavya",
+							maskedNumber: `**********${data?.paymentMethodDetails?.card?.last4}`,
+						},
 					},
-				},
-			});
-			const order = await createOrder.mutateAsync({
-				basketId,
-			});
-			if (order?.createOrder?.orderNo) {
-				sessionStorage.removeItem("basketId");
-				router.push(`/order-confirmation/${order?.createOrder?.orderNo}`);
+				});
+				if (response?.addPaymentInstrumentToBasket?.basketId) {
+					const order = await createOrder.mutateAsync({
+						basketId,
+					});
+					if (order?.createOrder?.orderNo) {
+						sessionStorage.removeItem("basketId");
+						router.push(`/order-confirmation/${order?.createOrder?.orderNo}`);
+					}
+				}
+			} catch (error) {
+				console.error("Failed to add payment instrument:", error);
 			}
 		}
 	};

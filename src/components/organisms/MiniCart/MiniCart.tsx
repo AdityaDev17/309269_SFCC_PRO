@@ -1,11 +1,12 @@
 "use client";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { Button } from "../../atomic/Button/Button";
-import Typography from "../../atomic/Typography/Typography";
-import CartItemList from "../../molecules/CartItemList/CartItemList";
+import { Button } from "@/components/atomic/Button/Button";
+import Typography from "@/components/atomic/Typography/Typography";
+import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import {
 	Drawer,
 	DrawerClose,
@@ -15,49 +16,22 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "../../molecules/Drawer/Drawer";
+} from "@/components/molecules/Drawer/Drawer";
 import {
 	getBasketDetail,
 	handleDeleteItem,
 	handleUpdateQuantity,
-} from "./CartFuntions";
-import styles from "./MiniCart.module.css";
-import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
-export interface CartItem {
-	id: string;
-	name: string;
-	description: string;
-	quantity: number;
-	price: number;
-	currency: string;
-	productImage: string;
-	itemId: string;
-  size?:string;
-  color?:string;
-}
+} from "@/components/organisms/MiniCart/CartFuntions";
+import styles from "@/components/organisms/MiniCart/MiniCart.module.css";
+import { CartItem, MiniCartProps } from "@/common/type";
 
-interface MiniCartProps {
-	cartItem?: CartItem[];
-	onDeleteItems?: (itemId: string) => void;
-	onUpdateQuantity?: (itemId: string, newQuantity: number) => void;
-	triggerType?: "button" | "icon";
-	bagIcon?: string;
-	open?: boolean;
-	onOpenChange?: (open: boolean) => void;
-	basketId?: string;
-	subTotals?: number;
-}
+
 
 const MiniCart = ({
-	// cartItem,
-	// onDeleteItems,
-	// onUpdateQuantity,
 	triggerType,
 	bagIcon,
 	open,
 	onOpenChange,
-	// basketId,
-	// subTotals,
 }: MiniCartProps) => {
 	const router = useRouter();
 	const basketId = sessionStorage.getItem("basketId") ?? "";
@@ -115,120 +89,122 @@ const MiniCart = ({
 	};
 
 	return (
-    <Drawer open={open} onOpenChange={onOpenChange} side="right">
-      <DrawerTrigger asChild />
-      <DrawerContent side="right">
-        <DrawerHeader className={styles.bagHeader}>
-          <div className={styles.bagWrapper}>
-            <DrawerTitle>
-              {" "}
-              <Typography
-                type={"Label"}
-                variant={3}
-                fontWeight="medium"
-                label="BAG"
-              />
-            </DrawerTitle>
+		<Drawer open={open} onOpenChange={onOpenChange} side="right">
+			<DrawerTrigger asChild />
+			<DrawerContent side="right">
+				<DrawerHeader className={styles.bagHeader}>
+					<div className={styles.bagWrapper}>
+						<DrawerTitle>
+							{" "}
+							<Typography
+								type={"Label"}
+								variant={3}
+								fontWeight="medium"
+								label="BAG"
+							/>
+						</DrawerTitle>
 
-            {cartItems?.length > 0 && (
-              <Typography
-                type={"Body"}
-                variant={3}
-                label={`${cartItems.length} items`}
-                color="#75757a"
-              />
-            )}
-          </div>
+						{cartItems?.length > 0 && (
+							<Typography
+								type={"Body"}
+								variant={3}
+								label={`${cartItems.length} items`}
+								color="#75757a"
+							/>
+						)}
+					</div>
 
-          <DrawerClose className={styles.close} asChild>
-            <Image
-              src="/images/expand.svg"
-              alt="Close"
-              width={48}
-              height={48}
-            />
-          </DrawerClose>
-        </DrawerHeader>
-        {cartItems?.length > 0 ? (
-          <>
-            <CartItemList
-              cartItems={cartItems}
-              onDeleteItem={onDeleteItem}
-              onUpdateQuantity={onUpdateQuantity}
-              miniCart={true}
-            />
+					<DrawerClose className={styles.close} asChild>
+						<Image
+							src="/images/expand.svg"
+							alt="Close"
+							width={48}
+							height={48}
+						/>
+					</DrawerClose>
+				</DrawerHeader>
+				{cartItems?.length > 0 ? (
+					<>
+						<div className={styles.cartItemList}>
+							<CartItemList
+								cartItems={cartItems}
+								onDeleteItem={onDeleteItem}
+								onUpdateQuantity={onUpdateQuantity}
+								miniCart={true}
+							/>
+						</div>
 
-            <DrawerFooter>
-              <div className={styles.footerWrapper}>
-                <div className={styles.bagWrapper}>
-                  <Typography
-                    type={"Label"}
-                    variant={3}
-                    fontWeight="medium"
-                    label="SUBTOTAL"
-                  />
-                  <Typography
-                    type={"Body"}
-                    variant={3}
-                    label="(including taxes)"
-                    color="#75757a"
-                  />
-                </div>
-                <Typography type="Label" variant={3} label={`${subTotal}`} />
-              </div>
-              <div className={styles.bagButton}>
-                <Button
-                  variant="icon"
-                  className={styles.viewbag}
-                  onClick={() => {
-                    router.push("/cart");
-                  }}
-                >
-                  VIEW BAG
-                </Button>
-              </div>
-            </DrawerFooter>
-          </>
-        ) : isLoading ? (
-          <div className={styles.productSkeletonWrapper}>
-            <Skeleton className={styles.titleSkeleton} />
-            <Skeleton className={styles.priceSkeleton} />
+						<DrawerFooter>
+							<div className={styles.footerWrapper}>
+								<div className={styles.bagWrapper}>
+									<Typography
+										type={"Label"}
+										variant={3}
+										fontWeight="medium"
+										label="SUBTOTAL"
+									/>
+									<Typography
+										type={"Body"}
+										variant={3}
+										label="(including taxes)"
+										color="#75757a"
+									/>
+								</div>
+								<Typography type="Label" variant={3} label={`${subTotal}`} />
+							</div>
+							<div className={styles.bagButton}>
+								<Button
+									variant="icon"
+									className={styles.viewbag}
+									onClick={() => {
+										router.push("/cart");
+									}}
+								>
+									VIEW BAG
+								</Button>
+							</div>
+						</DrawerFooter>
+					</>
+				) : isLoading ? (
+					<div className={styles.productSkeletonWrapper}>
+						<Skeleton className={styles.titleSkeleton} />
+						<Skeleton className={styles.priceSkeleton} />
 
-            <div>
-              <Skeleton className={styles.descLineSkeleton} />
-              <Skeleton className={styles.descLineSkeletonShort} />
-            </div>
+						<div>
+							<Skeleton className={styles.descLineSkeleton} />
+							<Skeleton className={styles.descLineSkeletonShort} />
+						</div>
 
-            <Skeleton className={styles.sizeLabelSkeleton} />
+						<Skeleton className={styles.sizeLabelSkeleton} />
 
-            <div className={styles.sizeGridSkeleton}>
-              <Skeleton className={styles.sizeSkeleton} />
-              <Skeleton className={styles.sizeSkeleton} />
-            </div>
+						<div className={styles.sizeGridSkeleton}>
+							<Skeleton className={styles.sizeSkeleton} />
+							<Skeleton className={styles.sizeSkeleton} />
+						</div>
 
-            <Skeleton className={styles.cartButtonSkeleton} />
-          </div>
-        ) : (
-          <div className={styles.emptyContainer}>
-            <div className={styles.emptyMessage}>
-              <Image
-                src="/images/emptyBag.svg"
-                alt=" Empty Bag"
-                width={222}
-                height={205}
-              />
-              <Typography
-                type="Body"
-                variant={2}
-                label="There is nothing in your bag!"
-                color="#75757a"
-              />
-            </div>
-          </div>
-        )}
-      </DrawerContent>
-    </Drawer>
-  );
+						<Skeleton className={styles.cartButtonSkeleton} />
+					</div>
+				) : (
+					<div className={styles.emptyContainer}>
+						<div className={styles.emptyMessage}>
+							<Image
+								src="/images/emptyBag.svg"
+								alt=" Empty Bag"
+								width={222}
+								height={205}
+							/>
+							<Typography
+								type="Body"
+								variant={2}
+								label="There is nothing in your bag!"
+								color="#75757a"
+							/>
+						</div>
+					</div>
+				)}
+			</DrawerContent>
+		</Drawer>
+	);
 };
 export default MiniCart;
 

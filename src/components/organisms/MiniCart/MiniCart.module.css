@@ -25,18 +25,20 @@
     border: 1px solid #cccbce ;
 }
 .emptyContainer {
-
     display: grid;
     place-items: center;
     height: 100%;
-  }
-  
-  .emptyMessage {
-    display: grid;
-    place-items: center;
-    text-align: center;
-    gap: 20px;
-  }
+}
+
+.emptyMessage {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  gap: 20px;
+}
+.cartItemList{
+  overflow-y: scroll;
+}
   
 .footerWrapper{
     display: grid;

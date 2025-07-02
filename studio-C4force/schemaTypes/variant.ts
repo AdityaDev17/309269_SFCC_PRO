@@ -1,0 +1,27 @@
+export default {
+  name: 'variant',
+  title: 'Variant',
+  type: 'document',
+  fields: [
+    { name: 'sku', type: 'string', title: 'SKU' },
+    { name: 'productId', type: 'string', title: 'Variant ID' },
+    { name: 'name', type: 'string', title: 'Name' },
+    { name: 'description', type: 'text', title: 'Description' },
+    { name: 'categoryId', type: 'string', title: 'Category ID' },
+    { name: 'price', type: 'number', title: 'Price' },
+    { name: 'currency', type: 'string', title: 'Currency' },
+    { name: 'isOnline', type: 'boolean', title: 'Is Online?' },
+    { name: 'size', type: 'string', title: 'Size' },
+    { name: 'colorHex', type: 'string', title: 'Color Hex' },
+    { name: 'variationAttributes', type: 'array', of: [{ type: 'string' }], title: 'Variation Attributes' },
+    { name: 'lastModified', type: 'datetime', title: 'Last Modified' },
+    {
+      name: 'parentProduct',
+      title: 'Parent Product',
+      type: 'reference',
+      to: [{ type: 'product' }],
+    },
+    { name: 'productKind', type: 'string', title: 'Product Kind', initialValue: 'variant', readOnly: true },
+    { name: 'importedAt', type: 'datetime', title: 'Imported At' },
+  ],
+};

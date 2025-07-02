@@ -51,7 +51,7 @@ export type ProductList = {
   };
 };
 
-export interface ProductDetails {
+export type ProductDetails = {
 		currency: string;
 		hitType: string;
 		image?: {
@@ -66,3 +66,116 @@ export interface ProductDetails {
 		productId: string;
 		productName: string;
 	}
+
+type CategoriesProps = {
+  name: string;
+  image?: {
+    productImageUrl: string;
+    productName: string;
+  }[];
+  subcategory?: {
+    subCategoryName: string;
+    subcategory: string[];
+  }[];
+};
+
+export type HeaderProps = {
+  isHome?: boolean;
+  logoImages: { default: string; white: string };
+  categories: CategoriesProps[];
+  headerIcons: { label: string; icon: string }[];
+  headerWhiteIcons: { label: string; icon: string }[];
+}
+export type ProductItem = {
+  productId: string;
+  productName: string;
+  quantity?: number;
+  price?: string;
+  productImage?: {
+    data: {
+      imageGroups: {
+        images: { link: string }[];
+      }[];
+    }[];
+  };
+};
+/*Same as CartItem*/
+export type CartItems = {
+  id: string;
+  name: string;
+  description: string;
+  quantity: number;
+  price: number;
+  currency: string;
+  productImage: string;
+  itemId: string;
+  size?: string;
+  color?: string;
+};
+
+export type CartItem = {
+  id: string;
+  name: string;
+  description: string;
+  quantity: number;
+  price: number;
+  currency: string;
+  productImage: string;
+  itemId: string;
+  size?: string;
+  color?: string;
+};
+
+export type MiniCartProps = {
+  cartItem?: CartItem[];
+  onDeleteItems?: (itemId: string) => void;
+  onUpdateQuantity?: (itemId: string, newQuantity: number) => void;
+  triggerType?: "button" | "icon";
+  bagIcon?: string;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  basketId?: string;
+  subTotals?: number;
+};
+
+export type CartItemResponse = {
+  productId: string;
+  itemId: string;
+  productName: string;
+  quantity: number;
+  price: number;
+  productData?: {
+    data?: {
+      imageGroups?: {
+        images?: {
+          link?: string;
+        }[];
+      }[];
+      variants?: {
+        productId: string;
+        variationValues?: {
+          color?: string;
+          size?: string;
+        };
+      }[];
+    }[];
+  };
+};
+
+
+export type Order = {
+  orderNo: string;
+  orderTotal: number;
+  productTotal: number;
+  currency: string;
+  productItems: ProductItem[];
+};
+
+export type GetOrderHistoryResponse = {
+  getOrderHistory: {
+    limit: number;
+    offset: number;
+    total: number;
+    data: Order[];
+  };
+};

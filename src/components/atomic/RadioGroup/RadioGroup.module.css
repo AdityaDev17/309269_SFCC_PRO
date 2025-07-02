@@ -6,12 +6,12 @@
   width: 1.125rem; 
   height: 1.125rem; 
   aspect-ratio: 1 / 1; 
-  border-radius: var(--border-radius-100); 
+  border-radius: var(--border-radius-circle); 
   border-width: 1.5px; 
   border-style: solid; 
-  border-color: var(--grey-grey-700); 
-  color: var(--colors-white); 
-  background-color: var(--colors-white); 
+  border-color: var(--colour-button-border-secondary); 
+  color: var(--colour-text-tertiary); 
+  background-color: var(--colour-button-background-primary); 
   outline: none;
 }
 
@@ -36,5 +36,5 @@
   height: 0.7rem; 
   width: 0.7rem; 
   fill: currentColor; 
-  color: var(--grey-grey-700); 
+  color: var(--colour-text-secondary); 
 }

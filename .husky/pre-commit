@@ -1,1 +1,1 @@
-npx @biomejs/biome check --write .
+npx @biomejs/biome check --write --staged

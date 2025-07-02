@@ -67,14 +67,24 @@ export const GET_ORDER_DETAILS = `
       currency
       orderNo
       orderTotal
+      customerInfo {
+        email
+      }
       productItems {
         price
-        productImage {
+        productData {
           data {
             imageGroups {
               images {
                 alt
                 link
+              }
+            }
+            variants {
+              productId
+              variationValues {
+                color
+                size
               }
             }
           }
@@ -89,6 +99,7 @@ export const GET_ORDER_DETAILS = `
           city
           countryCode
           fullName
+          phone
         }
       }
       creationDate

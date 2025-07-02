@@ -1,6 +1,6 @@
 "use client";
 
-import { disableDraftMode } from "@/app/actions";
+import { disableDraftMode } from "@/app/[locale]/actions";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 

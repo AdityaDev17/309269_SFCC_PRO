@@ -164,159 +164,73 @@ export function AddressDialog({
 
 	// Validation state
 	const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+	const [showErrors, setShowErrors] = useState(false);
 
-	// Validation rules - for firstName, lastName, and email
-	const validateField = (name: string, value: string) => {
-		const newErrors = { ...errors };
-
+	// Validation rules
+	const validateField = (name: string, value: string): string | undefined => {
 		switch (name) {
 			case "firstName":
-				if (!value.trim()) {
-					newErrors.firstName = "Please enter your first name";
-				} else {
-					newErrors.firstName = "";
-				}
-				break;
+				return !value.trim() ? "Please enter your first name" : undefined;
 			case "lastName":
-				if (!value.trim()) {
-					newErrors.lastName = "Please enter your last name";
-				} else {
-					newErrors.firstName = "";
-				}
-				break;
+				return !value.trim() ? "Please enter your last name" : undefined;
+			case "apartment":
+				return !value.trim() ? "Please enter your apartment/suite" : undefined;
+			case "building":
+				return !value.trim() ? "Please enter your address" : undefined;
+			case "city":
+				return !value.trim() ? "Please enter your city" : undefined;
+			case "state":
+				return !value.trim() ? "Please select your state" : undefined;
+			case "zipcode":
+				return !value.trim() ? "Please enter your zip code" : undefined;
+			case "phone":
+				return !value.trim() ? "Please enter your phone number" : undefined;
 			case "email":
 				if (customerType === "guest") {
 					if (!value.trim()) {
-						newErrors.email = "Please enter your email address";
-					} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-						newErrors.email = "Please enter a valid email address";
-					} else {
-						newErrors.firstName = "";
+						return "Please enter your email address";
+					} 
+				    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+						return "Please enter a valid email address";
 					}
 				}
-				break;
-			case "phone":
-				if (!value.trim()) {
-					newErrors.phone = "Phone number is required";
-				} else {
-					newErrors.phone = "";
-				}
-				break;
-			case "apartment":
-				if (!value.trim()) {
-					newErrors.apartment = "Apartment/Suite is required";
-				} else {
-					newErrors.apartment = "";
-				}
-				break;
-			case "building":
-				if (!value.trim()) {
-					newErrors.building = "Building number is required";
-				} else {
-					newErrors.building = "";
-				}
-				break;
-			case "city":
-				if (!value.trim()) {
-					newErrors.city = "City is required";
-				} else {
-					newErrors.city = "";
-				}
-				break;
-			case "zipcode":
-				if (!value.trim()) {
-					newErrors.zipcode = "ZIP code is required";
-				} else {
-					newErrors.zipcode = "";
-				}
-				break;
+				return undefined;
+			default:
+				return undefined;
 		}
-
-		setErrors(newErrors);
 	};
 
-	// Check if form is valid - validate firstName, lastName, and email
-	const isFormValid = useMemo(() => {
-		const requiredFields = [
+	// Validate all fields and update errors state
+	const validateAllFields = () => {
+		const fieldsToValidate = [
 			{ name: "firstName", value: firstName },
 			{ name: "lastName", value: lastName },
 			{ name: "apartment", value: street },
 			{ name: "building", value: address },
 			{ name: "city", value: city },
+			{ name: "state", value: state },
 			{ name: "zipcode", value: postalCode },
 			{ name: "phone", value: phone },
 		];
 
-		// Add email validation for guest customers
 		if (customerType === "guest") {
-			requiredFields.push({ name: "email", value: email });
+			fieldsToValidate.push({ name: "email", value: email });
 		}
 
-		// Check if all required fields are filled
-		const allFieldsFilled = requiredFields.every(
-			(field) => field.value.trim() !== "",
-		);
-
-		// Check if there are any validation errors
-		const hasErrors = Object.keys(errors).length > 0;
-
-		// For email validation, also check email format
-		if (customerType === "guest" && email) {
-			const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-			return allFieldsFilled && !hasErrors && emailValid;
+		const newErrors: Record<string, string | undefined> = {};
+		for (const field of fieldsToValidate) {
+			const error = validateField(field.name, field.value);
+			if (error) {
+				newErrors[field.name] = error;
+			}
 		}
 
-		return allFieldsFilled && !hasErrors;
-	}, [
-		firstName,
-		lastName,
-		street,
-		address,
-		city,
-		postalCode,
-		phone,
-		email,
-		customerType,
-		errors,
-	]);
-
-	useEffect(() => {
-		if (selectedAddress) {
-			setFirstName(selectedAddress.firstName || "");
-			setLastName(selectedAddress.lastName || "");
-			setStreet(selectedAddress.address1 || "");
-			setAddress(selectedAddress.address2 || "");
-			setCity(selectedAddress.city || "");
-			setState(selectedAddress.stateCode || "NY");
-			setCountry(selectedAddress.countryCode || "US");
-			setPostalCode(selectedAddress.postalCode || "");
-			setPhone(selectedAddress.phone || "");
-			setIsDefault(selectedAddress.isDefault || false);
-		} else {
-			resetForm();
-		}
-	}, [selectedAddress]);
-
-	const resetForm = () => {
-		setFirstName("");
-		setLastName("");
-		setStreet("");
-		setAddress("");
-		setCity("");
-		setState("");
-		setCountry("US");
-		setPostalCode("");
-		setPhone("");
-		setIsDefault(false);
-		setErrors({});
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
 	};
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-
-		// Validate field on change
-		validateField(name, value);
-
+	// Handle individual field changes
+	const handleFieldChange = (name: string, value: string) => {
 		switch (name) {
 			case "firstName":
 				setFirstName(value);
@@ -349,11 +263,77 @@ export function AddressDialog({
 				setEmail(value);
 				break;
 		}
+		// Clear error for this field if validation passes
+		if (showErrors) {
+			const error = validateField(name, value);
+			setErrors((prev) => ({
+				...prev,
+				[name]: error,
+			}));
+		}
+	};
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		handleFieldChange(name, value);
+	};
+
+	const handleSelectChange = (name: string, value: string) => {
+		handleFieldChange(name, value);
+	};
+
+	useEffect(() => {
+		if (selectedAddress) {
+			setFirstName(selectedAddress.firstName || "");
+			setLastName(selectedAddress.lastName || "");
+			setStreet(selectedAddress.address1 || "");
+			setAddress(selectedAddress.address2 || "");
+			setCity(selectedAddress.city || "");
+			setState(selectedAddress.stateCode || "NY");
+			setCountry(selectedAddress.countryCode || "US");
+			setPostalCode(selectedAddress.postalCode || "");
+			setPhone(selectedAddress.phone || "");
+			setIsDefault(selectedAddress.isDefault || false);
+		} else {
+			resetForm();
+		}
+	}, [selectedAddress]);
+
+	const resetForm = () => {
+		setFirstName("");
+		setLastName("");
+		setStreet("");
+		setAddress("");
+		setCity("");
+		setState("NY");
+		setCountry("US");
+		setPostalCode("");
+		setPhone("");
+		setIsDefault(false);
+		setErrors({});
+		setShowErrors(false);
 	};
 
 	const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const checked = e.target.checked;
 		setIsDefault(checked);
+	};
+
+	// Focus on first error field
+	const focusOnFirstError = () => {
+		const errorFields = Object.keys(errors);
+		if (errorFields.length > 0) {
+			const firstErrorField = errorFields[0];
+			setTimeout(() => {
+				const element = document.querySelector(
+					`[name="${firstErrorField}"]`,
+				) as HTMLElement;
+				if (element) {
+					element.focus();
+					element.scrollIntoView({ behavior: "smooth", block: "center" });
+				}
+			}, 100);
+		}
 	};
 
 	// Mutations
@@ -375,27 +355,11 @@ export function AddressDialog({
 	const handleSubmit = async () => {
 		console.log("save is clicked");
 
-		// Validate  before submitting
-		const fieldsToValidate = [
-			{ name: "firstName", value: firstName },
-			{ name: "lastName", value: lastName },
-			{ name: "apartment", value: street },
-			{ name: "building", value: address },
-			{ name: "city", value: city },
-			{ name: "zipcode", value: postalCode },
-			{ name: "phone", value: phone },
-		];
+		setShowErrors(true);
+		const isValid = validateAllFields();
 
-		if (customerType === "guest") {
-			fieldsToValidate.push({ name: "email", value: email });
-		}
-
-		for (const field of fieldsToValidate) {
-			validateField(field.name, field.value);
-		}
-
-		if (!isFormValid) {
-			console.log("Form is not valid, cannot submit");
+		if (!isValid) {
+			focusOnFirstError();
 			return;
 		}
 
@@ -589,8 +553,15 @@ export function AddressDialog({
 									)}
 								</div>
 								<div className={styles.SelectOutline}>
-									<Select value={state} onValueChange={setState}>
-										<SelectTrigger>
+									<Select
+										value={state}
+										onValueChange={(value) =>
+											handleSelectChange("state", value)
+										}
+									>
+										<SelectTrigger
+											className={errors.state ? styles.ErrorInput : ""}
+										>
 											<SelectValue placeholder="State*" />
 										</SelectTrigger>
 										<SelectContent>
@@ -601,6 +572,9 @@ export function AddressDialog({
 											))}
 										</SelectContent>
 									</Select>
+									{errors.state && (
+										<div className={styles.ErrorText}>{errors.state}</div>
+									)}
 								</div>
 							</div>
 							<div className={styles.TwoColumn}>
@@ -643,13 +617,7 @@ export function AddressDialog({
 						<DialogClose asChild>
 							<Button>Cancel</Button>
 						</DialogClose>
-						<Button
-							variant="secondary"
-							type="submit"
-							onClick={handleSubmit}
-							disabled={!isFormValid}
-							className={!isFormValid ? styles.DisabledButton : ""}
-						>
+						<Button variant="secondary" type="submit" onClick={handleSubmit}>
 							{isEditMode ? "Update" : "Save"}
 						</Button>
 					</div>

@@ -7,18 +7,20 @@ import ProductDetails from "./component";
 import styles from "./page.module.css";
 export default async function ProductDetailsPage({
 	params,
+	searchParams,
 }: {
-	params: Promise<{ id: string }>;
+	params: { id: string };
+	searchParams: { slug: string; name: string };
 }) {
-	const { id } = await params;
+	const { slug, name } = searchParams;
 
 	return (
 		<section className={styles.layout}>
 			<Breadcrumbs
 				breadcrumbItems={[
 					{ label: "Home", href: "/" },
-					{ label: "Shop", href: "/shop" },
-					{ label: "Lipstick" },
+					{ label: slug, href: `/category/${slug}` },
+					{ label: name, href: "" },
 				]}
 				breadcrumbSeparator="/slash.svg"
 			/>

@@ -38,8 +38,9 @@ export const GET_PRODUCT_DETAILS = `
 
 `;
 export const GET_PRODUCT_LIST = `
-  query GetProductList($getProductListId: String!, $limit: Int, $offset: Int) {
-    getProductList(id: $getProductListId, limit: $limit, offset: $offset) {
+  query GetProductList($getProductListId: String!, $limit: Int, $offset: Int, $price: String,$colors: String
+) {
+    getProductList(id: $getProductListId, limit: $limit, offset: $offset,price: $price, colors: $colors) {
       limit
       offset
       total
@@ -58,6 +59,17 @@ export const GET_PRODUCT_LIST = `
         productId
         productName
       }
+        refinements {
+        attributeId
+        label
+        values {
+          hitCount
+          label
+          value
+          presentationId
+        }
+      }
+      
     }
   }
 `;

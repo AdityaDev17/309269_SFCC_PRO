@@ -30,76 +30,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./shipping.module.css";
+import {CustomerDetails,CommonCardType,ShippingAddress,Shipment,CustomerAddress,ShippingMethod,UpdateShippingAddressInput,UpdateShippingMethodInput} from "@/common/type";
 
-type CustomerDetails = {
-	basketId: string;
-	email: string;
-};
-
-type CommonCardType = {
-	id: string;
-	title: string;
-	description: string;
-	extraInfo?: string;
-};
-type ShippingAddress = {
-	address1: string;
-	city: string;
-	countryCode: string;
-	firstName: string;
-	fullName: string;
-	id: string;
-	lastName: string;
-	postalCode: string;
-	stateCode: string;
-};
-
-type Shipment = {
-	shippingAddress: ShippingAddress | null;
-};
-
-type CustomerAddress = {
-	addressId: string;
-	address1: string;
-	address2: string;
-	city: string;
-	countryCode: string;
-	creationDate: string;
-	firstName: string;
-	fullName: string;
-	lastModified: string;
-	lastName: string;
-	phone: string;
-	postalCode: string;
-	preferred: boolean;
-	stateCode: string;
-};
-
-type ShippingMethod = {
-	description: string;
-	id: string;
-	name: string;
-	price: string;
-};
-
-type UpdateShippingAddressInput = {
-	basketId: string | null;
-	address1: string;
-	address2: string | null;
-	city: string;
-	countryCode: string;
-	firstName: string;
-	lastName: string;
-	phone: string;
-	postalCode: string;
-	stateCode: string;
-	useAsBilling: boolean;
-};
-
-type UpdateShippingMethodInput = {
-	basketId: string | null;
-	id: string | null;
-};
 const Shipping = () => {
 	const router = useRouter();
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
@@ -398,27 +330,14 @@ const Shipping = () => {
 					) : (
 						<OrderSummary
 							reverseOrder={true}
-							buttonText="CHECKOUT"
+							isButton={true}
+							total={shippingAddressData?.basketInfo?.productTotal}
+							currency={shippingAddressData?.basketInfo?.currency}
+							subTotal={shippingAddressData?.basketInfo?.productSubTotal}
+							buttonText="PROCEED TO PAYMENT"
 							onButtonClick={handleCheckout}
 						/>
 					)}
-				</div>
-
-				<div className={styles.summary}>
-					{/* <OrderSummary
-						reverseOrder={true}
-						buttonText="CHECKOUT"
-						onButtonClick={handleCheckout}
-					/> */}
-					<OrderSummary
-						reverseOrder={true}
-						isButton={true}
-						total={shippingAddressData?.basketInfo?.productTotal}
-						currency={shippingAddressData?.basketInfo?.currency}
-						subTotal={shippingAddressData?.basketInfo?.productSubTotal}
-						buttonText="PROCEED TO PAYMENT"
-						onButtonClick={handleCheckout}
-					/>
 				</div>
 			</div>
 

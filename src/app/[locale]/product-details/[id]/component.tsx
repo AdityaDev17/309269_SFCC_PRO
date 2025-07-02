@@ -44,6 +44,7 @@ export default function ProductDetails() {
 	const [targetColor, setTargetColor] = useState("");
 	const [targetSize, setTargetSize] = useState("");
 	const [sizes, setSizes] = useState<Size[]>([]);
+	const [error, setError] = useState("");
 
 	const createCustomerProductList = useMutation({
 		mutationFn: (input: { customerId: string; type: string }) =>
@@ -164,15 +165,20 @@ export default function ProductDetails() {
 		retry: 3,
 	});
 	const handleAddToBasket = async () => {
-		const masterId = data?.productDetails?.variants?.find(
-			(variant: Variants) =>
-				variant?.variationValues?.color === targetColor &&
-				variant?.variationValues?.size === targetSize,
-		)?.productId;
-		const response = await addToBasketMutation.mutateAsync({
-			productId: masterId ? masterId : productId,
-		});
-		return response;
+		if (sizes && targetSize === "") {
+			setError("Choose any size");
+		} else {
+			setError("");
+			const masterId = data?.productDetails?.variants?.find(
+				(variant: Variants) =>
+					variant?.variationValues?.color === targetColor &&
+					variant?.variationValues?.size === targetSize,
+			)?.productId;
+			const response = await addToBasketMutation.mutateAsync({
+				productId: masterId ? masterId : productId,
+			});
+			return response;
+		}
 	};
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement> | string,
@@ -260,6 +266,11 @@ export default function ProductDetails() {
 									/>
 								)}
 							</div>
+							<div>
+								<div className={styles.error}>
+									{error ? "Please choose any size" : "\u00A0"}
+								</div>
+							</div>
 							<div
 								className={`${styles.buttonContainer} ${
 									sizes ? styles.twoChildren : styles.oneChild
@@ -276,7 +287,7 @@ export default function ProductDetails() {
 												backgroundColor: "#fff",
 												border: "solid",
 												borderWidth: "1px",
-												borderColor: "#CCCBCE",
+												borderColor: error ? "red" : "#CCCBCE",
 												color: "#000",
 												fontSize: "12px",
 												fontWeight: "600",
@@ -302,10 +313,9 @@ export default function ProductDetails() {
 							<Button
 								variant="secondary"
 								className={styles.cartButton}
-								disabled={sizes ? targetSize === "" : false}
 								onClick={() => handleAddToBasket()}
 							>
-								Add To Bag
+								ADD TO BAG
 							</Button>
 						</>
 					)}

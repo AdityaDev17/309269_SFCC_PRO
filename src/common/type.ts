@@ -51,6 +51,7 @@ export type ProductList = {
   };
 };
 
+
 type CategoriesProps = {
   name: string;
   image?: {
@@ -63,7 +64,7 @@ type CategoriesProps = {
   }[];
 };
 
-export interface HeaderProps {
+export type HeaderProps = {
   isHome?: boolean;
   logoImages: { default: string; white: string };
   categories: CategoriesProps[];

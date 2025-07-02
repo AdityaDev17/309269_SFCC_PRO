@@ -38,11 +38,12 @@ export const GET_PRODUCT_DETAILS = `
 
 `;
 export const GET_PRODUCT_LIST = `
-  query GetProductList($getProductListId: String!
-   $price: String
-   $colors: String) {
-    getProductList(id: $getProductListId, price: $price, colors: $colors) {
+  query GetProductList($getProductListId: String!, $limit: Int, $offset: Int, $price: String,$colors: String
+) {
+    getProductList(id: $getProductListId, limit: $limit, offset: $offset,price: $price, colors: $colors) {
       limit
+      offset
+      total
       hits {
         currency
         hitType

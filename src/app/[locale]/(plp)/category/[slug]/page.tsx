@@ -27,14 +27,23 @@ import { useParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
+import { useState } from "react";
+import { ProductDetails } from "@/common/type";
 
 export default function PLPPage() {
+	const [displayedPage, setDisplayedPage] = useState(1);
+	const [activePage, setActivePage] = useState(1);
 	const { slug } = useParams() as { slug: string };
 	const router = useRouter();
+	const itemsPerPage = 25;
+
 	const fetchProductList = async () => {
 		try {
 			const variables = {
 				getProductListId: slug,
+				limit: itemsPerPage,
+				offset: (activePage-1)*itemsPerPage
+
 			};
 
 			const response = graphqlRequest(GET_PRODUCT_LIST, variables);
@@ -44,27 +53,13 @@ export default function PLPPage() {
 		}
 	};
 	const { data, error, isLoading } = useQuery({
-		queryKey: ["ProductList", slug],
+		queryKey: ["ProductList", slug, activePage],
 		queryFn: fetchProductList,
 		enabled: !!slug,
 	});
+	const totalProducts = data?.getProductList.total || 0;
+	const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
-	console.log("getProductList", data);
-	interface ProductDetails {
-		currency: string;
-		hitType: string;
-		image?: {
-			alt: string;
-			disBaseLink: string;
-			link: string;
-			title: string;
-		};
-		orderable: string;
-		price: string;
-		pricePerUnit: string;
-		productId: string;
-		productName: string;
-	}
 	const products: ProductDetails[] = data?.getProductList?.hits || [];
 	// const categoryName = slug
 	//  .split("-")
@@ -75,6 +70,27 @@ export default function PLPPage() {
 		{ label: "Categories", href: "/category" },
 		{ label: "Jewellery" },
 	];
+
+	const previousPage = function() {
+		if(displayedPage === 1) return;
+		if(activePage !== displayedPage+1) {
+			setDisplayedPage(prevPage => prevPage - 1);
+		}
+		setActivePage(prevPage => prevPage-1);
+	}
+
+	const nextPage = function() {
+		if(displayedPage === totalPages-1) return;
+		if(activePage !== displayedPage) {
+			setDisplayedPage(prevPage => prevPage+1);
+		}
+		setActivePage(prevPage => prevPage+1);
+	}
+
+	const activePageHandler = function(page: number) {
+		setActivePage(page);
+	}
+
 	return (
 		<div className={styles.container}>
 			<Breadcrumbs breadcrumbItems={breadcrumbItems} />
@@ -142,22 +158,20 @@ export default function PLPPage() {
 			</div>
 
 			<div className={styles.pagination}>
-				<Pagination fixedBottom>
+				<Pagination>
 					<PaginationContent>
-						<PaginationPrevious href="/page/1" />
+						<PaginationPrevious onClick={previousPage}/>
 						<PaginationItem>
-							<PaginationLink href="/page/1" isActive>
-								1
+							<PaginationLink isActive={activePage === displayedPage} onClick={() => activePageHandler(displayedPage)}>
+								{displayedPage}
 							</PaginationLink>
 						</PaginationItem>
 						<PaginationItem>
-							<PaginationLink href="/page/2">2</PaginationLink>
+							<PaginationLink isActive={activePage === displayedPage+1} onClick={() => activePageHandler(displayedPage+1)}>
+								{displayedPage+1}
+							</PaginationLink>
 						</PaginationItem>
-						<PaginationEllipsis />
-						<PaginationItem>
-							<PaginationLink href="/page/10">10</PaginationLink>
-						</PaginationItem>
-						<PaginationNext href="/page/2" />
+						<PaginationNext onClick={nextPage} />
 					</PaginationContent>
 				</Pagination>
 			</div>

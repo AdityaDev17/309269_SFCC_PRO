@@ -38,9 +38,11 @@ export const GET_PRODUCT_DETAILS = `
 
 `;
 export const GET_PRODUCT_LIST = `
-  query GetProductList($getProductListId: String!) {
-    getProductList(id: $getProductListId) {
+  query GetProductList($getProductListId: String!, $limit: Int, $offset: Int) {
+    getProductList(id: $getProductListId, limit: $limit, offset: $offset) {
       limit
+      offset
+      total
       hits {
         currency
         hitType
@@ -70,12 +72,19 @@ export const GET_ORDER_DETAILS = `
       }
       productItems {
         price
-        productImage {
+        productData {
           data {
             imageGroups {
               images {
                 alt
                 link
+              }
+            }
+            variants {
+              productId
+              variationValues {
+                color
+                size
               }
             }
           }

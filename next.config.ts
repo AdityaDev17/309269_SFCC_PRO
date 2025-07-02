@@ -1,5 +1,8 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -10,8 +13,9 @@ const nextConfig: NextConfig = {
     domains: ['zzrl-003.dx.commercecloud.salesforce.com', 'edge.disstg.commercecloud.salesforce.com','cdn.sanity.io'],
   },
 };
+const withNextIntl = createNextIntlPlugin();
 
-export default withSentryConfig(nextConfig, {
+export default withSentryConfig(withNextIntl(nextConfig), {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
 

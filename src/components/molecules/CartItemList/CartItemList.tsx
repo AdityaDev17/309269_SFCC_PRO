@@ -81,7 +81,9 @@ const CartItemList = ({
 							/>
 							{item?.size && item?.color && (
 								<div className={styles.textColor}>
-									<div>Size &nbsp;{Number.parseInt(item?.size ?? "") / 10}</div>
+									<div>
+										Size &nbsp;{Number.parseInt(item?.size, 10).toString()}
+									</div>
 									<div className={styles.align}>| </div>
 									<div className={styles.color}>
 										Color{" "}

@@ -51,6 +51,22 @@ export type ProductList = {
   };
 };
 
+export type ProductDetails = {
+		currency: string;
+		hitType: string;
+		image?: {
+			alt: string;
+			disBaseLink: string;
+			link: string;
+			title: string;
+		};
+		orderable: string;
+		price: string;
+		pricePerUnit: string;
+		productId: string;
+		productName: string;
+	}
+
 type CategoriesProps = {
   name: string;
   image?: {
@@ -63,7 +79,7 @@ type CategoriesProps = {
   }[];
 };
 
-export interface HeaderProps {
+export type HeaderProps = {
   isHome?: boolean;
   logoImages: { default: string; white: string };
   categories: CategoriesProps[];
@@ -146,10 +162,6 @@ export type CartItemResponse = {
   };
 };
 
-// export type ProductItem = {
-//   productId: string;
-//   productName: string;
-// }
 
 export type Order = {
   orderNo: string;
@@ -157,7 +169,7 @@ export type Order = {
   productTotal: number;
   currency: string;
   productItems: ProductItem[];
-}
+};
 
 export type GetOrderHistoryResponse = {
   getOrderHistory: {
@@ -166,4 +178,4 @@ export type GetOrderHistoryResponse = {
     total: number;
     data: Order[];
   };
-}
+};

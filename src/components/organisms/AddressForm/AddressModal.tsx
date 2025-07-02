@@ -379,7 +379,7 @@ export function AddressDialog({
 					phone,
 					postalCode,
 					preferred: isDefault,
-					stateCode: "NY",
+					stateCode: state,
 				};
 
 				isEditMode
@@ -397,7 +397,7 @@ export function AddressDialog({
 					lastName,
 					phone: phone,
 					postalCode,
-					stateCode: "NY",
+					stateCode: state,
 					...(isEditMode ? {} : { useAsBilling: true }),
 				};
 				await updateShippingAddressMutation.mutateAsync(input);
@@ -564,7 +564,7 @@ export function AddressDialog({
 										>
 											<SelectValue placeholder="State*" />
 										</SelectTrigger>
-										<SelectContent>
+										<SelectContent className={styles.SelectContent}>
 											{states.map((s) => (
 												<SelectItem key={s.value} value={s.value}>
 													{s.label}

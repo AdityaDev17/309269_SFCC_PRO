@@ -68,9 +68,9 @@
     transition: background-color 0.2s ease;
 }
 
-.Button[data-variant='secondary']:hover {
+/* .Button[data-variant='secondary']:hover {
     background-color: var(--colour-icon-secondary);
-}
+} */
 
 /* .Button[data-variant='ghost'] {
     background-color: transparent;

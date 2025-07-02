@@ -154,10 +154,10 @@
    }
 
    .ErrorText {
-    color: red;
+    color: var(--colour-label-mandatory-field);
     font-size: 0.75rem;
     margin-top: 4px;
 }
 .ErrorInput {
-  border: 1px solid red;
+  border: 1px solid  var(--colour-label-mandatory-field);
 }

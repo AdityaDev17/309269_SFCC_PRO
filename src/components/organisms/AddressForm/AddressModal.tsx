@@ -199,35 +199,35 @@ export function AddressDialog({
 				if (!value.trim()) {
 					newErrors.phone = "Phone number is required";
 				} else {
-					newErrors.phone="";
+					newErrors.phone = "";
 				}
 				break;
 			case "apartment":
 				if (!value.trim()) {
 					newErrors.apartment = "Apartment/Suite is required";
 				} else {
-					newErrors.apartment="";
+					newErrors.apartment = "";
 				}
 				break;
 			case "building":
 				if (!value.trim()) {
 					newErrors.building = "Building number is required";
 				} else {
-					 newErrors.building="";
+					newErrors.building = "";
 				}
 				break;
 			case "city":
 				if (!value.trim()) {
 					newErrors.city = "City is required";
 				} else {
-					newErrors.city="";
+					newErrors.city = "";
 				}
 				break;
 			case "zipcode":
 				if (!value.trim()) {
 					newErrors.zipcode = "ZIP code is required";
 				} else {
-					 newErrors.zipcode="";
+					newErrors.zipcode = "";
 				}
 				break;
 		}
@@ -267,7 +267,18 @@ export function AddressDialog({
 		}
 
 		return allFieldsFilled && !hasErrors;
-	}, [firstName, lastName, street, address, city, postalCode, phone, email, customerType, errors]);
+	}, [
+		firstName,
+		lastName,
+		street,
+		address,
+		city,
+		postalCode,
+		phone,
+		email,
+		customerType,
+		errors,
+	]);
 
 	useEffect(() => {
 		if (selectedAddress) {
@@ -381,7 +392,7 @@ export function AddressDialog({
 
 		for (const field of fieldsToValidate) {
 			validateField(field.name, field.value);
-		};
+		}
 
 		if (!isFormValid) {
 			console.log("Form is not valid, cannot submit");
@@ -501,7 +512,10 @@ export function AddressDialog({
 												placeholder="Phone No.*"
 												name="phone"
 												type="tel"
-												className={cn(styles.PhoneInput, errors.phone ? styles.ErrorInput : "")}
+												className={cn(
+													styles.PhoneInput,
+													errors.phone ? styles.ErrorInput : "",
+												)}
 												value={phone}
 												onChange={handleChange}
 											/>
@@ -518,7 +532,10 @@ export function AddressDialog({
 										placeholder="Phone No.*"
 										name="phone"
 										type="tel"
-										className={cn(styles.PhoneInput, errors.phone ? styles.ErrorInput : "")}
+										className={cn(
+											styles.PhoneInput,
+											errors.phone ? styles.ErrorInput : "",
+										)}
 										value={phone}
 										onChange={handleChange}
 									/>
@@ -626,9 +643,9 @@ export function AddressDialog({
 						<DialogClose asChild>
 							<Button>Cancel</Button>
 						</DialogClose>
-						<Button 
-							variant="secondary" 
-							type="submit" 
+						<Button
+							variant="secondary"
+							type="submit"
 							onClick={handleSubmit}
 							disabled={!isFormValid}
 							className={!isFormValid ? styles.DisabledButton : ""}

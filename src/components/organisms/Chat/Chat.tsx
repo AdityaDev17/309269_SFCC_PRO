@@ -14,24 +14,24 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Chat.module.css";
 import Message from "./Message";
 
-const initialMessage = [
-	{
-		id: "1",
-		author: "bot",
-		text: "Hello, how can I help you? Type in what you are looking for and I will suggest something that you will really enjoy.",
-	},
-	{
-		id: "2",
-		author: "user",
-		text: `Suggest mens fragrances`,
-	},
-	{
-		id: "3",
-		author: "bot",
-		// text: "I've found some relevant results for you. Can you provide more details or refine your search to get more precise results?"
-		text: "Based on your interest in dogs, I have a few product recommendations that might be perfect for your furry friend:\n\n1. **Compostable Dog Chews** - $5\n   \n   - Great for your dog's dental hygiene and your garden's soil health. These chews can be left outside in your garden or added to your compost/food waste bin to break down naturally.\n   - [Click here to buy](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_124&src=commerce-concierge)\n   - ![Compostable Dog Chews](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_124&src=commerce-concierge)\n\n2. **Care for Your Dog Treats** - $13\n   \n   - These organic dog biscuits are designed to support gut health and nutritional balance without any added nasties.\n   - [Click here to buy](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_125&src=commerce-concierge)\n   - ![Care for Your Dog Treats](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_125&src=commerce-concierge)\n\n3. **Natural Linen Dog Day Bed** - $140\n   \n   - Made from organic, locally sourced, low-impact linen, this bed offers both comfort and sustainability.\n   - [Click here to buy](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_126&src=commerce-concierge)\n   - ![Natural Linen Dog Day Bed](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_126&src=commerce-concierge)\n\nFeel free to let me know if you need more information on these products or if there's anything else you're looking for. Would you like to add any of these products to your cart?",
-	},
-];
+// const initialMessage = [
+// 	{
+// 		id: "1",
+// 		author: "bot",
+// 		text: "Hello, how can I help you? Type in what you are looking for and I will suggest something that you will really enjoy.",
+// 	},
+// 	{
+// 		id: "2",
+// 		author: "user",
+// 		text: `Suggest mens fragrances`,
+// 	},
+// 	{
+// 		id: "3",
+// 		author: "bot",
+// 		// text: "I've found some relevant results for you. Can you provide more details or refine your search to get more precise results?"
+// 		text: "Based on your interest in dogs, I have a few product recommendations that might be perfect for your furry friend:\n\n1. **Compostable Dog Chews** - $5\n   \n   - Great for your dog's dental hygiene and your garden's soil health. These chews can be left outside in your garden or added to your compost/food waste bin to break down naturally.\n   - [Click here to buy](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_124&src=commerce-concierge)\n   - ![Compostable Dog Chews](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_124&src=commerce-concierge)\n\n2. **Care for Your Dog Treats** - $13\n   \n   - These organic dog biscuits are designed to support gut health and nutritional balance without any added nasties.\n   - [Click here to buy](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_125&src=commerce-concierge)\n   - ![Care for Your Dog Treats](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_125&src=commerce-concierge)\n\n3. **Natural Linen Dog Day Bed** - $140\n   \n   - Made from organic, locally sourced, low-impact linen, this bed offers both comfort and sustainability.\n   - [Click here to buy](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_126&src=commerce-concierge)\n   - ![Natural Linen Dog Day Bed](https://zzrl-003.dx.commercecloud.salesforce.com/on/demandware.store/Sites-acndoggo-Site/en_US/Product-Show?pid=ACNPETS_126&src=commerce-concierge)\n\nFeel free to let me know if you need more information on these products or if there's anything else you're looking for. Would you like to add any of these products to your cart?",
+// 	},
+// ];
 
 // const askEinstein = async (userInput: string) => {
 //     try {
@@ -158,9 +158,7 @@ export default function Chat() {
 		setFullHeight((prevState) => !prevState);
 	};
 
-	const resetHandler = () => {
-		setMessages(initialMessage);
-	};
+	const resetHandler = () => {};
 
 	const sendMessageHandler = async (text: string) => {
 		if (isLoading) {

@@ -121,6 +121,9 @@ export default function Chat() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	const addMessage = (title: string, author: string) => {
+		if(!title) {
+			return;
+		}
 		setMessages((prevMessage) => [
 			...prevMessage,
 			{
@@ -133,7 +136,7 @@ export default function Chat() {
 	const displayChatHandler = async () => {
 		if (messages.length === 0) {
 			const text = await getIntitialMessage();
-			// sendMessageHandler(text, 'bot');
+			if(!text) return;
 			addMessage(text, "bot");
 		}
 		setShowChat((prevState) => !prevState);

@@ -109,13 +109,20 @@
   grid-template-columns: 1fr 1fr;
 }
 .varientSection {
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 }
 .cartButton{
     width:  100%;
     height: 36px;
     background-color: black;
     color: white;
+}
+.error{
+  color: red;
+  font-size: var(--font-size-font-size-300-m);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-lh-300);
+  padding: 5px 0;
 }
 /* Component Styles End*/
 

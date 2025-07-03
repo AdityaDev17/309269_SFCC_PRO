@@ -15,8 +15,8 @@ import HeroSection from "../../../studio-C4force/schemaTypes/modules/hero";
 import TwoColumnText from "../../../studio-C4force/schemaTypes/modules/twoColumn";
 
 export const sanityComponentMapper = {
-  heroSection: HeroSection,
-  twoColumnTextSection: TwoColumnText,
+	heroSection: HeroSection,
+	twoColumnTextSection: TwoColumnText,
 };
 
 // PageRenderer.tsx

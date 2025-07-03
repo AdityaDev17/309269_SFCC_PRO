@@ -1,79 +1,42 @@
-import {defineField, defineType} from 'sanity'
-
-export const productType = defineType({
-  name: 'product',
-  title: 'Products',
-  type: 'document',
+export default {
+  name: "product",
+  title: "Product",
+  type: "document",
   fields: [
-    defineField({
-      name: 'title',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'slug',
-      type: 'slug',
-      options: {source: 'title'},
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'price',
-      type: 'number',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'currency',
-      type: 'string',
-      initialValue: 'USD',
-    }),
-    defineField({
-      name: 'longDescription',
-      type: 'text',
-    }),
-    defineField({
-      name: 'imageGroups',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'images',
-              type: 'array',
-              of: [
-                {
-                  type: 'object',
-                  fields: [
-                    {
-                      name: 'image',
-                      type: 'image',
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'metaTags',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {name: 'id', type: 'string'},
-            {name: 'value', type: 'text'},
-          ],
-        },
-      ],
-    }),
-    defineField({
-      name: 'publishedAt',
-      type: 'datetime',
-      initialValue: () => new Date().toISOString(),
-      validation: (rule) => rule.required(),
-    }),
+    { name: "sku", type: "string", title: "SKU" },
+    { name: "productId", type: "string", title: "Product ID" },
+    { name: "name", type: "string", title: "Name" },
+    {
+      name: "slug",
+      type: "slug",
+      title: "Slug",
+      options: { source: "name", maxLength: 96 },
+    },
+    { name: "description", type: "text", title: "Description" },
+    { name: "categoryId", type: "string", title: "Category ID" },
+    { name: "price", type: "number", title: "Price" },
+    { name: "currency", type: "string", title: "Currency" },
+    { name: "isOnline", type: "boolean", title: "Is Online?" },
+    { name: "lastModified", type: "datetime", title: "Last Modified" },
+    {
+      name: "variationAttributes",
+      type: "array",
+      of: [{ type: "string" }],
+      title: "Variation Attributes",
+    },
+    {
+      name: "productKind",
+      type: "string",
+      title: "Product Kind",
+      initialValue: "master",
+      readOnly: true,
+    },
+    {
+      name: "variants",
+      title: "Variants",
+      type: "array",
+      of: [{ type: "reference", to: [{ type: "variant" }] }],
+    },
+    { name: "importedAt", type: "datetime", title: "Imported At" },
   ],
-})
+};

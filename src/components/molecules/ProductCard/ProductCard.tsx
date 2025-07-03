@@ -10,25 +10,8 @@ import {
 } from "../../atomic/Card/Card";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
+import { Alignment,ProductCardProps } from "@/common/type";
 
-type Alignment = "center" | "alignStart" | "alignEnd";
-
-interface ProductCardProps {
-	productId?: string;
-	alignment?: Alignment;
-	width?: number | string;
-	productImage: string;
-	productTitle?: string;
-	productDesc?: string;
-	price?: string;
-	currency?: string;
-	moveToBag?: boolean;
-	wishListed?: boolean;
-	bagPrice?: string;
-	onClick?: (productId: string) => void;
-	onButtonClick?: (productId: string) => void;
-	onMoveToBag?: (productId: string) => void;
-}
 const ProductCard = ({
 	productId,
 	alignment = "center",
@@ -117,7 +100,7 @@ const ProductCard = ({
 									variant={1}
 									color="gray"
 									fontWeight="medium"
-									label={`${currency}${price}`}
+									label={`${currency}  ${price}`}
 								/>
 							</div>
 						)}

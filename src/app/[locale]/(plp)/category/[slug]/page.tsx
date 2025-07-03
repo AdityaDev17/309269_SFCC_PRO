@@ -189,7 +189,7 @@ export default function PLPPage() {
 									alignment="alignStart"
 									width={"100%"}
 									price={product.price}
-									currency="$"
+									currency={product?.currency}
 									onClick={() => {
 										router.push(
 											`/product-details/${product.productId}?slug=${encodeURIComponent(slug)}&name=${encodeURIComponent(product.productName)}`,

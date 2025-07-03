@@ -160,6 +160,7 @@ const OrderCard = ({
 }) => {
 	const { orderId, price, orderName, items } = orderData;
 	const router = useRouter();
+
 	return (
 		<div className={styles.orderCard}>
 			<ImageGrid productData={items} />
@@ -181,14 +182,6 @@ const OrderCard = ({
 							label={orderName}
 						/>
 					</div>
-					<div className={styles.orderId}>
-						<Typography
-							type="Body"
-							variant={2}
-							fontWeight="regular"
-							label={`ORDER ID : ${orderId}`}
-						/>
-					</div>
 				</div>
 				<div className={styles.orderDetailsBottom}>
 					<div className={styles.orderTotal}>
@@ -196,7 +189,7 @@ const OrderCard = ({
 							type="Body"
 							variant={3}
 							fontWeight="semibold"
-							label={`Order Total: $${price}`}
+							label={`Order Total: ${orderData.items?.[0]?.currency ?? ""}  ${price}`}
 						/>
 					</div>
 					<Button
@@ -279,7 +272,7 @@ const OrderCardContainer = () => {
 		visiblePages.push(currentPage, currentPage + 1);
 	}
 	const goToPage = (page: number) => {
-		if(page>0 && page<=totalPages) setCurrentPage(page);
+		if (page > 0 && page <= totalPages) setCurrentPage(page);
 	};
 	return (
 		<>
@@ -290,35 +283,37 @@ const OrderCardContainer = () => {
 				))}
 			</div>
 
-			<div className={styles.pageNavigator}>
-				<Pagination>
-					<PaginationContent>
-						<PaginationItem>
-							<PaginationPrevious href="#" onClick={handlePrev} />
-						</PaginationItem>
-
-						{visiblePages.map((pgNo) => (
-							<PaginationItem key={pgNo}>
-								<PaginationLink
-									href="#"
-									isActive={pgNo === currentPage}
-									onClick={(e) => {
-										e.preventDefault();
-										goToPage(pgNo);
-									}}
-								>
-									{pgNo}
-								</PaginationLink>
+			{(data?.getOrderHistory?.total ?? 0) > itemsPerPage && (
+				<div className={styles.pageNavigator}>
+					<Pagination>
+						<PaginationContent>
+							<PaginationItem>
+								<PaginationPrevious href="#" onClick={handlePrev} />
 							</PaginationItem>
-						))}
 
-						<PaginationItem>
-							<PaginationNext href="#" onClick={handleNext} />
-						</PaginationItem>
-					</PaginationContent>
-				</Pagination>
-				{isMobile && <Filter isMobile />}
-			</div>
+							{visiblePages.map((pgNo) => (
+								<PaginationItem key={pgNo}>
+									<PaginationLink
+										href="#"
+										isActive={pgNo === currentPage}
+										onClick={(e) => {
+											e.preventDefault();
+											goToPage(pgNo);
+										}}
+									>
+										{pgNo}
+									</PaginationLink>
+								</PaginationItem>
+							))}
+
+							<PaginationItem>
+								<PaginationNext href="#" onClick={handleNext} />
+							</PaginationItem>
+						</PaginationContent>
+					</Pagination>
+					{isMobile && <Filter isMobile />}
+				</div>
+			)}
 		</>
 	);
 };

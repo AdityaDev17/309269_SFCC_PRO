@@ -192,3 +192,10 @@
   height: 430px;
   width: 100%;
 }
+
+
+.errorText {
+  color: red;
+  font-size: 14px;
+  margin-top: 8px;
+}

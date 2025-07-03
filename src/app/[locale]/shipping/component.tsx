@@ -40,6 +40,9 @@ const Shipping = () => {
 	>(null);
 	const [selectedAddress, setSelectedAddress] = useState<AddressData>();
 	const [email, setEmail] = useState<string>("");
+	const [addressError, setAddressError] = useState(false);
+    const [shippingMethodError, setShippingMethodError] = useState(false);
+	
 
 	//   const customerType = "registered";
 	const basketId = sessionStorage.getItem("basketId");
@@ -162,6 +165,23 @@ const Shipping = () => {
 		) ?? [];
 
 	const handleCheckout = async () => {
+		let hasError = false;
+
+		if (!selectedAddress) {
+			setAddressError(true);
+			hasError = true;
+		} else {
+			setAddressError(false);
+		}
+
+		if (!selectedShippingMethod) {
+			setShippingMethodError(true);
+			hasError = true;
+		} else {
+			setShippingMethodError(false);
+		}
+
+		if (hasError) return;
 		if (customerType === "registered" && selectedAddress) {
 			try {
 				await updateShippingAddressMutation.mutateAsync({
@@ -257,6 +277,7 @@ const Shipping = () => {
 							<p>No saved addresses found.</p>
 						</div>
 					) : (
+						<>
 						<AddressCard
 							items={addresses}
 							radioButton={true}
@@ -268,6 +289,10 @@ const Shipping = () => {
 							selectedAddress={selectedAddress}
 							setSelectedAddress={setSelectedAddress}
 						/>
+							{addressError && (
+							<p className={styles.errorText}>Please select a shipping address.</p>
+							)}
+						</>
 					)}
 				</div>
 
@@ -302,6 +327,7 @@ const Shipping = () => {
 							))}
 						</div>
 					) : (
+						<>
 						<RadioGroup
 							className={styles.cardGrid}
 							value={selectedShippingMethod || undefined}
@@ -320,6 +346,10 @@ const Shipping = () => {
 								</div>
 							))}
 						</RadioGroup>
+							{shippingMethodError && (
+							<p className={styles.errorText}>Please select a shipping method.</p>
+							)}
+				      </>
 					)}
 				</div>
 

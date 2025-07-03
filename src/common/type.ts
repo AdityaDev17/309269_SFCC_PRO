@@ -71,6 +71,7 @@ export type HeaderProps = {
   headerIcons: { label: string; icon: string }[];
   headerWhiteIcons: { label: string; icon: string }[];
 }
+
 export type ProductItem = {
   productId: string;
   productName: string;
@@ -79,11 +80,34 @@ export type ProductItem = {
   productImage?: {
     data: {
       imageGroups: {
-        images: { link: string }[];
+        images: {
+          alt: string;
+          link: string;
+        }[];
+      };
+    }[];
+  };
+  productData?: {
+    data: {
+      imageGroups: {
+        images: {
+          alt: string;
+          link: string;
+        }[];
+      }[];
+      variants: {
+        productId: string;
+        variationValues: {
+          color?: string;
+          size?: string;
+        };
       }[];
     }[];
   };
 };
+
+
+
 /*Same as CartItem*/
 export type CartItems = {
   id: string;
@@ -263,3 +287,38 @@ export type UpdateShippingMethodInput = {
 	basketId: string | null;
 	id: string | null;
 };
+
+export type OrderSummaryProps = {
+	reverseOrder?: boolean;
+	totalRowTop?: boolean;
+	isButton?: boolean;
+	isPaymentImage?: boolean;
+	totalAmt?: string;
+	currency?: string;
+	subTotal?: string;
+	delivery?: string;
+	tax?: string;
+	total?: string;
+	totalSavings?: string;
+	buttonText?: string;
+	onButtonClick?: () => void;
+};
+
+export type Alignment = "center" | "alignStart" | "alignEnd";
+
+export type ProductCardProps = {
+	productId?: string;
+	alignment?: Alignment;
+	width?: number | string;
+	productImage: string;
+	productTitle?: string;
+	productDesc?: string;
+	price?: string;
+	currency?: string;
+	moveToBag?: boolean;
+	wishListed?: boolean;
+	bagPrice?: string;
+	onClick?: (productId: string) => void;
+	onButtonClick?: (productId: string) => void;
+	onMoveToBag?: (productId: string) => void;
+}

@@ -11,7 +11,7 @@ function OrderDetails() {
 				breadcrumbItems={[
 					{ label: "Home", href: "/" },
 					{ label: "My Account", href: "/shop" },
-					{ label: "Order History" },
+					{ label: "Order History", href: "/my-account/order-history" },
 					{ label: "Order Details" },
 				]}
 				breadcrumbSeparator="/slash.svg"

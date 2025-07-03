@@ -3,21 +3,8 @@ import React from "react";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./OrderSummary.module.css";
-type OrderSummaryProps = {
-	reverseOrder?: boolean;
-	totalRowTop?: boolean;
-	isButton?: boolean;
-	isPaymentImage?: boolean;
-	totalAmt?: string;
-	currency?: string;
-	subTotal?: string;
-	delivery?: string;
-	tax?: string;
-	total?: string;
-	totalSavings?: string;
-	buttonText?: string;
-	onButtonClick?: () => void;
-};
+import { OrderSummaryProps } from "@/common/type";
+
 const OrderSummary = ({
 	reverseOrder = false,
 	totalRowTop = false,
@@ -168,7 +155,7 @@ const OrderSummary = ({
 							type={"Body"}
 							variant={2}
 							fontWeight="regular"
-							label={`${currency}${totalSavings}`}
+							label={`${currency}  ${totalSavings}`}
 							color="#4F4B53"
 						/>
 					</div>

@@ -28,8 +28,8 @@ const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 		description: "",
 		quantity: item?.quantity,
 		price: item?.price,
-		priceAfterItemDiscount:item?.priceAfterItemDiscount,
-        priceAfterOrderDiscount:item?.priceAfterOrderDiscount,
+		priceAfterItemDiscount: item?.priceAfterItemDiscount,
+		priceAfterOrderDiscount: item?.priceAfterOrderDiscount,
 		currency: currency,
 		itemId: item?.itemId,
 		color: item?.productData?.data?.[0]?.variants?.find(

@@ -1,7 +1,7 @@
 "use client";
 import { GET_ORDER_DETAILS, UPDATE_ORDER } from "@/common/schema";
-import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import type { CartItemResponse } from "@/common/type";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
@@ -231,7 +231,7 @@ const OrderConfimation = () => {
 							totalAmt={orderDetails?.orderTotal}
 							isDelivery={true}
 							discount={orderDetails?.orderPriceAdjustments[0]?.price}
-          					delivery={orderDetails?.shippingTotal}
+							delivery={orderDetails?.shippingTotal}
 							totalSavings="0"
 							subTotal={orderDetails?.productSubTotal.toString()}
 							tax={orderDetails?.taxTotal.toString()}

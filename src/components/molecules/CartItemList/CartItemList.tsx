@@ -1,11 +1,11 @@
 "use client";
+import type { CartItem } from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import QuantitySelector from "../../atomic/QuantitySelector/QuantitySelector";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./CartItemList.module.css";
-import { CartItem } from "@/common/type";
 
 // interface CartItem {
 // 	id: string;
@@ -208,23 +208,28 @@ const CartItemList = ({
 												</div>
 											</div>
 										)}
-										<div style={{display:"flex", justifyContent:"space-between"}}>
+										<div
+											style={{
+												display: "flex",
+												justifyContent: "space-between",
+											}}
+										>
 											<Typography
 												type="Label"
 												variant={3}
 												label={`${item.currency} :\u00A0`}
-												/>
+											/>
 											<Typography
 												type="Label"
 												variant={3}
 												label={`${item.price}`}
 												textDecoration="line-through"
-												/>
+											/>
 											<Typography
 												type="Label"
 												variant={3}
 												label={`\u00A0${item.priceAfterItemDiscount}`}
-												/>
+											/>
 										</div>
 									</div>
 								)}

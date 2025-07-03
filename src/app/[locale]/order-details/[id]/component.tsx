@@ -43,25 +43,26 @@ const Details = () => {
 	});
 	const orderDetails = data?.orderInfo;
 	console.log(orderDetails);
-	
-	const orderdedItems = orderDetails?.productItems?.map(
-		(item: ProductItem) => {
-	const imageUrl = item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link || "";
-	const variant = item?.productData?.data?.[0]?.variants?.find((v) => v?.productId === item.productId,);
 
-	return {
-		id: item.productId,
-		name: item.productName,
-		description: "",
-		quantity: item.quantity,
-		price: item.price,
-		currency: orderDetails.currency,
-		productImage: imageUrl,
-		size: variant?.variationValues?.size ?? "",
-		color: variant?.variationValues?.color ?? "",
-	};
-});
+	const orderdedItems = orderDetails?.productItems?.map((item: ProductItem) => {
+		const imageUrl =
+			item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link || "";
+		const variant = item?.productData?.data?.[0]?.variants?.find(
+			(v) => v?.productId === item.productId,
+		);
 
+		return {
+			id: item.productId,
+			name: item.productName,
+			description: "",
+			quantity: item.quantity,
+			price: item.price,
+			currency: orderDetails.currency,
+			productImage: imageUrl,
+			size: variant?.variationValues?.size ?? "",
+			color: variant?.variationValues?.color ?? "",
+		};
+	});
 
 	const capitalizeName = (name = "") =>
 		name
@@ -140,7 +141,6 @@ const Details = () => {
 					</div>
 				</>
 			) : (
-				
 				<>
 					<div className={styles.orderId}>
 						<Typography
@@ -267,31 +267,31 @@ const Details = () => {
 									label={"Method of Payment"}
 								/>
 
-						<div className={styles.address}>
-							{orderDetails?.paymentInstruments[0]?.paymentMethodId}
-						</div>
-					</div>
-				</section>
-				<div className={styles.bottom}>
-					<OrderSummary
-						totalRowTop={true}
-						isButton={false}
-						isPaymentImage={false}
-						subTotal={orderDetails?.productSubTotal}
-						total={orderDetails?.orderTotal}
-						totalAmt={orderDetails?.orderTotal}
-						isDelivery={true}
-						discount={orderDetails?.orderPriceAdjustments[0]?.price}
-					/>
-					<div>
-						<Typography
-							type="Body"
-							variant={2}
-							fontWeight="regular"
-							label="Return window is open till 25th April 2024."
-							color="#75757A"
-						/>
-					</div>
+								<div className={styles.address}>
+									{orderDetails?.paymentInstruments[0]?.paymentMethodId}
+								</div>
+							</div>
+						</section>
+						<div className={styles.bottom}>
+							<OrderSummary
+								totalRowTop={true}
+								isButton={false}
+								isPaymentImage={false}
+								subTotal={orderDetails?.productSubTotal}
+								total={orderDetails?.orderTotal}
+								totalAmt={orderDetails?.orderTotal}
+								isDelivery={true}
+								discount={orderDetails?.orderPriceAdjustments[0]?.price}
+							/>
+							<div>
+								<Typography
+									type="Body"
+									variant={2}
+									fontWeight="regular"
+									label="Return window is open till 25th April 2024."
+									color="#75757A"
+								/>
+							</div>
 
 							<div className={styles.deliverdButtons}>
 								{/* <Button>

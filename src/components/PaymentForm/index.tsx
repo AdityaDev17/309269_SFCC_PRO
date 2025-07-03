@@ -22,12 +22,12 @@ const StripePayment = () => {
 	type PaymentInstrumentInput = {
 		basketId: string;
 		items: {
+			amount:Number,
 			paymentMethodId: string;
 			paymentCard: {
 				cardType: string;
 				expirationMonth: number;
 				expirationYear: number;
-				holder: string;
 				maskedNumber: string;
 			};
 		};
@@ -90,11 +90,11 @@ const StripePayment = () => {
 					basketId,
 					items: {
 						paymentMethodId: "CREDIT_CARD",
+						amount:paymentIntent?.amount ?? 0,
 						paymentCard: {
 							cardType: "Visa",
 							expirationMonth: data?.paymentMethodDetails?.card?.exp_month,
 							expirationYear: data?.paymentMethodDetails?.card?.exp_year,
-							holder: "kavya",
 							maskedNumber: `**********${data?.paymentMethodDetails?.card?.last4}`,
 						},
 					},

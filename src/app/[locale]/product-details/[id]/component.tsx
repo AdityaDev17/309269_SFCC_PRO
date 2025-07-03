@@ -68,24 +68,6 @@ export default function ProductDetails() {
     ?.flatMap((group: ImageGroup) => group?.images ?? [])
     .map((image: ProductImage) => image?.link);
  
-  // useEffect(() => {
-  //        const sizes = data?.productDetails?.variationAttributes
-  //        ?.find((item: VariationAttributes) => item?.id === "size")
-  //        ?.values?.map((item: Values) => {
-  //            const hasMatchingVariant = data?.productDetails?.variants?.some(
-  //                (variant: Variants) =>
-  //                    variant.variationValues?.color === targetColor &&
-  //                    variant.variationValues?.size === item?.value,
-  //            );
- 
-  //            return {
-  //                value: item?.value,
-  //                title: item?.name,
-  //                disabled: !hasMatchingVariant,
-  //            };
-  //        });
-  //       setSizes(sizes);
-  // }, [data, targetColor]);
   useEffect(() => {
     const sizeAttr = data?.productDetails?.variationAttributes?.find(
       (item: VariationAttributes) => item?.id === "size"
@@ -185,22 +167,7 @@ export default function ProductDetails() {
     onSuccess: () => setOpen(true),
     retry: 3,
   });
-  //   const handleAddToBasket = async () => {
-  //     if (sizes && targetSize === "") {
-  //       setError("Choose any size");
-  //     } else {
-  //       setError("");
-  //       const masterId = data?.productDetails?.variants?.find(
-  //         (variant: Variants) =>
-  //           variant?.variationValues?.color === targetColor &&
-  //           variant?.variationValues?.size === targetSize
-  //       )?.productId;
-  //       const response = await addToBasketMutation.mutateAsync({
-  //         productId: masterId ? masterId : productId,
-  //       });
-  //       return response;
-  //     }
-  //   };
+
   const handleAddToBasket = async () => {
     if (sizes!==undefined&&!targetSize) {
       setError("Choose any size");

@@ -1,30 +1,36 @@
-import HeroBanner from "@/components/molecules/Banner/Banner";
-import ProductBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
-import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
+// const componentMapper = {
+// 	hero: HeroComponent,
+// 	productHero: ProductHeroComponent,
+// 	twoColumnText: TwoColumnTextComponent,
+// 	// more mappings
+//   }
+//   {page.content.map((block, idx) => {
+// 	const Component = componentMapper[block._type]
+// 	return Component ? <Component key={idx} {...block} /> : null
+//   })}
 
-interface BaseSanityBlock {
-	_type: string;
-	variant?: string;
-	[key: string]: unknown;
-}
+// sanityComponentMapper.tsx
 
-export function sanityComponentMapper(block: BaseSanityBlock) {
-	if (!block._type) return null;
+import HeroSection from "../../../studio-C4force/schemaTypes/modules/hero";
+import TwoColumnText from "../../../studio-C4force/schemaTypes/modules/twoColumn";
 
-	switch (block._type) {
-		case "banner":
-			switch (block.variant) {
-				case "hero":
-					return <HeroBanner {...block} />;
-				case "promo":
-					return <ProductBanner {...block} />;
-				case "statement":
-					return <StatementBanner {...block} />;
-				default:
-					return null;
-			}
+export const sanityComponentMapper = {
+  heroSection: HeroSection,
+  twoColumnTextSection: TwoColumnText,
+};
 
-		default:
-			return null;
-	}
-}
+// PageRenderer.tsx
+
+// import { sanityComponentMapper } from './sanityComponentMapper'
+
+// export default function PageRenderer({ sections }: { sections: any[] }) {
+//   return (
+//     <div>
+//       {sections.map((section, index) => {
+//         const Component = sanityComponentMapper[section._type]
+//         if (!Component) return null
+//         return <Component key={index} {...section} />
+//       })}
+//     </div>
+//   )
+// }

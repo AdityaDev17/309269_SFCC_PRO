@@ -156,7 +156,7 @@ export function AddressDialog({
 	const [street, setStreet] = useState("");
 	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
-	const [state, setState] = useState("NY");
+	const [state, setState] = useState("");
 	const [country, setCountry] = useState("US");
 	const [postalCode, setPostalCode] = useState("");
 	const [phone, setPhone] = useState("");
@@ -189,8 +189,8 @@ export function AddressDialog({
 				if (customerType === "guest") {
 					if (!value.trim()) {
 						return "Please enter your email address";
-					} 
-				    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+					}
+					if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
 						return "Please enter a valid email address";
 					}
 				}
@@ -231,6 +231,7 @@ export function AddressDialog({
 
 	// Handle individual field changes
 	const handleFieldChange = (name: string, value: string) => {
+		// Update the field value
 		switch (name) {
 			case "firstName":
 				setFirstName(value);
@@ -289,7 +290,7 @@ export function AddressDialog({
 			setStreet(selectedAddress.address1 || "");
 			setAddress(selectedAddress.address2 || "");
 			setCity(selectedAddress.city || "");
-			setState(selectedAddress.stateCode || "NY");
+			setState(selectedAddress.stateCode || "");
 			setCountry(selectedAddress.countryCode || "US");
 			setPostalCode(selectedAddress.postalCode || "");
 			setPhone(selectedAddress.phone || "");
@@ -305,7 +306,7 @@ export function AddressDialog({
 		setStreet("");
 		setAddress("");
 		setCity("");
-		setState("NY");
+		setState("");
 		setCountry("US");
 		setPostalCode("");
 		setPhone("");
@@ -552,7 +553,8 @@ export function AddressDialog({
 										<div className={styles.ErrorText}>{errors.city}</div>
 									)}
 								</div>
-								<div className={styles.SelectOutline}>
+
+								<div className={styles.SelectWrapper}>
 									<Select
 										value={state}
 										onValueChange={(value) =>
@@ -560,7 +562,10 @@ export function AddressDialog({
 										}
 									>
 										<SelectTrigger
-											className={errors.state ? styles.ErrorInput : ""}
+											className={cn(
+												styles.SelectOutline,
+												errors.state ? styles.ErrorInput : ""
+											)}
 										>
 											<SelectValue placeholder="State*" />
 										</SelectTrigger>
@@ -572,6 +577,7 @@ export function AddressDialog({
 											))}
 										</SelectContent>
 									</Select>
+
 									{errors.state && (
 										<div className={styles.ErrorText}>{errors.state}</div>
 									)}
@@ -590,12 +596,14 @@ export function AddressDialog({
 										<div className={styles.ErrorText}>{errors.zipcode}</div>
 									)}
 								</div>
-								<Input
-									placeholder="Country"
-									name="country"
-									value={country}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="Country"
+										name="country"
+										value={country}
+										onChange={handleChange}
+									/>
+								</div>
 							</div>
 						</fieldset>
 					</div>

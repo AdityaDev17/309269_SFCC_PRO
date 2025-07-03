@@ -128,6 +128,8 @@ export type CartItem = {
   description: string;
   quantity: number;
   price: number;
+  priceAfterItemDiscount?:number;
+  priceAfterOrderDiscount?:number;
   currency: string;
   productImage: string;
   itemId: string;
@@ -153,6 +155,8 @@ export type CartItemResponse = {
   productName: string;
   quantity: number;
   price: number;
+  priceAfterItemDiscount?:number;
+  priceAfterOrderDiscount?:number;
   productData?: {
     data?: {
       imageGroups?: {

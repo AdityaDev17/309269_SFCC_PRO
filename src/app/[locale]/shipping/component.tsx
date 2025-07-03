@@ -212,147 +212,162 @@ const Shipping = () => {
 			setSelectedAddress(defaultOrFirst);
 		}
 	}, [addresses, selectedAddress]);
-
 	return (
-		<section className={styles.componentLayout}>
-			<div className={styles.firstLayout}>
-				<div className={styles.tittleWrapper}>
-					<Typography
-						type={"Label"}
-						variant={3}
-						fontWeight="semibold"
-						label="Shipping Address"
-					/>
-					{!(customerType === "guest" && shippingAdresses.length === 1) && (
-						<Button
-							variant="secondary"
-							onClick={() => setIsAddressDialogOpen(true)}
-						>
-							ADD NEW ADDRESS
-						</Button>
-					)}
-				</div>
+    <section className={styles.componentLayout}>
+      <div className={styles.firstLayout}>
+        <div className={styles.tittleWrapper}>
+          <Typography
+            type={"Label"}
+            variant={3}
+            fontWeight="semibold"
+            label="Shipping Address"
+          />
+          {!(customerType === "guest" && shippingAdresses.length === 1) && (
+            <Button
+              variant="secondary"
+              onClick={() => setIsAddressDialogOpen(true)}
+            >
+              ADD NEW ADDRESS
+            </Button>
+          )}
+        </div>
 
-				{/* ADDRESS LIST */}
-				<div className={styles.address}>
-					{isLoadingCustomerAddresses || isLoadingShippingAddress ? (
-						<div className={styles.skeletonLayout}>
-							{Array.from({ length: 1 }).map((_, idx) => (
-								<div
-									key={`skeleton-${Date.now()}-${Math.random()}`}
-									className={styles.skeletonAddressCard}
-								>
-									<Skeleton className={styles.skeletonTitle} />
-									<Skeleton className={styles.skeletonAddress} />
-									<Skeleton className={styles.skeletonDesc} />
-									<div className={styles.skeletonButtons}>
-										<Skeleton className={styles.skeletonBtn} />
-										<Skeleton className={styles.skeletonBtn} />
-									</div>
-								</div>
-							))}
-						</div>
-					) : addresses.length === 0 ? (
-						<div className={styles.emptyState}>
-							<p>No saved addresses found.</p>
-						</div>
-					) : (
-						<AddressCard
-							items={addresses}
-							radioButton={true}
-							refetch={
-								customerType === "registered"
-									? refetchAddresses
-									: refetchShipping
-							}
-							selectedAddress={selectedAddress}
-							setSelectedAddress={setSelectedAddress}
-						/>
-					)}
-				</div>
+        {/* ADDRESS LIST */}
+        <div className={styles.address}>
+          {isLoadingCustomerAddresses || isLoadingShippingAddress ? (
+            <div className={styles.skeletonLayout}>
+              {Array.from({ length: 1 }).map((_, idx) => (
+                <div
+                  key={`skeleton-${Date.now()}-${Math.random()}`}
+                  className={styles.skeletonAddressCard}
+                >
+                  <Skeleton className={styles.skeletonTitle} />
+                  <Skeleton className={styles.skeletonAddress} />
+                  <Skeleton className={styles.skeletonDesc} />
+                  <div className={styles.skeletonButtons}>
+                    <Skeleton className={styles.skeletonBtn} />
+                    <Skeleton className={styles.skeletonBtn} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : addresses.length === 0 ? (
+            <div className={styles.emptyState}>
+              <p>No saved addresses found.</p>
+            </div>
+          ) : (
+            <AddressCard
+              items={addresses}
+              radioButton={true}
+              refetch={
+                customerType === "registered"
+                  ? refetchAddresses
+                  : refetchShipping
+              }
+              selectedAddress={selectedAddress}
+              setSelectedAddress={setSelectedAddress}
+            />
+          )}
+        </div>
 
-				{/* BILLING CHECKBOX */}
-				<div className={styles.billCheck}>
-					<CheckBox />
-					<p>Keep Billing Address same as Shipping Address </p>
-				</div>
+        {/* BILLING CHECKBOX */}
+        <div className={styles.billCheck}>
+          <CheckBox />
+          <p>Keep Billing Address same as Shipping Address </p>
+        </div>
 
-				{/* SHIPPING METHODS */}
-				<div className={styles.shippingmethod}>
-					<Typography
-						type={"Label"}
-						variant={3}
-						fontWeight="semibold"
-						label="Shipping Method"
-					/>
-					{isLoadingShippingMethods ? (
-						<div className={styles.skeletonLayout}>
-							{Array.from({ length: 2 }).map((_, idx) => (
-								<div
-									key={`skeleton-${Date.now()}-${Math.random()}`}
-									className={styles.skeletonShippingCard}
-								>
-									<Skeleton className={styles.skeletonTitle} />
-									<Skeleton className={styles.skeletonSubtitle} />
+        {/* SHIPPING METHODS */}
+        <div className={styles.shippingmethod}>
+          <Typography
+            type={"Label"}
+            variant={3}
+            fontWeight="semibold"
+            label="Shipping Method"
+          />
+          {isLoadingShippingMethods ? (
+            <div className={styles.skeletonLayout}>
+              {Array.from({ length: 2 }).map((_, idx) => (
+                <div
+                  key={`skeleton-${Date.now()}-${Math.random()}`}
+                  className={styles.skeletonShippingCard}
+                >
+                  <Skeleton className={styles.skeletonTitle} />
+                  <Skeleton className={styles.skeletonSubtitle} />
 
-									<div className={styles.skeletonButtons}>
-										<Skeleton className={styles.skeletonBtn} />
-									</div>
-								</div>
-							))}
-						</div>
-					) : (
-						<RadioGroup
-							className={styles.cardGrid}
-							value={selectedShippingMethod || undefined}
-							onValueChange={(value) => setSelectedShippingMethod(value)}
-						>
-							{shippingMethods.map((item) => (
-								<div key={item.id} className={styles.card}>
-									<div className={styles.wrapper}>
-										<h2 className={styles.name}>{item.title}</h2>
-										<RadioGroupItem value={item.id} />
-									</div>
-									<div>
-										<p className={styles.address}>{item.description}</p>
-										<p className={styles.extraInfo}>${item.extraInfo}</p>
-									</div>
-								</div>
-							))}
-						</RadioGroup>
-					)}
-				</div>
+                  <div className={styles.skeletonButtons}>
+                    <Skeleton className={styles.skeletonBtn} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <RadioGroup
+              className={styles.cardGrid}
+              value={selectedShippingMethod || undefined}
+              onValueChange={(value) => setSelectedShippingMethod(value)}
+            >
+              {shippingMethods.map((item) => (
+                <div key={item.id} className={styles.card}>
+                  <div className={styles.wrapper}>
+                    <h2 className={styles.name}>{item.title}</h2>
+                    <RadioGroupItem value={item.id} />
+                  </div>
+                  <div>
+                    <p className={styles.address}>{item.description}</p>
+                    <p className={styles.extraInfo}>${item.extraInfo}</p>
+                  </div>
+                </div>
+              ))}
+            </RadioGroup>
+          )}
+        </div>
 
-				{/* ORDER SUMMARY */}
-				<div className={styles.summary}>
-					{isLoadingShippingAddress || isLoadingShippingMethods ? (
-						<Skeleton className={styles.skeletonSummary} />
-					) : (
-						<OrderSummary
-							reverseOrder={true}
-							isButton={true}
-							total={shippingAddressData?.basketInfo?.productTotal}
-							currency={shippingAddressData?.basketInfo?.currency}
-							subTotal={shippingAddressData?.basketInfo?.productSubTotal}
-							buttonText="PROCEED TO PAYMENT"
-							onButtonClick={handleCheckout}
-						/>
-					)}
-				</div>
-			</div>
+        {/* ORDER SUMMARY */}
+        <div className={styles.summary}>
+          {isLoadingShippingAddress || isLoadingShippingMethods ? (
+            <Skeleton className={styles.skeletonSummary} />
+          ) : (
+        //     <OrderSummary
+        //       reverseOrder={true}
+        //       buttonText="CHECKOUT"
+        //       onButtonClick={handleCheckout}
+        //     />
+        //   )}
+        // </div>
 
-			<AddressDialog
-				open={isAddressDialogOpen}
-				onOpenChangeAction={setIsAddressDialogOpen}
-				refetch={
-					customerType === "registered" ? refetchAddresses : refetchShipping
-				}
-				customerType={customerType}
-				email={email}
-				setEmail={setEmail}
-			/>
-		</section>
-	);
+        // <div className={styles.summary}>
+        //   {/* <OrderSummary
+		// 				reverseOrder={true}
+		// 				buttonText="CHECKOUT"
+		// 				onButtonClick={handleCheckout}
+		// 			/> */}
+          <OrderSummary
+            reverseOrder={true}
+            isButton={true}
+            isDelivery={false}
+            discount={shippingAddressData?.basketInfo?.orderPriceAdjustments[0].price}
+            total={shippingAddressData?.basketInfo?.productTotal}
+            currency={shippingAddressData?.basketInfo?.currency}
+            subTotal={shippingAddressData?.basketInfo?.productSubTotal}
+            buttonText="PROCEED TO PAYMENT"
+            onButtonClick={handleCheckout}
+          />
+		)}
+        </div>
+      </div>
+
+      <AddressDialog
+        open={isAddressDialogOpen}
+        onOpenChangeAction={setIsAddressDialogOpen}
+        refetch={
+          customerType === "registered" ? refetchAddresses : refetchShipping
+        }
+        customerType={customerType}
+        email={email}
+        setEmail={setEmail}
+      />
+    </section>
+  );
 };
 
 export default Shipping;

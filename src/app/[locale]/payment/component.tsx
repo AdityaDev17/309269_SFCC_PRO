@@ -52,23 +52,27 @@ export default function Payment() {
 	}, [data]);
 
 	return (
-		<div className={styles.container}>
-			<div>
-				{clientSecret && (
-					<Elements stripe={stripePromise} options={{ clientSecret }}>
-						<PaymentForm />
-					</Elements>
-				)}
-			</div>
-			<div className={styles.orderSummarySection}>
-				<OrderSummary
-					totalRowTop={true}
-					isButton={false}
-					totalAmt={data?.basketInfo?.productTotal}
-					currency={data?.basketInfo?.currency}
-					subTotal={data?.basketInfo?.productSubTotal}
-				/>
-			</div>
-		</div>
-	);
+    <div className={styles.container}>
+      <div>
+        {clientSecret && (
+          <Elements stripe={stripePromise} options={{ clientSecret }}>
+            <PaymentForm />
+          </Elements>
+        )}
+      </div>
+      <div className={styles.orderSummarySection}>
+        <OrderSummary
+          totalRowTop={true}
+          isButton={false}
+          currency={data?.basketInfo?.currency}
+          isDelivery={true}
+          discount={data?.basketInfo?.orderPriceAdjustments[0]?.price}
+          totalAmt={data?.basketInfo?.orderTotal}
+          total={data?.basketInfo?.orderTotal}
+          delivery={data?.basketInfo?.shippingTotal}
+          subTotal={data?.basketInfo?.productSubTotal}
+        />
+      </div>
+    </div>
+  );
 }

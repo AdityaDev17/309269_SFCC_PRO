@@ -16,6 +16,7 @@ import { graphqlRequest } from "@/lib/graphqlRequest";
 
 let cartItems: CartItem[];
 let subTotal = "";
+let productTotal = "";
 
 const getSize = (values: Values[], size: string) => {
 	return values?.find((item) => item.value === size)?.name;
@@ -27,6 +28,8 @@ const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 		description: "",
 		quantity: item?.quantity,
 		price: item?.price,
+		priceAfterItemDiscount:item?.priceAfterItemDiscount,
+        priceAfterOrderDiscount:item?.priceAfterOrderDiscount,
 		currency: currency,
 		itemId: item?.itemId,
 		color: item?.productData?.data?.[0]?.variants?.find(
@@ -62,7 +65,10 @@ export const getBasketDetail = async () => {
 		response?.basketInfo?.currency,
 	);
 	subTotal = response?.basketInfo?.productSubTotal;
-	return { cartItems, subTotal };
+	productTotal = response?.basketInfo?.productTotal;
+	const orderDiscount = response?.basketInfo?.orderPriceAdjustments[0];
+	console.log(orderDiscount?.price);
+	return { cartItems, subTotal, productTotal, orderDiscount };
 };
 
 export const handleDeleteItem = async (itemId: string) => {

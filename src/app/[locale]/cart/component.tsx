@@ -151,9 +151,12 @@ const Cart = ({ basketId }: CartProps) => {
 						</div>
 						<div className={styles.orderSummarySection}>
 							<OrderSummary
-								totalRowTop={true}
+								totalRowTop={false}
 								isButton={true}
-								totalAmt={data?.subTotal}
+								// totalAmt={data?.subTotal}
+								isDelivery={false}
+								discount={data?.orderDiscount?.price}
+								total={data?.productTotal}
 								subTotal={data?.subTotal}
 								buttonText="CONTINUE"
 								currency={CartItems?.[0]?.currency}

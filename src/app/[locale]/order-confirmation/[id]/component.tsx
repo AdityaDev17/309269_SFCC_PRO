@@ -227,10 +227,13 @@ const OrderConfimation = () => {
 							isButton={false}
 							isPaymentImage={false}
 							total={orderDetails?.orderTotal.toString()}
-							totalAmt={orderDetails?.productTotal.toString()}
+							// totalAmt={orderDetails?.productTotal.toString()}
+							totalAmt={orderDetails?.orderTotal}
+							isDelivery={true}
+							discount={orderDetails?.orderPriceAdjustments[0]?.price}
+          					delivery={orderDetails?.shippingTotal}
 							totalSavings="0"
 							subTotal={orderDetails?.productSubTotal.toString()}
-							delivery="Free"
 							tax={orderDetails?.taxTotal.toString()}
 							currency={orderDetails?.currency}
 						/>

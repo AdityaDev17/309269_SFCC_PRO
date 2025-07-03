@@ -121,6 +121,22 @@ export const GET_ORDER_DETAILS = `
       taxTotal
       productSubTotal
       productTotal
+      shippingTotal
+      orderPriceAdjustments {
+        appliedDiscount {
+          amount
+          percentage
+          type
+        }
+        creationDate
+        custom
+        itemText
+        lastModified
+        manual
+        price
+        priceAdjustmentId
+        promotionId
+      }
     }
   }
 `;
@@ -252,6 +268,9 @@ export const GET_BASKET = `
       currency
       productSubTotal
       productTotal
+      shippingTotal
+      shippingTotalTax
+      orderTotal
       productItems {
         itemId
         itemText
@@ -287,6 +306,22 @@ export const GET_BASKET = `
           }
         }
         productName
+        priceAdjustments {
+          appliedDiscount {
+            amount
+            percentage
+            type
+          }
+          custom
+          itemText
+          manual
+          price
+          priceAdjustmentId
+          promotionId
+        }
+        priceAfterItemDiscount
+        priceAfterOrderDiscount
+        tax
       }
         shipments {
         shippingAddress {
@@ -305,8 +340,23 @@ export const GET_BASKET = `
       customerId
       email
     }
+    orderPriceAdjustments {
+      appliedDiscount {
+        amount
+        type
+        percentage
+      }
+      creationDate
+      custom
+      itemText
+      lastModified
+      manual
+      price
+      priceAdjustmentId
+      promotionId
+    }
   }
-  }
+}
 `;
 export const UPDATE_BASKET_ITEM = `
   mutation UpdateBasketItem($input: UpdateBasket!) {
@@ -560,6 +610,21 @@ export const GET_SHIPPING_ADDRESS_FROM_BASKET = `
     basketInfo(basketId: $basketId) {
       productSubTotal,
   	  productTotal,
+      orderPriceAdjustments {
+              appliedDiscount {
+                amount
+                percentage
+                type
+              }
+              creationDate
+              custom
+              itemText
+              lastModified
+              manual
+              price
+              priceAdjustmentId
+              promotionId
+            },
 	  currency
       shipments {
         shippingAddress {

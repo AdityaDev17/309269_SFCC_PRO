@@ -45,35 +45,36 @@ const Details = () => {
 	console.log(orderDetails);
 
 	const getSize = (values: Values[], size: string) => {
-	return values?.find((item) => item.value === size)?.name;
-};
-	
-	const orderdedItems = orderDetails?.productItems?.map(
-		(item: ProductItem) => {
-	const imageUrl = item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link || "";
-	const variant = item?.productData?.data?.[0]?.variants?.find((v) => v?.productId === item.productId,);
-
-	return {
-		id: item.productId,
-		name: item.productName,
-		description: "",
-		quantity: item.quantity,
-		price: item.price,
-		currency: orderDetails.currency,
-		productImage: imageUrl,
-		size: getSize(
-			(
-				item?.productData?.data?.[0]
-					?.variationAttributes as VariationAttributes[]
-			)?.find((attr) => attr.id === "size")?.values ?? [],
-			item?.productData?.data?.[0]?.variants?.find(
-				(variation) => variation?.productId === item?.productId,
-			)?.variationValues?.size ?? "",
-		),
-		color: variant?.variationValues?.color ?? "",
+		return values?.find((item) => item.value === size)?.name;
 	};
-});
 
+	const orderdedItems = orderDetails?.productItems?.map((item: ProductItem) => {
+		const imageUrl =
+			item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link || "";
+		const variant = item?.productData?.data?.[0]?.variants?.find(
+			(v) => v?.productId === item.productId,
+		);
+
+		return {
+			id: item.productId,
+			name: item.productName,
+			description: "",
+			quantity: item.quantity,
+			price: item.price,
+			currency: orderDetails.currency,
+			productImage: imageUrl,
+			size: getSize(
+				(
+					item?.productData?.data?.[0]
+						?.variationAttributes as VariationAttributes[]
+				)?.find((attr) => attr.id === "size")?.values ?? [],
+				item?.productData?.data?.[0]?.variants?.find(
+					(variation) => variation?.productId === item?.productId,
+				)?.variationValues?.size ?? "",
+			),
+			color: variant?.variationValues?.color ?? "",
+		};
+	});
 
 	const capitalizeName = (name = "") =>
 		name
@@ -152,7 +153,6 @@ const Details = () => {
 					</div>
 				</>
 			) : (
-				
 				<>
 					<div className={styles.orderId}>
 						<Typography
@@ -294,7 +294,6 @@ const Details = () => {
 								total={orderDetails?.productTotal}
 								totalAmt={orderDetails?.productTotal}
 								currency={orderDetails?.currency || "$"}
-								
 							/>
 							<div>
 								<Typography

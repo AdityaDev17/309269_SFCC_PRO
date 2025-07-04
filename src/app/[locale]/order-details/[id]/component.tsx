@@ -284,16 +284,16 @@ const Details = () => {
 								</div>
 							</div>
 						</section>
-
 						<div className={styles.bottom}>
 							<OrderSummary
 								totalRowTop={true}
 								isButton={false}
 								isPaymentImage={false}
 								subTotal={orderDetails?.productSubTotal}
-								total={orderDetails?.productTotal}
-								totalAmt={orderDetails?.productTotal}
-								currency={orderDetails?.currency || "$"}
+								total={orderDetails?.orderTotal}
+								totalAmt={orderDetails?.orderTotal}
+								isDelivery={true}
+								discount={orderDetails?.orderPriceAdjustments[0]?.price}
 							/>
 							<div>
 								<Typography

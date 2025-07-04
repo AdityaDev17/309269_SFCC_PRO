@@ -9,6 +9,16 @@ import {
 	UPDATE_SHIPPING_ADDRESS,
 	UPDATE_SHIPPING_METHOD,
 } from "@/common/schema";
+import {
+	type CommonCardType,
+	type CustomerAddress,
+	type CustomerDetails,
+	type Shipment,
+	ShippingAddress,
+	type ShippingMethod,
+	type UpdateShippingAddressInput,
+	type UpdateShippingMethodInput,
+} from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 import {
@@ -30,7 +40,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./shipping.module.css";
-import {CustomerDetails,CommonCardType,ShippingAddress,Shipment,CustomerAddress,ShippingMethod,UpdateShippingAddressInput,UpdateShippingMethodInput} from "@/common/type";
 
 const Shipping = () => {
 	const router = useRouter();
@@ -232,7 +241,6 @@ const Shipping = () => {
 			setSelectedAddress(defaultOrFirst);
 		}
 	}, [addresses, selectedAddress]);
-
 	return (
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
@@ -361,6 +369,10 @@ const Shipping = () => {
 						<OrderSummary
 							reverseOrder={true}
 							isButton={true}
+							isDelivery={false}
+							discount={
+								shippingAddressData?.basketInfo?.orderPriceAdjustments[0].price
+							}
 							total={shippingAddressData?.basketInfo?.productTotal}
 							currency={shippingAddressData?.basketInfo?.currency}
 							subTotal={shippingAddressData?.basketInfo?.productSubTotal}

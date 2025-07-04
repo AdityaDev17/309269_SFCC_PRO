@@ -1,24 +1,26 @@
+import type { OrderSummaryProps } from "@/common/type";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./OrderSummary.module.css";
-import { OrderSummaryProps } from "@/common/type";
 
 const OrderSummary = ({
 	reverseOrder = false,
 	totalRowTop = false,
 	isButton = true,
 	isPaymentImage = true,
+	discount,
 	totalAmt = "",
-	currency = "$",
+	currency = "",
 	subTotal = "",
 	delivery = "",
 	tax = "",
 	total = "",
-	totalSavings = "",
+	totalSavings = " ",
 	buttonText = "CONTINUE",
 	onButtonClick,
+	isDelivery = false,
 }: OrderSummaryProps) => {
 	const paymentImages = [
 		"/images/pay1.svg",
@@ -27,7 +29,7 @@ const OrderSummary = ({
 		"/images/pay4.svg",
 		"/images/pay5.svg",
 	];
-
+	console.log(currency);
 	return (
 		<div className={styles.layout}>
 			{totalRowTop && (
@@ -79,17 +81,35 @@ const OrderSummary = ({
 						type={"Body"}
 						variant={2}
 						fontWeight="regular"
-						label="Delivery"
+						label="Discount"
 						color="#4F4B53"
 					/>
 					<Typography
 						type={"Body"}
 						variant={2}
 						fontWeight="regular"
-						label={delivery ? delivery : "0"}
+						label={`${discount ?? 0}`}
 						color="#4F4B53"
 					/>
 				</div>
+				{isDelivery && (
+					<div className={styles.summaryRow}>
+						<Typography
+							type={"Body"}
+							variant={2}
+							fontWeight="regular"
+							label="Delivery"
+							color="#4F4B53"
+						/>
+						<Typography
+							type={"Body"}
+							variant={2}
+							fontWeight="regular"
+							label={delivery ? `${currency} ${delivery}` : "Free"}
+							color="#4F4B53"
+						/>
+					</div>
+				)}
 				<div className={styles.summaryRow}>
 					<Typography
 						type={"Body"}
@@ -142,7 +162,7 @@ const OrderSummary = ({
 					)}
 				</div>
 				<hr className={styles.divider} />
-				{!reverseOrder && (
+				{/* {!reverseOrder && (
 					<div className={styles.totalSavings}>
 						<Typography
 							type={"Body"}
@@ -155,11 +175,11 @@ const OrderSummary = ({
 							type={"Body"}
 							variant={2}
 							fontWeight="regular"
-							label={`${currency}  ${totalSavings}`}
+							label={`${currency} ${totalSavings}`}
 							color="#4F4B53"
 						/>
 					</div>
-				)}
+				)} */}
 				{isButton && (
 					<div className={styles.summaryButton}>
 						<Button
@@ -171,7 +191,7 @@ const OrderSummary = ({
 						</Button>
 					</div>
 				)}
-				{reverseOrder && (
+				{/* {reverseOrder && (
 					<div className={styles.reverseTotalSavings}>
 						<Typography
 							type={"Body"}
@@ -188,7 +208,7 @@ const OrderSummary = ({
 							color="#4F4B53"
 						/>
 					</div>
-				)}
+				)} */}
 				{isPaymentImage && (
 					<div className={styles.paymentImages}>
 						{paymentImages.map((src) => (

@@ -2,6 +2,56 @@
   "HomePage": {
     "title": "Hello world!",
     "about": "Go to the about page",
-    "order-history":"ORDER HISTORY"
+    "order-history": "ORDER HISTORY"
+  },
+  "Wishlist": {
+    "title": "WISHLIST",
+    "continue-shopping": "CONTINUE SHOPPING",
+    "text-empty-wishlist": "Your wishlist is empty!",
+    "clear-filters": "CLEAR FILTERS"
+  },
+  "Shipping": {
+    "address": "ADDRESS",
+    "shipping-address": "Shipping Address",
+    "add-new-address": "ADD NEW ADDRESS",
+    "no-saved-addresses": "No saved addresses found.",
+    "select-shipping-address-error": "Please select a shipping address.",
+    "keep-billing-same": "Keep Billing Address same as Shipping Address",
+    "shipping-method": "Shipping Method",
+    "select-shipping-method-error": "Please select a shipping method.",
+    "proceed-to-payment": "PROCEED TO PAYMENT"
+  },
+  "ProductDetails": {
+    "select-size-error": "Please choose any size",
+    "add-to-wishlist": "ADD TO WISHLIST",
+    "size": "Size",
+    "add-to-bag": "ADD TO BAG",
+    "may also like": "YOU MAY ALSO LIKE"
+  },
+  "Payments":{
+    "title":"Payment"
+  },
+  "OrderDetails": {
+    "delivered-on": "Delivered on {date}",
+    "order-id": "ORDER ID",
+    "customer-info": "Customer Information",
+    "name": "Name",
+    "phone": "Phone no.",
+    "email": "Email ID",
+    "delivery-address": "Delivery Address",
+    "payment-method": "Method of Payment",
+    "return-window": "Return window is open till {date}.",
+    "return-order": "RETURN ORDER",
+    "why-returning": "Why are you returning?",
+    "return-info-help": "This information will be used to improve our products and services.",
+    "reason-quality": "Quality issues",
+    "reason-defective": "Received wrong/defective product",
+    "reason-image-mismatch": "Product does not match website image",
+    "reason-other": "Other issue",
+    "additional-comments": "Any additional comments:",
+    "cancel": "CANCEL",
+    "submit": "SUBMIT",
+    "download-invoice": "DOWNLOAD INVOICE",
+    "cancel-order": "CANCEL ORDER"
   }
 }

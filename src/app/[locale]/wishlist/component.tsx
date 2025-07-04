@@ -2,11 +2,12 @@
 
 import { Button } from "@/components/atomic/Button/Button";
 import Typography from "@/components/atomic/Typography/Typography";
+import { useTranslations } from "next-intl";
 import React, { useState } from "react";
 import styles from "./wishlist.module.css";
 const ButtonList = ({ buttonNames }: { buttonNames: string[] }) => {
 	const [activeIndex, setActiveIndex] = useState<number>(-1);
-
+	const t = useTranslations("Wishlist");
 	return (
 		<>
 			<div className={styles.filterConainer}>
@@ -39,7 +40,7 @@ const ButtonList = ({ buttonNames }: { buttonNames: string[] }) => {
 							type={"Body"}
 							variant={4}
 							fontWeight="semibold"
-							label={"CLEAR FILTERS"}
+							label={t("clear-filters")}
 						/>
 					</Button>
 				</div>

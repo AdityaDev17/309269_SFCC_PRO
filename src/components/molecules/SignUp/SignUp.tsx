@@ -14,11 +14,11 @@ import {
 import styles from "./SignUp.module.css";
 
 type SignUpFormData = {
-	title: string;
+	title: string | null;
 	firstName: string;
 	lastName: string;
-	gender: string;
-	birthDate: string;
+	gender: string | null;
+	birthDate: string | null;
 	email: string;
 	password: string;
 	confirmPassword: string;
@@ -35,8 +35,8 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 		title: "",
 		firstName: "",
 		lastName: "",
-		gender: "",
-		birthDate: "",
+		gender: null as string | null,
+		birthDate: null as string | null,
 		email: "",
 		password: "",
 		confirmPassword: "",
@@ -62,9 +62,20 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 
 		if (!targetName) return;
 
+		// Convert empty strings to null for specific fields
+		let processedValue: string | null = value;
+		if ((targetName === "gender" || targetName === "birthDate")) {
+			// For select fields, ensure we're getting the actual value
+			if (value === "" || value === undefined || value === "null" || value === null) {
+				processedValue = null;
+			} else {
+				processedValue = String(value);
+			}
+		}
+
 		setFormData((prevData) => ({
 			...prevData,
-			[targetName]: value,
+			[targetName]: processedValue,
 		}));
 
 		//  Clear validation error when user starts typing
@@ -190,9 +201,12 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 		}
 
 		setErrors(newErrors);
-		return !newErrors.password && !newErrors.confirmPassword && !newErrors.agreeToTerms;
+		return (
+			!newErrors.password &&
+			!newErrors.confirmPassword &&
+			!newErrors.agreeToTerms
+		);
 	};
-
 
 	// Handle continue button click with validation
 	const handleContinue = () => {
@@ -204,7 +218,24 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 	// Handle proceed button click with validation
 	const handleProceed = () => {
 		if (validatePasswordStep()) {
-			onProceed(formData);
+			// Clean up form data before sending
+			const cleanedFormData: SignUpFormData = {
+				title: formData.title?.trim() || null,
+				firstName: formData.firstName,
+				lastName: formData.lastName,
+				gender: formData.gender || null,
+				birthDate: formData.birthDate || null,
+				email: formData.email,
+				password: formData.password,
+				confirmPassword: formData.confirmPassword,
+				agreeToTerms: formData.agreeToTerms,
+			};
+			// Debug log to check the values
+			console.log("Form data being sent:", cleanedFormData);
+			console.log("Gender type:", typeof cleanedFormData.gender, "Value:", cleanedFormData.gender);
+			console.log("BirthDate type:", typeof cleanedFormData.birthDate, "Value:", cleanedFormData.birthDate);
+
+			onProceed(cleanedFormData);
 		}
 	};
 
@@ -265,7 +296,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 								<SelectItem value="Mrs" data-testid="select-item-2">
 									Mrs
 								</SelectItem>
-								<SelectItem value="Ms" data-testid="select-item-2">
+								<SelectItem value="Ms" data-testid="select-item-3">
 									Ms
 								</SelectItem>
 							</SelectGroup>
@@ -289,7 +320,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					{errors.firstName && (
 						<div className={styles.errorMessage}>{errors.firstName}</div>
 					)}
-				</div>  
+				</div>
 				<div>
 					<div className={styles.fontColor}>Last Name*</div>
 					<Input
@@ -336,7 +367,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 								<SelectItem value="female" data-testid="select-item-2">
 									Female
 								</SelectItem>
-								<SelectItem value="others" data-testid="select-item-2">
+								<SelectItem value="others" data-testid="select-item-3">
 									Others
 								</SelectItem>
 							</SelectGroup>
@@ -400,24 +431,16 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						style={{
 							width: "325px",
 							borderColor: errors.password ? "#FF0000" : "#B3B2B5",
-
 						}}
 					/>
-					{/*  Password validation message */}
-					{/* {formData.password &&
-						!validatePassword(formData.password).isValid && (
-							<div className={styles.errorMessage}>
-								{getPasswordValidationMessage()}
-							</div>
-						)} */}
+
 					{/*  Error message for Password */}
 					{errors.password && (
 						<div className={styles.errorMessage}>{errors.password}</div>
 					)}
-
 				</div>
 				<div>
-					<div className={styles.fontColor}>Confirm Password</div>
+					<div className={styles.fontColor}>Confirm Password*</div>
 					<Input
 						type="password"
 						value={formData?.confirmPassword || ""}
@@ -466,7 +489,6 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						fontWeight: "600",
 					}}
 					onClick={handleProceed}
-
 				>
 					PROCEED
 				</Button>

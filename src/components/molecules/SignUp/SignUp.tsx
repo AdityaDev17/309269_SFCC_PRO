@@ -289,7 +289,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					{errors.firstName && (
 						<div className={styles.errorMessage}>{errors.firstName}</div>
 					)}
-				</div>
+				</div>  
 				<div>
 					<div className={styles.fontColor}>Last Name*</div>
 					<Input

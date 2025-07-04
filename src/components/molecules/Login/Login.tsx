@@ -12,6 +12,11 @@ interface LoginProps {
 	clearErrorMessage?: () => void;
 }
 
+interface ValidationErrors {
+	email?: string;
+	password?: string;
+}
+
 const Login = ({
 	onLoginClicked,
 	onCreateAccount,
@@ -22,6 +27,28 @@ const Login = ({
 		email: "",
 		password: "",
 	});
+	const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	const validateForm = (): boolean => {
+		const errors: ValidationErrors = {};
+
+		// Email validation
+		if (!formData.email.trim()) {
+			errors.email = "Email is required";
+		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+			errors.email = "Please enter a valid email address";
+		}
+
+		// Password validation
+		if (!formData.password.trim()) {
+			errors.password = "Password is required";
+		}
+
+		setValidationErrors(errors);
+		return Object.keys(errors).length === 0;
+	};
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 
@@ -32,12 +59,29 @@ const Login = ({
 			...prevData,
 			[name]: value,
 		}));
-	};
-	const handleDisable = () => {
-		if (formData?.email !== "" && formData?.password !== "") {
-			return false;
+
+		// Clear validation error for this field when user starts typing
+		if (validationErrors[name as keyof ValidationErrors]) {
+			setValidationErrors(prev => ({
+				...prev,
+				[name]: undefined,
+			}));
 		}
-		return true; 
+	};
+
+	const handleLoginClick = async () => {
+		// Always validate on submit
+		if (!validateForm()) {
+			return;
+		}
+
+		setIsSubmitting(true);
+
+		try {
+			await onLoginClicked(formData);
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 	return (
 		<div className={styles.layout}>
@@ -48,8 +92,11 @@ const Login = ({
 					type="email"
 					name="email"
 					onChange={handleChange}
-					style={{ width: "325px", borderColor: "#B3B2B5" }}
+					style={{ width: "325px", borderColor: validationErrors.email ? "#dc3545" : "#B3B2B5" }}
 				/>
+				{validationErrors.email && (
+					<p className={styles.fieldError}>{validationErrors.email}</p>
+				)}
 			</div>
 			<div>
 				<div className={styles.fontColor}>Password</div>
@@ -57,8 +104,11 @@ const Login = ({
 					type="password"
 					name="password"
 					onChange={handleChange}
-					style={{ width: "325px", borderColor: "#B3B2B5" }}
+					style={{ width: "325px", borderColor: validationErrors.password ? "#dc3545" : "#B3B2B5" }}
 				/>
+				{validationErrors.password && (
+					<p className={styles.fieldError}>{validationErrors.password}</p>
+				)}
 			</div>
 
 			{errorMessage && <p className={styles.errorMsg}>{errorMessage}</p>}
@@ -81,10 +131,9 @@ const Login = ({
 					fontSize: "12px",
 					fontWeight: "600",
 				}}
-				disabled={handleDisable()}
-				onClick={() => onLoginClicked(formData)}
+				onClick={handleLoginClick}
 			>
-				LOGIN
+				{isSubmitting ? "LOGGING IN..." : "LOGIN"}
 			</Button>
 			<div>
 				<div className={`${styles.fontColor} ${styles.marginBottom}`}>

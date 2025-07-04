@@ -159,7 +159,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 		return !newErrors.firstName && !newErrors.lastName && !newErrors.email;
 	};
 
-	//  Validation function for  (Password Screen)
+	//  Validation function for Step 2 (Password Screen)
 	const validatePasswordStep = () => {
 		const newErrors = {
 			firstName: "",
@@ -192,7 +192,6 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 		setErrors(newErrors);
 		return !newErrors.password && !newErrors.confirmPassword && !newErrors.agreeToTerms;
 	};
-
 
 	// Handle continue button click with validation
 	const handleContinue = () => {
@@ -237,7 +236,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 				className={styles.layout}
 			>
 				<div>
-					<div className={styles.fontColor}>Title</div>
+					<div className={styles.fontColor}>Title*</div>
 					<Select onValueChange={(e) => handleChange(e, "title")}>
 						<SelectTrigger
 							style={{
@@ -400,24 +399,15 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						style={{
 							width: "325px",
 							borderColor: errors.password ? "#FF0000" : "#B3B2B5",
-
 						}}
 					/>
-					{/*  Password validation message */}
-					{/* {formData.password &&
-						!validatePassword(formData.password).isValid && (
-							<div className={styles.errorMessage}>
-								{getPasswordValidationMessage()}
-							</div>
-						)} */}
 					{/*  Error message for Password */}
 					{errors.password && (
 						<div className={styles.errorMessage}>{errors.password}</div>
 					)}
-
 				</div>
 				<div>
-					<div className={styles.fontColor}>Confirm Password</div>
+					<div className={styles.fontColor}>Confirm Password*</div>
 					<Input
 						type="password"
 						value={formData?.confirmPassword || ""}
@@ -428,7 +418,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 							borderColor: errors.confirmPassword ? "#FF0000" : "#B3B2B5",
 						}}
 					/>
-					{/*  error message for confirm password */}
+					{/*  Error message for Confirm Password */}
 					{errors.confirmPassword && (
 						<div className={styles.errorMessage}>{errors.confirmPassword}</div>
 					)}
@@ -466,7 +456,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						fontWeight: "600",
 					}}
 					onClick={handleProceed}
-
+					// Removed disabled prop - button is now always enabled
 				>
 					PROCEED
 				</Button>
@@ -475,59 +465,3 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 	);
 };
 export default SignUp;
-
-/**
- * ## SignUp
- *
- * The SignUp component is a two-step registration form that collects user information
- * and validates input before proceeding. It features a clean UI and is built using
- * atomic design components such as `Input`, `Select`, `Checkbox`, and `Button`.
- *
- * ### Props
- *
- * - **onProceed** `(function)`: A callback function invoked with the complete form data
- *   once the user submits the form.
- *   ```ts
- *   (formData: {
- *     title: string;
- *     firstName: string;
- *     lastName: string;
- *     gender: string;
- *     birthDate: string;
- *     email: string;
- *     password: string;
- *     confirmPassword: string;
- *     agreeToTerms: boolean;
- *   }) => void
- *   ```
- *
- * ### Component Behavior
- *
- * - Renders a two-step form:
- *   1. **Step 1**: Collects personal details like title, name, gender, birth date, and email.
- *   2. **Step 2**: Prompts for password setup and agreement to terms.
- *
- * - The **"CONTINUE"** button is disabled until all required fields in Step 1 are filled.
- * - The **"PROCEED"** button is disabled until:
- *   - Password and confirm password fields match
- *   - Terms & Conditions checkbox is checked
- *
- * - Form field values are controlled via component state.
- * - Styling is handled via CSS modules (`SignUp.module.css`) and inline overrides.
- *
- * ### Internal State
- *
- * - `formData`: Object containing all field values.
- * - `passwordScreen`: Boolean flag to switch between Step 1 and Step 2.
- *
- * ### Usage Example
- *
- * ```tsx
- *
- * const handleSignUp = (formData) => {
- *   console.log("User submitted form:", formData);
- * };
- *
- * <SignUp onProceed={handleSignUp} />
- * ```
- */

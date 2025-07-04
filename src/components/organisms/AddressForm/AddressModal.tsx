@@ -564,7 +564,7 @@ export function AddressDialog({
 										<SelectTrigger
 											className={cn(
 												styles.SelectOutline,
-												errors.state ? styles.ErrorInput : ""
+												errors.state ? styles.ErrorInput : "",
 											)}
 										>
 											<SelectValue placeholder="State*" />

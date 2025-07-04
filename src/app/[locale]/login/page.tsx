@@ -71,7 +71,8 @@ const Page = () => {
 	const loginClickHandler = (
 		formData: { email: string; password: string },
 		call = "login",
-	) => {
+	): Promise<void> => {
+		return new Promise((resolve, reject) => {
 		// const authResponse = await loginCustomer()
 		// console.log("Auth response received:", JSON.stringify(authResponse, null, 2))
 		setLoginError(undefined); // Clear previous error
@@ -97,6 +98,7 @@ const Page = () => {
 				if (!data?.access_token) {
 					setLoginError("Incorrect email or password.Please try again");
 					loginSuccess = false;
+					reject(new Error("Login failed"));
 					return;
 				}
 				loginSuccess = true;
@@ -143,11 +145,14 @@ const Page = () => {
 					sessionStorage.setItem("basketId", basketId);
 				}
 				router.push("/"); //  Only happens after successful login
+				resolve(); // Resolve when everything is done
 			})
 			.catch((error) => {
 				console.error("Login error ", error);
 				setLoginError("Something went wrong. Please try again");
+				reject(error); //  Reject on error
 			});
+		});
 	};
 
 	const signUpHandler = (formData: formDataProps) => {

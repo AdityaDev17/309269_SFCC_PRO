@@ -366,20 +366,6 @@ const Shipping = () => {
 					{isLoadingShippingAddress || isLoadingShippingMethods ? (
 						<Skeleton className={styles.skeletonSummary} />
 					) : (
-						//     <OrderSummary
-						//       reverseOrder={true}
-						//       buttonText="CHECKOUT"
-						//       onButtonClick={handleCheckout}
-						//     />
-						//   )}
-						// </div>
-
-						// <div className={styles.summary}>
-						//   {/* <OrderSummary
-						// 				reverseOrder={true}
-						// 				buttonText="CHECKOUT"
-						// 				onButtonClick={handleCheckout}
-						// 			/> */}
 						<OrderSummary
 							reverseOrder={true}
 							isButton={true}

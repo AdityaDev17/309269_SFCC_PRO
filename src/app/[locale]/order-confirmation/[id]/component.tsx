@@ -1,6 +1,10 @@
 "use client";
 import { GET_ORDER_DETAILS, UPDATE_ORDER } from "@/common/schema";
-import type { CartItemResponse } from "@/common/type";
+import type {
+	CartItemResponse,
+	Values,
+	VariationAttributes,
+} from "@/common/type";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
@@ -45,6 +49,10 @@ const OrderConfimation = () => {
 		runUpdate();
 	}, [runUpdate]);
 
+	const getSize = (values: Values[], size: string) => {
+		return values?.find((item) => item.value === size)?.name;
+	};
+
 	const orderDetails = data?.orderInfo;
 	const orderdedItems = orderDetails?.productItems?.map(
 		(item: CartItemResponse) => ({
@@ -58,9 +66,15 @@ const OrderConfimation = () => {
 			color: item?.productData?.data?.[0]?.variants?.find(
 				(variation) => variation?.productId === item?.productId,
 			)?.variationValues?.color,
-			size: item?.productData?.data?.[0]?.variants?.find(
-				(variation) => variation?.productId === item?.productId,
-			)?.variationValues?.size,
+			size: getSize(
+				(
+					item?.productData?.data?.[0]
+						?.variationAttributes as VariationAttributes[]
+				)?.find((attr) => attr.id === "size")?.values ?? [],
+				item?.productData?.data?.[0]?.variants?.find(
+					(variation) => variation?.productId === item?.productId,
+				)?.variationValues?.size ?? "",
+			),
 			productImage:
 				item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link,
 		}),

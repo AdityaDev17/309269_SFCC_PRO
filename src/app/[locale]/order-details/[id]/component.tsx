@@ -3,7 +3,7 @@
 // import { orderDetails } from "@/common/constant";
 import { orderStatus } from "@/common/constant";
 import { GET_ORDER_DETAILS } from "@/common/schema";
-import type { ProductItem } from "@/common/type";
+import type { ProductItem, Values, VariationAttributes } from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
 import Input from "@/components/atomic/Input/Input";
 import {
@@ -44,6 +44,10 @@ const Details = () => {
 	const orderDetails = data?.orderInfo;
 	console.log(orderDetails);
 
+	const getSize = (values: Values[], size: string) => {
+		return values?.find((item) => item.value === size)?.name;
+	};
+
 	const orderdedItems = orderDetails?.productItems?.map((item: ProductItem) => {
 		const imageUrl =
 			item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link || "";
@@ -59,7 +63,15 @@ const Details = () => {
 			price: item.price,
 			currency: orderDetails.currency,
 			productImage: imageUrl,
-			size: variant?.variationValues?.size ?? "",
+			size: getSize(
+				(
+					item?.productData?.data?.[0]
+						?.variationAttributes as VariationAttributes[]
+				)?.find((attr) => attr.id === "size")?.values ?? [],
+				item?.productData?.data?.[0]?.variants?.find(
+					(variation) => variation?.productId === item?.productId,
+				)?.variationValues?.size ?? "",
+			),
 			color: variant?.variationValues?.color ?? "",
 		};
 	});

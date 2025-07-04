@@ -69,21 +69,24 @@ export default function ProductDetails() {
 		.map((image: ProductImage) => image?.link);
 
 	useEffect(() => {
-		const sizes = data?.productDetails?.variationAttributes
-			?.find((item: VariationAttributes) => item?.id === "size")
-			?.values?.map((item: Values) => {
-				const hasMatchingVariant = data?.productDetails?.variants?.some(
-					(variant: Variants) =>
-						variant.variationValues?.color === targetColor &&
-						variant.variationValues?.size === item?.value,
-				);
+		const sizeAttr = data?.productDetails?.variationAttributes?.find(
+			(item: VariationAttributes) => item?.id === "size",
+		);
 
-				return {
-					value: item?.value,
-					title: item?.name,
-					disabled: !hasMatchingVariant,
-				};
-			});
+		const sizes = sizeAttr?.values?.map((item: Values) => {
+			const hasMatchingVariant = data?.productDetails?.variants?.some(
+				(variant: Variants) =>
+					(variant?.variationValues?.color === targetColor || !targetColor) &&
+					variant?.variationValues?.size === item?.value,
+			);
+
+			return {
+				value: item?.value,
+				title: item?.name,
+				disabled: !hasMatchingVariant,
+			};
+		});
+
 		setSizes(sizes);
 	}, [data, targetColor]);
 
@@ -164,22 +167,30 @@ export default function ProductDetails() {
 		onSuccess: () => setOpen(true),
 		retry: 3,
 	});
+
 	const handleAddToBasket = async () => {
-		if (sizes && targetSize === "") {
+		if (sizes !== undefined && !targetSize) {
 			setError("Choose any size");
-		} else {
-			setError("");
-			const masterId = data?.productDetails?.variants?.find(
-				(variant: Variants) =>
-					variant?.variationValues?.color === targetColor &&
-					variant?.variationValues?.size === targetSize,
-			)?.productId;
-			const response = await addToBasketMutation.mutateAsync({
-				productId: masterId ? masterId : productId,
-			});
-			return response;
+			return;
 		}
+
+		setError("");
+
+		const matchedVariant = data?.productDetails?.variants?.find(
+			(variant: Variants) =>
+				(variant?.variationValues?.color === targetColor || !targetColor) &&
+				variant?.variationValues?.size === targetSize,
+		);
+
+		const selectedProductId = matchedVariant?.productId ?? productId;
+
+		const response = await addToBasketMutation.mutateAsync({
+			productId: selectedProductId,
+		});
+
+		return response;
 	};
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement> | string,
 		name?: string,
@@ -190,6 +201,7 @@ export default function ProductDetails() {
 		if (!targetName) return;
 		setTargetSize(value);
 	};
+	console.log("343", sizes);
 	return (
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
@@ -303,7 +315,7 @@ export default function ProductDetails() {
 													key={item?.title}
 													disabled={item?.disabled}
 												>
-													{item?.title}
+													{item?.disabled ? <s>{item?.title}</s> : item?.title}
 												</SelectItem>
 											))}
 										</SelectContent>

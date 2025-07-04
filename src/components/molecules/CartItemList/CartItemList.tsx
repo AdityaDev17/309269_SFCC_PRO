@@ -80,24 +80,28 @@ const CartItemList = ({
 								fontWeight="semibold"
 								label={item.name}
 							/>
-							{item?.size && item?.color && (
-								<div className={styles.textColor}>
+							<div className={styles.textColor}>
+								{item?.size && (
 									<div>
 										Size &nbsp;
 										{item?.size}
 									</div>
-									<div className={styles.align}>| </div>
-									<div className={styles.color}>
-										Color{" "}
-										<div
-											className={styles.circle}
-											style={{
-												backgroundColor: `${item?.color}`,
-											}}
-										/>
-									</div>
-								</div>
-							)}
+								)}
+								{item?.color && (
+									<>
+										<div className={styles.align}>| </div>
+										<div className={styles.color}>
+											Color{" "}
+											<div
+												className={styles.circle}
+												style={{
+													backgroundColor: `${item?.color}`,
+												}}
+											/>
+										</div>
+									</>
+								)}
+							</div>
 							{item.description && (
 								<Typography
 									type="Body"

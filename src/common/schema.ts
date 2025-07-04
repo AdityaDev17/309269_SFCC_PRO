@@ -99,6 +99,15 @@ export const GET_ORDER_DETAILS = `
                 size
               }
             }
+            variationAttributes {
+              id
+              name
+              values {
+                name
+                orderable
+                value
+              }
+            }
           }
         }
         quantity

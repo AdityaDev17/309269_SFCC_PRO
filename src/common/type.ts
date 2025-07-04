@@ -102,6 +102,12 @@ export type ProductItem = {
           size?: string;
         };
       }[];
+      variationAttributes?: {
+        values?: {
+          name?: string;
+          value?: string;
+        };
+      }[];
     }[];
   };
 };

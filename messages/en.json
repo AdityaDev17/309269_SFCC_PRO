@@ -169,5 +169,56 @@
     "button": "FILTERS",
     "drawerTitle": "FILTERS"
   }
+  },
+  "AddressCard": {
+    "phone": "Phone No.",
+    "default": "Default",
+    "set-as-default": "Set as Default",
+    "delete-title": "Delete Confirmation",
+    "delete-confirmation": "Are you sure you want to delete this address?",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "AddressForm": {
+    "edit-address": "Edit Address",
+    "add-address": "Add Address",
+    "contact-details": "Contact Details:",
+    "location-details": "Location Details:",
+    "set-as-default": "Set as Default",
+    "cancel": "Cancel",
+    "update": "Update",
+    "save": "Save"
+  },
+  "Footer": {
+    "change-location": "Change Location",
+    "country": {
+      "US": "US",
+      "UK": "UK",
+      "Canada": "Canada"
+    },
+    "copyright": "SFCC PRO International"
+  },
+  "Header": {
+    "menu": "Menu"
+  },
+  "CartItemList": {
+    "quantity": "Quantity",
+    "buy-now": "BUY NOW",
+    "write-review": "WRITE REVIEW",
+    "move-to-wishlist": "Move to Wishlist",
+    "delete": "Delete",
+    "size": "Size",
+    "color": "Color"
+  },
+  "FilterDialog": {
+    "filter-button": "Filter",
+    "title": "Filters",
+    "clear-filters": "CLEAR FILTERS",
+    "apply-filters": "APPLY FILTERS"
+  },
+  "ProductCard": {
+    "move-to-bag": "Move to Bag"
   }
+
 }
+

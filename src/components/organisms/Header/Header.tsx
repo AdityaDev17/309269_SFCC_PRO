@@ -30,6 +30,7 @@ import MiniCart from "../MiniCart/MiniCart";
 import styles from "./Header.module.css";
 import SearchMenu from "./SearchMenu";
 import { HeaderProps } from "@/common/type";
+import { useTranslations } from "next-intl";
 
 const getImageContainerClass = (length: number) => {
   if (length === 2) return styles.oneSecondaryImage;
@@ -44,6 +45,7 @@ const Header: React.FC<HeaderProps> = ({
   headerIcons,
   headerWhiteIcons,
 }) => {
+  const t = useTranslations("Header");
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
   const [open, setOpen] = useState(false);
@@ -122,7 +124,7 @@ const Header: React.FC<HeaderProps> = ({
               <DrawerContent side="left">
                 <DrawerHeader className={styles.menuheader}>
                   <ChevronLeft size={20} onClick={previousHandler} />
-                  <DrawerTitle className={styles.title}>MENU</DrawerTitle>
+                  <DrawerTitle className={styles.title}>{t("menu")}</DrawerTitle>
                   <DrawerClose className={styles.close} asChild>
                     <Image
                       src="/images/expand.svg"

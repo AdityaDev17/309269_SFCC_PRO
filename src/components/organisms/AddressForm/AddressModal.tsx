@@ -26,6 +26,7 @@ import {
 } from "../../molecules/Dialog/Dialog";
 import type { AddressData } from "../AddressCard/AddressCard";
 import styles from "./AddressModal.module.css";
+import { useTranslations } from "next-intl";
 
 const basketId = sessionStorage.getItem("basketId");
 const customerId = sessionStorage.getItem("customer_id");
@@ -161,6 +162,8 @@ export function AddressDialog({
 	const [postalCode, setPostalCode] = useState("");
 	const [phone, setPhone] = useState("");
 	const [isDefault, setIsDefault] = useState(false);
+
+	const t = useTranslations("AddressForm");
 
 	useEffect(() => {
 		if (selectedAddress) {
@@ -307,7 +310,7 @@ export function AddressDialog({
 			>
 				<DialogHeader className={styles.AddressDialogHeader}>
 					<DialogTitle className={styles.AddressDialogTitle}>
-						{isEditMode ? "Edit Address" : "Add Address"}
+						{isEditMode ? t("edit-address") : t("add-address")}
 					</DialogTitle>
 				</DialogHeader>
 
@@ -319,7 +322,7 @@ export function AddressDialog({
 
 						{/* Contact Details */}
 						<fieldset className={styles.Section}>
-							<legend>Contact Details:</legend>
+							<legend>{t("contact-details")}</legend>
 							<div className={styles.TwoColumn}>
 								<Input
 									placeholder="First Name*"
@@ -366,7 +369,7 @@ export function AddressDialog({
 
 						{/* Location Details */}
 						<fieldset className={styles.Section}>
-							<legend>Location Details:</legend>
+							<legend>{t("location-details")}</legend>
 							<div className={styles.TwoColumn}>
 								<Input
 									placeholder="Apartment, Suite, etc.*"
@@ -430,15 +433,15 @@ export function AddressDialog({
 							checked={isDefault}
 							onChange={handleCheckboxChange}
 						/>
-						<label htmlFor="setDefault">Set as Default</label>
+						<label htmlFor="setDefault">{t("set-as-default")}</label>
 					</div>
 
 					<div className={styles.ButtonRow}>
 						<DialogClose asChild>
-							<Button>Cancel</Button>
+							<Button>{t("cancel")}</Button>
 						</DialogClose>
 						<Button variant="secondary" type="submit" onClick={handleSubmit}>
-							{isEditMode ? "Update" : "Save"}
+							{isEditMode ? t("update") : t("save")}
 						</Button>
 					</div>
 				</DialogFooter>

@@ -52,11 +52,11 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 			[targetName]: value,
 		}));
 
-    setErrors((prev) => ({
-      ...prev,
-      [targetName]: "",
-    }));
-  };
+		setErrors((prev) => ({
+			...prev,
+			[targetName]: "",
+		}));
+	};
 
 	const validateFields = () => {
 		const newErrors: Partial<Record<keyof UserDetails, string>> = {};

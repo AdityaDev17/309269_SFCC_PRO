@@ -47,17 +47,17 @@
 .inputField {
   width: 325px;
   border: 1px solid var(--colour-link-3);
-  color:var(--colour-icon-support);
+  color: var(--colour-icon-support);
   border-radius: 4px;
   padding: 4px 8px;
 }
 
 .inputFieldError {
-  border-color: var(--colour-label-mandatory-field) ;
+  border-color: var(--colour-label-mandatory-field);
 }
 
 .errorText {
-  color: var(--colour-label-mandatory-field) ;
+  color: var(--colour-label-mandatory-field);
   font-size: 12px;
   margin-top: 4px;
 }
@@ -77,11 +77,5 @@
 }
 
 .selectTriggerError {
-  border-color: var(--colour-label-mandatory-field) ;
-}
-
-.errorText {
-  color:var(--colour-label-mandatory-field) ;
-  font-size: 12px;
-  margin-top: 4px;
+  border-color: var(--colour-label-mandatory-field);
 }

@@ -4,6 +4,7 @@ import React from "react";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./OrderSummary.module.css";
+import { useTranslations } from "next-intl";
 
 const OrderSummary = ({
 	reverseOrder = false,
@@ -29,7 +30,8 @@ const OrderSummary = ({
 		"/images/pay4.svg",
 		"/images/pay5.svg",
 	];
-	console.log(currency);
+	// console.log(currency);
+	const t = useTranslations("OrderSummary");
 	return (
 		<div className={styles.layout}>
 			{totalRowTop && (
@@ -39,7 +41,7 @@ const OrderSummary = ({
 							type={"Label"}
 							variant={3}
 							fontWeight="medium"
-							label="Total"
+							label={t("total")}
 						/>
 						<Typography
 							type={"Label"}
@@ -57,7 +59,7 @@ const OrderSummary = ({
 						type={"Label"}
 						variant={3}
 						fontWeight="medium"
-						label="Price Details"
+						label={t("price-details")}
 					/>
 				</div>
 				<div className={styles.summaryRow}>
@@ -65,7 +67,7 @@ const OrderSummary = ({
 						type={"Body"}
 						variant={2}
 						fontWeight="regular"
-						label="Sub Total"
+						label={t("sub-total")}
 						color="#4F4B53"
 					/>
 					<Typography
@@ -81,7 +83,7 @@ const OrderSummary = ({
 						type={"Body"}
 						variant={2}
 						fontWeight="regular"
-						label="Discount"
+						label={t("discount")}
 						color="#4F4B53"
 					/>
 					<Typography
@@ -98,14 +100,14 @@ const OrderSummary = ({
 							type={"Body"}
 							variant={2}
 							fontWeight="regular"
-							label="Delivery"
+							label={t("delivery")}
 							color="#4F4B53"
 						/>
 						<Typography
 							type={"Body"}
 							variant={2}
 							fontWeight="regular"
-							label={delivery ? `${currency} ${delivery}` : "Free"}
+							label={delivery ? `${currency} ${delivery}` : t("free")}
 							color="#4F4B53"
 						/>
 					</div>
@@ -115,7 +117,7 @@ const OrderSummary = ({
 						type={"Body"}
 						variant={2}
 						fontWeight="regular"
-						label="Tax"
+						label={t("tax")}
 						color="#4F4B53"
 					/>
 					<Typography
@@ -134,7 +136,7 @@ const OrderSummary = ({
 								type={"Body"}
 								variant={2}
 								fontWeight="medium"
-								label="Total"
+								label={t("total")}
 							/>
 							<Typography
 								type={"Body"}
@@ -150,7 +152,7 @@ const OrderSummary = ({
 								type={"Label"}
 								variant={3}
 								fontWeight="medium"
-								label="Total"
+								label={t("total")}
 							/>
 							<Typography
 								type={"Label"}

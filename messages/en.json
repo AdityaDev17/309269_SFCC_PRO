@@ -198,9 +198,6 @@
     },
     "copyright": "SFCC PRO International"
   },
-  "Header": {
-    "menu": "Menu"
-  },
   "CartItemList": {
     "quantity": "Quantity",
     "buy-now": "BUY NOW",
@@ -218,7 +215,43 @@
   },
   "ProductCard": {
     "move-to-bag": "Move to Bag"
+  },
+  "OrderConfirmation": {
+    "order-summary": "ORDER SUMMARY",
+    "delivery-address": "Delivery Address",
+    "order-date": "Date of Order",
+    "payment-method": "Method of Payment",
+    "product-details": "Product Details",
+    "continue-shopping":"CONTINUE SHOPPING"
+  },
+  
+  "Timeline":{
+    "shipping-details":"Shipping Details",
+    "track-package":"TRACK PACKAGE"
+  },
+  "OrderSummary": {
+    "total": "Total",
+    "price-details": "Price Details",
+    "sub-total": "Sub Total",
+    "discount": "Discount",
+    "delivery": "Delivery",
+    "free": "Free",
+    "tax": "Tax",
+    "total-savings": "Total Savings",
+    "continue": "CONTINUE"
+  },
+  "MiniCart": {
+    "bag-title": "BAG",
+    "items": "{count} items",
+    "subtotal": "SUBTOTAL",
+    "including-taxes": "(including taxes)",
+    "view-bag": "VIEW BAG",
+    "empty-message": "There is nothing in your bag!"
+  },
+  "Header": {
+    "menu": "MENU",
+    "searchSuggestion": "SEARCH SUGGESTION",
+    "productSuggestion": "PRODUCT SUGGESTION"
   }
-
+  
 }
-

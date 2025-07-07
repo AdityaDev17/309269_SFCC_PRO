@@ -24,6 +24,7 @@ import {
 } from "@/components/organisms/MiniCart/CartFuntions";
 import styles from "@/components/organisms/MiniCart/MiniCart.module.css";
 import { CartItem, MiniCartProps } from "@/common/type";
+import { useTranslations } from "next-intl";
 
 
 
@@ -34,6 +35,7 @@ const MiniCart = ({
 	onOpenChange,
 }: MiniCartProps) => {
 	const router = useRouter();
+	const t = useTranslations("MiniCart");
 	const basketId = sessionStorage.getItem("basketId") ?? "";
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Basket", basketId],
@@ -100,7 +102,7 @@ const MiniCart = ({
 								type={"Label"}
 								variant={3}
 								fontWeight="medium"
-								label="BAG"
+								label={t("bag-title")}
 							/>
 						</DrawerTitle>
 
@@ -141,12 +143,12 @@ const MiniCart = ({
 										type={"Label"}
 										variant={3}
 										fontWeight="medium"
-										label="SUBTOTAL"
+										label={t("subtotal")}
 									/>
 									<Typography
 										type={"Body"}
 										variant={3}
-										label="(including taxes)"
+										label={t("including-taxes")}
 										color="#75757a"
 									/>
 								</div>
@@ -160,7 +162,7 @@ const MiniCart = ({
 										router.push("/cart");
 									}}
 								>
-									VIEW BAG
+									{t("view-bag")}
 								</Button>
 							</div>
 						</DrawerFooter>
@@ -196,7 +198,7 @@ const MiniCart = ({
 							<Typography
 								type="Body"
 								variant={2}
-								label="There is nothing in your bag!"
+								label={t("empty-message")}
 								color="#75757a"
 							/>
 						</div>

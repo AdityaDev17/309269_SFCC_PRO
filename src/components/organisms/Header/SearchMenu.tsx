@@ -16,6 +16,7 @@ import {
 	searchSuggestions,
 } from "../../../common/constant";
 import styles from "./Header.module.css";
+import { useTranslations } from "next-intl";
 
 interface SearchMenuProps {
 	keyVal: number;
@@ -27,7 +28,7 @@ const SearchMenu = ({ keyVal, searchIcon, isMobile }: SearchMenuProps) => {
 	const searchMenuHeight = useRef<HTMLDivElement | null>(null);
 	const [height, setHeight] = useState(0);
 	const [open, setOpen] = useState(false);
-
+	const t = useTranslations("Header");
 	useEffect(() => {
 		if (!open) return;
 
@@ -100,7 +101,7 @@ const SearchMenu = ({ keyVal, searchIcon, isMobile }: SearchMenuProps) => {
 									<Typography
 										type="Body"
 										variant={1}
-										label="SEARCH SUGGESTION"
+										label={t("searchSuggestion")}
 									/>
 									{searchSuggestions.map((suggestion, index) => (
 										<Fragment key={suggestion}>
@@ -115,7 +116,7 @@ const SearchMenu = ({ keyVal, searchIcon, isMobile }: SearchMenuProps) => {
 									<Typography
 										type="Body"
 										variant={1}
-										label="PRODUCT SUGGESTION"
+										label={t("productSuggestion")}
 									/>
 									<div className={styles.productSuggestionWrapper}>
 										{productSuggestions.map((suggestion, index) => (

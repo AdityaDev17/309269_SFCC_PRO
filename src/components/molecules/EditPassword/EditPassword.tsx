@@ -15,33 +15,51 @@ interface EditPasswordProps {
 }
 
 const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
-	const [userPassword, setUserPassword] = useState({
+	const [userPassword, setUserPassword] = useState<UserPassword>({
 		currentPassword: "",
 		password: "",
 		confirmPassword: "",
 	});
+	const [errors, setErrors] = useState<Partial<Record<keyof UserPassword, string>>>({});
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const name = e?.target?.name;
-		setUserPassword((prevData) => ({
-			...prevData,
-			[name]: e?.target?.value,
-		}));
+		const name = e.target.name as keyof UserPassword;
+		const value = e.target.value;
+
+		setUserPassword((prev) => ({ ...prev, [name]: value }));
+
+		// Clear the specific error
+		setErrors((prev) => ({ ...prev, [name]: "" }));
 	};
-	const handleDisable = () => {
+
+	const validateForm = (): boolean => {
+		const newErrors: Partial<Record<keyof UserPassword, string>> = {};
+
+		if (!userPassword.currentPassword.trim()) newErrors.currentPassword = "Current password is required";
+		if (!userPassword.password.trim()) newErrors.password = "New password is required";
+		if (!userPassword.confirmPassword.trim()) newErrors.confirmPassword = "Confirm password is required";
 		if (
-			userPassword?.confirmPassword !== "" &&
-			userPassword?.currentPassword !== "" &&
-			userPassword?.password !== "" &&
-			userPassword?.confirmPassword === userPassword?.password
+			userPassword.password &&
+			userPassword.confirmPassword &&
+			userPassword.password !== userPassword.confirmPassword
 		) {
-			return false;
+			newErrors.confirmPassword = "Passwords do not match";
 		}
+
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
 	};
-	console.log("24343", userPassword);
+
+	const handleUpdate = () => {
+		if (!validateForm()) return;
+		onUpdateClicked(userPassword);
+	};
+
 	return (
 		<div className={styles.layout}>
 			<div className={styles.profileText}>Password</div>
 			<div className={styles.sectionForm}>
+				{/* Current Password */}
 				<div>
 					<div className={styles.fontColor}>Current Password*</div>
 					<Input
@@ -49,9 +67,14 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 						name="currentPassword"
 						value={userPassword.currentPassword}
 						onChange={handleChange}
-						style={{ width: "325px", borderColor: "#B3B2B5" }}
+						  className={`${styles.inputField} ${errors.currentPassword ? styles.inputFieldError : ""}`}
 					/>
+					{errors.currentPassword && (
+						<div className={styles.errorText}>{errors.currentPassword}</div>
+					)}
 				</div>
+
+				{/* New Password */}
 				<div>
 					<div className={styles.fontColor}>New Password*</div>
 					<Input
@@ -59,9 +82,14 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 						name="password"
 						value={userPassword.password}
 						onChange={handleChange}
-						style={{ width: "325px", borderColor: "#B3B2B5" }}
+						className={`${styles.inputField} ${errors.password ? styles.inputFieldError : ""}`}
 					/>
+					{errors.password && (
+						<div className={styles.errorText}>{errors.password}</div>
+					)}
 				</div>
+
+				{/* Confirm Password */}
 				<div>
 					<div className={styles.fontColor}>Confirm Password*</div>
 					<Input
@@ -69,16 +97,20 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 						name="confirmPassword"
 						value={userPassword.confirmPassword}
 						onChange={handleChange}
-						style={{ width: "325px", borderColor: "#B3B2B5" }}
+						 className={`${styles.inputField} ${errors.confirmPassword? styles.inputFieldError : ""}`}
 					/>
+					{errors.confirmPassword && (
+						<div className={styles.errorText}>{errors.confirmPassword}</div>
+					)}
 				</div>
 			</div>
+
+			{/* Update Button (always enabled) */}
 			<div className={styles.buttonContainer}>
 				<Button
-					disabled={handleDisable()}
 					variant="profileUpdate"
 					className={styles.updateButton}
-					onClick={() => onUpdateClicked(userPassword)}
+					onClick={handleUpdate}
 				>
 					UPDATE
 				</Button>
@@ -86,6 +118,7 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 		</div>
 	);
 };
+
 export default EditPassword;
 
 /**

@@ -24,17 +24,11 @@
   padding-bottom: 4px;
 }
 
-
-
-
-
-
-
 .buttonContainer {
   container-type: inline-size; /* This enables container queries */
 }
 
-.buttonContainer :global([data-variant="profileUpdate"]){
+.buttonContainer :global([data-variant="profileUpdate"]) {
   width: 85%;
   height: 36px;
   color: #fff;
@@ -45,7 +39,49 @@
 
 /* Container query: Apply fixed width when container is narrow */
 @container (max-width: 400px) {
-  .buttonContainer :global([data-variant="profileUpdate"]){
+  .buttonContainer :global([data-variant="profileUpdate"]) {
     width: 325px;
   }
+}
+
+.inputField {
+  width: 325px;
+  border: 1px solid var(--colour-link-3);
+  color:var(--colour-icon-support);
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.inputFieldError {
+  border-color: var(--colour-label-mandatory-field) ;
+}
+
+.errorText {
+  color: var(--colour-label-mandatory-field) ;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.selectTrigger {
+  width: 325px;
+  height: 40px;
+  border: 1px solid var(--colour-link-3);
+  border-radius: 4px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--colour-icon-support);
+  background-color: var(--colour-text-quaternary);
+  font-size: 14px;
+}
+
+.selectTriggerError {
+  border-color: var(--colour-label-mandatory-field) ;
+}
+
+.errorText {
+  color:var(--colour-label-mandatory-field) ;
+  font-size: 12px;
+  margin-top: 4px;
 }

@@ -9,6 +9,7 @@ import {
 import ProductCard from "@/components/molecules/ProductCard/ProductCard";
 import Search from "@/components/molecules/Search/Search";
 import { SearchIcon, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
 import {
@@ -16,7 +17,6 @@ import {
 	searchSuggestions,
 } from "../../../common/constant";
 import styles from "./Header.module.css";
-import { useTranslations } from "next-intl";
 
 interface SearchMenuProps {
 	keyVal: number;

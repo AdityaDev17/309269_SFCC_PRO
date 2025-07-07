@@ -1,11 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./timeline.module.css";
-import { useTranslations } from "next-intl";
 
 interface TimelineProps {
 	steps: { header: string; text?: string }[];
@@ -15,7 +15,7 @@ interface TimelineProps {
 // {steps,currentStep,complete = false,}
 const Timeline = ({ steps, currentStep, complete = false }: TimelineProps) => {
 	const [isMobile, setIsMobile] = useState(false);
-	const t = useTranslations("Timeline")
+	const t = useTranslations("Timeline");
 	useEffect(() => {
 		const checkMobileView = () => {
 			setIsMobile(window.innerWidth < 768);

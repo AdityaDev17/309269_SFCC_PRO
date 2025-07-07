@@ -1,10 +1,10 @@
 import type { OrderSummaryProps } from "@/common/type";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../../atomic/Button/Button";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./OrderSummary.module.css";
-import { useTranslations } from "next-intl";
 
 const OrderSummary = ({
 	reverseOrder = false,

@@ -1,10 +1,7 @@
 "use client";
-import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { CartItem, type MiniCartProps } from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import {
@@ -23,10 +20,11 @@ import {
 	handleUpdateQuantity,
 } from "@/components/organisms/MiniCart/CartFuntions";
 import styles from "@/components/organisms/MiniCart/MiniCart.module.css";
-import { CartItem, MiniCartProps } from "@/common/type";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-
-
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 const MiniCart = ({
 	triggerType,

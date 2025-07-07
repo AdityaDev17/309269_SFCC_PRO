@@ -11,11 +11,11 @@ import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
 import styles from "./page.module.css";
-import { useTranslations } from "next-intl";
 
 const OrderConfimation = () => {
 	const { id } = useParams() as { id: string };

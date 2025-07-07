@@ -11,6 +11,7 @@ import {
 	SelectValue,
 } from "../../atomic/Select/Select";
 import styles from "./Profile.module.css";
+import { useTranslations } from "next-intl";
 type UserDetails = {
 	title: string;
 	lastName: string;
@@ -26,6 +27,7 @@ interface ProfileProps {
 }
 
 const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
+	const t = useTranslations("Profile")
 	const [initialUserData, setInitailUserDate] = useState(userDetails);
 	const [originalData, setOriginalData] = useState(userDetails);
 
@@ -65,11 +67,11 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 
 	return (
 		<div className={styles.layout}>
-			<div className={styles.profileText}>Profile</div>
+			<div className={styles.profileText}>{t("profile")}</div>
 			<div className={styles.section}>
 				<div className={styles.sectionForm}>
 					<div>
-						<div className={styles.fontColor}>Title*</div>
+						<div className={styles.fontColor}>{t("title")}</div>
 						<Select onValueChange={(e) => handleChange(e, "title")}>
 							<SelectTrigger
 								style={{
@@ -104,7 +106,7 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 						</Select>
 					</div>
 					<div>
-						<div className={styles.fontColor}>Last Name*</div>
+						<div className={styles.fontColor}>{t("last-name")}</div>
 						<Input
 							type="text"
 							name="lastName"
@@ -114,7 +116,7 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 						/>
 					</div>
 					<div>
-						<div className={styles.fontColor}>Birth Date*</div>
+						<div className={styles.fontColor}>{t("birth-date")}</div>
 						<Input
 							type="date"
 							name="birthDate"
@@ -126,7 +128,7 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 				</div>
 				<div className={styles.sectionForm}>
 					<div>
-						<div className={styles.fontColor}>First Name*</div>
+						<div className={styles.fontColor}>{t("first-name")}</div>
 						<Input
 							type="text"
 							name="firstName"
@@ -136,7 +138,7 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 						/>
 					</div>
 					<div>
-						<div className={styles.fontColor}>Gender*</div>
+						<div className={styles.fontColor}>{t("gender")}</div>
 						<Select onValueChange={(e) => handleChange(e, "gender")}>
 							<SelectTrigger
 								style={{
@@ -173,7 +175,7 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 						</Select>
 					</div>
 					<div>
-						<div className={styles.fontColor}>Email ID*</div>
+						<div className={styles.fontColor}>{t("email")}</div>
 						<Input
 							type="email"
 							name="email"
@@ -192,7 +194,7 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 					className={styles.updateButton}
 					onClick={() => onUpdateClicked(initialUserData)}
 				>
-					UPDATE
+					{t("update")}
 				</Button>
 			</div>
 		</div>

@@ -52,6 +52,122 @@
     "cancel": "CANCEL",
     "submit": "SUBMIT",
     "download-invoice": "DOWNLOAD INVOICE",
-    "cancel-order": "CANCEL ORDER"
+    "cancel-order": "CANCEL ORDER",
+    "order-history":"ORDER HISTORY"
+  },
+  "PLP": {
+    "product": "Product",
+    "products": "Products",
+    "recently-added": "Recently added",
+    "most-popular": "Most Popular",
+    "price-low-high": "Price: Low to High",
+    "price-high-low": "Price: High to Low"
+
+  },
+  "Cart": {
+    "bag": "Bag",
+    "you-may-also-like": "YOU MAY ALSO LIKE",
+    "items-in-the-bag": "Items in the Bag ({count} items)",
+    "continue": "CONTINUE",
+    "redeem-points": "Redeem Points",
+    "accumulated-points": "80 ACCUMULATED POINTS",
+    "redeem-message": "Would you like to redeem your sustainability points? (1 POINT = €1)",
+    "enter-points": "Enter points here",
+    "apply": "APPLY"
+
+  },
+  "Login":{
+    "welcome": "Welcome",
+    "email": "Email",
+    "password": "Password",
+    "remember-me": "Remember Me",
+    "forgot-password": "Forgot Password?",
+    "not-yet-registered": "Not yet registered with us",
+    "login": "LOGIN",
+    "create-account": "CREATE ACCOUNT"
+  },
+  "SignUp":{
+    "create-account": "CREATE ACCOUNT",
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "title": "Title",
+    "gender": "Gender",
+    "birth-date": "Birth Date",
+    "email": "Email ID",
+    "continue": "CONTINUE",
+    "password": "Password",
+    "confirm-password": "Confirm Password",
+    "privacy-policy": "I have read, agreed to T&C & Privacy Policy*",
+    "proceed": "PROCEED"
+  },
+  "FAQ": {
+    "frequently-asked": "FREQUENTLY ASKED",
+    "orders": "ORDERS",
+    "shipping": "SHIPPING",
+    "returns-exchange": "RETURNS & EXCHANGE",
+    "payments": "PAYMENTS",
+    "product-information": "PRODUCT INFORMATION",
+    "need-more-assistance":"NEED MORE ASSISTANCE?",
+    "reach-out-to-us-on":"Reach out to us on :",
+    "phone-number":"+44 20 4410 4422",
+    "monday-to-friday":"Monday to Saturday from 9 am to 6:30 pm.",
+    "write-us":"Write to us at :",
+    "email":"support.elenor@abc.com",
+    "we-usually-revert":"We usually revert in 12hrs",
+    "chat-with-our-assistant":"Chat with our assistant :",
+    "send-message":"SEND MESSAGE",
+    "online":"Online"
+
+  },
+  "MyAccount": {
+    "personal-info": "Personal Information",
+    "order-history": "Order History",
+    "payments": "Payments",
+    "my-subscription": "My Subscription",
+    "address-book": "Address Book",
+    "contact-preferences": "Contact & Preferences",
+    "logout": "Log Out"
+  },
+  "PersonalInformation": {
+    "personal-information":"Personal Information"
+  },
+  "Profile":{
+    "profile": "Profile",
+    "title":"Title*",
+    "last-name":"Last Name*",
+    "birth-date":"Birth Date*",
+    "first-name":"First Name*",
+    "gender":"Gender*",
+    "email":"Email ID*",
+    "update":"UPDATE"
+  },
+  "Password":{
+    "password-title":"Password",
+    "current-password":"Current Password*",
+    "new-password":"New Password*",
+    "confirm-password":"Confirm Password*",
+    "update-btn":"UPDATE"
+  },
+  "AddressBook":{
+    "address-book-title":"ADDRESS BOOK",
+    "add-new-address":"ADD NEW ADDRESS",
+    "no-saved-address":"No Saved Addresses",
+    "save-address":"Save an address for faster checkout.",
+    "add-address-btn":"ADD AN ADDRESS"
+
+  },
+  "OrderHistory":{
+    "status": "Arriving Tomorrow",
+    "order-total": "Order Total",
+    "view-details": "VIEW DETAILS",
+    "filter": {
+    "months3": "3 Months",
+    "months6": "6 Months",
+    "year2025": "2025",
+    "year2024": "2024",
+    "year2023": "2023",
+    "button": "FILTERS",
+    "drawerTitle": "FILTERS"
+  }
   }
 }

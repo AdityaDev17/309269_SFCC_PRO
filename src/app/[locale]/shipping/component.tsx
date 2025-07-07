@@ -256,7 +256,11 @@ const Shipping = () => {
 					{!(customerType === "guest" && shippingAdresses.length === 1) && (
 						<Button
 							variant="secondary"
-							onClick={() => setIsAddressDialogOpen(true)}
+							// onClick={() => setIsAddressDialogOpen(true)}
+							onClick={() => {
+								setIsAddressDialogOpen(true);
+								setAddressError(false); 
+							}}
 						>
 							{t("add-new-address")}
 						</Button>
@@ -285,6 +289,9 @@ const Shipping = () => {
 					) : addresses.length === 0 ? (
 						<div className={styles.emptyState}>
 							<p>{t("no-saved-addresses")}</p>
+							{addressError && (
+							<p className={styles.errorText}>{t("select-shipping-address-error")}</p>
+						    )}
 						</div>
 					) : (
 						<>
@@ -297,7 +304,11 @@ const Shipping = () => {
 									: refetchShipping
 							}
 							selectedAddress={selectedAddress}
-							setSelectedAddress={setSelectedAddress}
+							// setSelectedAddress={setSelectedAddress}
+							setSelectedAddress={(address) => {
+							setSelectedAddress(address);
+							setAddressError(false); 
+						}}
 						/>
 							{addressError && (
 							<p className={styles.errorText}>{t("select-shipping-address-error")}</p>
@@ -341,7 +352,11 @@ const Shipping = () => {
 						<RadioGroup
 							className={styles.cardGrid}
 							value={selectedShippingMethod || undefined}
-							onValueChange={(value) => setSelectedShippingMethod(value)}
+							// onValueChange={(value) => setSelectedShippingMethod(value)}
+							onValueChange={(value) => {
+								setSelectedShippingMethod(value);
+								setShippingMethodError(false); 
+					}}
 						>
 							{shippingMethods.map((item) => (
 								<div key={item.id} className={styles.card}>

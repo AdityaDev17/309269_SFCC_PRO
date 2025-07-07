@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import styles from "./EditPassword.module.css";
+import { useTranslations } from "next-intl";
 
 type UserPassword = {
 	currentPassword: string;
@@ -15,6 +16,7 @@ interface EditPasswordProps {
 }
 
 const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
+	const t = useTranslations("Password")
 	const [userPassword, setUserPassword] = useState({
 		currentPassword: "",
 		password: "",
@@ -40,10 +42,10 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 	console.log("24343", userPassword);
 	return (
 		<div className={styles.layout}>
-			<div className={styles.profileText}>Password</div>
+			<div className={styles.profileText}>{t("password-title")}</div>
 			<div className={styles.sectionForm}>
 				<div>
-					<div className={styles.fontColor}>Current Password*</div>
+					<div className={styles.fontColor}>{t("current-password")}</div>
 					<Input
 						type="password"
 						name="currentPassword"
@@ -53,7 +55,7 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 					/>
 				</div>
 				<div>
-					<div className={styles.fontColor}>New Password*</div>
+					<div className={styles.fontColor}>{t("new-password")}</div>
 					<Input
 						type="password"
 						name="password"
@@ -63,7 +65,7 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 					/>
 				</div>
 				<div>
-					<div className={styles.fontColor}>Confirm Password*</div>
+					<div className={styles.fontColor}>{t("confirm-password")}</div>
 					<Input
 						type="password"
 						name="confirmPassword"
@@ -80,7 +82,7 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 					className={styles.updateButton}
 					onClick={() => onUpdateClicked(userPassword)}
 				>
-					UPDATE
+					{t("update-btn")}
 				</Button>
 			</div>
 		</div>

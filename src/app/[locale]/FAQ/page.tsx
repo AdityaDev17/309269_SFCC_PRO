@@ -14,6 +14,7 @@ import { FaqAccordion } from "./FaqAccordion";
 import NeedAssistance from "./NeedAssistance";
 import SearchWithSuggestions from "./SearchWithSuggestions";
 import styles from "./page.module.css";
+import { useTranslations } from "next-intl";
 interface FaqItem {
 	id: string;
 	question: string;
@@ -32,6 +33,7 @@ const allFaqItems = [
 ];
 
 export default function FAQPage() {
+	const t = useTranslations("FAQ")
 	const [searchTerm, setSearchTerm] = useState("");
 	const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 	const faqRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -87,7 +89,7 @@ export default function FAQPage() {
 						{/* FAQ Accordions */}
 						<div className={styles.accordionContainer}>
 							<FaqAccordion
-								title="FREQUENTLY ASKED"
+								title={t("frequently-asked")}
 								icon={
 									<img
 										src="images/FAQ_icon.svg"
@@ -108,7 +110,7 @@ export default function FAQPage() {
 							/>
 
 							<FaqAccordion
-								title="ORDERS"
+								title={t("orders")}
 								icon={
 									<img
 										src="/images/orders_icon.svg"
@@ -124,7 +126,7 @@ export default function FAQPage() {
 								itemRefs={faqRefs}
 							/>
 							<FaqAccordion
-								title="SHIPPING"
+								title={t("shipping")}
 								icon={
 									<img
 										src="/images/shipping_icon.svg"
@@ -142,7 +144,7 @@ export default function FAQPage() {
 								itemRefs={faqRefs}
 							/>
 							<FaqAccordion
-								title="RETURNS & EXCHANGE"
+								title={t("returns-exchange")}
 								icon={
 									<img
 										src="/images/return_icon.svg"
@@ -160,7 +162,7 @@ export default function FAQPage() {
 								itemRefs={faqRefs}
 							/>
 							<FaqAccordion
-								title="PAYMENTS"
+								title={t("payments")}
 								icon={
 									<img
 										src="/images/payments_icon.svg"
@@ -178,7 +180,7 @@ export default function FAQPage() {
 								itemRefs={faqRefs}
 							/>
 							<FaqAccordion
-								title="PRODUCT INFORMATION"
+								title={t("product-information")}
 								icon={
 									<img
 										src="/images/products_info_icon.svg"

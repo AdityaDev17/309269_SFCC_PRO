@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import styles from "./Login.module.css";
+import { useTranslations } from "next-intl";
 
 interface LoginProps {
 	onLoginClicked: (formData: { email: string; password: string }) => void;
@@ -18,6 +19,7 @@ const Login = ({
 	errorMessage,
 	clearErrorMessage,
 }: LoginProps) => {
+	const t = useTranslations("Login");
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
@@ -41,9 +43,9 @@ const Login = ({
 	};
 	return (
 		<div className={styles.layout}>
-			<div className={styles.header}>Welcome</div>
+			<div className={styles.header}>{t("welcome")}</div>
 			<div>
-				<div className={styles.fontColor}>Email</div>
+				<div className={styles.fontColor}>{t("email")}</div>
 				<Input
 					type="email"
 					name="email"
@@ -52,7 +54,7 @@ const Login = ({
 				/>
 			</div>
 			<div>
-				<div className={styles.fontColor}>Password</div>
+				<div className={styles.fontColor}>{t("password")}</div>
 				<Input
 					type="password"
 					name="password"
@@ -66,10 +68,10 @@ const Login = ({
 			<div className={styles.row}>
 				<div className={styles.rowGap}>
 					<CheckBox data-testid="checkbox" className={styles.checkboxBox} />
-					<div className={styles.forgotPassword}>Remember Me</div>
+					<div className={styles.forgotPassword}>{t("remember-me")}</div>
 				</div>
 				<div>
-					<div className={styles.forgotPassword}>Forgot Password?</div>
+					<div className={styles.forgotPassword}>{t("forgot-password")}</div>
 				</div>
 			</div>
 			<Button
@@ -84,11 +86,11 @@ const Login = ({
 				disabled={handleDisable()}
 				onClick={() => onLoginClicked(formData)}
 			>
-				LOGIN
+				{t("login")}
 			</Button>
 			<div>
 				<div className={`${styles.fontColor} ${styles.marginBottom}`}>
-					Not yet registered with us
+					{t("not-yet-registered")}
 				</div>
 				<Button
 					onClick={onCreateAccount}
@@ -101,7 +103,7 @@ const Login = ({
 						fontWeight: "600",
 					}}
 				>
-					CREATE ACCOUNT
+					{t("create-account")}
 				</Button>
 			</div>
 		</div>

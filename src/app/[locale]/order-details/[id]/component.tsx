@@ -26,12 +26,14 @@ import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import Timeline from "@/components/organisms/Timeline/Timeline";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import type React from "react";
 import styles from "./orderDetails.module.css";
 
 const Details = () => {
 	const { isDelivered, steps, currentStep } = orderStatus;
+	const t = useTranslations("Order-Details");
 	// const [selectedOption, setSelectedOption] = useState("");
 	// const [textValue, setTextValue] = useState("");
 	const { id } = useParams() as { id: string };
@@ -159,13 +161,13 @@ const Details = () => {
 							type="Body"
 							variant={2}
 							fontWeight="semibold"
-							label="Delivered on 18th April 2024"
+							label={t("delivered-on", { date: "18th April 2024" })}
 						/>
 						<Typography
 							type="Body"
 							variant={2}
 							fontWeight="regular"
-							label={`ORDER ID : ${orderDetails?.orderNo}`}
+							label={`${t("order-id")}: ${orderDetails?.orderNo}`}
 							color="#4F4B53"
 						/>
 
@@ -196,7 +198,7 @@ const Details = () => {
 									variant={3}
 									fontWeight="bold"
 									color="black"
-									label={"Customer Information"}
+									label={t("customer-info")}
 								/>
 								<div className={styles.address}>
 									<div className={styles.custInfo}>
@@ -204,7 +206,7 @@ const Details = () => {
 											type="Body"
 											variant={2}
 											fontWeight="semibold"
-											label="Name: "
+											label={`${t("name")}: `}
 										/>
 										<Typography
 											type="Body"
@@ -220,7 +222,7 @@ const Details = () => {
 											type="Body"
 											variant={2}
 											fontWeight="semibold"
-											label="Phone no.: "
+											label={`${t("phone")}: `}
 										/>
 										<Typography
 											type="Body"
@@ -234,7 +236,7 @@ const Details = () => {
 											type="Body"
 											variant={2}
 											fontWeight="semibold"
-											label="Email ID: "
+											label={`${t("email")}: `}
 										/>
 										<Typography
 											type="Body"
@@ -252,7 +254,7 @@ const Details = () => {
 									variant={3}
 									fontWeight="bold"
 									color="black"
-									label={"Delivery Address"}
+									label={t("delivery-address")}
 								/>
 								<div className={styles.address}>
 									<div>
@@ -276,7 +278,7 @@ const Details = () => {
 									variant={3}
 									fontWeight="bold"
 									color="black"
-									label={"Method of Payment"}
+									label={t("payment-method")}
 								/>
 
 								<div className={styles.address}>
@@ -300,7 +302,7 @@ const Details = () => {
 									type="Body"
 									variant={2}
 									fontWeight="regular"
-									label="Return window is open till 25th April 2024."
+									label={t("return-window", { date: "25th April 2024" })}
 									color="#75757A"
 								/>
 							</div>
@@ -323,7 +325,7 @@ const Details = () => {
 														type="Body"
 														variant={2}
 														fontWeight="regular"
-														label="RETURN ORDER"
+														label={t("return-order")}
 													/>
 												</Button>
 											</DialogTrigger>
@@ -338,7 +340,7 @@ const Details = () => {
 															type="Label"
 															variant={3}
 															fontWeight="semibold"
-															label="Return Order"
+															label={t("return-order")}
 														/>
 													</DialogTitle>
 												</DialogHeader>
@@ -349,13 +351,13 @@ const Details = () => {
 															type="Body"
 															variant={2}
 															fontWeight="semibold"
-															label="Why are you returning?"
+															label={t("why-returning")}
 														/>
 														<Typography
 															type="Body"
 															variant={2}
 															fontWeight="regular"
-															label="This information will be used to improve our products and services."
+															label={t("return-info-help")}
 														/>
 														<RadioGroup defaultValue="option-one">
 															<div className={styles.radioContainer}>
@@ -365,7 +367,7 @@ const Details = () => {
 																		id="option-one"
 																	/>
 																	<label htmlFor="option-one">
-																		Quality issues
+																		{t("reason-quality")}
 																	</label>
 																</div>
 																<div className={styles.radioButton}>
@@ -374,7 +376,7 @@ const Details = () => {
 																		id="option-two"
 																	/>
 																	<label htmlFor="option-two">
-																		Received wrong/defective product
+																		{t("reason-defective")}
 																	</label>
 																</div>
 																<div className={styles.radioButton}>
@@ -383,7 +385,7 @@ const Details = () => {
 																		id="option-three"
 																	/>
 																	<label htmlFor="option-three">
-																		Product does not match website image
+																		{t("reason-image-mismatch")}
 																	</label>
 																</div>
 																<div className={styles.radioButton}>
@@ -392,7 +394,7 @@ const Details = () => {
 																		id="option-four"
 																	/>
 																	<label htmlFor="option-four">
-																		Other issue
+																		{t("reason-other")}
 																	</label>
 																</div>
 															</div>
@@ -401,7 +403,7 @@ const Details = () => {
 															type="Body"
 															variant={2}
 															fontWeight="semibold"
-															label="Any additional comments:"
+															label={t("additional-comments")}
 														/>
 														<div>
 															<Input />
@@ -414,7 +416,7 @@ const Details = () => {
 																	type="Body"
 																	variant={2}
 																	fontWeight="regular"
-																	label="CANCEL"
+																	label={t("cancel")}
 																/>
 															</Button>
 														</DialogClose>
@@ -423,7 +425,7 @@ const Details = () => {
 																type="Body"
 																variant={2}
 																fontWeight="regular"
-																label="SUBMIT"
+																label={t("submit")}
 																color="white"
 															/>
 														</Button>
@@ -436,7 +438,7 @@ const Details = () => {
 												type="Body"
 												variant={2}
 												fontWeight="regular"
-												label="DOWNLOAD INVOICE"
+												label={t("download-invoice")}
 												color="white"
 											/>
 										</Button>
@@ -447,7 +449,7 @@ const Details = () => {
 											type="Body"
 											variant={2}
 											fontWeight="regular"
-											label="CANCEL ORDER"
+											label={t("cancel-order")}
 										/>
 									</Button>
 								)}

@@ -311,6 +311,8 @@ export type OrderSummaryProps = {
 	total?: string;
 	totalSavings?: string;
 	buttonText?: string;
+  isDelivery?:boolean;
+  discount?:string;
 	onButtonClick?: () => void;
 };
 

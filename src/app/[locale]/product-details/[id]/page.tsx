@@ -3,6 +3,8 @@ import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";
 import Banner from "@/components/molecules/Banner/Banner";
 import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
+
+import { getTranslations } from "next-intl/server";
 import ProductDetails from "./component";
 import styles from "./page.module.css";
 export default async function ProductDetailsPage({
@@ -13,7 +15,7 @@ export default async function ProductDetailsPage({
 	searchParams: { slug: string; name: string };
 }) {
 	const { slug, name } = searchParams;
-
+	const t = await getTranslations("ProductDetails");
 	return (
 		<section className={styles.layout}>
 			<Breadcrumbs
@@ -31,7 +33,7 @@ export default async function ProductDetailsPage({
 					variant={1}
 					fontWeight="bold"
 					color="black"
-					label={"YOU MAY ALSO LIKE"}
+					label={t("may also like")}
 				/>
 				<section>
 					<ProductImageCarousel

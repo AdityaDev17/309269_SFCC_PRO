@@ -33,6 +33,7 @@ import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 import MiniCart from "@/components/organisms/MiniCart/MiniCart";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
@@ -40,6 +41,7 @@ import styles from "./page.module.css";
 export default function ProductDetails() {
 	const { id } = useParams() as { id: string };
 	const productId = id;
+	const t = useTranslations("ProductDetails");
 	const [open, setOpen] = useState(false);
 	const [targetColor, setTargetColor] = useState("");
 	const [targetSize, setTargetSize] = useState("");
@@ -280,7 +282,7 @@ export default function ProductDetails() {
 							</div>
 							<div>
 								<div className={styles.error}>
-									{error ? "Please choose any size" : "\u00A0"}
+									{error ? t("select-size-error") : "\u00A0"}
 								</div>
 							</div>
 							<div
@@ -289,7 +291,7 @@ export default function ProductDetails() {
 								}`}
 							>
 								<Button onClick={() => handleAddToWishlist()}>
-									ADD TO WISHLIST
+									{t("add-to-wishlist")}
 								</Button>
 								{sizes !== undefined && (
 									<Select onValueChange={(e) => handleChange(e, "title")}>
@@ -306,7 +308,7 @@ export default function ProductDetails() {
 												lineHeight: "16px",
 											}}
 										>
-											<SelectValue placeholder={"Size"} />
+											<SelectValue placeholder={t("size")} />
 										</SelectTrigger>
 										<SelectContent>
 											{sizes?.map((item: Size) => (
@@ -327,7 +329,7 @@ export default function ProductDetails() {
 								className={styles.cartButton}
 								onClick={() => handleAddToBasket()}
 							>
-								ADD TO BAG
+								{t("add-to-bag")}
 							</Button>
 						</>
 					)}

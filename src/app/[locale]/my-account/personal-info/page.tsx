@@ -18,8 +18,10 @@ import {
 	UPDATE_PASSWORD,
 } from "@/common/schema";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+import { useTranslations } from "next-intl";
 
 export default function PersonalInfoPage() {
+	const t = useTranslations("PersonalInformation")
 	const router = useRouter();
 	const customerId = sessionStorage.getItem("customer_id") ?? "";
 
@@ -146,7 +148,7 @@ export default function PersonalInfoPage() {
 						{ label: "Personal Information" },
 					]}
 				/>
-				<h2 className={styles.header}>Personal Information</h2>
+				<h2 className={styles.header}>{t("personal-information")}</h2>
 
 				<div className={styles.gridLayout}>
 					<div className={`${styles.column} ${styles.leftColumn}`}>
@@ -212,7 +214,7 @@ export default function PersonalInfoPage() {
 					{ label: "Personal Information" },
 				]}
 			/>
-			<h2 className={styles.header}>Personal Information</h2>
+			<h2 className={styles.header}>{t("personal-information")}</h2>
 
 			<div className={styles.gridLayout}>
 				<div className={styles.column}>

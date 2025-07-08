@@ -11,6 +11,7 @@ import {
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
 import { Alignment,ProductCardProps } from "@/common/type";
+import { useTranslations } from "next-intl";
 
 const ProductCard = ({
 	productId,
@@ -28,6 +29,7 @@ const ProductCard = ({
 	onButtonClick,
 	onMoveToBag,
 }: ProductCardProps) => {
+	const t = useTranslations("ProductCard")
 	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
@@ -130,7 +132,7 @@ const ProductCard = ({
 								<Typography
 									type="Body"
 									variant={2}
-									label="Move to Bag"
+									label={t("move-to-bag")}
 									fontWeight="medium"
 									color="black"
 								/>
@@ -160,7 +162,7 @@ const ProductCard = ({
 								<Typography
 									type="Body"
 									variant={2}
-									label="Move to Bag"
+									label={t("move-to-bag")}
 									fontWeight="medium"
 									color="black"
 								/>

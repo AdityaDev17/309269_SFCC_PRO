@@ -37,11 +37,13 @@ import {
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./shipping.module.css";
 
 const Shipping = () => {
+	const t = useTranslations("Shipping")
 	const router = useRouter();
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 	const [selectedShippingMethod, setSelectedShippingMethod] = useState<
@@ -249,14 +251,18 @@ const Shipping = () => {
 						type={"Label"}
 						variant={3}
 						fontWeight="semibold"
-						label="Shipping Address"
+						label={t("shipping-address")}
 					/>
 					{!(customerType === "guest" && shippingAdresses.length === 1) && (
 						<Button
 							variant="secondary"
-							onClick={() => setIsAddressDialogOpen(true)}
+							// onClick={() => setIsAddressDialogOpen(true)}
+							onClick={() => {
+								setIsAddressDialogOpen(true);
+								setAddressError(false); 
+							}}
 						>
-							ADD NEW ADDRESS
+							{t("add-new-address")}
 						</Button>
 					)}
 				</div>
@@ -282,7 +288,10 @@ const Shipping = () => {
 						</div>
 					) : addresses.length === 0 ? (
 						<div className={styles.emptyState}>
-							<p>No saved addresses found.</p>
+							<p>{t("no-saved-addresses")}</p>
+							{addressError && (
+							<p className={styles.errorText}>{t("select-shipping-address-error")}</p>
+						    )}
 						</div>
 					) : (
 						<>
@@ -295,10 +304,14 @@ const Shipping = () => {
 									: refetchShipping
 							}
 							selectedAddress={selectedAddress}
-							setSelectedAddress={setSelectedAddress}
+							// setSelectedAddress={setSelectedAddress}
+							setSelectedAddress={(address) => {
+							setSelectedAddress(address);
+							setAddressError(false); 
+						}}
 						/>
 							{addressError && (
-							<p className={styles.errorText}>Please select a shipping address.</p>
+							<p className={styles.errorText}>{t("select-shipping-address-error")}</p>
 							)}
 						</>
 					)}
@@ -307,7 +320,7 @@ const Shipping = () => {
 				{/* BILLING CHECKBOX */}
 				<div className={styles.billCheck}>
 					<CheckBox />
-					<p>Keep Billing Address same as Shipping Address </p>
+					<p>{t("keep-billing-same")}</p>
 				</div>
 
 				{/* SHIPPING METHODS */}
@@ -316,7 +329,7 @@ const Shipping = () => {
 						type={"Label"}
 						variant={3}
 						fontWeight="semibold"
-						label="Shipping Method"
+						label={t("shipping-method")}
 					/>
 					{isLoadingShippingMethods ? (
 						<div className={styles.skeletonLayout}>
@@ -339,7 +352,11 @@ const Shipping = () => {
 						<RadioGroup
 							className={styles.cardGrid}
 							value={selectedShippingMethod || undefined}
-							onValueChange={(value) => setSelectedShippingMethod(value)}
+							// onValueChange={(value) => setSelectedShippingMethod(value)}
+							onValueChange={(value) => {
+								setSelectedShippingMethod(value);
+								setShippingMethodError(false); 
+					}}
 						>
 							{shippingMethods.map((item) => (
 								<div key={item.id} className={styles.card}>
@@ -355,7 +372,7 @@ const Shipping = () => {
 							))}
 						</RadioGroup>
 							{shippingMethodError && (
-							<p className={styles.errorText}>Please select a shipping method.</p>
+							<p className={styles.errorText}>{t("select-shipping-method-error")}</p>
 							)}
 				      </>
 					)}
@@ -376,7 +393,7 @@ const Shipping = () => {
 							total={shippingAddressData?.basketInfo?.productTotal}
 							currency={shippingAddressData?.basketInfo?.currency}
 							subTotal={shippingAddressData?.basketInfo?.productSubTotal}
-							buttonText="PROCEED TO PAYMENT"
+							buttonText={t("proceed-to-payment")}
 							onButtonClick={handleCheckout}
 						/>
 					)}

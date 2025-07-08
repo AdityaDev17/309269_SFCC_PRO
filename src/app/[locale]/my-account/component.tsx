@@ -13,8 +13,10 @@ import { GET_CUSTOMER, LOGOUT_CUSTOMER } from "@/common/schema";
 import { clearSession, handlePostLogoutTokenRefresh } from "@/lib/sessionUtils";
 
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+import { useTranslations } from "next-intl";
 
 const MyAccount = () => {
+	const t = useTranslations("MyAccount")
 	const router = useRouter();
 	const customerId = sessionStorage.getItem("customer_id");
 
@@ -127,13 +129,13 @@ const MyAccount = () => {
 				</div>
 			) : (
 				<div className={styles.tilesGrid}>
-					<Tile label="Personal Information" href="/my-account/personal-info" />
-					<Tile label="Order History" href="/my-account/order-history" />
-					<Tile label="Payments" href="/my-account/payments" />
-					<Tile label="My Subscription" href="/my-account/subscription" />
-					<Tile label="Address Book" href="/my-account/address" />
-					<Tile label="Contact & Preferences" href="/my-account/contact-info" />
-					<Tile label="Log Out" onClick={handleLogout} />
+					<Tile label={t("personal-info")} href="/my-account/personal-info" />
+					<Tile label={t("order-history")} href="/my-account/order-history" />
+					<Tile label={t("payments")} href="/my-account/payments" />
+					<Tile label={t("my-subscription")} href="/my-account/subscription" />
+					<Tile label={t("address-book")} href="/my-account/address" />
+					<Tile label={t("contact-preferences")} href="/my-account/contact-info" />
+					<Tile label={t("logout")} onClick={handleLogout} />
 				</div>
 			)}
 		</div>

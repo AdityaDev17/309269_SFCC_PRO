@@ -29,8 +29,11 @@ import { getProductsByCategory } from "@/lib/sfcc/products";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
 import { ProductDetails } from "@/common/type";
+import { useTranslation } from "sanity";
+import { useTranslations } from "next-intl";
 
 export default function PLPPage() {
+	const t = useTranslations("PLP")
 	const [displayedPage, setDisplayedPage] = useState(1);
 	const [activePage, setActivePage] = useState(1);
 	const { slug } = useParams() as { slug: string };
@@ -125,7 +128,7 @@ export default function PLPPage() {
 			<h1 className={styles.pageHeading}>
 				{categoryName}{" "}
 				<small className={styles.productCount}>
-					({productCount} {productCount === 1 ? "Product" : "Products"})
+					({productCount} {productCount === 1 ? t("product") : t("products")})
 				</small>
 			</h1>
 
@@ -145,10 +148,10 @@ export default function PLPPage() {
 						<SelectValue placeholder="Select sort option" />
 					</SelectTrigger>
 					<SelectContent>
-						<SelectItem value="recent">Recently added</SelectItem>
-						<SelectItem value="popular">Most Popular</SelectItem>
-						<SelectItem value="price_low_high">Price: Low to High</SelectItem>
-						<SelectItem value="price_high_low">Price: High to Low</SelectItem>
+						<SelectItem value="recent">{t("recently-added")}</SelectItem>
+						<SelectItem value="popular">{t("most-popular")}</SelectItem>
+						<SelectItem value="price_low_high">{t("price-low-high")}</SelectItem>
+						<SelectItem value="price_high_low">{t("price-high-low")}</SelectItem>
 					</SelectContent>
 				</Select>
 			</div>

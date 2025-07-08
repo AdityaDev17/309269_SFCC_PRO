@@ -12,8 +12,8 @@ export default function AnalyticsProvider() {
 	// 	analytics.page();
 	// }, [pathname]);
 	useEffect(() => {
-    analytics.page({ path: pathname });
-}, [pathname]);
+		analytics.page({ path: pathname });
+	}, [pathname]);
 
 	return null;
 }

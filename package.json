@@ -33,6 +33,7 @@
     "@sanity/visual-editing": "^2.15.0",
     "@sentry/nextjs": "^9.17.0",
     "@vercel/edge-config": "^1.4.0",
+    "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "commerce-sdk-isomorphic": "^3.2.0",
     "groq": "^3.88.3",

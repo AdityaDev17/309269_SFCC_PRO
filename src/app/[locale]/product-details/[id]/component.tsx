@@ -119,10 +119,10 @@ export default function ProductDetails() {
 		}
 	}, [colors]);
 
-	const accordionData = productDetails?.pageMetaTags?.map((item) => ({
-		title: item?.id.toUpperCase(),
-		desc: item?.value,
-	}));
+	// const accordionData = productDetails?.pageMetaTags?.map((item) => ({
+	// 	title: item?.id.toUpperCase(),
+	// 	desc: item?.value,
+	// }));
 
 	const handleSelected = (selected: Colors) => {
 		setTargetColor(selected?.hex);

@@ -290,10 +290,16 @@ export default function ProductDetails() {
 							<ul className={styles.promotions}>
 								{promotions?.map((item: Promotions) => {
 									return (
-										<li className={styles.promotionli} key={item?.promotionId}>{item?.calloutMsg}</li>
+										<li className={styles.promotionli} key={item?.promotionId}>
+											{item?.calloutMsg}
+										</li>
 									);
 								})}
-								<div onClick={handleClickViewMore} onKeyDown={handleClickViewMore} className={styles.more}>
+								<div
+									onClick={handleClickViewMore}
+									onKeyDown={handleClickViewMore}
+									className={styles.more}
+								>
 									{viewMore ? "View More" : "View Less"}
 								</div>
 							</ul>

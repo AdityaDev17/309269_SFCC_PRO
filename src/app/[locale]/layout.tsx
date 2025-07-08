@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
+import Chat from "@/components/organisms/Chat/Chat";
 import Footer from "@/components/organisms/Footer/Footer";
 import HeaderWrapper from "@/components/organisms/Header/HeaderWrapper";
 import { routing } from "@/i18n/routing";
@@ -12,7 +13,6 @@ import { VisualEditing } from "next-sanity";
 import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 import Providers from "./providers";
-import Chat from "@/components/organisms/Chat/Chat";
 
 const geistSans = Geist({
 	variable: "--font-geist-sans",
@@ -59,8 +59,8 @@ export default async function RootLayout({
 							</>
 						)}
 						{/* <ReactQueryDevtools initialIsOpen={false} position="bottom" /> */}
+						<Chat />
 					</Providers>
-					<Chat/>
 					<Footer />
 				</body>
 			</NextIntlClientProvider>

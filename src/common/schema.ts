@@ -774,3 +774,43 @@ export const ORDER_HISTORY = `query OrderHistory($customerId: ID!, $limit: Int, 
   }
 }
 `;
+
+export const GET_CHAT_ACCESS_TOKEN = `
+  mutation GetChatAccessTokenHandler($input: ChatAccessTokenInput) {
+    getChatAccessTokenHandler(input: $input) {
+      access_token
+    }
+  }
+`
+
+export const GET_SESSION_ID = `
+    mutation Mutation {
+        getSessionIdHandler {
+            sessionId
+            messages {
+            message
+            }
+        }
+    }
+`
+
+export const GET_MESSAGE = `
+  mutation GetMessageHandler($message: String, $sessionId: String) {
+    getMessageHandler(message: $message, sessionId: $sessionId) {
+      messages {
+        message
+      }
+    }
+  }
+`
+
+export const DELETE_SESSION = `
+  mutation DeleteSessionHandler($sessionId: String) {
+    deleteSessionHandler(sessionId: $sessionId) {
+      messages {
+        type
+      }
+    }
+  }
+`
+

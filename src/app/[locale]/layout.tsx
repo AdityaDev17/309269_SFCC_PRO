@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import AnalyticsProvider from "@/components/AnalyticsProvider";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 import Footer from "@/components/organisms/Footer/Footer";
 import HeaderWrapper from "@/components/organisms/Header/HeaderWrapper";
@@ -50,6 +51,7 @@ export default async function RootLayout({
 					<Providers>
 						<WebVitals />
 						<HeaderWrapper />
+						<AnalyticsProvider />
 						{children}
 						{(await draftMode()).isEnabled && (
 							<>

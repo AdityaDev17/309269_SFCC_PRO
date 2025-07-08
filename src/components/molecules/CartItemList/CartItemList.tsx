@@ -1,12 +1,12 @@
 "use client";
 import type { CartItem } from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import QuantitySelector from "../../atomic/QuantitySelector/QuantitySelector";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./CartItemList.module.css";
-import { useTranslations } from "next-intl";
 
 // interface CartItem {
 // 	id: string;
@@ -119,7 +119,9 @@ const CartItemList = ({
 										type="Body"
 										variant={2}
 										label={
-											orderQuantity ? `${t("quantity")}: ${item.quantity}` : t("quantity")
+											orderQuantity
+												? `${t("quantity")}: ${item.quantity}`
+												: t("quantity")
 										}
 										color="#4f4b53"
 									/>
@@ -229,13 +231,17 @@ const CartItemList = ({
 												type="Label"
 												variant={3}
 												label={`${item.price}`}
-												textDecoration="line-through"
+												textDecoration={
+													item?.showStrikedPrice ? "line-through" : "none"
+												}
 											/>
-											<Typography
-												type="Label"
-												variant={3}
-												label={`\u00A0${item.priceAfterItemDiscount}`}
-											/>
+											{item?.showStrikedPrice && (
+												<Typography
+													type="Label"
+													variant={3}
+													label={`\u00A0${item.priceAfterItemDiscount}`}
+												/>
+											)}
 										</div>
 									</div>
 								)}
@@ -258,7 +264,9 @@ const CartItemList = ({
 									}
 									qty={item.quantity}
 								/>
-								<Button className={styles.wishlistBtn}>{t("move-to-wishlist")}</Button>
+								<Button className={styles.wishlistBtn}>
+									{t("move-to-wishlist")}
+								</Button>
 								<div className={styles.deleteWrapper}>
 									<Image
 										src="/images/delete.png"

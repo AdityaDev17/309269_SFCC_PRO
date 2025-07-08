@@ -111,6 +111,25 @@
 .varientSection {
   /* padding-bottom: 20px; */
 }
+.promotions{
+  padding-left: 20px;
+  background-color: #FAFAFA;
+}
+.promotionli{
+  font-size: var(--font-size-font-size-400);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-lh-500);
+  color: var(--colour-title-2);
+  padding-bottom: 12.5px;
+}
+.more{
+  font-size: var(--font-size-font-size-400);
+  font-weight:  var(--font-weight-semibold);
+  line-height: var(--font-line-height-lh-500);
+  color: var(--colour-title-2);
+  padding-bottom: 12.5px;
+  cursor: pointer;
+}
 .cartButton{
     width:  100%;
     height: 36px;

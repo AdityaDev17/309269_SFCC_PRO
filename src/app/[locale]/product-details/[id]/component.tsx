@@ -11,6 +11,7 @@ import type {
 	ImageGroup,
 	ProductImage,
 	ProductList,
+	Promotions,
 	Size,
 	Values,
 	Variants,
@@ -40,13 +41,15 @@ import styles from "./page.module.css";
 
 export default function ProductDetails() {
 	const { id } = useParams() as { id: string };
-	const productId = id;
 	const t = useTranslations("ProductDetails");
+	const productId = id;
 	const [open, setOpen] = useState(false);
 	const [targetColor, setTargetColor] = useState("");
 	const [targetSize, setTargetSize] = useState("");
 	const [sizes, setSizes] = useState<Size[]>([]);
 	const [error, setError] = useState("");
+	const [promotions, setPromotions] = useState([]);
+	const [viewMore, setViewMore] = useState(true);
 
 	const createCustomerProductList = useMutation({
 		mutationFn: (input: { customerId: string; type: string }) =>
@@ -69,6 +72,14 @@ export default function ProductDetails() {
 	const galleryImages = data?.productDetails?.imageGroups
 		?.flatMap((group: ImageGroup) => group?.images ?? [])
 		.map((image: ProductImage) => image?.link);
+
+	useEffect(() => {
+		if (viewMore) {
+			setPromotions(data?.productDetails?.productPromotions?.slice(0, 1));
+		} else {
+			setPromotions(data?.productDetails?.productPromotions);
+		}
+	}, [data, viewMore]);
 
 	useEffect(() => {
 		const sizeAttr = data?.productDetails?.variationAttributes?.find(
@@ -203,7 +214,11 @@ export default function ProductDetails() {
 		if (!targetName) return;
 		setTargetSize(value);
 	};
-	console.log("343", sizes);
+
+	const handleClickViewMore = () => {
+		setViewMore(!viewMore);
+	};
+
 	return (
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
@@ -272,6 +287,16 @@ export default function ProductDetails() {
 							<div className={styles.desc}>
 								{data?.productDetails?.longDescription}
 							</div>
+							<ul className={styles.promotions}>
+								{promotions?.map((item: Promotions) => {
+									return (
+										<li className={styles.promotionli} key={item?.promotionId}>{item?.calloutMsg}</li>
+									);
+								})}
+								<div onClick={handleClickViewMore} onKeyDown={handleClickViewMore} className={styles.more}>
+									{viewMore ? "View More" : "View Less"}
+								</div>
+							</ul>
 							<div className={styles.varientSection}>
 								{colors !== undefined && (
 									<VarientSelector
@@ -282,7 +307,7 @@ export default function ProductDetails() {
 							</div>
 							<div>
 								<div className={styles.error}>
-									{error ? t("select-size-error") : "\u00A0"}
+									{error ? "Please choose any size" : "\u00A0"}
 								</div>
 							</div>
 							<div
@@ -308,7 +333,7 @@ export default function ProductDetails() {
 												lineHeight: "16px",
 											}}
 										>
-											<SelectValue placeholder={t("size")} />
+											<SelectValue placeholder={"Size"} />
 										</SelectTrigger>
 										<SelectContent>
 											{sizes?.map((item: Size) => (

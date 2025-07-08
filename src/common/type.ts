@@ -136,6 +136,7 @@ export type CartItem = {
   price: number;
   priceAfterItemDiscount?:number;
   priceAfterOrderDiscount?:number;
+  showStrikedPrice?:boolean;
   currency: string;
   productImage: string;
   itemId: string;
@@ -333,4 +334,10 @@ export type ProductCardProps = {
 	onClick?: (productId: string) => void;
 	onButtonClick?: (productId: string) => void;
 	onMoveToBag?: (productId: string) => void;
+}
+
+export type Promotions={
+ calloutMsg:string
+ promotionId:string
+ promotionPrice:string
 }

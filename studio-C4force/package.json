@@ -15,7 +15,7 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/assist": "^4.4.1",
+    "@sanity/assist": "^4.2.0",
     "@sanity/color-input": "^4.0.3",
     "@sanity/image-url": "^1.1.0",
     "@sanity/react-loader": "^1.11.11",

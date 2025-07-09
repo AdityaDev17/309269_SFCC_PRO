@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "commonjs",
+    "noEmit": false
+  },
+  "include": ["studio-C4force/campaign-promotion-sfcc-to-sanity/**/*.ts"]
+}

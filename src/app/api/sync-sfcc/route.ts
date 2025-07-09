@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
 
     // Step 1: Get bearer token from SCAPI
     const authUrl = process.env.SFCC_SCAPI_AUTH_URL!;
-    const clientId = process.env.SFCC_ADMIN_CLIENT_ID!;
-    const clientSecret = process.env.SFCC_ADMIN_CLIENT_SECRET!;
+    const clientId = process.env.SFCC_CLIENT_ID!;
+    const clientSecret = process.env.SFCC_CLIENT_SECRET!;
 
     const authHeader = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
     const tokenRes = await axios.post(
@@ -48,8 +48,8 @@ export async function POST(req: NextRequest) {
     console.log('SCAPI Token acquired');
 
     // Step 2: Construct PATCH URL
-    const baseUrl = process.env.SFCC_SCAPI_BASE_URL!;
-    const version = process.env.SFCC_SCAPI_VERSION!;
+    const baseUrl = process.env.SFCC_API_HOST!;
+    const version = process.env.SFCC_API_VERSION!;
     const orgId = process.env.SFCC_ORGANIZATION_ID!;
     const siteId = process.env.SFCC_SITE_ID!;
     const patchUrl = `${baseUrl}/product/products/${version}/organizations/${orgId}/products/${productId}`;

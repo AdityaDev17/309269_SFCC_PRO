@@ -10,8 +10,8 @@ export const getValidToken = () => {
           GET_CHAT_ACCESS_TOKEN,
           {input: {
             grant_type: "client_credentials",
-            client_id: process.env.AGENT_FORCE_CLIENT_ID,
-            client_secret: process.env.AGENT_FORCE_CLIENT_SECRET
+            client_id: process.env.NEXT_PUBLIC_AGENT_FORCE_CLIENT_ID,
+            client_secret: process.env.NEXT_PUBLIC_AGENT_FORCE_CLIENT_SECRET
           }} ,
           {}
         );

@@ -133,7 +133,7 @@ const Login = ({
 				}}
 				onClick={handleLoginClick}
 			>
-				{isSubmitting ? "LOGGING IN..." : "LOGIN"}
+				{isSubmitting ? "LOGGING IN..." : t("login")}
 			</Button>
 			<div>
 				<div className={`${styles.fontColor} ${styles.marginBottom}`}>

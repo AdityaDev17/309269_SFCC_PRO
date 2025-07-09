@@ -9,6 +9,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // typescript:{
+  //   ignoreBuildErrors:true
+  // },
   images: {
     domains: ['zzrl-003.dx.commercecloud.salesforce.com', 'edge.disstg.commercecloud.salesforce.com','cdn.sanity.io'],
     remotePatterns: [

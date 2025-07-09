@@ -1,5 +1,5 @@
+import LandingPageMapper from "@/sanity/mappers/LandingPageMapper";
 import { getLandingPageData } from "@/sanity/queries/landing";
-import LandingPageMapper from "../../../sanity/mappers/LandingPageMapper";
 
 export default async function LandingPage({ params }) {
 	const { slug } = params;

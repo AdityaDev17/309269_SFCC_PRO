@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import styles from "./Login.module.css";
-
+import { useTranslation } from "react-i18next";
 interface LoginProps {
 	onLoginClicked: (formData: { email: string; password: string }) => void;
 	onCreateAccount: () => void;
@@ -23,6 +23,7 @@ const Login = ({
 	errorMessage,
 	clearErrorMessage,
 }: LoginProps) => {
+	const { t } = useTranslation();
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",

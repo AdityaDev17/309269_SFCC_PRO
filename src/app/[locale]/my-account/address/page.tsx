@@ -11,7 +11,6 @@ import AddressCard, {
 import { AddressDialog } from "@/components/organisms/AddressForm/AddressModal";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { gql } from "graphql-request";
 import { useState } from "react";
 import styles from "./address.module.css";
 import { useTranslations } from "next-intl";

@@ -11,6 +11,12 @@ const nextConfig: NextConfig = {
   },
   images: {
     domains: ['zzrl-003.dx.commercecloud.salesforce.com', 'edge.disstg.commercecloud.salesforce.com','cdn.sanity.io'],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+      },
+    ],
   },
 };
 const withNextIntl = createNextIntlPlugin();

@@ -11,7 +11,7 @@ import AddressCard, {
 import { AddressDialog } from "@/components/organisms/AddressForm/AddressModal";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { gql } from "graphql-request";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import styles from "./address.module.css";
 
@@ -30,6 +30,7 @@ type AddressType = {
 };
 
 const AddressPage = () => {
+	const t = useTranslations("AddressBook");
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 	const [selectedAddress, setSelectedAddress] = useState<AddressData>();
 	const customerId = sessionStorage.getItem("customer_id") ?? "";
@@ -91,7 +92,7 @@ const AddressPage = () => {
 						{ label: "Address Book" },
 					]}
 				/>
-				<h1 className={styles.title}>ADDRESS BOOK</h1>
+				<h1 className={styles.title}>{t("address-book-title")}</h1>
 				<Skeleton className={styles.skeletonAddBtn} />
 
 				<div className={styles.skeletonLayout}>
@@ -123,7 +124,7 @@ const AddressPage = () => {
 					{ label: "Address Book" },
 				]}
 			/>
-			<h1 className={styles.title}>ADDRESS BOOK</h1>
+			<h1 className={styles.title}>{t("address-book-title")}</h1>
 
 			{addresses?.length > 0 && (
 				<Button
@@ -131,7 +132,7 @@ const AddressPage = () => {
 					onClick={() => setIsAddressDialogOpen(true)}
 					className={styles.button}
 				>
-					ADD NEW ADDRESS
+					{t("add-new-address")}
 				</Button>
 			)}
 
@@ -148,9 +149,9 @@ const AddressPage = () => {
 						errImg="/images/emptyBook.svg"
 						imgHeight={200}
 						imgWidth={200}
-						text1="No Saved Addresses"
-						text2="Save an address for faster checkout."
-						buttonText="ADD AN ADDRESS"
+						text1={t("no-saved-address")}
+						text2={t("save-address")}
+						buttonText={t("add-address-btn")}
 						onButtonClick={() => setIsAddressDialogOpen(true)}
 					/>
 				</div>

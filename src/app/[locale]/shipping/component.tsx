@@ -9,6 +9,16 @@ import {
 	UPDATE_SHIPPING_ADDRESS,
 	UPDATE_SHIPPING_METHOD,
 } from "@/common/schema";
+import {
+	type CommonCardType,
+	type CustomerAddress,
+	type CustomerDetails,
+	type Shipment,
+	ShippingAddress,
+	type ShippingMethod,
+	type UpdateShippingAddressInput,
+	type UpdateShippingMethodInput,
+} from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 import {
@@ -27,80 +37,13 @@ import {
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./shipping.module.css";
 
-type CustomerDetails = {
-	basketId: string;
-	email: string;
-};
-
-type CommonCardType = {
-	id: string;
-	title: string;
-	description: string;
-	extraInfo?: string;
-};
-type ShippingAddress = {
-	address1: string;
-	city: string;
-	countryCode: string;
-	firstName: string;
-	fullName: string;
-	id: string;
-	lastName: string;
-	postalCode: string;
-	stateCode: string;
-};
-
-type Shipment = {
-	shippingAddress: ShippingAddress | null;
-};
-
-type CustomerAddress = {
-	addressId: string;
-	address1: string;
-	address2: string;
-	city: string;
-	countryCode: string;
-	creationDate: string;
-	firstName: string;
-	fullName: string;
-	lastModified: string;
-	lastName: string;
-	phone: string;
-	postalCode: string;
-	preferred: boolean;
-	stateCode: string;
-};
-
-type ShippingMethod = {
-	description: string;
-	id: string;
-	name: string;
-	price: string;
-};
-
-type UpdateShippingAddressInput = {
-	basketId: string | null;
-	address1: string;
-	address2: string | null;
-	city: string;
-	countryCode: string;
-	firstName: string;
-	lastName: string;
-	phone: string;
-	postalCode: string;
-	stateCode: string;
-	useAsBilling: boolean;
-};
-
-type UpdateShippingMethodInput = {
-	basketId: string | null;
-	id: string | null;
-};
 const Shipping = () => {
+	const t = useTranslations("Shipping");
 	const router = useRouter();
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 	const [selectedShippingMethod, setSelectedShippingMethod] = useState<
@@ -108,6 +51,8 @@ const Shipping = () => {
 	>(null);
 	const [selectedAddress, setSelectedAddress] = useState<AddressData>();
 	const [email, setEmail] = useState<string>("");
+	const [addressError, setAddressError] = useState(false);
+	const [shippingMethodError, setShippingMethodError] = useState(false);
 
 	//   const customerType = "registered";
 	const basketId = sessionStorage.getItem("basketId");
@@ -230,6 +175,23 @@ const Shipping = () => {
 		) ?? [];
 
 	const handleCheckout = async () => {
+		let hasError = false;
+
+		if (!selectedAddress) {
+			setAddressError(true);
+			hasError = true;
+		} else {
+			setAddressError(false);
+		}
+
+		if (!selectedShippingMethod) {
+			setShippingMethodError(true);
+			hasError = true;
+		} else {
+			setShippingMethodError(false);
+		}
+
+		if (hasError) return;
 		if (customerType === "registered" && selectedAddress) {
 			try {
 				await updateShippingAddressMutation.mutateAsync({
@@ -280,7 +242,6 @@ const Shipping = () => {
 			setSelectedAddress(defaultOrFirst);
 		}
 	}, [addresses, selectedAddress]);
-
 	return (
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
@@ -289,14 +250,18 @@ const Shipping = () => {
 						type={"Label"}
 						variant={3}
 						fontWeight="semibold"
-						label="Shipping Address"
+						label={t("shipping-address")}
 					/>
 					{!(customerType === "guest" && shippingAdresses.length === 1) && (
 						<Button
 							variant="secondary"
-							onClick={() => setIsAddressDialogOpen(true)}
+							// onClick={() => setIsAddressDialogOpen(true)}
+							onClick={() => {
+								setIsAddressDialogOpen(true);
+								setAddressError(false);
+							}}
 						>
-							ADD NEW ADDRESS
+							{t("add-new-address")}
 						</Button>
 					)}
 				</div>
@@ -322,27 +287,43 @@ const Shipping = () => {
 						</div>
 					) : addresses.length === 0 ? (
 						<div className={styles.emptyState}>
-							<p>No saved addresses found.</p>
+							<p>{t("no-saved-addresses")}</p>
+							{addressError && (
+								<p className={styles.errorText}>
+									{t("select-shipping-address-error")}
+								</p>
+							)}
 						</div>
 					) : (
-						<AddressCard
-							items={addresses}
-							radioButton={true}
-							refetch={
-								customerType === "registered"
-									? refetchAddresses
-									: refetchShipping
-							}
-							selectedAddress={selectedAddress}
-							setSelectedAddress={setSelectedAddress}
-						/>
+						<>
+							<AddressCard
+								items={addresses}
+								radioButton={true}
+								refetch={
+									customerType === "registered"
+										? refetchAddresses
+										: refetchShipping
+								}
+								selectedAddress={selectedAddress}
+								// setSelectedAddress={setSelectedAddress}
+								setSelectedAddress={(address) => {
+									setSelectedAddress(address);
+									setAddressError(false);
+								}}
+							/>
+							{addressError && (
+								<p className={styles.errorText}>
+									{t("select-shipping-address-error")}
+								</p>
+							)}
+						</>
 					)}
 				</div>
 
 				{/* BILLING CHECKBOX */}
 				<div className={styles.billCheck}>
 					<CheckBox />
-					<p>Keep Billing Address same as Shipping Address </p>
+					<p>{t("keep-billing-same")}</p>
 				</div>
 
 				{/* SHIPPING METHODS */}
@@ -351,7 +332,7 @@ const Shipping = () => {
 						type={"Label"}
 						variant={3}
 						fontWeight="semibold"
-						label="Shipping Method"
+						label={t("shipping-method")}
 					/>
 					{isLoadingShippingMethods ? (
 						<div className={styles.skeletonLayout}>
@@ -370,24 +351,35 @@ const Shipping = () => {
 							))}
 						</div>
 					) : (
-						<RadioGroup
-							className={styles.cardGrid}
-							value={selectedShippingMethod || undefined}
-							onValueChange={(value) => setSelectedShippingMethod(value)}
-						>
-							{shippingMethods.map((item) => (
-								<div key={item.id} className={styles.card}>
-									<div className={styles.wrapper}>
-										<h2 className={styles.name}>{item.title}</h2>
-										<RadioGroupItem value={item.id} />
+						<>
+							<RadioGroup
+								className={styles.cardGrid}
+								value={selectedShippingMethod || undefined}
+								// onValueChange={(value) => setSelectedShippingMethod(value)}
+								onValueChange={(value) => {
+									setSelectedShippingMethod(value);
+									setShippingMethodError(false);
+								}}
+							>
+								{shippingMethods.map((item) => (
+									<div key={item.id} className={styles.card}>
+										<div className={styles.wrapper}>
+											<h2 className={styles.name}>{item.title}</h2>
+											<RadioGroupItem value={item.id} />
+										</div>
+										<div>
+											<p className={styles.address}>{item.description}</p>
+											<p className={styles.extraInfo}>${item.extraInfo}</p>
+										</div>
 									</div>
-									<div>
-										<p className={styles.address}>{item.description}</p>
-										<p className={styles.extraInfo}>${item.extraInfo}</p>
-									</div>
-								</div>
-							))}
-						</RadioGroup>
+								))}
+							</RadioGroup>
+							{shippingMethodError && (
+								<p className={styles.errorText}>
+									{t("select-shipping-method-error")}
+								</p>
+							)}
+						</>
 					)}
 				</div>
 
@@ -398,27 +390,18 @@ const Shipping = () => {
 					) : (
 						<OrderSummary
 							reverseOrder={true}
-							buttonText="CHECKOUT"
+							isButton={true}
+							isDelivery={false}
+							discount={
+								shippingAddressData?.basketInfo?.orderPriceAdjustments[0].price
+							}
+							total={shippingAddressData?.basketInfo?.productTotal}
+							currency={shippingAddressData?.basketInfo?.currency}
+							subTotal={shippingAddressData?.basketInfo?.productSubTotal}
+							buttonText={t("proceed-to-payment")}
 							onButtonClick={handleCheckout}
 						/>
 					)}
-				</div>
-
-				<div className={styles.summary}>
-					{/* <OrderSummary
-						reverseOrder={true}
-						buttonText="CHECKOUT"
-						onButtonClick={handleCheckout}
-					/> */}
-					<OrderSummary
-						reverseOrder={true}
-						isButton={true}
-						total={shippingAddressData?.basketInfo?.productTotal}
-						currency={shippingAddressData?.basketInfo?.currency}
-						subTotal={shippingAddressData?.basketInfo?.productSubTotal}
-						buttonText="PROCEED TO PAYMENT"
-						onButtonClick={handleCheckout}
-					/>
 				</div>
 			</div>
 

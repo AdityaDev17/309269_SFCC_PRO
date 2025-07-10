@@ -2,7 +2,11 @@ import { DELETE_SESSION, GET_MESSAGE, GET_SESSION_ID, GET_CHAT_ACCESS_TOKEN } fr
 import { AccessTokenResponse, SessionResponse, MessageResponse, DeleteSessionResponse } from "@/common/type";
 import { request } from "graphql-request";
 
-const endpoint = "https://i3bbw2uveg.execute-api.us-east-1.amazonaws.com/dev/graphql";
+if (!process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT) {
+  throw new Error("NEXT_PUBLIC_GRAPHQL_ENDPOINT is not defined");
+}
+
+const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT;
 
 export const getValidToken = () => {
     return request<AccessTokenResponse>(

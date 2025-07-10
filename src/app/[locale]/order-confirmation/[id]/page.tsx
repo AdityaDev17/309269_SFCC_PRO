@@ -1,5 +1,6 @@
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Banner from "@/components/molecules/Banner/Banner";
+import { getTranslations } from "next-intl/server";
 import React from "react";
 import OrderConfimation from "./component";
 import styles from "./page.module.css";
@@ -10,6 +11,7 @@ export default async function OrderConfirmationPage({
 	params: Promise<{ id: string }>;
 }) {
 	const { id } = await params;
+	const t = await getTranslations("OrderConfirmation");
 	return (
 		<section className={`${styles.layout} ${styles.pageLayout}`}>
 			<Breadcrumbs
@@ -23,7 +25,7 @@ export default async function OrderConfirmationPage({
 				textColor="#000"
 				subtitle={`Order ID ${id}`}
 				subtitleVariant={5}
-				buttonText="CONTINUE SHOPPING"
+				buttonText={t("continue-shopping")}
 				backgroundImage="/images/orderConfirmationBanner.svg"
 				alignment="center-center"
 			/>

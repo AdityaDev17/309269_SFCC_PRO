@@ -1,10 +1,16 @@
 import { GET_ACCESS_TOKEN } from "@/common/schema";
 import { request } from "graphql-request";
  
-const endpoint = "https://i3bbw2uveg.execute-api.us-east-1.amazonaws.com/dev/graphql";
- 
-const AUTH_HEADER =
-  "Basic NjgyMjQ3NDItNGU2ZC00NWUzLWFjZjctMmI3NWQ1ZDJiZGIwOjc4NlliZ1E1SF9TS2FMbXloOHctNXNUOFF6YThvNnNtQnJTWTBIOG5SRGs=";
+if (!process.env.NEXT_PUBLIC_AUTH_HEADER) {
+  throw new Error("NEXT_PUBLIC_AUTH_HEADER is not defined");
+}
+
+if (!process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT) {
+  throw new Error("NEXT_PUBLIC_GRAPHQL_ENDPOINT is not defined");
+}
+
+const AUTH_HEADER = process.env.NEXT_PUBLIC_AUTH_HEADER;
+const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT
  
 // Token helper: fetch and store tokens
 export const fetchToken = async (isRefresh = false): Promise<string | null> => {

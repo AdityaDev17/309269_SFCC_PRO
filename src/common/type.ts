@@ -51,6 +51,7 @@ export type ProductList = {
   };
 };
 
+
 type CategoriesProps = {
   name: string;
   image?: {
@@ -63,13 +64,14 @@ type CategoriesProps = {
   }[];
 };
 
-export interface HeaderProps {
+export type HeaderProps = {
   isHome?: boolean;
   logoImages: { default: string; white: string };
   categories: CategoriesProps[];
   headerIcons: { label: string; icon: string }[];
   headerWhiteIcons: { label: string; icon: string }[];
 }
+
 export type ProductItem = {
   productId: string;
   productName: string;
@@ -78,11 +80,40 @@ export type ProductItem = {
   productImage?: {
     data: {
       imageGroups: {
-        images: { link: string }[];
+        images: {
+          alt: string;
+          link: string;
+        }[];
+      };
+    }[];
+  };
+  productData?: {
+    data: {
+      imageGroups: {
+        images: {
+          alt: string;
+          link: string;
+        }[];
+      }[];
+      variants: {
+        productId: string;
+        variationValues: {
+          color?: string;
+          size?: string;
+        };
+      }[];
+      variationAttributes?: {
+        values?: {
+          name?: string;
+          value?: string;
+        };
       }[];
     }[];
   };
 };
+
+
+
 /*Same as CartItem*/
 export type CartItems = {
   id: string;
@@ -103,6 +134,9 @@ export type CartItem = {
   description: string;
   quantity: number;
   price: number;
+  priceAfterItemDiscount?:number;
+  priceAfterOrderDiscount?:number;
+  showStrikedPrice?:boolean;
   currency: string;
   productImage: string;
   itemId: string;
@@ -128,6 +162,8 @@ export type CartItemResponse = {
   productName: string;
   quantity: number;
   price: number;
+  priceAfterItemDiscount?:number;
+  priceAfterOrderDiscount?:number;
   productData?: {
     data?: {
       imageGroups?: {
@@ -140,6 +176,12 @@ export type CartItemResponse = {
         variationValues?: {
           color?: string;
           size?: string;
+        };
+      }[];
+      variationAttributes?: {
+        values?: {
+          name?: string;
+          value?: string;
         };
       }[];
     }[];
@@ -194,3 +236,138 @@ export type MessageType = {
   author: string;
   text: string;
 };
+export type FilterDialogProps = {
+	priceFilters: { label: string; value: string }[];
+	colorFilters: string[];
+	onApplyFilters: (filters: Record<string, string[]>) => void;
+}
+
+export type ProductDetails = {
+		currency: string;
+		hitType: string;
+		image?: {
+			alt: string;
+			disBaseLink: string;
+			link: string;
+			title: string;
+		};
+		orderable: string;
+		price: string;
+		pricePerUnit: string;
+		productId: string;
+		productName: string;
+	}
+
+
+export type CustomerDetails = {
+	basketId: string;
+	email: string;
+};
+
+export type CommonCardType = {
+	id: string;
+	title: string;
+	description: string;
+	extraInfo?: string;
+};
+export type ShippingAddress = {
+	address1: string;
+	city: string;
+	countryCode: string;
+	firstName: string;
+	fullName: string;
+	id: string;
+	lastName: string;
+	postalCode: string;
+	stateCode: string;
+};
+
+export type Shipment = {
+	shippingAddress: ShippingAddress | null;
+};
+
+export type CustomerAddress = {
+	addressId: string;
+	address1: string;
+	address2: string;
+	city: string;
+	countryCode: string;
+	creationDate: string;
+	firstName: string;
+	fullName: string;
+	lastModified: string;
+	lastName: string;
+	phone: string;
+	postalCode: string;
+	preferred: boolean;
+	stateCode: string;
+};
+
+export type ShippingMethod = {
+	description: string;
+	id: string;
+	name: string;
+	price: string;
+};
+
+export type UpdateShippingAddressInput = {
+	basketId: string | null;
+	address1: string;
+	address2: string | null;
+	city: string;
+	countryCode: string;
+	firstName: string;
+	lastName: string;
+	phone: string;
+	postalCode: string;
+	stateCode: string;
+	useAsBilling: boolean;
+};
+
+export type UpdateShippingMethodInput = {
+	basketId: string | null;
+	id: string | null;
+};
+
+export type OrderSummaryProps = {
+	reverseOrder?: boolean;
+	totalRowTop?: boolean;
+	isButton?: boolean;
+	isPaymentImage?: boolean;
+	totalAmt?: string;
+	currency?: string;
+	subTotal?: string;
+	delivery?: string;
+	tax?: string;
+	total?: string;
+	totalSavings?: string;
+	buttonText?: string;
+  isDelivery?:boolean;
+  discount?:string;
+	onButtonClick?: () => void;
+};
+
+export type Alignment = "center" | "alignStart" | "alignEnd";
+
+export type ProductCardProps = {
+	productId?: string;
+	alignment?: Alignment;
+	width?: number | string;
+	productImage: string;
+	productTitle?: string;
+	productDesc?: string;
+	price?: string;
+	currency?: string;
+	moveToBag?: boolean;
+	wishListed?: boolean;
+	bagPrice?: string;
+	onClick?: (productId: string) => void;
+	onButtonClick?: (productId: string) => void;
+	onMoveToBag?: (productId: string) => void;
+}
+
+export type Promotions={
+ calloutMsg:string
+ promotionId:string
+ promotionPrice:string
+}

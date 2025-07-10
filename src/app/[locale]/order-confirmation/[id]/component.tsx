@@ -1,12 +1,17 @@
 "use client";
 import { GET_ORDER_DETAILS, UPDATE_ORDER } from "@/common/schema";
+import type {
+	CartItemResponse,
+	Values,
+	VariationAttributes,
+} from "@/common/type";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
-import type { CartItemResponse } from "@/common/type";
 import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
@@ -14,6 +19,7 @@ import styles from "./page.module.css";
 
 const OrderConfimation = () => {
 	const { id } = useParams() as { id: string };
+	const t = useTranslations("OrderConfirmation");
 	const orderId = id;
 	const hasUpdated = useRef(false);
 
@@ -45,6 +51,10 @@ const OrderConfimation = () => {
 		runUpdate();
 	}, [runUpdate]);
 
+	const getSize = (values: Values[], size: string) => {
+		return values?.find((item) => item.value === size)?.name;
+	};
+
 	const orderDetails = data?.orderInfo;
 	const orderdedItems = orderDetails?.productItems?.map(
 		(item: CartItemResponse) => ({
@@ -58,9 +68,15 @@ const OrderConfimation = () => {
 			color: item?.productData?.data?.[0]?.variants?.find(
 				(variation) => variation?.productId === item?.productId,
 			)?.variationValues?.color,
-			size: item?.productData?.data?.[0]?.variants?.find(
-				(variation) => variation?.productId === item?.productId,
-			)?.variationValues?.size,
+			size: getSize(
+				(
+					item?.productData?.data?.[0]
+						?.variationAttributes as VariationAttributes[]
+				)?.find((attr) => attr.id === "size")?.values ?? [],
+				item?.productData?.data?.[0]?.variants?.find(
+					(variation) => variation?.productId === item?.productId,
+				)?.variationValues?.size ?? "",
+			),
 			productImage:
 				item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link,
 		}),
@@ -73,7 +89,7 @@ const OrderConfimation = () => {
 				variant={3}
 				fontWeight="semibold"
 				color="black"
-				label={"ORDER SUMMARY"}
+				label={t("order-summary")}
 			/>
 			<section className={styles.detailsSection}>
 				<section className={styles.main}>
@@ -92,7 +108,7 @@ const OrderConfimation = () => {
 									variant={3}
 									fontWeight="semibold"
 									color="black"
-									label={"Delivery Address"}
+									label={t("delivery-address")}
 								/>
 								<div className={styles.address}>
 									<div>
@@ -143,7 +159,7 @@ const OrderConfimation = () => {
 									variant={3}
 									fontWeight="bold"
 									color="black"
-									label={"Date of Order"}
+									label={t("order-date")}
 								/>
 								<div className={styles.address}>
 									{isLoading ? (
@@ -171,7 +187,7 @@ const OrderConfimation = () => {
 									variant={3}
 									fontWeight="bold"
 									color="black"
-									label={"Method of Payment"}
+									label={t("payment-method")}
 								/>
 								<div className={styles.address}>
 									{isLoading ? (
@@ -190,7 +206,7 @@ const OrderConfimation = () => {
 							variant={3}
 							fontWeight="semibold"
 							color="black"
-							label={"Product Details"}
+							label={t("product-details")}
 						/>
 						{isLoading ? (
 							<div style={{ display: "grid", gap: "1rem" }}>
@@ -227,10 +243,13 @@ const OrderConfimation = () => {
 							isButton={false}
 							isPaymentImage={false}
 							total={orderDetails?.orderTotal.toString()}
-							totalAmt={orderDetails?.productTotal.toString()}
+							// totalAmt={orderDetails?.productTotal.toString()}
+							totalAmt={orderDetails?.orderTotal}
+							isDelivery={true}
+							discount={orderDetails?.orderPriceAdjustments[0]?.price}
+							delivery={orderDetails?.shippingTotal}
 							totalSavings="0"
 							subTotal={orderDetails?.productSubTotal.toString()}
-							delivery="Free"
 							tax={orderDetails?.taxTotal.toString()}
 							currency={orderDetails?.currency}
 						/>

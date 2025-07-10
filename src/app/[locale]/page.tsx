@@ -23,10 +23,8 @@ export const revalidate = 60;
 
 export default async function Home() {
 	const t = await getTranslations("HomePage");
-	console.log(t("about"));
 	const homepageData = await getHomepageData();
 	const banners = homepageData.banners || [];
-	console.log("🚀 ~ Home ~ banners:", banners);
 	const statementBanner = homepageData.statementBanner;
 	return (
 		<div className={styles.homeContainer}>

@@ -33,14 +33,22 @@ export const GET_PRODUCT_DETAILS = `
         value
       }
     }
+    productPromotions {
+      calloutMsg
+      promotionId
+      promotionPrice
+    }
   }
 }
 
 `;
 export const GET_PRODUCT_LIST = `
-  query GetProductList($getProductListId: String!) {
-    getProductList(id: $getProductListId) {
+  query GetProductList($getProductListId: String!, $limit: Int, $offset: Int, $price: String,$colors: String
+) {
+    getProductList(id: $getProductListId, limit: $limit, offset: $offset,price: $price, colors: $colors) {
       limit
+      offset
+      total
       hits {
         currency
         hitType
@@ -56,6 +64,17 @@ export const GET_PRODUCT_LIST = `
         productId
         productName
       }
+        refinements {
+        attributeId
+        label
+        values {
+          hitCount
+          label
+          value
+          presentationId
+        }
+      }
+      
     }
   }
 `;
@@ -85,6 +104,15 @@ export const GET_ORDER_DETAILS = `
                 size
               }
             }
+            variationAttributes {
+              id
+              name
+              values {
+                name
+                orderable
+                value
+              }
+            }
           }
         }
         quantity
@@ -107,6 +135,22 @@ export const GET_ORDER_DETAILS = `
       taxTotal
       productSubTotal
       productTotal
+      shippingTotal
+      orderPriceAdjustments {
+        appliedDiscount {
+          amount
+          percentage
+          type
+        }
+        creationDate
+        custom
+        itemText
+        lastModified
+        manual
+        price
+        priceAdjustmentId
+        promotionId
+      }
     }
   }
 `;
@@ -238,6 +282,9 @@ export const GET_BASKET = `
       currency
       productSubTotal
       productTotal
+      shippingTotal
+      shippingTotalTax
+      orderTotal
       productItems {
         itemId
         itemText
@@ -261,9 +308,34 @@ export const GET_BASKET = `
               size
             }
           }
+            variationAttributes {
+              id
+              name
+              values {
+                name
+                orderable
+                value
+              }
+            }
           }
         }
         productName
+        priceAdjustments {
+          appliedDiscount {
+            amount
+            percentage
+            type
+          }
+          custom
+          itemText
+          manual
+          price
+          priceAdjustmentId
+          promotionId
+        }
+        priceAfterItemDiscount
+        priceAfterOrderDiscount
+        tax
       }
         shipments {
         shippingAddress {
@@ -282,8 +354,23 @@ export const GET_BASKET = `
       customerId
       email
     }
+    orderPriceAdjustments {
+      appliedDiscount {
+        amount
+        type
+        percentage
+      }
+      creationDate
+      custom
+      itemText
+      lastModified
+      manual
+      price
+      priceAdjustmentId
+      promotionId
+    }
   }
-  }
+}
 `;
 export const UPDATE_BASKET_ITEM = `
   mutation UpdateBasketItem($input: UpdateBasket!) {
@@ -537,6 +624,21 @@ export const GET_SHIPPING_ADDRESS_FROM_BASKET = `
     basketInfo(basketId: $basketId) {
       productSubTotal,
   	  productTotal,
+      orderPriceAdjustments {
+              appliedDiscount {
+                amount
+                percentage
+                type
+              }
+              creationDate
+              custom
+              itemText
+              lastModified
+              manual
+              price
+              priceAdjustmentId
+              promotionId
+            },
 	  currency
       shipments {
         shippingAddress {

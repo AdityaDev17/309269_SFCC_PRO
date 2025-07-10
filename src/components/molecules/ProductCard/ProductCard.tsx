@@ -1,4 +1,6 @@
 "use client";
+import { Alignment, type ProductCardProps } from "@/common/type";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../atomic/Button/Button";
@@ -11,24 +13,6 @@ import {
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
 
-type Alignment = "center" | "alignStart" | "alignEnd";
-
-interface ProductCardProps {
-	productId?: string;
-	alignment?: Alignment;
-	width?: number | string;
-	productImage: string;
-	productTitle?: string;
-	productDesc?: string;
-	price?: string;
-	currency?: string;
-	moveToBag?: boolean;
-	wishListed?: boolean;
-	bagPrice?: string;
-	onClick?: (productId: string) => void;
-	onButtonClick?: (productId: string) => void;
-	onMoveToBag?: (productId: string) => void;
-}
 const ProductCard = ({
 	productId,
 	alignment = "center",
@@ -45,6 +29,7 @@ const ProductCard = ({
 	onButtonClick,
 	onMoveToBag,
 }: ProductCardProps) => {
+	const t = useTranslations("ProductCard");
 	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
@@ -117,7 +102,7 @@ const ProductCard = ({
 									variant={1}
 									color="gray"
 									fontWeight="medium"
-									label={`${currency}${price}`}
+									label={`${currency}  ${price}`}
 								/>
 							</div>
 						)}
@@ -147,7 +132,7 @@ const ProductCard = ({
 								<Typography
 									type="Body"
 									variant={2}
-									label="Move to Bag"
+									label={t("move-to-bag")}
 									fontWeight="medium"
 									color="black"
 								/>
@@ -177,7 +162,7 @@ const ProductCard = ({
 								<Typography
 									type="Body"
 									variant={2}
-									label="Move to Bag"
+									label={t("move-to-bag")}
 									fontWeight="medium"
 									color="black"
 								/>

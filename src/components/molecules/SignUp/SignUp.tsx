@@ -1,5 +1,6 @@
 "use client";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
@@ -14,11 +15,11 @@ import {
 import styles from "./SignUp.module.css";
 
 type SignUpFormData = {
-	title: string;
+	title: string | null;
 	firstName: string;
 	lastName: string;
-	gender: string;
-	birthDate: string;
+	gender: string | null;
+	birthDate: string | null;
 	email: string;
 	password: string;
 	confirmPassword: string;
@@ -30,13 +31,14 @@ interface SignUpProps {
 }
 
 const SignUp = ({ onProceed }: SignUpProps) => {
+	const t = useTranslations("SignUp");
 	const [passwordScreen, setpasswordScreen] = useState(false);
 	const [formData, setFormData] = useState({
 		title: "",
 		firstName: "",
 		lastName: "",
-		gender: "",
-		birthDate: "",
+		gender: null as string | null,
+		birthDate: null as string | null,
 		email: "",
 		password: "",
 		confirmPassword: "",
@@ -50,6 +52,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 		email: "",
 		password: "",
 		confirmPassword: "",
+		agreeToTerms: "",
 	});
 
 	const handleChange = (
@@ -61,9 +64,25 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 
 		if (!targetName) return;
 
+		// Convert empty strings to null for specific fields
+		let processedValue: string | null = value;
+		if (targetName === "gender" || targetName === "birthDate") {
+			// For select fields, ensure we're getting the actual value
+			if (
+				value === "" ||
+				value === undefined ||
+				value === "null" ||
+				value === null
+			) {
+				processedValue = null;
+			} else {
+				processedValue = String(value);
+			}
+		}
+
 		setFormData((prevData) => ({
 			...prevData,
-			[targetName]: value,
+			[targetName]: processedValue,
 		}));
 
 		//  Clear validation error when user starts typing
@@ -137,6 +156,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 			email: "",
 			password: "",
 			confirmPassword: "",
+			agreeToTerms: "",
 		};
 
 		if (!formData.firstName.trim()) {
@@ -157,13 +177,41 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 		return !newErrors.firstName && !newErrors.lastName && !newErrors.email;
 	};
 
-	//  Updated disable logic for Step 1 (only check mandatory fields)
-	const handleDisable = () => {
-		return !(
-			formData.firstName.trim() &&
-			formData.lastName.trim() &&
-			formData.email.trim() &&
-			isValidEmail(formData.email)
+	//  Validation function for  (Password Screen)
+	const validatePasswordStep = () => {
+		const newErrors = {
+			firstName: "",
+			lastName: "",
+			email: "",
+			password: "",
+			confirmPassword: "",
+			agreeToTerms: "",
+		};
+
+		// Validate password
+		if (!formData.password.trim()) {
+			newErrors.password = "Password is mandatory";
+		} else if (!validatePassword(formData.password).isValid) {
+			newErrors.password = getPasswordValidationMessage();
+		}
+
+		// Validate confirm password
+		if (!formData.confirmPassword.trim()) {
+			newErrors.confirmPassword = "Confirm Password is mandatory";
+		} else if (formData.password !== formData.confirmPassword) {
+			newErrors.confirmPassword = "Passwords do not match";
+		}
+
+		// Validate terms agreement
+		if (!formData.agreeToTerms) {
+			newErrors.agreeToTerms = "You must agree to the Terms & Conditions";
+		}
+
+		setErrors(newErrors);
+		return (
+			!newErrors.password &&
+			!newErrors.confirmPassword &&
+			!newErrors.agreeToTerms
 		);
 	};
 
@@ -174,16 +222,38 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 		}
 	};
 
-	//  Password screen validation
-	const isPasswordValid = () => {
-		if (!formData.password || !formData.confirmPassword) return false;
+	// Handle proceed button click with validation
+	const handleProceed = () => {
+		if (validatePasswordStep()) {
+			// Clean up form data before sending
+			const cleanedFormData: SignUpFormData = {
+				title: formData.title?.trim() || null,
+				firstName: formData.firstName,
+				lastName: formData.lastName,
+				gender: formData.gender || null,
+				birthDate: formData.birthDate || null,
+				email: formData.email,
+				password: formData.password,
+				confirmPassword: formData.confirmPassword,
+				agreeToTerms: formData.agreeToTerms,
+			};
+			// Debug log to check the values
+			console.log("Form data being sent:", cleanedFormData);
+			console.log(
+				"Gender type:",
+				typeof cleanedFormData.gender,
+				"Value:",
+				cleanedFormData.gender,
+			);
+			console.log(
+				"BirthDate type:",
+				typeof cleanedFormData.birthDate,
+				"Value:",
+				cleanedFormData.birthDate,
+			);
 
-		const passwordValidation = validatePassword(formData.password);
-		const passwordsMatch = formData.password === formData.confirmPassword;
-
-		return (
-			passwordValidation.isValid && passwordsMatch && formData.agreeToTerms
-		);
+			onProceed(cleanedFormData);
+		}
 	};
 
 	//  Get password validation message
@@ -209,13 +279,13 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 
 	return (
 		<div className={styles.layout}>
-			<div className={styles.header}>CREATE ACCOUNT</div>
+			<div className={styles.header}>{t("create-account")}</div>
 			<div
 				style={{ display: passwordScreen ? "none" : "grid" }}
 				className={styles.layout}
 			>
 				<div>
-					<div className={styles.fontColor}>Title*</div>
+					<div className={styles.fontColor}>Title</div>
 					<Select onValueChange={(e) => handleChange(e, "title")}>
 						<SelectTrigger
 							style={{
@@ -243,7 +313,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 								<SelectItem value="Mrs" data-testid="select-item-2">
 									Mrs
 								</SelectItem>
-								<SelectItem value="Ms" data-testid="select-item-2">
+								<SelectItem value="Ms" data-testid="select-item-3">
 									Ms
 								</SelectItem>
 							</SelectGroup>
@@ -251,7 +321,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					</Select>
 				</div>
 				<div>
-					<div className={styles.fontColor}>First Name*</div>
+					<div className={styles.fontColor}>{t("first-name")}*</div>
 					<Input
 						type="text"
 						name="firstName"
@@ -269,7 +339,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					)}
 				</div>
 				<div>
-					<div className={styles.fontColor}>Last Name*</div>
+					<div className={styles.fontColor}>{t("last-name")}*</div>
 					<Input
 						type="text"
 						name="lastName"
@@ -287,7 +357,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					)}
 				</div>
 				<div>
-					<div className={styles.fontColor}>Gender</div>
+					<div className={styles.fontColor}>{t("gender")}</div>
 					<Select onValueChange={(e) => handleChange(e, "gender")}>
 						<SelectTrigger
 							style={{
@@ -314,7 +384,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 								<SelectItem value="female" data-testid="select-item-2">
 									Female
 								</SelectItem>
-								<SelectItem value="others" data-testid="select-item-2">
+								<SelectItem value="others" data-testid="select-item-3">
 									Others
 								</SelectItem>
 							</SelectGroup>
@@ -322,7 +392,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					</Select>
 				</div>
 				<div>
-					<div className={styles.fontColor}>Birth Date</div>
+					<div className={styles.fontColor}>{t("birth-date")}</div>
 					<Input
 						type="date"
 						name="birthDate"
@@ -332,7 +402,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					/>
 				</div>
 				<div>
-					<div className={styles.fontColor}>Email ID*</div>
+					<div className={styles.fontColor}>{t("email")}*</div>
 					<Input
 						type="email"
 						name="email"
@@ -353,7 +423,6 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					variant="secondary"
 					className={styles.buttonStyle}
 					size="lg"
-					disabled={handleDisable()}
 					style={{
 						width: "325px",
 						color: "#FFFFFF",
@@ -362,7 +431,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					}}
 					onClick={handleContinue}
 				>
-					CONTINUE
+					{t("continue")}
 				</Button>
 			</div>
 			<div
@@ -370,7 +439,10 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 				className={styles.layout}
 			>
 				<div>
-					<div className={styles.fontColor}>Password</div>
+					<div className={styles.fontColor}>
+						{t("password")}
+						<span className={styles.required}>*</span>
+					</div>
 					<Input
 						type="password"
 						value={formData?.password || ""}
@@ -378,48 +450,53 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						onChange={handleChange}
 						style={{
 							width: "325px",
-							borderColor:
-								formData.password &&
-								!validatePassword(formData.password).isValid
-									? "#FF0000"
-									: "#B3B2B5",
+							borderColor: errors.password ? "#FF0000" : "#B3B2B5",
 						}}
 					/>
-					{/*  Password validation message */}
-					{formData.password &&
-						!validatePassword(formData.password).isValid && (
-							<div className={styles.errorMessage}>
-								{getPasswordValidationMessage()}
-							</div>
-						)}
+
+					{/*  Error message for Password */}
+					{errors.password && (
+						<div className={styles.errorMessage}>{errors.password}</div>
+					)}
 				</div>
 				<div>
-					<div className={styles.fontColor}>Confirm Password</div>
+					<div className={styles.fontColor}>
+						{t("confirm-password")}
+						<span className={styles.required}>*</span>
+					</div>
 					<Input
 						type="password"
 						value={formData?.confirmPassword || ""}
 						name="confirmPassword"
 						onChange={handleChange}
-						style={{ width: "325px", borderColor: "#B3B2B5" }}
+						style={{
+							width: "325px",
+							borderColor: errors.confirmPassword ? "#FF0000" : "#B3B2B5",
+						}}
 					/>
-					{/*  Confirm password validation message */}
-					{formData.confirmPassword &&
-						formData.password !== formData.confirmPassword && (
-							<div className={styles.errorMessage}>Passwords do not match</div>
-						)}
+					{/*  error message for confirm password */}
+					{errors.confirmPassword && (
+						<div className={styles.errorMessage}>{errors.confirmPassword}</div>
+					)}
 				</div>
 				<div className={styles.row}>
 					<CheckBox
 						data-testid="checkbox"
 						style={{ borderColor: "#4F4B53" }}
 						checked={formData.agreeToTerms}
-						onCheckedChange={(checked: boolean) =>
-							setFormData((prev) => ({ ...prev, agreeToTerms: checked }))
-						}
+						onCheckedChange={(checked: boolean) => {
+							setFormData((prev) => ({ ...prev, agreeToTerms: checked }));
+							// Clear error when user checks the box
+							if (checked && errors.agreeToTerms) {
+								setErrors((prev) => ({ ...prev, agreeToTerms: "" }));
+							}
+						}}
 					/>
-					<div className={styles.policy}>
-						I have read, agreed to T&C & Privacy Policy*
-					</div>
+					<div className={styles.policy}>{t("privacy-policy")}</div>
+					{/*  Error message for Terms Agreement */}
+					{errors.agreeToTerms && (
+						<div className={styles.errorMessage}>{errors.agreeToTerms}</div>
+					)}
 				</div>
 				<Button
 					variant="secondary"
@@ -430,12 +507,9 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						fontSize: "12px",
 						fontWeight: "600",
 					}}
-					onClick={() => onProceed(formData)}
-					disabled={
-						!isPasswordValid()
-					} /* Changed to use isPasswordValid function */
+					onClick={handleProceed}
 				>
-					PROCEED
+					{t("proceed")}
 				</Button>
 			</div>
 		</div>

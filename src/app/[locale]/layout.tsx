@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import AnalyticsProvider from "@/components/AnalyticsProvider";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
 import Chat from "@/components/organisms/Chat/Chat";
 import Footer from "@/components/organisms/Footer/Footer";
@@ -37,7 +38,6 @@ export default async function RootLayout({
 	params: Promise<{ locale: string }>;
 }>) {
 	const { locale } = await params;
-	console.log(hasLocale(routing.locales, locale));
 	if (!hasLocale(routing.locales, locale)) {
 		notFound();
 	}
@@ -51,6 +51,7 @@ export default async function RootLayout({
 					<Providers>
 						<WebVitals />
 						<HeaderWrapper />
+						<AnalyticsProvider />
 						{children}
 						{(await draftMode()).isEnabled && (
 							<>

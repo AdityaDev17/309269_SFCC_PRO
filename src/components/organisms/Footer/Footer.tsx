@@ -10,8 +10,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/atomic/Select/Select";
+import { useTranslations } from "next-intl";
 import { Icon } from "../../atomic/Icons/Icons";
 const Footer = () => {
+	const t = useTranslations("Footer");
 	return (
 		<div className={styles.footer}>
 			<div className={styles.logoSection}>
@@ -44,7 +46,7 @@ const Footer = () => {
 					})}
 				</div>
 				<div>
-					<div style={{ paddingBottom: "15px" }}>Change Location</div>
+					<div style={{ paddingBottom: "15px" }}>{t("change-location")}</div>
 					<Select>
 						<SelectTrigger
 							style={{
@@ -67,13 +69,13 @@ const Footer = () => {
 						>
 							<SelectGroup>
 								<SelectItem value="US" data-testid="select-item-1">
-									US
+									{t("country.US")}
 								</SelectItem>
 								<SelectItem value="UK" data-testid="select-item-2">
-									UK
+									{t("country.UK")}
 								</SelectItem>
 								<SelectItem value="Canada" data-testid="select-item-2">
-									Canada
+									{t("country.Canada")}
 								</SelectItem>
 							</SelectGroup>
 						</SelectContent>
@@ -82,7 +84,7 @@ const Footer = () => {
 			</div>
 			<div className={styles.buttonSection}>
 				<div className={styles.buttonContainer}>
-					<div>&copy;2024 SFCC PRO International</div>
+					<div>&copy;2024 {t("copyright")}</div>
 					<div className={styles.gap}>
 						<Icon name="Instagram" />
 						<Icon name="Facebook" />

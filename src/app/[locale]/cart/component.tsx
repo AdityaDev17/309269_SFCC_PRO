@@ -58,17 +58,14 @@ const Cart = ({ basketId }: CartProps) => {
 	const removeBasketMutations = useMutation({
 		mutationFn: (input: { itemId: string }) => handleDeleteItem(input.itemId),
 		onSuccess: () => {
-			console.log("hii");
 			refetch();
 		},
 		retry: 3,
 	});
 
 	const onDeleteItem = async (itemId: string) => {
-		console.log("id", itemId);
 		try {
 			const response = await removeBasketMutations.mutateAsync({ itemId });
-			console.log("Remove response:", response);
 		} catch (error) {
 			console.error("Error removing basket item:", error);
 		}
@@ -84,13 +81,11 @@ const Cart = ({ basketId }: CartProps) => {
 	});
 
 	const onUpdateQuantity = async (itemId: string, newQuantity: number) => {
-		console.log("id", itemId, newQuantity);
 		try {
 			const response = await updateBasketMutations.mutateAsync({
 				itemId,
 				quantity: newQuantity,
 			});
-			console.log("Update response:", response);
 		} catch (error) {
 			console.error("Error updating basket item:", error);
 		}

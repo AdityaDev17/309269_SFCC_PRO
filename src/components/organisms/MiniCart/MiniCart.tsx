@@ -41,26 +41,20 @@ const MiniCart = ({
 		enabled: !!basketId,
 	});
 
-	console.log(isLoading);
-	console.log(data);
-
 	const cartItems = data?.cartItems ?? [];
 	const subTotal = data?.subTotal ?? 0;
 
 	const removeBasketMutation = useMutation({
 		mutationFn: (input: { itemId: string }) => handleDeleteItem(input.itemId),
 		onSuccess: () => {
-			console.log("hii");
 			refetch();
 		},
 		retry: 3,
 	});
 
 	const onDeleteItem = async (itemId: string) => {
-		console.log("id", itemId);
 		try {
 			const response = await removeBasketMutation.mutateAsync({ itemId });
-			console.log("Remove response:", response);
 		} catch (error) {
 			console.error("Error removing basket item:", error);
 		}
@@ -76,13 +70,11 @@ const MiniCart = ({
 	});
 
 	const onUpdateQuantity = async (itemId: string, newQuantity: number) => {
-		console.log("id", itemId, newQuantity);
 		try {
 			const response = await updateBasketMutation.mutateAsync({
 				itemId,
 				quantity: newQuantity,
 			});
-			console.log("Update response:", response);
 		} catch (error) {
 			console.error("Error updating basket item:", error);
 		}

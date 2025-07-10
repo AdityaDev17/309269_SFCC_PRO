@@ -73,8 +73,6 @@ const Page = () => {
 		call = "login",
 	): Promise<void> => {
 		return new Promise((resolve, reject) => {
-			// const authResponse = await loginCustomer()
-			// console.log("Auth response received:", JSON.stringify(authResponse, null, 2))
 			setLoginError(undefined); // Clear previous error
 			let loginSuccess = false; // ✅ flag to track success
 			const usid = sessionStorage.getItem("usid")
@@ -105,18 +103,10 @@ const Page = () => {
 					Object.entries(data).map(([key, value]) => {
 						sessionStorage.setItem(key, String(value));
 					});
-					console.log("data");
 					const customerType = data.idp_access_token ? "registered" : "guest";
 					sessionStorage.setItem("customer_type", customerType);
-					// const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
-					//   customerId: data?.customer_id,
-					// });
-					// console.log("Active Basket", response);
-					// sessionStorage.setItem("basketId",response?.customerBasketInfo?.baskets?.[0]?.basketId)
-					// router.push("/");
 					const expiryTime = Date.now() + data.expires_in * 1000;
 					sessionStorage.setItem("sfcc_token_expiry", expiryTime.toString());
-					// router.push("/");
 				})
 				.then(async () => {
 					// Stop here if login failed

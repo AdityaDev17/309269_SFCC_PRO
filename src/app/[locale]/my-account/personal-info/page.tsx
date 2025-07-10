@@ -4,24 +4,22 @@ import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import EditPassword from "@/components/molecules/EditPassword/EditPassword";
 import Profile from "@/components/molecules/Profile/Profile";
 
-import sonnerToast, {
-	Toaster,
-} from "@/components/molecules/Toast/Toast";
-import styles from "./PersonalInfo.module.css";
+import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
+import styles from "./personalInfo.module.css";
 
-import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
 import {
 	GET_CUSTOMER,
 	UPDATE_CUSTOMER,
 	UPDATE_PASSWORD,
 } from "@/common/schema";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function PersonalInfoPage() {
-	const t = useTranslations("PersonalInformation")
+	const t = useTranslations("PersonalInformation");
 	const router = useRouter();
 	const customerId = sessionStorage.getItem("customer_id") ?? "";
 

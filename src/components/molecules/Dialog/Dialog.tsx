@@ -3,7 +3,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import * as React from "react";
-import styles from "./dialog.module.css";
+import styles from "./Dialog.module.css";
 
 const Dialog = DialogPrimitive.Root;
 

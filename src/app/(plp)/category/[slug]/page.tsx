@@ -1,3 +1,4 @@
+import CampaignBlock from "../../../../components/organisms/CampaignBlock/CampaignBlock";
 import Breadcrumbs from "../../../../components/atomic/Breadcrumbs/Breadcrumbs";
 import {
 	Select,
@@ -60,6 +61,7 @@ export default async function PLPPage({ params }: PageProps) {
 					</SelectContent>
 				</Select>
 			</div>
+            <CampaignBlock variant="slim" />
 
 			<div className={styles.grid}>
 				{products.map((product, index) => {

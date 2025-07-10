@@ -25,7 +25,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^19.1.0",
-    "sanity": "^3.93.0",
+    "sanity": "^3.97.1",
     "sanity-plugin-asset-source-openai": "^1.1.2",
     "styled-components": "^6.1.15"
   },

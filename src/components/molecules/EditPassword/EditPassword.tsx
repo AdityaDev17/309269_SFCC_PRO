@@ -22,35 +22,39 @@ const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
 		password: "",
 		confirmPassword: "",
 	});
-	const [errors, setErrors] = useState<Partial<Record<keyof UserPassword, string>>>({});
+	const [errors, setErrors] = useState<
+		Partial<Record<keyof UserPassword, string>>
+	>({});
 	const [passwordStrength, setPasswordStrength] = useState<string[]>([]);
 
-	const validatePassword = (password: string): { isValid: boolean; errors: string[] } => {
+	const validatePassword = (
+		password: string,
+	): { isValid: boolean; errors: string[] } => {
 		const errors: string[] = [];
-		
+
 		if (password.length < 8) {
 			errors.push("At least 8 characters");
 		}
-		
+
 		if (!/[a-z]/.test(password)) {
 			errors.push("At least one lowercase letter");
 		}
-		
+
 		if (!/[A-Z]/.test(password)) {
 			errors.push("At least one uppercase letter");
 		}
-		
+
 		if (!/[0-9]/.test(password)) {
 			errors.push("At least one number");
 		}
-		
+
 		if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
 			errors.push("At least one special character");
 		}
-		
+
 		return {
 			isValid: errors.length === 0,
-			errors
+			errors,
 		};
 	};
 

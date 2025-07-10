@@ -30,7 +30,9 @@ interface ProfileProps {
 const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 	const t = useTranslations("Profile");
 	const [initialUserData, setInitailUserDate] = useState(userDetails);
-	const [errors, setErrors] = useState<Partial<Record<keyof UserDetails, string>>>({});
+	const [errors, setErrors] = useState<
+		Partial<Record<keyof UserDetails, string>>
+	>({});
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement> | string,
@@ -63,9 +65,12 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 	const validateFields = () => {
 		const newErrors: Partial<Record<keyof UserDetails, string>> = {};
 		if (!initialUserData.title) newErrors.title = "Title is required";
-		if (!initialUserData.firstName.trim()) newErrors.firstName = "First Name is required";
-		if (!initialUserData.lastName.trim()) newErrors.lastName = "Last Name is required";
-		if (!initialUserData.birthDate) newErrors.birthDate = "Birth Date is required";
+		if (!initialUserData.firstName.trim())
+			newErrors.firstName = "First Name is required";
+		if (!initialUserData.lastName.trim())
+			newErrors.lastName = "Last Name is required";
+		if (!initialUserData.birthDate)
+			newErrors.birthDate = "Birth Date is required";
 		if (!initialUserData.gender) newErrors.gender = "Gender is required";
 		setErrors(newErrors);
 		return Object.keys(newErrors).length === 0;
@@ -86,7 +91,8 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 						<div className={styles.fontColor}>{t("title")}</div>
 						<Select onValueChange={(e) => handleChange(e, "title")}>
 							<SelectTrigger
-								className={`${styles.selectTrigger} ${errors.title ? styles.selectTriggerError : ""}`}>
+								className={`${styles.selectTrigger} ${errors.title ? styles.selectTriggerError : ""}`}
+							>
 								<SelectValue placeholder={initialUserData?.title || "Select"} />
 							</SelectTrigger>
 							<SelectContent>
@@ -97,7 +103,9 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 								</SelectGroup>
 							</SelectContent>
 						</Select>
-						{errors.title && <div className={styles.errorText}>{errors.title}</div>}
+						{errors.title && (
+							<div className={styles.errorText}>{errors.title}</div>
+						)}
 					</div>
 
 					{/* Last Name */}
@@ -110,7 +118,9 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 							onChange={handleChange}
 							className={`${styles.inputField} ${errors.lastName ? styles.inputFieldError : ""}`}
 						/>
-						{errors.lastName && <div className={styles.errorText}>{errors.lastName}</div>}
+						{errors.lastName && (
+							<div className={styles.errorText}>{errors.lastName}</div>
+						)}
 					</div>
 
 					{/* Birth Date */}
@@ -123,7 +133,9 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 							onChange={handleChange}
 							className={`${styles.inputField} ${errors.birthDate ? styles.inputFieldError : ""}`}
 						/>
-						{errors.birthDate && <div className={styles.errorText}>{errors.birthDate}</div>}
+						{errors.birthDate && (
+							<div className={styles.errorText}>{errors.birthDate}</div>
+						)}
 					</div>
 				</div>
 				<div className={styles.sectionForm}>
@@ -137,14 +149,18 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 							onChange={handleChange}
 							className={`${styles.inputField} ${errors.firstName ? styles.inputFieldError : ""}`}
 						/>
-						{errors.firstName && <div className={styles.errorText}>{errors.firstName}</div>}
+						{errors.firstName && (
+							<div className={styles.errorText}>{errors.firstName}</div>
+						)}
 					</div>
 
 					{/* Gender */}
 					<div>
 						<div className={styles.fontColor}>{t("gender")}</div>
 						<Select onValueChange={(e) => handleChange(e, "gender")}>
-							<SelectTrigger className={`${styles.selectTrigger} ${errors.gender ? styles.selectTriggerError : ""}`}>
+							<SelectTrigger
+								className={`${styles.selectTrigger} ${errors.gender ? styles.selectTriggerError : ""}`}
+							>
 								<SelectValue
 									placeholder={initialUserData?.gender || "Gender"}
 								/>
@@ -157,7 +173,9 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 								</SelectGroup>
 							</SelectContent>
 						</Select>
-						{errors.gender && <div className={styles.errorText}>{errors.gender}</div>}
+						{errors.gender && (
+							<div className={styles.errorText}>{errors.gender}</div>
+						)}
 					</div>
 
 					{/* Email */}

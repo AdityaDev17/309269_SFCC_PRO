@@ -16,7 +16,7 @@ import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import { useTranslations } from "next-intl";
 
 const MyAccount = () => {
-	const t = useTranslations("MyAccount")
+	const t = useTranslations("MyAccount");
 	const router = useRouter();
 	const customerId = sessionStorage.getItem("customer_id");
 
@@ -134,7 +134,10 @@ const MyAccount = () => {
 					<Tile label={t("payments")} href="/my-account/payments" />
 					<Tile label={t("my-subscription")} href="/my-account/subscription" />
 					<Tile label={t("address-book")} href="/my-account/address" />
-					<Tile label={t("contact-preferences")} href="/my-account/contact-info" />
+					<Tile
+						label={t("contact-preferences")}
+						href="/my-account/contact-info"
+					/>
 					<Tile label={t("logout")} onClick={handleLogout} />
 				</div>
 			)}

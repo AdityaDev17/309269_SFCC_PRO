@@ -37,6 +37,13 @@
 	font-size: 14px;
 }
 
+.fieldError {
+	color: #dc3545;
+	font-size: 12px;
+	margin-top: 4px;
+	margin-bottom: 0;
+}
+
 .checkboxBox {
 	border: 1px solid var(--colour-button-border-secondary);
 	width: 16px;

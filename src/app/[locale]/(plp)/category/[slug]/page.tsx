@@ -1,10 +1,6 @@
 "use client";
 import { GET_PRODUCT_LIST } from "@/common/schema";
-import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useQuery } from "@tanstack/react-query";
-import { useParams, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import type { ProductDetails } from "@/common/type";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import {
 	Select,
@@ -25,15 +21,19 @@ import {
 	PaginationPrevious,
 } from "@/components/molecules/Pagination/Pagination";
 import ProductCard from "@/components/molecules/ProductCard/ProductCard";
+import { graphqlRequest } from "@/lib/graphqlRequest";
 import { getProductsByCategory } from "@/lib/sfcc/products";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import { useParams, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useTranslation } from "sanity";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
-import { ProductDetails } from "@/common/type";
-import { useTranslation } from "sanity";
-import { useTranslations } from "next-intl";
 
 export default function PLPPage() {
-	const t = useTranslations("PLP")
+	const t = useTranslations("PLP");
 	const [displayedPage, setDisplayedPage] = useState(1);
 	const [activePage, setActivePage] = useState(1);
 	const { slug } = useParams() as { slug: string };
@@ -61,8 +61,7 @@ export default function PLPPage() {
 				price: selectedFilters.price || "",
 				colors: selectedFilters.colors || "",
 				limit: itemsPerPage,
-				offset: (activePage-1)*itemsPerPage
-
+				offset: (activePage - 1) * itemsPerPage,
 			};
 
 			const response = graphqlRequest(GET_PRODUCT_LIST, variables);
@@ -72,7 +71,7 @@ export default function PLPPage() {
 		}
 	};
 	const { data, error, isLoading } = useQuery({
-		queryKey: ["ProductList", slug, activePage,selectedFilters],
+		queryKey: ["ProductList", slug, activePage, selectedFilters],
 		queryFn: fetchProductList,
 		enabled: !!slug,
 	});
@@ -101,25 +100,25 @@ export default function PLPPage() {
 		{ label: categoryName, href: `/category/${slug}` },
 	];
 
-	const previousPage = function() {
-		if(displayedPage === 1) return;
-		if(activePage !== displayedPage+1) {
-			setDisplayedPage(prevPage => prevPage - 1);
+	const previousPage = () => {
+		if (displayedPage === 1) return;
+		if (activePage !== displayedPage + 1) {
+			setDisplayedPage((prevPage) => prevPage - 1);
 		}
-		setActivePage(prevPage => prevPage-1);
-	}
+		setActivePage((prevPage) => prevPage - 1);
+	};
 
-	const nextPage = function() {
-		if(displayedPage === totalPages-1) return;
-		if(activePage !== displayedPage) {
-			setDisplayedPage(prevPage => prevPage+1);
+	const nextPage = () => {
+		if (displayedPage === totalPages - 1) return;
+		if (activePage !== displayedPage) {
+			setDisplayedPage((prevPage) => prevPage + 1);
 		}
-		setActivePage(prevPage => prevPage+1);
-	}
+		setActivePage((prevPage) => prevPage + 1);
+	};
 
-	const activePageHandler = function(page: number) {
+	const activePageHandler = (page: number) => {
 		setActivePage(page);
-	}
+	};
 
 	return (
 		<div className={styles.container}>
@@ -150,8 +149,12 @@ export default function PLPPage() {
 					<SelectContent>
 						<SelectItem value="recent">{t("recently-added")}</SelectItem>
 						<SelectItem value="popular">{t("most-popular")}</SelectItem>
-						<SelectItem value="price_low_high">{t("price-low-high")}</SelectItem>
-						<SelectItem value="price_high_low">{t("price-high-low")}</SelectItem>
+						<SelectItem value="price_low_high">
+							{t("price-low-high")}
+						</SelectItem>
+						<SelectItem value="price_high_low">
+							{t("price-high-low")}
+						</SelectItem>
 					</SelectContent>
 				</Select>
 			</div>
@@ -165,7 +168,6 @@ export default function PLPPage() {
 									key={`skeleton-${Date.now()}-${Math.random()}`}
 									className={isLarge ? styles.largeCard : styles.mediumCard}
 								>
-									
 									<Skeleton
 										className={
 											isLarge
@@ -206,15 +208,21 @@ export default function PLPPage() {
 			<div className={styles.pagination}>
 				<Pagination>
 					<PaginationContent>
-						<PaginationPrevious onClick={previousPage}/>
+						<PaginationPrevious onClick={previousPage} />
 						<PaginationItem>
-							<PaginationLink isActive={activePage === displayedPage} onClick={() => activePageHandler(displayedPage)}>
+							<PaginationLink
+								isActive={activePage === displayedPage}
+								onClick={() => activePageHandler(displayedPage)}
+							>
 								{displayedPage}
 							</PaginationLink>
 						</PaginationItem>
 						<PaginationItem>
-							<PaginationLink isActive={activePage === displayedPage+1} onClick={() => activePageHandler(displayedPage+1)}>
-								{displayedPage+1}
+							<PaginationLink
+								isActive={activePage === displayedPage + 1}
+								onClick={() => activePageHandler(displayedPage + 1)}
+							>
+								{displayedPage + 1}
 							</PaginationLink>
 						</PaginationItem>
 						<PaginationNext onClick={nextPage} />

@@ -2,6 +2,7 @@
 import { UPDATE_CUSTOMER_ADDRESS } from "@/common/schema";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
@@ -20,7 +21,6 @@ import {
 } from "../../molecules/Dialog/Dialog";
 import { AddressDialog } from "../AddressForm/AddressModal";
 import styles from "./AddressCard.module.css";
-import { useTranslations } from "next-intl";
 
 export type AddressData = {
 	addressId: string;
@@ -155,7 +155,9 @@ const AddressCard: React.FC<AddressCardProps> = ({
 						{`${item?.address1} ${item?.city} ${item?.stateCode} ${item?.countryCode} ${item?.postalCode}`}
 					</p>
 
-					<p className={styles.phone}>{t("phone")} {item.phone}</p>
+					<p className={styles.phone}>
+						{t("phone")} {item.phone}
+					</p>
 
 					<div className={styles.actions}>
 						<div className={styles.checkbox}>
@@ -165,7 +167,9 @@ const AddressCard: React.FC<AddressCardProps> = ({
 								checked={item.isDefault}
 								onChange={(e) => handleDefaultAddress(item, e)}
 							/>
-							<span>{item?.isDefault ? t("default") : t("set-as-default")}</span>
+							<span>
+								{item?.isDefault ? t("default") : t("set-as-default")}
+							</span>
 						</div>
 
 						<div className={styles.iconGroup}>

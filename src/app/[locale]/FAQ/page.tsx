@@ -9,12 +9,12 @@ import {
 	shippingData,
 } from "@/common/constant";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
+import { useTranslations } from "next-intl";
 import { useRef, useState } from "react";
 import { FaqAccordion } from "./FaqAccordion";
 import NeedAssistance from "./NeedAssistance";
 import SearchWithSuggestions from "./SearchWithSuggestions";
 import styles from "./page.module.css";
-import { useTranslations } from "next-intl";
 interface FaqItem {
 	id: string;
 	question: string;
@@ -33,7 +33,7 @@ const allFaqItems = [
 ];
 
 export default function FAQPage() {
-	const t = useTranslations("FAQ")
+	const t = useTranslations("FAQ");
 	const [searchTerm, setSearchTerm] = useState("");
 	const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 	const faqRefs = useRef<Record<string, HTMLDivElement | null>>({});

@@ -12,11 +12,11 @@ import LoginComponent from "./component";
 import styles from "./login.module.css";
 
 type formDataProps = {
-	title: string;
+	title: string | null;
 	firstName: string;
 	lastName: string;
-	gender: string;
-	birthDate: string;
+	gender: string | null;
+	birthDate: string | null;
 	email: string;
 	password: string;
 	confirmPassword: string;
@@ -39,11 +39,11 @@ const Page = () => {
 					login: string;
 					lastName: string;
 					email: string;
-					title: string;
-					salutation: string;
-					gender: number;
-					birthday: string;
-					firstName: string;
+					title?: string | null;
+					salutation?: string | null;
+					gender?: number | null;
+					birthday?: string | null;
+					firstName?: string | null;
 				};
 			};
 		}) => graphqlRequest(REGISTER, { input }),
@@ -71,90 +71,99 @@ const Page = () => {
 	const loginClickHandler = (
 		formData: { email: string; password: string },
 		call = "login",
-	) => {
-		// const authResponse = await loginCustomer()
-		// console.log("Auth response received:", JSON.stringify(authResponse, null, 2))
-		setLoginError(undefined); // Clear previous error
-		let loginSuccess = false; // ✅ flag to track success
-		const usid = sessionStorage.getItem("usid")
-			? sessionStorage.getItem("usid")
-			: "";
-		const { email, password } = formData;
-		fetch("/api/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				email,
-				password,
-				usid,
-			}),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				//  if login failed stop here
-				if (!data?.access_token) {
-					setLoginError("Incorrect email or password.Please try again");
-					loginSuccess = false;
-					return;
-				}
-				loginSuccess = true;
-				Object.entries(data).map(([key, value]) => {
-					sessionStorage.setItem(key, String(value));
-				});
-				console.log("data");
-				const customerType = data.idp_access_token ? "registered" : "guest";
-				sessionStorage.setItem("customer_type", customerType);
-				// const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
-				//   customerId: data?.customer_id,
-				// });
-				// console.log("Active Basket", response);
-				// sessionStorage.setItem("basketId",response?.customerBasketInfo?.baskets?.[0]?.basketId)
-				// router.push("/");
-				const expiryTime = Date.now() + data.expires_in * 1000;
-				sessionStorage.setItem("sfcc_token_expiry", expiryTime.toString());
-				// router.push("/");
+	): Promise<void> => {
+		return new Promise((resolve, reject) => {
+			// const authResponse = await loginCustomer()
+			// console.log("Auth response received:", JSON.stringify(authResponse, null, 2))
+			setLoginError(undefined); // Clear previous error
+			let loginSuccess = false; // ✅ flag to track success
+			const usid = sessionStorage.getItem("usid")
+				? sessionStorage.getItem("usid")
+				: "";
+			const { email, password } = formData;
+			fetch("/api/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					email,
+					password,
+					usid,
+				}),
 			})
-			.then(async () => {
-				// Stop here if login failed
-				if (!loginSuccess) {
-					return;
-				}
-				if (call === "login") {
-					try {
-						await mergeBasketMutation.mutateAsync();
-					} catch (err) {
-						console.log(err);
+				.then((response) => response.json())
+				.then((data) => {
+					//  if login failed stop here
+					if (!data?.access_token) {
+						setLoginError("Incorrect email or password.Please try again");
+						loginSuccess = false;
+						reject(new Error("Login failed"));
+						return;
 					}
-				}
+					loginSuccess = true;
+					Object.entries(data).map(([key, value]) => {
+						sessionStorage.setItem(key, String(value));
+					});
+					console.log("data");
+					const customerType = data.idp_access_token ? "registered" : "guest";
+					sessionStorage.setItem("customer_type", customerType);
+					// const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
+					//   customerId: data?.customer_id,
+					// });
+					// console.log("Active Basket", response);
+					// sessionStorage.setItem("basketId",response?.customerBasketInfo?.baskets?.[0]?.basketId)
+					// router.push("/");
+					const expiryTime = Date.now() + data.expires_in * 1000;
+					sessionStorage.setItem("sfcc_token_expiry", expiryTime.toString());
+					// router.push("/");
+				})
+				.then(async () => {
+					// Stop here if login failed
+					if (!loginSuccess) {
+						return;
+					}
+					if (call === "login") {
+						try {
+							await mergeBasketMutation.mutateAsync();
+						} catch (err) {
+							console.log(err);
+						}
+					}
 
-				const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
-					customerId: sessionStorage?.getItem("customer_id"),
+					const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
+						customerId: sessionStorage?.getItem("customer_id"),
+					});
+					console.log("Active Basket", response);
+					// sessionStorage.setItem(
+					// 	"basketId",
+					// 	response?.customerBasketInfo?.baskets?.[0]?.basketId,
+					// );
+					const basketId = response?.customerBasketInfo?.baskets?.[0]?.basketId;
+
+					if (basketId) {
+						sessionStorage.setItem("basketId", basketId);
+					}
+					router.push("/"); //  Only happens after successful login
+					resolve(); // Resolve when everything is done
+				})
+				.catch((error) => {
+					console.error("Login error ", error);
+					setLoginError("Something went wrong. Please try again");
+					reject(error); //  Reject on error 
 				});
-				console.log("Active Basket", response);
-				// sessionStorage.setItem(
-				// 	"basketId",
-				// 	response?.customerBasketInfo?.baskets?.[0]?.basketId,
-				// );
-				const basketId = response?.customerBasketInfo?.baskets?.[0]?.basketId;
-
-				if (basketId) {
-					sessionStorage.setItem("basketId", basketId);
-				}
-				router.push("/"); //  Only happens after successful login
-			})
-			.catch((error) => {
-				console.error("Login error ", error);
-				setLoginError("Something went wrong. Please try again");
-			});
+		});
 	};
 
 	const signUpHandler = (formData: formDataProps) => {
 		console.log("FormData", formData);
 		const { title, gender, firstName, lastName, birthDate, email, password } =
 			formData;
-		const genderBool = gender === "male" ? 1 : gender === "female" ? 0 : 2;
+		const genderValue =
+			gender === "male" ? 1 :
+			gender === "female" ? 0 :
+			gender === "others" ? 2 :
+				2;
 
 		postRegisterMutation
 			.mutateAsync({
@@ -164,16 +173,16 @@ const Page = () => {
 						login: `${email}`,
 						lastName: `${lastName}`,
 						email: `${email}`,
-						title: `${title}`,
-						salutation: `${title}`,
-						gender: genderBool,
-						birthday: `${birthDate}`,
+						title: title?.trim() || null,
+						salutation: title?.trim() || null,
+						gender: genderValue,
+						birthday: birthDate?.trim() || null,
 						firstName: `${firstName}`,
 					},
 				},
 			})
-			.then((response) => response.json())
-			.then((data) => console.log(data))
+			// .then((response) => response.json())
+			.then((data) => console.log("Registration Success:", data))
 			.catch((error) => console.error("Login error ", error));
 	};
 

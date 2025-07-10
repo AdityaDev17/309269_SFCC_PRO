@@ -33,9 +33,9 @@ import {
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Drawer } from "vaul";
-import { useTranslations } from "next-intl";
 
 const Filter = ({ isMobile }: { isMobile: boolean }) => {
 	const t = useTranslations("OrderHistory");

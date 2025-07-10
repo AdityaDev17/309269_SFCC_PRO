@@ -10,11 +10,11 @@ import {
 } from "@/components/organisms/MiniCart/CartFuntions";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 import styles from "./cart.module.css";
-import { useTranslations } from "next-intl";
 
 type ImageProduct = {
 	alt: string;
@@ -46,7 +46,7 @@ type CartProps = {
 };
 
 const Cart = ({ basketId }: CartProps) => {
-	const t = useTranslations("Cart")
+	const t = useTranslations("Cart");
 	const router = useRouter();
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Basket", basketId],

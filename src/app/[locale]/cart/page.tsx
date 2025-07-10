@@ -3,14 +3,14 @@ import { productData } from "@/common/constant";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";
 import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React from "react";
 import styles from "./cart.module.css";
 import Cart from "./component";
-import { useTranslations } from "next-intl";
 
 export default function CartPage() {
-	const t = useTranslations("Cart")
+	const t = useTranslations("Cart");
 	const router = useRouter();
 	const basketId = sessionStorage.getItem("basketId") ?? "";
 	return (

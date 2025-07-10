@@ -1,4 +1,6 @@
 "use client";
+import { Alignment, type ProductCardProps } from "@/common/type";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Button } from "../../atomic/Button/Button";
@@ -10,8 +12,6 @@ import {
 } from "../../atomic/Card/Card";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./ProductCard.module.css";
-import { Alignment,ProductCardProps } from "@/common/type";
-import { useTranslations } from "next-intl";
 
 const ProductCard = ({
 	productId,
@@ -29,7 +29,7 @@ const ProductCard = ({
 	onButtonClick,
 	onMoveToBag,
 }: ProductCardProps) => {
-	const t = useTranslations("ProductCard")
+	const t = useTranslations("ProductCard");
 	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {

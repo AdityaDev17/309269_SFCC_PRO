@@ -150,7 +150,7 @@ const Page = () => {
 				.catch((error) => {
 					console.error("Login error ", error);
 					setLoginError("Something went wrong. Please try again");
-					reject(error); //  Reject on error 
+					reject(error); //  Reject on error
 				});
 		});
 	};
@@ -160,10 +160,13 @@ const Page = () => {
 		const { title, gender, firstName, lastName, birthDate, email, password } =
 			formData;
 		const genderValue =
-			gender === "male" ? 1 :
-			gender === "female" ? 0 :
-			gender === "others" ? 2 :
-				2;
+			gender === "male"
+				? 1
+				: gender === "female"
+					? 0
+					: gender === "others"
+						? 2
+						: 2;
 
 		postRegisterMutation
 			.mutateAsync({

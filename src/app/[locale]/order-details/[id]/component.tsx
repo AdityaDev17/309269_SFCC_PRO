@@ -31,9 +31,7 @@ import styles from "./orderDetails.module.css";
 
 const Details = () => {
 	const { isDelivered, steps, currentStep } = orderStatus;
-	const t = useTranslations("Order-Details");
-	// const [selectedOption, setSelectedOption] = useState("");
-	// const [textValue, setTextValue] = useState("");
+	const t = useTranslations("OrderDetails");
 	const { id } = useParams() as { id: string };
 	const orderId = id;
 	const { data, error, isLoading } = useQuery({

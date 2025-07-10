@@ -1,6 +1,4 @@
 "use client";
-// import { useState } from "react";
-// import { orderDetails } from "@/common/constant";
 import { orderStatus } from "@/common/constant";
 import { GET_ORDER_DETAILS } from "@/common/schema";
 import type { ProductItem, Values, VariationAttributes } from "@/common/type";

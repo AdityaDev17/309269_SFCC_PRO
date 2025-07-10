@@ -186,7 +186,7 @@ const Header: React.FC<HeaderProps> = ({
                   }}>
                   <NavigationMenuList>
                     <NavigationMenuItem value={category.name}>
-                      {category.subcategory && category.image ? (
+                      {category.subcategory && category.image && (
                         <>
                           <NavigationMenuTrigger>
                             <span className={styles.category}>
@@ -266,13 +266,15 @@ const Header: React.FC<HeaderProps> = ({
                             </section>
                           </NavigationMenuContent>
                         </>
-                      ) : (
-                        <Link href="/SUSTAINABILITY">
-                          <span className={styles.category}>
-                            {category.name}
-                          </span>
-                        </Link>
-                      )}
+                      ) 
+                      // : (
+                      //   <Link href="/SUSTAINABILITY">
+                      //     <span className={styles.category}>
+                      //       {category.name}
+                      //     </span>
+                      //   </Link>
+                      // )
+                      }
                     </NavigationMenuItem>
                   </NavigationMenuList>
                 </NavigationMenu>

@@ -124,11 +124,6 @@ const Page = () => {
 					const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
 						customerId: sessionStorage?.getItem("customer_id"),
 					});
-					console.log("Active Basket", response);
-					// sessionStorage.setItem(
-					// 	"basketId",
-					// 	response?.customerBasketInfo?.baskets?.[0]?.basketId,
-					// );
 					const basketId = response?.customerBasketInfo?.baskets?.[0]?.basketId;
 
 					if (basketId) {
@@ -146,7 +141,6 @@ const Page = () => {
 	};
 
 	const signUpHandler = (formData: formDataProps) => {
-		console.log("FormData", formData);
 		const { title, gender, firstName, lastName, birthDate, email, password } =
 			formData;
 		const genderValue =

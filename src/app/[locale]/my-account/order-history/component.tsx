@@ -249,7 +249,6 @@ const OrderCardContainer = () => {
 		price: order.orderTotal,
 		orderName: `Order #${order.orderNo}`, // Customize as needed
 		items: order.productItems.map((item) => {
-			console.log(item.productImage.data[0]?.imageGroups?.[0]?.images[0]?.link);
 			return {
 				productId: item.productId,
 				productTitle: item.productName,

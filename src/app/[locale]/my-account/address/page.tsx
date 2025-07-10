@@ -76,7 +76,6 @@ const AddressPage = () => {
 					};
 				};
 				const status = e?.response?.errors?.extensions?.http?.status;
-				console.log("HTTP status:", status);
 			}
 			await refetch();
 		}

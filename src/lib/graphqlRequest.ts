@@ -70,9 +70,6 @@ export const fetchToken = async (isRefresh = false): Promise<string | null> => {
 
     const customerType = tokenData.idp_access_token ? "registered" : "guest";
     sessionStorage.setItem("customer_type", customerType);
- 
-    console.log("Token fetched successfully");
-    // console.log(tokenData.access_token);
     return tokenData.access_token;
   } catch (error) {
     console.error("Error fetching token:", error);
@@ -86,7 +83,6 @@ export const fetchToken = async (isRefresh = false): Promise<string | null> => {
   const isExpired = !expiry || Date.now() >= parseInt(expiry, 10);
  
   if (isExpired) {
-    console.log("Token expired or missing. Refreshing...");
     const refreshExpiry = sessionStorage.getItem("refresh_token_expiry");
     const isRefreshExpired = refreshExpiry && Date.now() >= parseInt(refreshExpiry, 10);
 
@@ -101,8 +97,6 @@ export const fetchToken = async (isRefresh = false): Promise<string | null> => {
     console.warn("Access token missing in sessionStorage. Fetching a new one...");
     return await fetchToken(false);
   }
-
-  console.log("Using valid stored access token.");
   return accessToken;
 };
  

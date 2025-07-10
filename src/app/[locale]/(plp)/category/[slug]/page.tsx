@@ -67,7 +67,7 @@ export default function PLPPage() {
 			const response = graphqlRequest(GET_PRODUCT_LIST, variables);
 			return response;
 		} catch (er) {
-			console.log("234", er);
+			console.log("Error", er);
 		}
 	};
 	const { data, error, isLoading } = useQuery({

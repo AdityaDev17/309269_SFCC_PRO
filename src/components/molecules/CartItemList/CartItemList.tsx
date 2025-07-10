@@ -48,7 +48,6 @@ const CartItemList = ({
 	useEffect(() => {
 		const checkMobileView = () => {
 			setIsMobile(window.innerWidth <= 768);
-			console.log(window.innerWidth);
 		};
 
 		checkMobileView();

@@ -15,7 +15,6 @@ const config = {
 export async function POST(request: NextRequest) {
   try {
     const { email: username, password, usid } = await request.json();
-    console.log(usid);
     const loginClient = new ShopperLogin(config);
     // const usid = String(sessionStorage?.getItem("usid")) ?? "";
     const authResponse = await helpers.loginRegisteredUserB2C(
@@ -27,12 +26,10 @@ export async function POST(request: NextRequest) {
       },
       { redirectURI: `${config.proxyPath}/callback`, usid }
     );
-    console.log(authResponse);
     return NextResponse.json(authResponse, {
       status: 200,
     });
   } catch (error) {
-    console.log(error);
     return NextResponse.json(
       { message: "Incorrect credentials" },
       { status: 500 }

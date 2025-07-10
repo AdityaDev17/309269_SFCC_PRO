@@ -373,7 +373,6 @@ export function AddressDialog({
 	});
 
 	const handleSubmit = async () => {
-		console.log("save is clicked");
 
 		setShowErrors(true);
 		const isValid = validateAllFields();

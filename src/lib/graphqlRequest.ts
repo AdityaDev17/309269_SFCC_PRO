@@ -1,7 +1,7 @@
 import { GET_ACCESS_TOKEN } from "@/common/schema";
 import { request } from "graphql-request";
  
-const endpoint = "http://localhost:4000";
+const endpoint = "https://i3bbw2uveg.execute-api.us-east-1.amazonaws.com/dev/graphql";
  
 const AUTH_HEADER =
   "Basic NjgyMjQ3NDItNGU2ZC00NWUzLWFjZjctMmI3NWQ1ZDJiZGIwOjc4NlliZ1E1SF9TS2FMbXloOHctNXNUOFF6YThvNnNtQnJTWTBIOG5SRGs=";

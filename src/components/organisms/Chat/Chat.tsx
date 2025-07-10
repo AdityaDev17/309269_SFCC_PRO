@@ -1,6 +1,7 @@
 "use client";
 import type { MessageType } from "@/common/type";
 import Input from "@/components/atomic/Input/Input";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {
 	ArrowDownRight,
 	ArrowUpRight,
@@ -14,7 +15,12 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./Chat.module.css";
 import Message from "./Message";
-import { useChat } from "./useChat";
+import {
+	deleteSessionRequest,
+	getValidToken,
+	graphqlChatRequest,
+	graphqlSessionRequest,
+} from "./chatRequest";
 
 export default function Chat() {
 	const [showChat, setShowChat] = useState(false);
@@ -24,15 +30,43 @@ export default function Chat() {
 	const [messages, setMessages] = useState<MessageType[]>([]);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const chatContainerRef = useRef<HTMLDivElement>(null);
-	const { getSession, sendMessage, deleteSession } = useChat();
+	const { data: tokenData } = useQuery({
+		queryKey: ["authToken"],
+		queryFn: async () => {
+			const data = await getValidToken();
+			sessionStorage.setItem(
+				"ChatAccessToken",
+				data.getChatAccessTokenHandler.access_token,
+			);
+			return data.getChatAccessTokenHandler.access_token;
+		},
+		refetchInterval: 10 * 60 * 1000,
+	});
+	const getSession = useMutation({
+		mutationFn: graphqlSessionRequest,
+	});
+	const sendMessage = useMutation({
+		mutationFn: (text: string) => graphqlChatRequest(text),
+	});
+	const deleteSession = useMutation({
+		mutationFn: deleteSessionRequest,
+	});
 
-	const addMessage = useCallback((text: string, author: string) => {
-		if (!text) return;
-		setMessages((prev) => [...prev, { id: crypto.randomUUID(), author, text }]);
-	}, []);
+	const addMessage = (title: string, author: string) => {
+		if (!title) {
+			return;
+		}
+		setMessages((prevMessage) => [
+			...prevMessage,
+			{
+				id: crypto.randomUUID(),
+				author: author,
+				text: title,
+			},
+		]);
+	};
 
-
-	const setInitialMessage = useCallback(() => {
+	const setInitialMessage = () => {
 		getSession.mutate(undefined, {
 			onSuccess: (data) => {
 				if (!data || !data.getSessionIdHandler) {
@@ -41,11 +75,13 @@ export default function Chat() {
 				}
 				const { sessionId, messages } = data.getSessionIdHandler;
 				sessionStorage.setItem("ChatSessionId", sessionId);
-				if (messages.length) addMessage(messages[0].message, "bot");
+				if (messages) addMessage(messages[0]?.message, "bot");
 			},
-			onError: (err) => alert(`Error: ${err}`),
+			onError: (error) => {
+				console.error("Error fetching session ID:", error);
+			},
 		});
-	}, [getSession, addMessage]);
+	};
 
 	const toggleChatVisibility = () => {
 		if (messages.length === 0) return;
@@ -95,22 +131,24 @@ export default function Chat() {
 		sendMessageHandler(input);
 	};
 
-	const scrollToBottom = useCallback((behavior: ScrollBehavior = "auto") => {
+	const scrollToBottom = (behavior: ScrollBehavior = "auto") => {
 		messagesEndRef.current?.scrollIntoView({ behavior });
-	}, []);
+	};
 
 	// biome-ignore lint: ''
 	useEffect(() => {
 		scrollToBottom("smooth");
 	}, [messages]);
 
+	// biome-ignore lint: ''
 	useEffect(() => {
 		scrollToBottom("auto");
-	}, [scrollToBottom]);
+	}, [showChat]);
 
+	// biome-ignore lint: ''
 	useEffect(() => {
 		setInitialMessage();
-	}, [setInitialMessage]);
+	}, []);
 
 	const messageBoxHeight = fullHeight ? "400px" : "238px";
 
@@ -204,7 +242,7 @@ export default function Chat() {
 						</>
 					)}
 				</div>
-			)} 
+			)}
 		</div>
 	);
 }

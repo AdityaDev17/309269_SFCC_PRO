@@ -2,7 +2,7 @@ import { DELETE_SESSION, GET_MESSAGE, GET_SESSION_ID, GET_CHAT_ACCESS_TOKEN } fr
 import { AccessTokenResponse, SessionResponse, MessageResponse, DeleteSessionResponse } from "@/common/type";
 import { request } from "graphql-request";
 
-const endpoint = "http://localhost:4000";
+const endpoint = "https://i3bbw2uveg.execute-api.us-east-1.amazonaws.com/dev/graphql";
 
 export const getValidToken = () => {
     return request<AccessTokenResponse>(

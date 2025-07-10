@@ -439,7 +439,9 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 				className={styles.layout}
 			>
 				<div>
-					<div className={styles.fontColor}>{t("password")}</div>
+					<div className={styles.fontColor}>{t("password")}
+						<span className={styles.required}>*</span>
+					</div>
 					<Input
 						type="password"
 						value={formData?.password || ""}
@@ -457,7 +459,9 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					)}
 				</div>
 				<div>
-					<div className={styles.fontColor}>{t("confirm-password")}</div>
+					<div className={styles.fontColor}>{t("confirm-password")}
+						<span className={styles.required}>*</span>
+					</div>
 					<Input
 						type="password"
 						value={formData?.confirmPassword || ""}

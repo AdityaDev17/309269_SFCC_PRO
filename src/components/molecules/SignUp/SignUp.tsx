@@ -1,5 +1,6 @@
 "use client";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
@@ -12,7 +13,6 @@ import {
 	SelectValue,
 } from "../../atomic/Select/Select";
 import styles from "./SignUp.module.css";
-import { useTranslations } from "next-intl";
 
 type SignUpFormData = {
 	title: string | null;
@@ -66,9 +66,14 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 
 		// Convert empty strings to null for specific fields
 		let processedValue: string | null = value;
-		if ((targetName === "gender" || targetName === "birthDate")) {
+		if (targetName === "gender" || targetName === "birthDate") {
 			// For select fields, ensure we're getting the actual value
-			if (value === "" || value === undefined || value === "null" || value === null) {
+			if (
+				value === "" ||
+				value === undefined ||
+				value === "null" ||
+				value === null
+			) {
 				processedValue = null;
 			} else {
 				processedValue = String(value);
@@ -234,8 +239,18 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 			};
 			// Debug log to check the values
 			console.log("Form data being sent:", cleanedFormData);
-			console.log("Gender type:", typeof cleanedFormData.gender, "Value:", cleanedFormData.gender);
-			console.log("BirthDate type:", typeof cleanedFormData.birthDate, "Value:", cleanedFormData.birthDate);
+			console.log(
+				"Gender type:",
+				typeof cleanedFormData.gender,
+				"Value:",
+				cleanedFormData.gender,
+			);
+			console.log(
+				"BirthDate type:",
+				typeof cleanedFormData.birthDate,
+				"Value:",
+				cleanedFormData.birthDate,
+			);
 
 			onProceed(cleanedFormData);
 		}
@@ -464,16 +479,14 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						style={{ borderColor: "#4F4B53" }}
 						checked={formData.agreeToTerms}
 						onCheckedChange={(checked: boolean) => {
-								setFormData((prev) => ({ ...prev, agreeToTerms: checked }));
-								// Clear error when user checks the box
-								if (checked && errors.agreeToTerms) {
-									setErrors((prev) => ({ ...prev, agreeToTerms: "" }));
-								}
-							}}
+							setFormData((prev) => ({ ...prev, agreeToTerms: checked }));
+							// Clear error when user checks the box
+							if (checked && errors.agreeToTerms) {
+								setErrors((prev) => ({ ...prev, agreeToTerms: "" }));
+							}
+						}}
 					/>
-					<div className={styles.policy}>
-						{t("privacy-policy")}
-					</div>
+					<div className={styles.policy}>{t("privacy-policy")}</div>
 					{/*  Error message for Terms Agreement */}
 					{errors.agreeToTerms && (
 						<div className={styles.errorMessage}>{errors.agreeToTerms}</div>

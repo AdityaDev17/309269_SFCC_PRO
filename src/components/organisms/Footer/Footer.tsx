@@ -10,10 +10,10 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/atomic/Select/Select";
-import { Icon } from "../../atomic/Icons/Icons";
 import { useTranslations } from "next-intl";
+import { Icon } from "../../atomic/Icons/Icons";
 const Footer = () => {
-	const t = useTranslations('Footer');
+	const t = useTranslations("Footer");
 	return (
 		<div className={styles.footer}>
 			<div className={styles.logoSection}>

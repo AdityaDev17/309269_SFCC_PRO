@@ -1,10 +1,10 @@
 "use client";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import styles from "./Login.module.css";
-import { useTranslations } from "next-intl";
 
 interface LoginProps {
 	onLoginClicked: (formData: { email: string; password: string }) => void;
@@ -29,7 +29,9 @@ const Login = ({
 		email: "",
 		password: "",
 	});
-	const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+	const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
+		{},
+	);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const validateForm = (): boolean => {
@@ -64,7 +66,7 @@ const Login = ({
 
 		// Clear validation error for this field when user starts typing
 		if (validationErrors[name as keyof ValidationErrors]) {
-			setValidationErrors(prev => ({
+			setValidationErrors((prev) => ({
 				...prev,
 				[name]: undefined,
 			}));
@@ -94,7 +96,10 @@ const Login = ({
 					type="email"
 					name="email"
 					onChange={handleChange}
-					style={{ width: "325px", borderColor: validationErrors.email ? "#dc3545" : "#B3B2B5" }}
+					style={{
+						width: "325px",
+						borderColor: validationErrors.email ? "#dc3545" : "#B3B2B5",
+					}}
 				/>
 				{validationErrors.email && (
 					<p className={styles.fieldError}>{validationErrors.email}</p>
@@ -106,7 +111,10 @@ const Login = ({
 					type="password"
 					name="password"
 					onChange={handleChange}
-					style={{ width: "325px", borderColor: validationErrors.password ? "#dc3545" : "#B3B2B5" }}
+					style={{
+						width: "325px",
+						borderColor: validationErrors.password ? "#dc3545" : "#B3B2B5",
+					}}
 				/>
 				{validationErrors.password && (
 					<p className={styles.fieldError}>{validationErrors.password}</p>

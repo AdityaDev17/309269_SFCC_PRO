@@ -43,7 +43,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./shipping.module.css";
 
 const Shipping = () => {
-	const t = useTranslations("Shipping")
+	const t = useTranslations("Shipping");
 	const router = useRouter();
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 	const [selectedShippingMethod, setSelectedShippingMethod] = useState<
@@ -52,8 +52,7 @@ const Shipping = () => {
 	const [selectedAddress, setSelectedAddress] = useState<AddressData>();
 	const [email, setEmail] = useState<string>("");
 	const [addressError, setAddressError] = useState(false);
-    const [shippingMethodError, setShippingMethodError] = useState(false);
-	
+	const [shippingMethodError, setShippingMethodError] = useState(false);
 
 	//   const customerType = "registered";
 	const basketId = sessionStorage.getItem("basketId");
@@ -259,7 +258,7 @@ const Shipping = () => {
 							// onClick={() => setIsAddressDialogOpen(true)}
 							onClick={() => {
 								setIsAddressDialogOpen(true);
-								setAddressError(false); 
+								setAddressError(false);
 							}}
 						>
 							{t("add-new-address")}
@@ -290,28 +289,32 @@ const Shipping = () => {
 						<div className={styles.emptyState}>
 							<p>{t("no-saved-addresses")}</p>
 							{addressError && (
-							<p className={styles.errorText}>{t("select-shipping-address-error")}</p>
-						    )}
+								<p className={styles.errorText}>
+									{t("select-shipping-address-error")}
+								</p>
+							)}
 						</div>
 					) : (
 						<>
-						<AddressCard
-							items={addresses}
-							radioButton={true}
-							refetch={
-								customerType === "registered"
-									? refetchAddresses
-									: refetchShipping
-							}
-							selectedAddress={selectedAddress}
-							// setSelectedAddress={setSelectedAddress}
-							setSelectedAddress={(address) => {
-							setSelectedAddress(address);
-							setAddressError(false); 
-						}}
-						/>
+							<AddressCard
+								items={addresses}
+								radioButton={true}
+								refetch={
+									customerType === "registered"
+										? refetchAddresses
+										: refetchShipping
+								}
+								selectedAddress={selectedAddress}
+								// setSelectedAddress={setSelectedAddress}
+								setSelectedAddress={(address) => {
+									setSelectedAddress(address);
+									setAddressError(false);
+								}}
+							/>
 							{addressError && (
-							<p className={styles.errorText}>{t("select-shipping-address-error")}</p>
+								<p className={styles.errorText}>
+									{t("select-shipping-address-error")}
+								</p>
 							)}
 						</>
 					)}
@@ -349,32 +352,34 @@ const Shipping = () => {
 						</div>
 					) : (
 						<>
-						<RadioGroup
-							className={styles.cardGrid}
-							value={selectedShippingMethod || undefined}
-							// onValueChange={(value) => setSelectedShippingMethod(value)}
-							onValueChange={(value) => {
-								setSelectedShippingMethod(value);
-								setShippingMethodError(false); 
-					}}
-						>
-							{shippingMethods.map((item) => (
-								<div key={item.id} className={styles.card}>
-									<div className={styles.wrapper}>
-										<h2 className={styles.name}>{item.title}</h2>
-										<RadioGroupItem value={item.id} />
+							<RadioGroup
+								className={styles.cardGrid}
+								value={selectedShippingMethod || undefined}
+								// onValueChange={(value) => setSelectedShippingMethod(value)}
+								onValueChange={(value) => {
+									setSelectedShippingMethod(value);
+									setShippingMethodError(false);
+								}}
+							>
+								{shippingMethods.map((item) => (
+									<div key={item.id} className={styles.card}>
+										<div className={styles.wrapper}>
+											<h2 className={styles.name}>{item.title}</h2>
+											<RadioGroupItem value={item.id} />
+										</div>
+										<div>
+											<p className={styles.address}>{item.description}</p>
+											<p className={styles.extraInfo}>${item.extraInfo}</p>
+										</div>
 									</div>
-									<div>
-										<p className={styles.address}>{item.description}</p>
-										<p className={styles.extraInfo}>${item.extraInfo}</p>
-									</div>
-								</div>
-							))}
-						</RadioGroup>
+								))}
+							</RadioGroup>
 							{shippingMethodError && (
-							<p className={styles.errorText}>{t("select-shipping-method-error")}</p>
+								<p className={styles.errorText}>
+									{t("select-shipping-method-error")}
+								</p>
 							)}
-				      </>
+						</>
 					)}
 				</div>
 

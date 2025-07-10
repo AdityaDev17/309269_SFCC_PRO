@@ -1,10 +1,10 @@
 import { Button } from "@/components/atomic/Button/Button";
 import { Mail, MessageSquare, Phone } from "lucide-react";
-import styles from "./page.module.css";
 import { useTranslations } from "next-intl";
+import styles from "./page.module.css";
 
 const NeedAssistance = () => {
-	const t = useTranslations("FAQ")
+	const t = useTranslations("FAQ");
 	return (
 		<div className={styles.assistanceBox}>
 			<h2 className={styles.assistanceHeading}>{t("need-more-assistance")}</h2>
@@ -16,9 +16,7 @@ const NeedAssistance = () => {
 						<Phone className="h-5 w-5" />
 						<span>{t("phone-number")}</span>
 					</div>
-					<p className={styles.assistanceSubtext}>
-						{t("monday-to-friday")}
-					</p>
+					<p className={styles.assistanceSubtext}>{t("monday-to-friday")}</p>
 				</div>
 
 				<div>
@@ -31,7 +29,9 @@ const NeedAssistance = () => {
 				</div>
 
 				<div>
-					<p className={styles.assistanceText}>{t("chat-with-our-assistant")}</p>
+					<p className={styles.assistanceText}>
+						{t("chat-with-our-assistant")}
+					</p>
 					<Button className={styles.assistanceButton}>
 						<MessageSquare className="h-5 w-5" />
 						<span>{t("send-message")}</span>

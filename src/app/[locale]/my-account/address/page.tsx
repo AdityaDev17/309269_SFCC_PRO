@@ -11,9 +11,9 @@ import AddressCard, {
 import { AddressDialog } from "@/components/organisms/AddressForm/AddressModal";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import styles from "./address.module.css";
-import { useTranslations } from "next-intl";
 
 type AddressType = {
 	firstName: string;
@@ -30,7 +30,7 @@ type AddressType = {
 };
 
 const AddressPage = () => {
-	const t = useTranslations("AddressBook")
+	const t = useTranslations("AddressBook");
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 	const [selectedAddress, setSelectedAddress] = useState<AddressData>();
 	const customerId = sessionStorage.getItem("customer_id") ?? "";

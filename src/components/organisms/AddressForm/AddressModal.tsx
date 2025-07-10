@@ -3,6 +3,7 @@
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import clsx, { type ClassValue } from "clsx";
+import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import { states } from "../../../common/constant";
 import { Button } from "../../atomic/Button/Button";
@@ -26,7 +27,6 @@ import {
 } from "../../molecules/Dialog/Dialog";
 import type { AddressData } from "../AddressCard/AddressCard";
 import styles from "./AddressModal.module.css";
-import { useTranslations } from "next-intl";
 
 const basketId = sessionStorage.getItem("basketId");
 const customerId = sessionStorage.getItem("customer_id");

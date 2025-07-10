@@ -1,5 +1,7 @@
 "use client";
 
+import type { FilterDialogProps } from "@/common/type";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import CheckBox from "../../atomic/CheckBox/CheckBox";
@@ -13,10 +15,6 @@ import {
 	DialogTrigger,
 } from "../../molecules/Dialog/Dialog";
 import styles from "./FilterDialog.module.css";
-import { FilterDialogProps } from "@/common/type";
-import { useTranslations } from "next-intl";
-
-
 
 export default function FilterDialog({
 	priceFilters,

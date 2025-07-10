@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
@@ -11,7 +12,6 @@ import {
 	SelectValue,
 } from "../../atomic/Select/Select";
 import styles from "./Profile.module.css";
-import { useTranslations } from "next-intl";
 type UserDetails = {
 	title: string;
 	lastName: string;
@@ -27,7 +27,7 @@ interface ProfileProps {
 }
 
 const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
-	const t = useTranslations("Profile")
+	const t = useTranslations("Profile");
 	const [initialUserData, setInitailUserDate] = useState(userDetails);
 	const [originalData, setOriginalData] = useState(userDetails);
 

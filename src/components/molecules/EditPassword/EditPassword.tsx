@@ -1,9 +1,9 @@
 "use client";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import styles from "./EditPassword.module.css";
-import { useTranslations } from "next-intl";
 
 type UserPassword = {
 	currentPassword: string;
@@ -16,7 +16,7 @@ interface EditPasswordProps {
 }
 
 const EditPassword = ({ onUpdateClicked }: EditPasswordProps) => {
-	const t = useTranslations("Password")
+	const t = useTranslations("Password");
 	const [userPassword, setUserPassword] = useState({
 		currentPassword: "",
 		password: "",

@@ -1,10 +1,12 @@
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";
+import { useTranslations } from "next-intl";
 import React from "react";
 import Payment from "./component";
 import styles from "./payment.module.css";
 
 export default function PaymentPage() {
+	const t = useTranslations("Payments");
 	return (
 		<section className={styles.layout}>
 			<Breadcrumbs
@@ -20,7 +22,7 @@ export default function PaymentPage() {
 				type={"Label"}
 				variant={3}
 				fontWeight="semibold"
-				label="Payment"
+				label={t("title")}
 			/>
 
 			<Payment />

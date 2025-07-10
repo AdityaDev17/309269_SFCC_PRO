@@ -2,6 +2,7 @@
 import { UPDATE_CUSTOMER_ADDRESS } from "@/common/schema";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import type React from "react";
 import { useEffect, useState } from "react";
 import { FaPen, FaTrash } from "react-icons/fa";
@@ -65,6 +66,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
 	selectedAddress,
 	setSelectedAddress,
 }) => {
+	const t = useTranslations("AddressCard");
 	const [isAddressDialogOpen, setIsAddressDialogOpen] = useState(false);
 	const [editMode, setEditMode] = useState(false);
 
@@ -153,7 +155,9 @@ const AddressCard: React.FC<AddressCardProps> = ({
 						{`${item?.address1} ${item?.city} ${item?.stateCode} ${item?.countryCode} ${item?.postalCode}`}
 					</p>
 
-					<p className={styles.phone}>Phone No. {item.phone}</p>
+					<p className={styles.phone}>
+						{t("phone")} {item.phone}
+					</p>
 
 					<div className={styles.actions}>
 						<div className={styles.checkbox}>
@@ -163,7 +167,9 @@ const AddressCard: React.FC<AddressCardProps> = ({
 								checked={item.isDefault}
 								onChange={(e) => handleDefaultAddress(item, e)}
 							/>
-							<span>{item?.isDefault ? "Default" : "Set as Default"}</span>
+							<span>
+								{item?.isDefault ? t("default") : t("set-as-default")}
+							</span>
 						</div>
 
 						<div className={styles.iconGroup}>
@@ -217,22 +223,22 @@ const AddressCard: React.FC<AddressCardProps> = ({
 									<DialogContent className={styles.dialogContent}>
 										<DialogHeader className={styles.dialogHeader}>
 											<DialogTitle className={styles.dialogTitle}>
-												Delete Confirmation
+												{t("delete-title")}
 											</DialogTitle>
 										</DialogHeader>
 										<DialogDescription className={styles.dialogDescription}>
-											Are you sure you want to delete this address?
+											{t("delete-confirmation")}
 										</DialogDescription>
 										<DialogFooter className={styles.dialogFooter}>
 											<DialogClose asChild>
-												<Button>Cancel</Button>
+												<Button>{t("cancel")}</Button>
 											</DialogClose>
 											<DialogClose asChild>
 												<Button
 													variant="secondary"
 													onClick={() => handleDeleteAddress?.(item)}
 												>
-													Delete
+													{t("delete")}
 												</Button>
 											</DialogClose>
 										</DialogFooter>

@@ -10,6 +10,7 @@ import {
 } from "@/components/organisms/MiniCart/CartFuntions";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -45,6 +46,7 @@ type CartProps = {
 };
 
 const Cart = ({ basketId }: CartProps) => {
+	const t = useTranslations("Cart");
 	const router = useRouter();
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Basket", basketId],
@@ -138,7 +140,7 @@ const Cart = ({ basketId }: CartProps) => {
 								type={"Label"}
 								variant={3}
 								fontWeight="semibold"
-								label={`Items in the Bag (${CartItems?.length} items)`}
+								label={t("items-in-the-bag", { count: CartItems?.length })}
 							/>
 						</div>
 						<div className={styles.cartItemList}>
@@ -158,7 +160,7 @@ const Cart = ({ basketId }: CartProps) => {
 								discount={data?.orderDiscount?.price}
 								total={data?.productTotal}
 								subTotal={data?.subTotal}
-								buttonText="CONTINUE"
+								buttonText={t("continue")}
 								currency={CartItems?.[0]?.currency}
 								onButtonClick={() => router.push("/shipping")}
 							/>
@@ -168,7 +170,7 @@ const Cart = ({ basketId }: CartProps) => {
 								type={"Label"}
 								variant={3}
 								fontWeight="semibold"
-								label="Redeem Points"
+								label={t("redeem-points")}
 							/>
 							<div className={styles.redeemGrid}>
 								<div className={styles.redeemPoints}>
@@ -176,24 +178,24 @@ const Cart = ({ basketId }: CartProps) => {
 										type={"Body"}
 										variant={2}
 										fontWeight="semibold"
-										label="80 ACCUMULATED POINTS"
+										label={t("accumulated-points")}
 									/>
 									<Typography
 										type={"Body"}
 										variant={2}
-										label="Would you like to redeem your sustainability points? (1 POINT = €1)"
+										label={t("redeem-message")}
 										color="#4F4B53"
 									/>
 									<div>
 										<Typography
 											type={"Body"}
 											variant={2}
-											label="Enter points here"
+											label={t("enter-points")}
 											color="#4F4B53"
 										/>
 										<div className={styles.inputGrid}>
 											<Input className={styles.input} />
-											<Button variant="secondary">APPLY</Button>
+											<Button variant="secondary">{t("apply")}</Button>
 										</div>
 									</div>
 								</div>

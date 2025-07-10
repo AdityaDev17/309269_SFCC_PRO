@@ -1,5 +1,6 @@
 "use client";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
@@ -12,16 +13,46 @@ interface LoginProps {
 	clearErrorMessage?: () => void;
 }
 
+interface ValidationErrors {
+	email?: string;
+	password?: string;
+}
+
 const Login = ({
 	onLoginClicked,
 	onCreateAccount,
 	errorMessage,
 	clearErrorMessage,
 }: LoginProps) => {
+	const t = useTranslations("Login");
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",
 	});
+	const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
+		{},
+	);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+
+	const validateForm = (): boolean => {
+		const errors: ValidationErrors = {};
+
+		// Email validation
+		if (!formData.email.trim()) {
+			errors.email = "Email is required";
+		} else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+			errors.email = "Please enter a valid email address";
+		}
+
+		// Password validation
+		if (!formData.password.trim()) {
+			errors.password = "Password is required";
+		}
+
+		setValidationErrors(errors);
+		return Object.keys(errors).length === 0;
+	};
+
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 
@@ -32,33 +63,62 @@ const Login = ({
 			...prevData,
 			[name]: value,
 		}));
-	};
-	const handleDisable = () => {
-		if (formData?.email !== "" && formData?.password !== "") {
-			return false;
+
+		// Clear validation error for this field when user starts typing
+		if (validationErrors[name as keyof ValidationErrors]) {
+			setValidationErrors((prev) => ({
+				...prev,
+				[name]: undefined,
+			}));
 		}
-		return true; 
+	};
+
+	const handleLoginClick = async () => {
+		// Always validate on submit
+		if (!validateForm()) {
+			return;
+		}
+
+		setIsSubmitting(true);
+
+		try {
+			await onLoginClicked(formData);
+		} finally {
+			setIsSubmitting(false);
+		}
 	};
 	return (
 		<div className={styles.layout}>
-			<div className={styles.header}>Welcome</div>
+			<div className={styles.header}>{t("welcome")}</div>
 			<div>
-				<div className={styles.fontColor}>Email</div>
+				<div className={styles.fontColor}>{t("email")}</div>
 				<Input
 					type="email"
 					name="email"
 					onChange={handleChange}
-					style={{ width: "325px", borderColor: "#B3B2B5" }}
+					style={{
+						width: "325px",
+						borderColor: validationErrors.email ? "#dc3545" : "#B3B2B5",
+					}}
 				/>
+				{validationErrors.email && (
+					<p className={styles.fieldError}>{validationErrors.email}</p>
+				)}
 			</div>
 			<div>
-				<div className={styles.fontColor}>Password</div>
+				<div className={styles.fontColor}>{t("password")}</div>
 				<Input
 					type="password"
 					name="password"
 					onChange={handleChange}
-					style={{ width: "325px", borderColor: "#B3B2B5" }}
+					style={{
+						width: "325px",
+						borderColor: validationErrors.password ? "#dc3545" : "#B3B2B5",
+					}}
 				/>
+				{validationErrors.password && (
+					<p className={styles.fieldError}>{validationErrors.password}</p>
+				)}
 			</div>
 
 			{errorMessage && <p className={styles.errorMsg}>{errorMessage}</p>}
@@ -66,10 +126,10 @@ const Login = ({
 			<div className={styles.row}>
 				<div className={styles.rowGap}>
 					<CheckBox data-testid="checkbox" className={styles.checkboxBox} />
-					<div className={styles.forgotPassword}>Remember Me</div>
+					<div className={styles.forgotPassword}>{t("remember-me")}</div>
 				</div>
 				<div>
-					<div className={styles.forgotPassword}>Forgot Password?</div>
+					<div className={styles.forgotPassword}>{t("forgot-password")}</div>
 				</div>
 			</div>
 			<Button
@@ -81,14 +141,13 @@ const Login = ({
 					fontSize: "12px",
 					fontWeight: "600",
 				}}
-				disabled={handleDisable()}
-				onClick={() => onLoginClicked(formData)}
+				onClick={handleLoginClick}
 			>
-				LOGIN
+				{isSubmitting ? "LOGGING IN..." : t("login")}
 			</Button>
 			<div>
 				<div className={`${styles.fontColor} ${styles.marginBottom}`}>
-					Not yet registered with us
+					{t("not-yet-registered")}
 				</div>
 				<Button
 					onClick={onCreateAccount}
@@ -101,7 +160,7 @@ const Login = ({
 						fontWeight: "600",
 					}}
 				>
-					CREATE ACCOUNT
+					{t("create-account")}
 				</Button>
 			</div>
 		</div>

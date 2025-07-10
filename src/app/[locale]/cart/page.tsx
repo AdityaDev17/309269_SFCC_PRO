@@ -3,12 +3,14 @@ import { productData } from "@/common/constant";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";
 import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React from "react";
 import styles from "./cart.module.css";
 import Cart from "./component";
 
 export default function CartPage() {
+	const t = useTranslations("Cart");
 	const router = useRouter();
 	const basketId = sessionStorage.getItem("basketId") ?? "";
 	return (
@@ -24,7 +26,7 @@ export default function CartPage() {
 				type={"Label"}
 				variant={3}
 				fontWeight="semibold"
-				label="BAG"
+				label={t("bag")}
 			/>
 
 			<Cart basketId={basketId} />
@@ -34,7 +36,7 @@ export default function CartPage() {
 					variant={1}
 					fontWeight="bold"
 					color="black"
-					label={"YOU MAY ALSO LIKE"}
+					label={t("you-may-also-like")}
 				/>
 				<section>
 					<ProductImageCarousel

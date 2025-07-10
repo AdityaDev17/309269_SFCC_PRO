@@ -1,10 +1,9 @@
 import FilteredImageSelector from '../components/FilteredImageSelector'
 
-// schemas/banner.ts
 export default {
   name: 'banner',
   type: 'document',
-  title: 'Banner',
+  title: 'Banners',
   fields: [
     {
       name: 'title',

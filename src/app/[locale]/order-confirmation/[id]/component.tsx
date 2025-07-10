@@ -11,6 +11,7 @@ import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
@@ -18,6 +19,7 @@ import styles from "./page.module.css";
 
 const OrderConfimation = () => {
 	const { id } = useParams() as { id: string };
+	const t = useTranslations("OrderConfirmation");
 	const orderId = id;
 	const hasUpdated = useRef(false);
 
@@ -87,7 +89,7 @@ const OrderConfimation = () => {
 				variant={3}
 				fontWeight="semibold"
 				color="black"
-				label={"ORDER SUMMARY"}
+				label={t("order-summary")}
 			/>
 			<section className={styles.detailsSection}>
 				<section className={styles.main}>
@@ -106,7 +108,7 @@ const OrderConfimation = () => {
 									variant={3}
 									fontWeight="semibold"
 									color="black"
-									label={"Delivery Address"}
+									label={t("delivery-address")}
 								/>
 								<div className={styles.address}>
 									<div>
@@ -157,7 +159,7 @@ const OrderConfimation = () => {
 									variant={3}
 									fontWeight="bold"
 									color="black"
-									label={"Date of Order"}
+									label={t("order-date")}
 								/>
 								<div className={styles.address}>
 									{isLoading ? (
@@ -185,7 +187,7 @@ const OrderConfimation = () => {
 									variant={3}
 									fontWeight="bold"
 									color="black"
-									label={"Method of Payment"}
+									label={t("payment-method")}
 								/>
 								<div className={styles.address}>
 									{isLoading ? (
@@ -204,7 +206,7 @@ const OrderConfimation = () => {
 							variant={3}
 							fontWeight="semibold"
 							color="black"
-							label={"Product Details"}
+							label={t("product-details")}
 						/>
 						{isLoading ? (
 							<div style={{ display: "grid", gap: "1rem" }}>

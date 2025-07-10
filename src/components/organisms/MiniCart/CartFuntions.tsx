@@ -30,6 +30,7 @@ const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 		price: item?.price,
 		priceAfterItemDiscount: item?.priceAfterItemDiscount,
 		priceAfterOrderDiscount: item?.priceAfterOrderDiscount,
+		showStrikedPrice: item?.price !== item?.priceAfterItemDiscount,
 		currency: currency,
 		itemId: item?.itemId,
 		color: item?.productData?.data?.[0]?.variants?.find(

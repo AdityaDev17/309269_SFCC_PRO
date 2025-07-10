@@ -1,10 +1,7 @@
 "use client";
-import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React from "react";
+import { CartItem, type MiniCartProps } from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import {
@@ -23,9 +20,11 @@ import {
 	handleUpdateQuantity,
 } from "@/components/organisms/MiniCart/CartFuntions";
 import styles from "@/components/organisms/MiniCart/MiniCart.module.css";
-import { CartItem, MiniCartProps } from "@/common/type";
-
-
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 const MiniCart = ({
 	triggerType,
@@ -34,6 +33,7 @@ const MiniCart = ({
 	onOpenChange,
 }: MiniCartProps) => {
 	const router = useRouter();
+	const t = useTranslations("MiniCart");
 	const basketId = sessionStorage.getItem("basketId") ?? "";
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Basket", basketId],
@@ -100,7 +100,7 @@ const MiniCart = ({
 								type={"Label"}
 								variant={3}
 								fontWeight="medium"
-								label="BAG"
+								label={t("bag-title")}
 							/>
 						</DrawerTitle>
 
@@ -141,12 +141,12 @@ const MiniCart = ({
 										type={"Label"}
 										variant={3}
 										fontWeight="medium"
-										label="SUBTOTAL"
+										label={t("subtotal")}
 									/>
 									<Typography
 										type={"Body"}
 										variant={3}
-										label="(including taxes)"
+										label={t("including-taxes")}
 										color="#75757a"
 									/>
 								</div>
@@ -160,7 +160,7 @@ const MiniCart = ({
 										router.push("/cart");
 									}}
 								>
-									VIEW BAG
+									{t("view-bag")}
 								</Button>
 							</div>
 						</DrawerFooter>
@@ -196,7 +196,7 @@ const MiniCart = ({
 							<Typography
 								type="Body"
 								variant={2}
-								label="There is nothing in your bag!"
+								label={t("empty-message")}
 								color="#75757a"
 							/>
 						</div>

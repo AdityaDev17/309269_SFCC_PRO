@@ -33,6 +33,11 @@ export const GET_PRODUCT_DETAILS = `
         value
       }
     }
+    productPromotions {
+      calloutMsg
+      promotionId
+      promotionPrice
+    }
   }
 }
 

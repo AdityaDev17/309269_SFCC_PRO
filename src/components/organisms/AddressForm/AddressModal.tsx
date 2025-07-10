@@ -3,7 +3,8 @@
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import clsx, { type ClassValue } from "clsx";
-import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
+import { useEffect, useMemo, useState } from "react";
 import { states } from "../../../common/constant";
 import { Button } from "../../atomic/Button/Button";
 import CheckBox from "../../atomic/CheckBox/CheckBox";
@@ -156,11 +157,16 @@ export function AddressDialog({
 	const [street, setStreet] = useState("");
 	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
-	const [state, setState] = useState("NY");
+	const [state, setState] = useState("");
 	const [country, setCountry] = useState("US");
 	const [postalCode, setPostalCode] = useState("");
 	const [phone, setPhone] = useState("");
 	const [isDefault, setIsDefault] = useState(false);
+
+	// Validation state
+	const [errors, setErrors] = useState<Record<string, string | undefined>>({});
+	const [showErrors, setShowErrors] = useState(false);
+	const t = useTranslations("AddressForm");
 
 	useEffect(() => {
 		if (selectedAddress) {
@@ -179,21 +185,72 @@ export function AddressDialog({
 		}
 	}, [selectedAddress]);
 
-	const resetForm = () => {
-		setFirstName("");
-		setLastName("");
-		setStreet("");
-		setAddress("");
-		setCity("");
-		setState("");
-		setCountry("US");
-		setPostalCode("");
-		setPhone("");
-		setIsDefault(false);
+	// Validation rules
+	const validateField = (name: string, value: string): string | undefined => {
+		switch (name) {
+			case "firstName":
+				return !value.trim() ? "Please enter your first name" : undefined;
+			case "lastName":
+				return !value.trim() ? "Please enter your last name" : undefined;
+			case "apartment":
+				return !value.trim() ? "Please enter your apartment/suite" : undefined;
+			case "building":
+				return !value.trim() ? "Please enter your address" : undefined;
+			case "city":
+				return !value.trim() ? "Please enter your city" : undefined;
+			case "state":
+				return !value.trim() ? "Please select your state" : undefined;
+			case "zipcode":
+				return !value.trim() ? "Please enter your zip code" : undefined;
+			case "phone":
+				return !value.trim() ? "Please enter your phone number" : undefined;
+			case "email":
+				if (customerType === "guest") {
+					if (!value.trim()) {
+						return "Please enter your email address";
+					}
+					if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+						return "Please enter a valid email address";
+					}
+				}
+				return undefined;
+			default:
+				return undefined;
+		}
 	};
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+	// Validate all fields and update errors state
+	const validateAllFields = () => {
+		const fieldsToValidate = [
+			{ name: "firstName", value: firstName },
+			{ name: "lastName", value: lastName },
+			{ name: "apartment", value: street },
+			{ name: "building", value: address },
+			{ name: "city", value: city },
+			{ name: "state", value: state },
+			{ name: "zipcode", value: postalCode },
+			{ name: "phone", value: phone },
+		];
+
+		if (customerType === "guest") {
+			fieldsToValidate.push({ name: "email", value: email });
+		}
+
+		const newErrors: Record<string, string | undefined> = {};
+		for (const field of fieldsToValidate) {
+			const error = validateField(field.name, field.value);
+			if (error) {
+				newErrors[field.name] = error;
+			}
+		}
+
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	};
+
+	// Handle individual field changes
+	const handleFieldChange = (name: string, value: string) => {
+		// Update the field value
 		switch (name) {
 			case "firstName":
 				setFirstName(value);
@@ -226,11 +283,77 @@ export function AddressDialog({
 				setEmail(value);
 				break;
 		}
+		// Clear error for this field if validation passes
+		if (showErrors) {
+			const error = validateField(name, value);
+			setErrors((prev) => ({
+				...prev,
+				[name]: error,
+			}));
+		}
+	};
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		handleFieldChange(name, value);
+	};
+
+	const handleSelectChange = (name: string, value: string) => {
+		handleFieldChange(name, value);
+	};
+
+	useEffect(() => {
+		if (selectedAddress) {
+			setFirstName(selectedAddress.firstName || "");
+			setLastName(selectedAddress.lastName || "");
+			setStreet(selectedAddress.address1 || "");
+			setAddress(selectedAddress.address2 || "");
+			setCity(selectedAddress.city || "");
+			setState(selectedAddress.stateCode || "");
+			setCountry(selectedAddress.countryCode || "US");
+			setPostalCode(selectedAddress.postalCode || "");
+			setPhone(selectedAddress.phone || "");
+			setIsDefault(selectedAddress.isDefault || false);
+		} else {
+			resetForm();
+		}
+	}, [selectedAddress]);
+
+	const resetForm = () => {
+		setFirstName("");
+		setLastName("");
+		setStreet("");
+		setAddress("");
+		setCity("");
+		setState("");
+		setCountry("US");
+		setPostalCode("");
+		setPhone("");
+		setIsDefault(false);
+		setErrors({});
+		setShowErrors(false);
 	};
 
 	const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const checked = e.target.checked;
 		setIsDefault(checked);
+	};
+
+	// Focus on first error field
+	const focusOnFirstError = () => {
+		const errorFields = Object.keys(errors);
+		if (errorFields.length > 0) {
+			const firstErrorField = errorFields[0];
+			setTimeout(() => {
+				const element = document.querySelector(
+					`[name="${firstErrorField}"]`,
+				) as HTMLElement;
+				if (element) {
+					element.focus();
+					element.scrollIntoView({ behavior: "smooth", block: "center" });
+				}
+			}, 100);
+		}
 	};
 
 	// Mutations
@@ -251,6 +374,15 @@ export function AddressDialog({
 
 	const handleSubmit = async () => {
 		console.log("save is clicked");
+
+		setShowErrors(true);
+		const isValid = validateAllFields();
+
+		if (!isValid) {
+			focusOnFirstError();
+			return;
+		}
+
 		try {
 			if (customerType === "registered") {
 				const input: CustomerAddressInput = {
@@ -307,7 +439,7 @@ export function AddressDialog({
 			>
 				<DialogHeader className={styles.AddressDialogHeader}>
 					<DialogTitle className={styles.AddressDialogTitle}>
-						{isEditMode ? "Edit Address" : "Add Address"}
+						{isEditMode ? t("edit-address") : t("add-address")}
 					</DialogTitle>
 				</DialogHeader>
 
@@ -319,78 +451,141 @@ export function AddressDialog({
 
 						{/* Contact Details */}
 						<fieldset className={styles.Section}>
-							<legend>Contact Details:</legend>
+							<legend>{t("contact-details")}</legend>
 							<div className={styles.TwoColumn}>
-								<Input
-									placeholder="First Name*"
-									name="firstName"
-									value={firstName}
-									onChange={handleChange}
-								/>
-								<Input
-									placeholder="Last Name"
-									name="lastName"
-									value={lastName}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="First Name*"
+										name="firstName"
+										value={firstName}
+										onChange={handleChange}
+										className={errors.firstName ? styles.ErrorInput : ""}
+									/>
+									{errors.firstName && (
+										<div className={styles.ErrorText}>{errors.firstName}</div>
+									)}
+								</div>
+								<div>
+									<Input
+										placeholder="Last Name*"
+										name="lastName"
+										value={lastName}
+										onChange={handleChange}
+										className={errors.lastName ? styles.ErrorInput : ""}
+									/>
+									{errors.lastName && (
+										<div className={styles.ErrorText}>{errors.lastName}</div>
+									)}
+								</div>
 								{customerType === "guest" && (
 									<>
-										<Input
-											placeholder="Email"
-											name="email"
-											value={email}
-											onChange={handleChange}
-										/>
-										<Input
-											placeholder="Phone No.*"
-											name="phone"
-											type="tel"
-											className={styles.PhoneInput}
-											value={phone}
-											onChange={handleChange}
-										/>
+										<div>
+											<Input
+												placeholder="Email*"
+												name="email"
+												value={email}
+												onChange={handleChange}
+												className={errors.email ? styles.ErrorInput : ""}
+											/>
+											{errors.email && (
+												<div className={styles.ErrorText}>{errors.email}</div>
+											)}
+										</div>
+										<div>
+											<Input
+												placeholder="Phone No.*"
+												name="phone"
+												type="tel"
+												className={cn(
+													styles.PhoneInput,
+													errors.phone ? styles.ErrorInput : "",
+												)}
+												value={phone}
+												onChange={handleChange}
+											/>
+											{errors.phone && (
+												<div className={styles.ErrorText}>{errors.phone}</div>
+											)}
+										</div>
 									</>
 								)}
 							</div>
 							{customerType === "registered" && (
-								<Input
-									placeholder="Phone No.*"
-									name="phone"
-									type="tel"
-									className={styles.PhoneInput}
-									value={phone}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="Phone No.*"
+										name="phone"
+										type="tel"
+										className={cn(
+											styles.PhoneInput,
+											errors.phone ? styles.ErrorInput : "",
+										)}
+										value={phone}
+										onChange={handleChange}
+									/>
+									{errors.phone && (
+										<div className={styles.ErrorText}>{errors.phone}</div>
+									)}
+								</div>
 							)}
 						</fieldset>
 
 						{/* Location Details */}
 						<fieldset className={styles.Section}>
-							<legend>Location Details:</legend>
+							<legend>{t("location-details")}</legend>
 							<div className={styles.TwoColumn}>
-								<Input
-									placeholder="Apartment, Suite, etc.*"
-									name="apartment"
-									value={street}
-									onChange={handleChange}
-								/>
-								<Input
-									placeholder="Building no.*"
-									name="building"
-									value={address}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="Apartment, Suite, etc.*"
+										name="apartment"
+										value={street}
+										onChange={handleChange}
+										className={errors.apartment ? styles.ErrorInput : ""}
+									/>
+									{errors.apartment && (
+										<div className={styles.ErrorText}>{errors.apartment}</div>
+									)}
+								</div>
+								<div>
+									<Input
+										placeholder="Building no.*"
+										name="building"
+										value={address}
+										onChange={handleChange}
+										className={errors.building ? styles.ErrorInput : ""}
+									/>
+									{errors.building && (
+										<div className={styles.ErrorText}>{errors.building}</div>
+									)}
+								</div>
 							</div>
 							<div className={styles.TwoColumn}>
-								<Input
-									placeholder="City*"
-									name="city"
-									value={city}
-									onChange={handleChange}
-								/>
-								<div className={styles.SelectOutline}>
-									<Select value={state} onValueChange={setState}>
-										<SelectTrigger>
+								<div>
+									<Input
+										placeholder="City*"
+										name="city"
+										value={city}
+										onChange={handleChange}
+										className={errors.city ? styles.ErrorInput : ""}
+									/>
+									{errors.city && (
+										<div className={styles.ErrorText}>{errors.city}</div>
+									)}
+								</div>
+
+								<div className={styles.SelectWrapper}>
+									<Select
+										value={state}
+										onValueChange={(value) =>
+											handleSelectChange("state", value)
+										}
+									>
+										<SelectTrigger
+											className={cn(
+												styles.SelectOutline,
+												errors.state ? styles.ErrorInput : "",
+											)}
+										>
 											<SelectValue placeholder="State*" />
 										</SelectTrigger>
 										<SelectContent className={styles.SelectContent}>
@@ -401,21 +596,33 @@ export function AddressDialog({
 											))}
 										</SelectContent>
 									</Select>
+
+									{errors.state && (
+										<div className={styles.ErrorText}>{errors.state}</div>
+									)}
 								</div>
 							</div>
 							<div className={styles.TwoColumn}>
-								<Input
-									placeholder="ZIP code*"
-									name="zipcode"
-									value={postalCode}
-									onChange={handleChange}
-								/>
-								<Input
-									placeholder="Country"
-									name="country"
-									value={country}
-									onChange={handleChange}
-								/>
+								<div>
+									<Input
+										placeholder="ZIP code*"
+										name="zipcode"
+										value={postalCode}
+										onChange={handleChange}
+										className={errors.zipcode ? styles.ErrorInput : ""}
+									/>
+									{errors.zipcode && (
+										<div className={styles.ErrorText}>{errors.zipcode}</div>
+									)}
+								</div>
+								<div>
+									<Input
+										placeholder="Country"
+										name="country"
+										value={country}
+										onChange={handleChange}
+									/>
+								</div>
 							</div>
 						</fieldset>
 					</div>
@@ -430,15 +637,15 @@ export function AddressDialog({
 							checked={isDefault}
 							onChange={handleCheckboxChange}
 						/>
-						<label htmlFor="setDefault">Set as Default</label>
+						<label htmlFor="setDefault">{t("set-as-default")}</label>
 					</div>
 
 					<div className={styles.ButtonRow}>
 						<DialogClose asChild>
-							<Button>Cancel</Button>
+							<Button>{t("cancel")}</Button>
 						</DialogClose>
 						<Button variant="secondary" type="submit" onClick={handleSubmit}>
-							{isEditMode ? "Update" : "Save"}
+							{isEditMode ? t("update") : t("save")}
 						</Button>
 					</div>
 				</DialogFooter>

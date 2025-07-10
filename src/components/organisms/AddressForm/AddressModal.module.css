@@ -1,157 +1,178 @@
-   .AddressDialogContent {
-     position: fixed;
-     left: 50%;
-     top: 50%;
-     z-index: 1000;
-     display: grid;
-     grid-template-rows: auto 1fr auto;
-     height: auto;
-     transform: translate(-50%, -50%);
-     border-radius: var(--radius);
-     background-color: #FAFAFA;
-     box-shadow: -1px -1px 6px hsl(var(--foreground) / 0.80);
-     overflow: visible;
-     container-type: inline-size;
-     container-name: dialog;
-     width: clamp(320px, 90vw, 720px);
-   }
+.AddressDialogContent {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 1000;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  border-radius: var(--radius);
+  background-color: #fafafa;
+  box-shadow: -1px -1px 6px hsl(var(--foreground) / 0.8);
+  overflow: visible;
+  container-type: inline-size;
+  container-name: dialog;
+  width: clamp(320px, 90vw, 720px);
+}
 
-   .AddressDialogHeader {
-     padding: 10px 20px;
-     height: 60px;
-     display: grid;
-     grid-template-columns: 1fr auto;
-     color: black;
-     align-items: center;
-     border-bottom: 1px solid #ccc;
-   }
+.AddressDialogHeader {
+  padding: 10px 20px;
+  height: 60px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  color: black;
+  align-items: center;
+  border-bottom: 1px solid #ccc;
+}
 
-   .ScrollableContent {
-     padding: 0 20px;
-     overflow-y: auto;
-     overflow-x: visible; 
-     max-height: calc(100vh - 160px);
-   }
+.ScrollableContent {
+  padding: 0 20px;
+  overflow-y: auto;
+  overflow-x: visible;
+  max-height: calc(100vh - 160px);
+}
 
-   .MandatoryText {
-     font-size: 0.75rem;
-     color: gray;
-     margin-bottom: 1rem;
-   }
+.MandatoryText {
+  font-size: 0.75rem;
+  color: gray;
+  margin-bottom: 1rem;
+}
 
-   .Section {
-     border: none;
-     padding: 0;
-     color: black;
-     margin-bottom: 1rem;
-   }
+.Section {
+  border: none;
+  padding: 0;
+  color: black;
+  margin-bottom: 1rem;
+}
 
-   .Section legend {
-     font-weight: bold;
-     margin-bottom: 0.5rem;
-   }
+.Section legend {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
 
-   .TwoColumn {
-     display: grid;
-     grid-template-columns: 1fr 1fr;
-     gap: 1rem;
-     margin-bottom: 1rem;
-   }
+.TwoColumn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
 
-   .AddressDialogFooter {
-     display: grid;
-     grid-template-columns: 1fr auto;
-     align-items: center;
-     padding: 10px 20px;
-     height: 60px;
-     border-top: 1px solid #ccc;
-   }
+.AddressDialogFooter {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 10px 20px;
+  height: 60px;
+  border-top: 1px solid #ccc;
+}
 
-   .CheckboxRow {
-     display: inline-grid;
-     grid-template-columns: auto 1fr;
-     align-items: center;
-     gap: 0.5rem;
-     color: black;
-   }
+.CheckboxRow {
+  display: inline-grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  color: black;
+}
 
-   .ButtonRow {
-     display: inline-grid;
-     grid-auto-flow: column;
-     gap: 0.75rem;
-   }
+.ButtonRow {
+  display: inline-grid;
+  grid-auto-flow: column;
+  gap: 0.75rem;
+}
 
-   .StreetRow {
-     margin-bottom: 16px;
-   }
+.StreetRow {
+  margin-bottom: 16px;
+}
 
-   .SelectOutline {
-     border: 1px solid #B3B2B5;
-     background-color: var(--colour-surface-primary);
-   }
+.SelectOutline {
+  border: 1px solid #b3b2b5;
+  background-color: var(--colour-surface-primary);
+  width: 100%;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 4px;
+  justify-content: space-between;
+}
 
-   .SelectContent {
-     z-index: 9999;
-     background-color: var(--colour-surface-primary);
-     position:"popper"
-   }
+.SelectContent {
+  z-index: 9999;
+  background-color: var(--colour-surface-primary);
+  position: "popper";
+  max-height: 200px;
+  overflow-y: auto;
+}
 
-   .dialogOverlay {
-     background-color: rgba(0, 0, 0, 0.5);
-     backdrop-filter: blur(6px);
-     position: fixed;
-     inset: 0;
-     z-index: 999;
-   }
+.dialogOverlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+}
 
+@container dialog (max-width: 600px) {
+  .AddressDialogContent {
+    grid-template-rows: auto 1fr auto;
+    padding-bottom: 0;
+  }
 
-   @container dialog (max-width: 600px) {
-     .AddressDialogContent {
-       grid-template-rows: auto 1fr auto;
-       padding-bottom: 0;
-     }
+  .ScrollableContent {
+    max-height: calc(100vh - 160px);
+  }
 
-     .ScrollableContent {
-       max-height: calc(100vh - 160px);
-     }
+  .TwoColumn,
+  .StreetRow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 
-     .TwoColumn,
-     .StreetRow {
-       display: grid;
-       grid-template-columns: 1fr;
-       gap: 1rem;
-     }
+  .PhoneInput,
+  .SelectOutline {
+    width: 100%;
+  }
 
-     .PhoneInput,
-     .SelectOutline {
-       width: 100%;
-     }
+  .AddressDialogFooter {
+    grid-template-columns: 1fr auto auto;
+    gap: 1rem;
+  }
 
-     .AddressDialogFooter {
-       grid-template-columns: 1fr auto auto;
-       gap: 1rem;
-     }
+  .CheckboxRow {
+    width: 100%;
+    margin-bottom: 1rem;
+  }
 
-     .CheckboxRow {
-       width: 100%;
-       margin-bottom: 1rem;
-     }
+  .ButtonRow {
+    justify-self: end;
+  }
+}
 
-     .ButtonRow {
-       justify-self: end;
-     }
+.editIcon {
+  cursor: pointer;
+}
 
-   }
+.icon {
+  cursor: pointer;
+  color: #666;
+}
 
-   .editIcon {
-     cursor: pointer;
-   }
+.button {
+  width: 168px;
+}
 
-   .icon {
-     cursor: pointer;
-     color: #666;
-   }
-
-   .button {
-     width: 168px;
-   }
+.ErrorText {
+  color: var(--colour-label-mandatory-field);
+  font-size: 0.75rem;
+  margin-top: 4px;
+}
+.ErrorInput {
+  border: 1px solid var(--colour-label-mandatory-field);
+}
+.SelectWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

@@ -56,7 +56,6 @@ export const getBasketDetail = async () => {
 		const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
 			customerId: sessionStorage?.getItem("customer_id"),
 		});
-		console.log("Active Basket", response);
 		basketId = response?.customerBasketInfo?.baskets?.[0]?.basketId;
 		if (basketId) sessionStorage.setItem("basketId", basketId);
 	}
@@ -68,12 +67,10 @@ export const getBasketDetail = async () => {
 	subTotal = response?.basketInfo?.productSubTotal;
 	productTotal = response?.basketInfo?.productTotal;
 	const orderDiscount = response?.basketInfo?.orderPriceAdjustments[0];
-	console.log(orderDiscount?.price);
 	return { cartItems, subTotal, productTotal, orderDiscount };
 };
 
 export const handleDeleteItem = async (itemId: string) => {
-	console.log("id", itemId);
 	const basketId = sessionStorage.getItem("basketId") ?? "";
 	const input = {
 		basketId,
@@ -81,7 +78,6 @@ export const handleDeleteItem = async (itemId: string) => {
 	};
 	try {
 		const response = await graphqlRequest(DELETE_BASKET_ITEM, { input });
-		console.log("Remove response:", response);
 	} catch (error) {
 		console.error("Error removing basket item:", error);
 		return error;
@@ -92,7 +88,6 @@ export const handleUpdateQuantity = async (
 	itemId: string,
 	newQuantity: number,
 ) => {
-	console.log("id", itemId, newQuantity);
 	const basketId = sessionStorage.getItem("basketId") ?? "";
 	try {
 		const response = await graphqlRequest(UPDATE_BASKET_ITEM, {
@@ -102,7 +97,6 @@ export const handleUpdateQuantity = async (
 				quantity: newQuantity,
 			},
 		});
-		console.log("Update response:", response);
 	} catch (error) {
 		console.error("Error updating basket item:", error);
 	}
@@ -114,7 +108,6 @@ export const addToBasket = async (productId: string) => {
 		const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
 			customerId: sessionStorage?.getItem("customer_id"),
 		});
-		console.log("Active Basket", response);
 		basketId = response?.customerBasketInfo?.baskets?.[0]?.basketId;
 
 		if (!basketId) {

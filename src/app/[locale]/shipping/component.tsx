@@ -162,7 +162,6 @@ const Shipping = () => {
 							stateCode: addr?.stateCode ?? null,
 						};
 					}) ?? []);
-	console.log(addresses, shippingAddressData, customerType);
 
 	const shippingMethods: CommonCardType[] =
 		shippingMethodData?.getShippingMethod?.applicableShippingMethods?.map(

@@ -30,7 +30,6 @@ const OrderSummary = ({
 		"/images/pay4.svg",
 		"/images/pay5.svg",
 	];
-	// console.log(currency);
 	const t = useTranslations("OrderSummary");
 	return (
 		<div className={styles.layout}>

@@ -42,7 +42,6 @@ const Details = () => {
 		enabled: !!orderId,
 	});
 	const orderDetails = data?.orderInfo;
-	console.log(orderDetails);
 
 	const getSize = (values: Values[], size: string) => {
 		return values?.find((item) => item.value === size)?.name;
@@ -84,9 +83,6 @@ const Details = () => {
 
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		// console.log("Selected:", selectedOption);
-		// console.log("Text:", textValue);
-		// TODO: handle your submit logic here
 	};
 	return (
 		<div className={styles.detailsSection}>

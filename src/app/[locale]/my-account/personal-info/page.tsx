@@ -62,8 +62,6 @@ export default function PersonalInfoPage() {
 				birthday: updatedData.birthDate,
 				gender: updatedData.gender,
 			});
-			console.log("Profile Updated");
-			// Optionally refetch or show toast
 		} catch (err) {
 			console.error("Update failed", err);
 		}
@@ -94,8 +92,6 @@ export default function PersonalInfoPage() {
 				className: "toast-success-class",
 				unstyled: true,
 			});
-
-			console.log("Password updated:", response);
 		} catch (err: unknown) {
 			if (typeof err === "object" && err !== null && "graphQLErrors" in err) {
 				const e = err as {

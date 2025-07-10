@@ -9,7 +9,6 @@ import styles from "./orderHistory.module.css";
 
 function OrderHistory() {
 	const t = useTranslations("HomePage");
-	console.log(t("order-history"));
 	return (
 		<div className={styles.container}>
 			{allOrderData.length === 0 ? (

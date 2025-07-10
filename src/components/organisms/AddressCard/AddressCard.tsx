@@ -115,7 +115,6 @@ const AddressCard: React.FC<AddressCardProps> = ({
 
 			const response = await updateAddressMutation.mutateAsync(input);
 			await refetch?.();
-			console.log("Update response:", response);
 		} catch (error) {
 			console.error("Error updating address:", error);
 		}

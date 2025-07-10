@@ -237,20 +237,6 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 				confirmPassword: formData.confirmPassword,
 				agreeToTerms: formData.agreeToTerms,
 			};
-			// Debug log to check the values
-			console.log("Form data being sent:", cleanedFormData);
-			console.log(
-				"Gender type:",
-				typeof cleanedFormData.gender,
-				"Value:",
-				cleanedFormData.gender,
-			);
-			console.log(
-				"BirthDate type:",
-				typeof cleanedFormData.birthDate,
-				"Value:",
-				cleanedFormData.birthDate,
-			);
 
 			onProceed(cleanedFormData);
 		}

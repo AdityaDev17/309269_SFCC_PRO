@@ -26,8 +26,6 @@ const MyAccount = () => {
 		enabled: !!customerId,
 	});
 
-	console.log("Customer Data:", data);
-
 	const logoutCustomerMutation = useMutation({
 		mutationFn: (input: {
 			clientId: string;
@@ -52,8 +50,6 @@ const MyAccount = () => {
 				return;
 			}
 
-			console.log("Logging out user...");
-
 			const response = await logoutCustomerMutation.mutateAsync({
 				clientId,
 				refreshToken,
@@ -61,7 +57,6 @@ const MyAccount = () => {
 			});
 
 			if (response?.data?.logoutCustomer) {
-				console.log("Logout successful:", response.data.logoutCustomer);
 
 				clearSession();
 
@@ -84,8 +79,6 @@ const MyAccount = () => {
 			}
 		} catch (err) {
 			console.error("Logout error:", err);
-
-			console.log("Performing fallback logout cleanup...");
 			await handlePostLogoutTokenRefresh();
 			router.push("/");
 		}

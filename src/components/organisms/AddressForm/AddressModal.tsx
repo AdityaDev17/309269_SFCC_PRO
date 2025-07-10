@@ -1,13 +1,11 @@
 "use client";
-
 import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import clsx, { type ClassValue } from "clsx";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { states } from "../../../common/constant";
 import { Button } from "../../atomic/Button/Button";
-import CheckBox from "../../atomic/CheckBox/CheckBox";
 import Input from "../../atomic/Input/Input";
 import {
 	Select,
@@ -27,71 +25,9 @@ import {
 } from "../../molecules/Dialog/Dialog";
 import type { AddressData } from "../AddressCard/AddressCard";
 import styles from "./AddressModal.module.css";
+import { CREATE_CUSTOMER_ADDRESS, UPDATE_ADDRESS, UPDATE_SHIPPING_ADDRESS } from "@/common/schema";
+import { CustomerAddressInput, ShippingAddressInput } from "@/common/type";
 
-const basketId = sessionStorage.getItem("basketId");
-const customerId = sessionStorage.getItem("customer_id");
-
-export const createAddress = `
-  mutation CreateCustomerAddress($input: InputCustomerAddress!) {
-    createCustomerAddress(input: $input) {
-      addressId
-      address1
-      address2
-      city
-      countryCode
-      creationDate
-      firstName
-      fullName
-      lastModified
-      lastName
-      phone
-      postalCode
-      preferred
-      stateCode
-    }
-  }
-`;
-
-export const updateAddress = `
-  mutation UpdateCustomerAddress($input: InputCustomerAddress!) {
-    updateCustomerAddress(input: $input) {
-      addressId
-      address1
-      address2
-      city
-      countryCode
-      creationDate
-      firstName
-      fullName
-      lastModified
-      lastName
-      phone
-      postalCode
-      preferred
-      stateCode
-    }
-  }
-`;
-
-export const updateShippingAddress = `
-  mutation UpdateShippingAddress($input: InputCustomerAddress!) {
-    updateShippingAddress(input: $input) {
-      shipments {
-        shippingAddress {
-          address1
-          city
-          countryCode
-          firstName
-          fullName
-          id
-          lastName
-          postalCode
-          stateCode
-        }
-      }
-    }
-  }
-`;
 
 export const cn = (...args: ClassValue[]) => clsx(...args);
 type RefetchFunction = () => Promise<{
@@ -101,34 +37,6 @@ type RefetchFunction = () => Promise<{
 		};
 	};
 }>;
-type CustomerAddressInput = {
-	customerId: string | null;
-	addressId?: string;
-	address1: string;
-	address2: string;
-	city: string;
-	countryCode: string;
-	firstName: string;
-	lastName: string;
-	phone: string;
-	postalCode: string;
-	preferred: boolean;
-	stateCode: string;
-};
-
-type ShippingAddressInput = {
-	basketId: string | null;
-	address1: string;
-	address2: string;
-	city: string;
-	countryCode: string;
-	firstName: string;
-	lastName: string;
-	phone: string;
-	postalCode: string;
-	stateCode: string;
-	useAsBilling?: boolean;
-};
 
 export function AddressDialog({
 	open,
@@ -162,6 +70,9 @@ export function AddressDialog({
 	const [postalCode, setPostalCode] = useState("");
 	const [phone, setPhone] = useState("");
 	const [isDefault, setIsDefault] = useState(false);
+
+	const basketId = sessionStorage.getItem("basketId");
+	const customerId = sessionStorage.getItem("customer_id");
 
 	// Validation state
 	const [errors, setErrors] = useState<Record<string, string | undefined>>({});
@@ -359,17 +270,17 @@ export function AddressDialog({
 	// Mutations
 	const createAddressMutation = useMutation({
 		mutationFn: (input: CustomerAddressInput) =>
-			graphqlRequest(createAddress, { input }),
+			graphqlRequest(CREATE_CUSTOMER_ADDRESS, { input }),
 	});
 
 	const updateCustomerAddressMutation = useMutation({
 		mutationFn: (input: CustomerAddressInput) =>
-			graphqlRequest(updateAddress, { input }),
+			graphqlRequest(UPDATE_ADDRESS, { input }),
 	});
 
 	const updateShippingAddressMutation = useMutation({
 		mutationFn: (input: ShippingAddressInput) =>
-			graphqlRequest(updateShippingAddress, { input }),
+			graphqlRequest(UPDATE_SHIPPING_ADDRESS, { input }),
 	});
 
 	const handleSubmit = async () => {

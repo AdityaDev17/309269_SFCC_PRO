@@ -41,13 +41,11 @@ export type BasketItem = {
 	itemId: string;
 	productImage: ProductImage;
 };
-type CartProps = {
-	basketId: string;
-};
 
-const Cart = ({ basketId }: CartProps) => {
+const Cart = () => {
 	const t = useTranslations("Cart");
 	const router = useRouter();
+	const basketId = sessionStorage.getItem("basketId") ?? "";
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Basket", basketId],
 		queryFn: () => getBasketDetail(),

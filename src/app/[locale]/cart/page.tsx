@@ -12,7 +12,6 @@ import Cart from "./component";
 export default function CartPage() {
 	const t = useTranslations("Cart");
 	const router = useRouter();
-	const basketId = sessionStorage.getItem("basketId") ?? "";
 	return (
 		<section className={styles.container}>
 			<Breadcrumbs
@@ -29,7 +28,7 @@ export default function CartPage() {
 				label={t("bag")}
 			/>
 
-			<Cart basketId={basketId} />
+			<Cart />
 			<section className={styles.productCarouselSection}>
 				<Typography
 					type="Body"

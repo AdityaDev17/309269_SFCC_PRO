@@ -32,6 +32,7 @@ import VarientSelector from "@/components/molecules/VarientSelector/VarientSelec
 import Gallery from "@/components/organisms/Gallery/Gallery";
 import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 import MiniCart from "@/components/organisms/MiniCart/MiniCart";
+import analytics from "@/lib/analytics";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -182,6 +183,11 @@ export default function ProductDetails() {
 	});
 
 	const handleAddToBasket = async () => {
+		analytics.track("Promo Clicked", {
+			category: "Promotion",
+			label: "Summer Sale Banner",
+			debug_mode: true, // Add this line
+		});
 		if (sizes !== undefined && !targetSize) {
 			setError("Choose any size");
 			return;

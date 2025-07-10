@@ -11,6 +11,7 @@ import type {
 	ImageGroup,
 	ProductImage,
 	ProductList,
+	Promotions,
 	Size,
 	Values,
 	Variants,
@@ -33,18 +34,22 @@ import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 import MiniCart from "@/components/organisms/MiniCart/MiniCart";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import styles from "./page.module.css";
 
 export default function ProductDetails() {
 	const { id } = useParams() as { id: string };
+	const t = useTranslations("ProductDetails");
 	const productId = id;
 	const [open, setOpen] = useState(false);
 	const [targetColor, setTargetColor] = useState("");
 	const [targetSize, setTargetSize] = useState("");
 	const [sizes, setSizes] = useState<Size[]>([]);
 	const [error, setError] = useState("");
+	const [promotions, setPromotions] = useState([]);
+	const [viewMore, setViewMore] = useState(true);
 
 	const createCustomerProductList = useMutation({
 		mutationFn: (input: { customerId: string; type: string }) =>
@@ -69,21 +74,32 @@ export default function ProductDetails() {
 		.map((image: ProductImage) => image?.link);
 
 	useEffect(() => {
-		const sizes = data?.productDetails?.variationAttributes
-			?.find((item: VariationAttributes) => item?.id === "size")
-			?.values?.map((item: Values) => {
-				const hasMatchingVariant = data?.productDetails?.variants?.some(
-					(variant: Variants) =>
-						variant.variationValues?.color === targetColor &&
-						variant.variationValues?.size === item?.value,
-				);
+		if (viewMore) {
+			setPromotions(data?.productDetails?.productPromotions?.slice(0, 1));
+		} else {
+			setPromotions(data?.productDetails?.productPromotions);
+		}
+	}, [data, viewMore]);
 
-				return {
-					value: item?.value,
-					title: item?.name,
-					disabled: !hasMatchingVariant,
-				};
-			});
+	useEffect(() => {
+		const sizeAttr = data?.productDetails?.variationAttributes?.find(
+			(item: VariationAttributes) => item?.id === "size",
+		);
+
+		const sizes = sizeAttr?.values?.map((item: Values) => {
+			const hasMatchingVariant = data?.productDetails?.variants?.some(
+				(variant: Variants) =>
+					(variant?.variationValues?.color === targetColor || !targetColor) &&
+					variant?.variationValues?.size === item?.value,
+			);
+
+			return {
+				value: item?.value,
+				title: item?.name,
+				disabled: !hasMatchingVariant,
+			};
+		});
+
 		setSizes(sizes);
 	}, [data, targetColor]);
 
@@ -103,10 +119,10 @@ export default function ProductDetails() {
 		}
 	}, [colors]);
 
-	const accordionData = productDetails?.pageMetaTags?.map((item) => ({
-		title: item?.id.toUpperCase(),
-		desc: item?.value,
-	}));
+	// const accordionData = productDetails?.pageMetaTags?.map((item) => ({
+	// 	title: item?.id.toUpperCase(),
+	// 	desc: item?.value,
+	// }));
 
 	const handleSelected = (selected: Colors) => {
 		setTargetColor(selected?.hex);
@@ -164,22 +180,30 @@ export default function ProductDetails() {
 		onSuccess: () => setOpen(true),
 		retry: 3,
 	});
+
 	const handleAddToBasket = async () => {
-		if (sizes && targetSize === "") {
+		if (sizes !== undefined && !targetSize) {
 			setError("Choose any size");
-		} else {
-			setError("");
-			const masterId = data?.productDetails?.variants?.find(
-				(variant: Variants) =>
-					variant?.variationValues?.color === targetColor &&
-					variant?.variationValues?.size === targetSize,
-			)?.productId;
-			const response = await addToBasketMutation.mutateAsync({
-				productId: masterId ? masterId : productId,
-			});
-			return response;
+			return;
 		}
+
+		setError("");
+
+		const matchedVariant = data?.productDetails?.variants?.find(
+			(variant: Variants) =>
+				(variant?.variationValues?.color === targetColor || !targetColor) &&
+				variant?.variationValues?.size === targetSize,
+		);
+
+		const selectedProductId = matchedVariant?.productId ?? productId;
+
+		const response = await addToBasketMutation.mutateAsync({
+			productId: selectedProductId,
+		});
+
+		return response;
 	};
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement> | string,
 		name?: string,
@@ -190,6 +214,11 @@ export default function ProductDetails() {
 		if (!targetName) return;
 		setTargetSize(value);
 	};
+
+	const handleClickViewMore = () => {
+		setViewMore(!viewMore);
+	};
+
 	return (
 		<section className={styles.componentLayout}>
 			<div className={styles.firstLayout}>
@@ -258,6 +287,22 @@ export default function ProductDetails() {
 							<div className={styles.desc}>
 								{data?.productDetails?.longDescription}
 							</div>
+							<ul className={styles.promotions}>
+								{promotions?.map((item: Promotions) => {
+									return (
+										<li className={styles.promotionli} key={item?.promotionId}>
+											{item?.calloutMsg}
+										</li>
+									);
+								})}
+								<div
+									onClick={handleClickViewMore}
+									onKeyDown={handleClickViewMore}
+									className={styles.more}
+								>
+									{viewMore ? "View More" : "View Less"}
+								</div>
+							</ul>
 							<div className={styles.varientSection}>
 								{colors !== undefined && (
 									<VarientSelector
@@ -277,7 +322,7 @@ export default function ProductDetails() {
 								}`}
 							>
 								<Button onClick={() => handleAddToWishlist()}>
-									ADD TO WISHLIST
+									{t("add-to-wishlist")}
 								</Button>
 								{sizes !== undefined && (
 									<Select onValueChange={(e) => handleChange(e, "title")}>
@@ -303,7 +348,7 @@ export default function ProductDetails() {
 													key={item?.title}
 													disabled={item?.disabled}
 												>
-													{item?.title}
+													{item?.disabled ? <s>{item?.title}</s> : item?.title}
 												</SelectItem>
 											))}
 										</SelectContent>
@@ -315,7 +360,7 @@ export default function ProductDetails() {
 								className={styles.cartButton}
 								onClick={() => handleAddToBasket()}
 							>
-								ADD TO BAG
+								{t("add-to-bag")}
 							</Button>
 						</>
 					)}

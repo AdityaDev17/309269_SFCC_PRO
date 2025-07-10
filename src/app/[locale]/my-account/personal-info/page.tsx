@@ -5,7 +5,7 @@ import EditPassword from "@/components/molecules/EditPassword/EditPassword";
 import Profile from "@/components/molecules/Profile/Profile";
 
 import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
-import styles from "./PersonalInfo.module.css";
+import styles from "./personalInfo.module.css";
 
 import {
 	GET_CUSTOMER,
@@ -15,9 +15,11 @@ import {
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 export default function PersonalInfoPage() {
+	const t = useTranslations("PersonalInformation");
 	const router = useRouter();
 	const customerId = sessionStorage.getItem("customer_id") ?? "";
 
@@ -144,7 +146,7 @@ export default function PersonalInfoPage() {
 						{ label: "Personal Information" },
 					]}
 				/>
-				<h2 className={styles.header}>Personal Information</h2>
+				<h2 className={styles.header}>{t("personal-information")}</h2>
 
 				<div className={styles.gridLayout}>
 					<div className={`${styles.column} ${styles.leftColumn}`}>
@@ -210,7 +212,7 @@ export default function PersonalInfoPage() {
 					{ label: "Personal Information" },
 				]}
 			/>
-			<h2 className={styles.header}>Personal Information</h2>
+			<h2 className={styles.header}>{t("personal-information")}</h2>
 
 			<div className={styles.gridLayout}>
 				<div className={styles.column}>

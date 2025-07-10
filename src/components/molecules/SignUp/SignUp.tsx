@@ -12,6 +12,7 @@ import {
 	SelectValue,
 } from "../../atomic/Select/Select";
 import styles from "./SignUp.module.css";
+import { useTranslations } from "next-intl";
 
 type SignUpFormData = {
 	title: string | null;
@@ -30,6 +31,7 @@ interface SignUpProps {
 }
 
 const SignUp = ({ onProceed }: SignUpProps) => {
+	const t = useTranslations("SignUp");
 	const [passwordScreen, setpasswordScreen] = useState(false);
 	const [formData, setFormData] = useState({
 		title: "",
@@ -262,7 +264,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 
 	return (
 		<div className={styles.layout}>
-			<div className={styles.header}>CREATE ACCOUNT</div>
+			<div className={styles.header}>{t("create-account")}</div>
 			<div
 				style={{ display: passwordScreen ? "none" : "grid" }}
 				className={styles.layout}
@@ -304,7 +306,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					</Select>
 				</div>
 				<div>
-					<div className={styles.fontColor}>First Name*</div>
+					<div className={styles.fontColor}>{t("first-name")}*</div>
 					<Input
 						type="text"
 						name="firstName"
@@ -322,7 +324,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					)}
 				</div>
 				<div>
-					<div className={styles.fontColor}>Last Name*</div>
+					<div className={styles.fontColor}>{t("last-name")}*</div>
 					<Input
 						type="text"
 						name="lastName"
@@ -340,7 +342,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					)}
 				</div>
 				<div>
-					<div className={styles.fontColor}>Gender</div>
+					<div className={styles.fontColor}>{t("gender")}</div>
 					<Select onValueChange={(e) => handleChange(e, "gender")}>
 						<SelectTrigger
 							style={{
@@ -375,7 +377,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					</Select>
 				</div>
 				<div>
-					<div className={styles.fontColor}>Birth Date</div>
+					<div className={styles.fontColor}>{t("birth-date")}</div>
 					<Input
 						type="date"
 						name="birthDate"
@@ -385,7 +387,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					/>
 				</div>
 				<div>
-					<div className={styles.fontColor}>Email ID*</div>
+					<div className={styles.fontColor}>{t("email")}*</div>
 					<Input
 						type="email"
 						name="email"
@@ -414,7 +416,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					}}
 					onClick={handleContinue}
 				>
-					CONTINUE
+					{t("continue")}
 				</Button>
 			</div>
 			<div
@@ -422,7 +424,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 				className={styles.layout}
 			>
 				<div>
-					<div className={styles.fontColor}>Password*</div>
+					<div className={styles.fontColor}>{t("password")}</div>
 					<Input
 						type="password"
 						value={formData?.password || ""}
@@ -440,7 +442,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					)}
 				</div>
 				<div>
-					<div className={styles.fontColor}>Confirm Password*</div>
+					<div className={styles.fontColor}>{t("confirm-password")}</div>
 					<Input
 						type="password"
 						value={formData?.confirmPassword || ""}
@@ -456,23 +458,21 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 						<div className={styles.errorMessage}>{errors.confirmPassword}</div>
 					)}
 				</div>
-				<div>
-					<div className={styles.row}>
-						<CheckBox
-							data-testid="checkbox"
-							style={{ borderColor: "#4F4B53" }}
-							checked={formData.agreeToTerms}
-							onCheckedChange={(checked: boolean) => {
+				<div className={styles.row}>
+					<CheckBox
+						data-testid="checkbox"
+						style={{ borderColor: "#4F4B53" }}
+						checked={formData.agreeToTerms}
+						onCheckedChange={(checked: boolean) => {
 								setFormData((prev) => ({ ...prev, agreeToTerms: checked }));
 								// Clear error when user checks the box
 								if (checked && errors.agreeToTerms) {
 									setErrors((prev) => ({ ...prev, agreeToTerms: "" }));
 								}
 							}}
-						/>
-						<div className={styles.policy}>
-							I have read, agreed to T&C & Privacy Policy*
-						</div>
+					/>
+					<div className={styles.policy}>
+						{t("privacy-policy")}
 					</div>
 					{/*  Error message for Terms Agreement */}
 					{errors.agreeToTerms && (
@@ -490,7 +490,7 @@ const SignUp = ({ onProceed }: SignUpProps) => {
 					}}
 					onClick={handleProceed}
 				>
-					PROCEED
+					{t("proceed")}
 				</Button>
 			</div>
 		</div>

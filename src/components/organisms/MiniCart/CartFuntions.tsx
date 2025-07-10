@@ -6,12 +6,21 @@ import {
 	GET_CUSTOMER_BASKET,
 	UPDATE_BASKET_ITEM,
 } from "@/common/schema";
-import { CartItem, CartItemResponse } from "@/common/type";
+import type {
+	CartItem,
+	CartItemResponse,
+	Values,
+	VariationAttributes,
+} from "@/common/type";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 
 let cartItems: CartItem[];
 let subTotal = "";
-const currency = "";
+let productTotal = "";
+
+const getSize = (values: Values[], size: string) => {
+	return values?.find((item) => item.value === size)?.name;
+};
 const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 	cartItems = response?.map((item) => ({
 		id: item?.productId,
@@ -19,14 +28,23 @@ const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 		description: "",
 		quantity: item?.quantity,
 		price: item?.price,
+		priceAfterItemDiscount: item?.priceAfterItemDiscount,
+		priceAfterOrderDiscount: item?.priceAfterOrderDiscount,
+		showStrikedPrice: item?.price !== item?.priceAfterItemDiscount,
 		currency: currency,
 		itemId: item?.itemId,
 		color: item?.productData?.data?.[0]?.variants?.find(
 			(variation) => variation?.productId === item?.productId,
 		)?.variationValues?.color,
-		size: item?.productData?.data?.[0]?.variants?.find(
-			(variation) => variation?.productId === item?.productId,
-		)?.variationValues?.size,
+		size: getSize(
+			(
+				item?.productData?.data?.[0]
+					?.variationAttributes as VariationAttributes[]
+			)?.find((attr) => attr.id === "size")?.values ?? [],
+			item?.productData?.data?.[0]?.variants?.find(
+				(variation) => variation?.productId === item?.productId,
+			)?.variationValues?.size ?? "",
+		),
 		productImage:
 			item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ?? "",
 	}));
@@ -40,8 +58,7 @@ export const getBasketDetail = async () => {
 		});
 		console.log("Active Basket", response);
 		basketId = response?.customerBasketInfo?.baskets?.[0]?.basketId;
-		if(basketId)
-			sessionStorage.setItem("basketId", basketId);
+		if (basketId) sessionStorage.setItem("basketId", basketId);
 	}
 	const response = await graphqlRequest(GET_BASKET, { basketId });
 	prepareCartItems(
@@ -49,7 +66,10 @@ export const getBasketDetail = async () => {
 		response?.basketInfo?.currency,
 	);
 	subTotal = response?.basketInfo?.productSubTotal;
-	return { cartItems, subTotal };
+	productTotal = response?.basketInfo?.productTotal;
+	const orderDiscount = response?.basketInfo?.orderPriceAdjustments[0];
+	console.log(orderDiscount?.price);
+	return { cartItems, subTotal, productTotal, orderDiscount };
 };
 
 export const handleDeleteItem = async (itemId: string) => {
@@ -90,7 +110,7 @@ export const handleUpdateQuantity = async (
 
 export const addToBasket = async (productId: string) => {
 	let basketId = sessionStorage.getItem("basketId");
-	if (!basketId)  {
+	if (!basketId) {
 		const response = await graphqlRequest(GET_CUSTOMER_BASKET, {
 			customerId: sessionStorage?.getItem("customer_id"),
 		});
@@ -115,14 +135,14 @@ export const addToBasket = async (productId: string) => {
 		sessionStorage.setItem("basketId", basketId ?? "");
 	}
 	const response = await graphqlRequest(ADD_ITEM_TO_BASKET, {
-    input: {
-		basketId,
-		items: [{ productId, quantity: 1 }],
+		input: {
+			basketId,
+			items: [{ productId, quantity: 1 }],
 		},
 	});
 	prepareCartItems(
 		response?.addToCart?.productItems,
-		response?.addToCart?.currency
+		response?.addToCart?.currency,
 	);
 	subTotal = response?.basketInfo?.productSubTotal;
 	return { cartItems, subTotal };

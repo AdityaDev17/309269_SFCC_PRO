@@ -13,6 +13,14 @@
     gap: 10px;
 }
 
+.productCount {
+  font-size: 1rem;
+  font-weight: normal;
+  color: #666;
+  margin-left: 0.5rem;
+}
+
+
 .gridContainer {
     container-type: inline-size;
     container-name: gridContainer;

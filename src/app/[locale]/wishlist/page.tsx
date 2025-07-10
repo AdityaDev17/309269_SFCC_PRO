@@ -8,6 +8,7 @@ import { Toaster } from "@/components/molecules/Toast/Toast";
 import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React from "react";
 import ButtonList from "./component";
@@ -83,7 +84,7 @@ function Wishlist() {
 	const handleProductClick = (productId: string) => {
 		router.push(`/product-details/${productId}`);
 	};
-
+	const t = useTranslations("Wishlist");
 	return isLoading ? (
 		<div className={styles.container}>
 			<Breadcrumbs
@@ -95,7 +96,7 @@ function Wishlist() {
 				type={"Label"}
 				variant={3}
 				fontWeight="semibold"
-				label="WISHLIST"
+				label={t("title")}
 			/>
 
 			{/* Filters skeleton */}
@@ -122,8 +123,8 @@ function Wishlist() {
 			errImg="./images/wishlistEmpty.svg"
 			imgHeight={205}
 			imgWidth={216}
-			text1="Your wishlist is empty!"
-			buttonText="CONTINUE SHOPPING"
+			text1={t("text-empty-wishlist")}
+			buttonText={t("continue-shopping")}
 		/>
 	) : (
 		<div className={styles.container}>
@@ -135,7 +136,7 @@ function Wishlist() {
 				type={"Label"}
 				variant={3}
 				fontWeight="semibold"
-				label="WISHLIST"
+				label={t("title")}
 			/>
 			{data && uniqueBrands && <ButtonList buttonNames={uniqueBrands} />}
 			{data && wishlistData && (

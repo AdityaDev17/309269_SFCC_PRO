@@ -1,23 +1,25 @@
 "use client";
+import type { CartItem } from "@/common/type";
 import { Button } from "@/components/atomic/Button/Button";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import QuantitySelector from "../../atomic/QuantitySelector/QuantitySelector";
 import Typography from "../../atomic/Typography/Typography";
 import styles from "./CartItemList.module.css";
 
-interface CartItem {
-	id: string;
-	name: string;
-	description?: string;
-	quantity: number;
-	price: number;
-	currency: string;
-	productImage: string;
-	itemId: string;
-	size?: string;
-	color?: string;
-}
+// interface CartItem {
+// 	id: string;
+// 	name: string;
+// 	description?: string;
+// 	quantity: number;
+// 	price: number;
+// 	currency: string;
+// 	productImage: string;
+// 	itemId: string;
+// 	size?: string;
+// 	color?: string;
+// }
 
 interface CartItemListProps {
 	cartItems: CartItem[];
@@ -40,6 +42,7 @@ const CartItemList = ({
 	button1,
 	button2,
 }: CartItemListProps) => {
+	const t = useTranslations("CartItemList");
 	const [isMobile, setIsMobile] = useState(false);
 
 	useEffect(() => {
@@ -79,23 +82,28 @@ const CartItemList = ({
 								fontWeight="semibold"
 								label={item.name}
 							/>
-							{item?.size && item?.color && (
-								<div className={styles.textColor}>
+							<div className={styles.textColor}>
+								{item?.size && (
 									<div>
-										Size &nbsp;{Number.parseInt(item?.size, 10).toString()}
+										{t("size")} &nbsp;
+										{item?.size}
 									</div>
-									<div className={styles.align}>| </div>
-									<div className={styles.color}>
-										Color{" "}
-										<div
-											className={styles.circle}
-											style={{
-												backgroundColor: `${item?.color}`,
-											}}
-										/>
-									</div>
-								</div>
-							)}
+								)}
+								{item?.color && (
+									<>
+										<div className={styles.align}>| </div>
+										<div className={styles.color}>
+											{t("color")}{" "}
+											<div
+												className={styles.circle}
+												style={{
+													backgroundColor: `${item?.color}`,
+												}}
+											/>
+										</div>
+									</>
+								)}
+							</div>
 							{item.description && (
 								<Typography
 									type="Body"
@@ -111,7 +119,9 @@ const CartItemList = ({
 										type="Body"
 										variant={2}
 										label={
-											orderQuantity ? `Quantity: ${item.quantity}` : "Quantity"
+											orderQuantity
+												? `${t("quantity")}: ${item.quantity}`
+												: t("quantity")
 										}
 										color="#4f4b53"
 									/>
@@ -132,7 +142,7 @@ const CartItemList = ({
 													<Typography
 														type="Body"
 														variant={2}
-														label="BUY NOW"
+														label={t("buy-now")}
 														fontWeight="regular"
 													/>
 												</Button>
@@ -142,7 +152,7 @@ const CartItemList = ({
 													<Typography
 														type="Body"
 														variant={2}
-														label="WRITE REVIEW"
+														label={t("write-review")}
 														fontWeight="regular"
 													/>
 												</Button>
@@ -191,7 +201,7 @@ const CartItemList = ({
 													qty={item.quantity}
 												/>
 												<Button className={styles.wishlistBtn}>
-													Move to Wishlist
+													{t("move-to-wishlist")}
 												</Button>
 												<div className={styles.deleteWrapper}>
 													<Image
@@ -206,11 +216,33 @@ const CartItemList = ({
 												</div>
 											</div>
 										)}
-										<Typography
-											type="Label"
-											variant={3}
-											label={`${item.currency} ${item.price}`}
-										/>
+										<div
+											style={{
+												display: "flex",
+												justifyContent: "space-between",
+											}}
+										>
+											<Typography
+												type="Label"
+												variant={3}
+												label={`${item.currency} :\u00A0`}
+											/>
+											<Typography
+												type="Label"
+												variant={3}
+												label={`${item.price}`}
+												textDecoration={
+													item?.showStrikedPrice ? "line-through" : "none"
+												}
+											/>
+											{item?.showStrikedPrice && (
+												<Typography
+													type="Label"
+													variant={3}
+													label={`\u00A0${item.priceAfterItemDiscount}`}
+												/>
+											)}
+										</div>
 									</div>
 								)}
 							</div>
@@ -221,7 +253,7 @@ const CartItemList = ({
 							<Typography
 								type="Body"
 								variant={2}
-								label={"Quantity"}
+								label={t("quantity")}
 								color="#4f4b53"
 							/>
 							<div className={styles.mobileCartLeft}>
@@ -232,11 +264,13 @@ const CartItemList = ({
 									}
 									qty={item.quantity}
 								/>
-								<Button className={styles.wishlistBtn}>Move to Wishlist</Button>
+								<Button className={styles.wishlistBtn}>
+									{t("move-to-wishlist")}
+								</Button>
 								<div className={styles.deleteWrapper}>
 									<Image
 										src="/images/delete.png"
-										alt="Delete"
+										alt={t("delete")}
 										onClick={() => onDeleteItem?.(item.itemId)}
 										className={styles.deleteIcon}
 										width={24}

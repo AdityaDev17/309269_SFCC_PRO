@@ -35,8 +35,10 @@ import { useQuery } from "@tanstack/react-query";
 import { ChevronRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Drawer } from "vaul";
+import { useTranslations } from "next-intl";
 
 const Filter = ({ isMobile }: { isMobile: boolean }) => {
+	const t = useTranslations("OrderHistory");
 	const filters = ["3 Months", "6 Months", "2025", "2024", "2023"];
 
 	return (
@@ -78,11 +80,11 @@ const Filter = ({ isMobile }: { isMobile: boolean }) => {
 						<SelectContent>
 							<SelectGroup>
 								<SelectLabel>Duration</SelectLabel>
-								<SelectItem value="3">3 Months</SelectItem>
-								<SelectItem value="6">6 Months</SelectItem>
-								<SelectItem value="2025">2025</SelectItem>
-								<SelectItem value="2024">2024</SelectItem>
-								<SelectItem value="2023">2023</SelectItem>
+								<SelectItem value="3">{t("filter.months3")}</SelectItem>
+								<SelectItem value="6">{t("filter.months6")}</SelectItem>
+								<SelectItem value="2025">{t("filter.year2025")}</SelectItem>
+								<SelectItem value="2024">{t("filter.year2024")}</SelectItem>
+								<SelectItem value="2023">{t("filter.year2023")}</SelectItem>
 							</SelectGroup>
 						</SelectContent>
 					</Select>
@@ -160,6 +162,8 @@ const OrderCard = ({
 }) => {
 	const { orderId, price, orderName, items } = orderData;
 	const router = useRouter();
+	const t = useTranslations("OrderHistory");
+
 	return (
 		<div className={styles.orderCard}>
 			<ImageGrid productData={items} />
@@ -170,7 +174,7 @@ const OrderCard = ({
 							type="Body"
 							variant={3}
 							fontWeight="semibold"
-							label="Arriving Tomorrow"
+							label={t("status")}
 						/>
 					</div>
 					<div className={styles.orderName}>
@@ -181,14 +185,6 @@ const OrderCard = ({
 							label={orderName}
 						/>
 					</div>
-					<div className={styles.orderId}>
-						<Typography
-							type="Body"
-							variant={2}
-							fontWeight="regular"
-							label={`ORDER ID : ${orderId}`}
-						/>
-					</div>
 				</div>
 				<div className={styles.orderDetailsBottom}>
 					<div className={styles.orderTotal}>
@@ -196,7 +192,7 @@ const OrderCard = ({
 							type="Body"
 							variant={3}
 							fontWeight="semibold"
-							label={`Order Total: $${price}`}
+							label={`${t("order-total")}: ${orderData.items?.[0]?.currency ?? ""}  ${price}`}
 						/>
 					</div>
 					<Button
@@ -208,7 +204,7 @@ const OrderCard = ({
 							type="Body"
 							variant={3}
 							fontWeight="semibold"
-							label="VIEW DETAILS"
+							label={t("view-details")}
 						/>
 					</Button>
 				</div>
@@ -279,7 +275,7 @@ const OrderCardContainer = () => {
 		visiblePages.push(currentPage, currentPage + 1);
 	}
 	const goToPage = (page: number) => {
-		if(page>0 && page<=totalPages) setCurrentPage(page);
+		if (page > 0 && page <= totalPages) setCurrentPage(page);
 	};
 	return (
 		<>
@@ -290,35 +286,37 @@ const OrderCardContainer = () => {
 				))}
 			</div>
 
-			<div className={styles.pageNavigator}>
-				<Pagination>
-					<PaginationContent>
-						<PaginationItem>
-							<PaginationPrevious href="#" onClick={handlePrev} />
-						</PaginationItem>
-
-						{visiblePages.map((pgNo) => (
-							<PaginationItem key={pgNo}>
-								<PaginationLink
-									href="#"
-									isActive={pgNo === currentPage}
-									onClick={(e) => {
-										e.preventDefault();
-										goToPage(pgNo);
-									}}
-								>
-									{pgNo}
-								</PaginationLink>
+			{(data?.getOrderHistory?.total ?? 0) > itemsPerPage && (
+				<div className={styles.pageNavigator}>
+					<Pagination>
+						<PaginationContent>
+							<PaginationItem>
+								<PaginationPrevious href="#" onClick={handlePrev} />
 							</PaginationItem>
-						))}
 
-						<PaginationItem>
-							<PaginationNext href="#" onClick={handleNext} />
-						</PaginationItem>
-					</PaginationContent>
-				</Pagination>
-				{isMobile && <Filter isMobile />}
-			</div>
+							{visiblePages.map((pgNo) => (
+								<PaginationItem key={pgNo}>
+									<PaginationLink
+										href="#"
+										isActive={pgNo === currentPage}
+										onClick={(e) => {
+											e.preventDefault();
+											goToPage(pgNo);
+										}}
+									>
+										{pgNo}
+									</PaginationLink>
+								</PaginationItem>
+							))}
+
+							<PaginationItem>
+								<PaginationNext href="#" onClick={handleNext} />
+							</PaginationItem>
+						</PaginationContent>
+					</Pagination>
+					{isMobile && <Filter isMobile />}
+				</div>
+			)}
 		</>
 	);
 };

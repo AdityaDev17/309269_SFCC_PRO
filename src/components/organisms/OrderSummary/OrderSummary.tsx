@@ -18,7 +18,6 @@ const OrderSummary = ({
 	delivery = "",
 	tax = "",
 	total = "",
-	totalSavings = " ",
 	buttonText = "CONTINUE",
 	onButtonClick,
 	isDelivery = false,

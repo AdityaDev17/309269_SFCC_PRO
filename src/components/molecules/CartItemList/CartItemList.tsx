@@ -82,26 +82,40 @@ const CartItemList = ({
 								label={item.name}
 							/>
 							<div className={styles.textColor}>
-								{item?.size && (
-									<div>
-										{t("size")} &nbsp;
-										{item?.size}
-									</div>
-								)}
-								{item?.color && (
+								{item?.size ? (
+									// Show size first, then color if both exist
 									<>
-										<div className={styles.align}>| </div>
-										<div className={styles.color}>
-											{t("color")}{" "}
-											<div
-												className={styles.circle}
-												style={{
-													backgroundColor: `${item?.color}`,
-												}}
-											/>
+										<div>
+											{t("size")} &nbsp;
+											{item?.size}
 										</div>
+										{item?.color && (
+											<>
+												<div className={styles.align}>| </div>
+												<div className={styles.color}>
+													{t("color")}{" "}
+													<div
+														className={styles.circle}
+														style={{
+															backgroundColor: `${item?.color}`,
+														}}
+													/>
+												</div>
+											</>
+										)}
 									</>
-								)}
+								) : item?.color ? (
+									// Show color only when size is not available
+									<div className={styles.color}>
+										{t("color")}{" "}
+										<div
+											className={styles.circle}
+											style={{
+												backgroundColor: `${item?.color}`,
+											}}
+										/>
+									</div>
+								) : null}
 							</div>
 							{item.description && (
 								<Typography

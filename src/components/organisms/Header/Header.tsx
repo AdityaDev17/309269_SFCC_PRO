@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [value, setValue] = useState("");
 
-  const checkMobileView = () => setIsMobile(window.innerWidth <= 768);
+  const checkMobileView = () => setIsMobile(window.innerWidth <= 840);
   
   useEffect(() => {
     checkMobileView();

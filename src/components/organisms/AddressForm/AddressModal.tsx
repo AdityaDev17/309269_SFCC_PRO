@@ -295,29 +295,21 @@ export function AddressDialog({
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		handleFieldChange(name, value);
+
+		let formattedValue = value;
+		if (name === "phone") {
+			formattedValue = value.replace(/\D/g, "").slice(0, 10);
+		}
+		if (name === "zipcode") {
+			formattedValue = value.replace(/\D/g, "").slice(0, 6);
+		}
+
+		handleFieldChange(name, formattedValue);
 	};
 
 	const handleSelectChange = (name: string, value: string) => {
 		handleFieldChange(name, value);
 	};
-
-	useEffect(() => {
-		if (selectedAddress) {
-			setFirstName(selectedAddress.firstName || "");
-			setLastName(selectedAddress.lastName || "");
-			setStreet(selectedAddress.address1 || "");
-			setAddress(selectedAddress.address2 || "");
-			setCity(selectedAddress.city || "");
-			setState(selectedAddress.stateCode || "");
-			setCountry(selectedAddress.countryCode || "US");
-			setPostalCode(selectedAddress.postalCode || "");
-			setPhone(selectedAddress.phone || "");
-			setIsDefault(selectedAddress.isDefault || false);
-		} else {
-			resetForm();
-		}
-	}, [selectedAddress]);
 
 	const resetForm = () => {
 		setFirstName("");
@@ -414,7 +406,7 @@ export function AddressDialog({
 					countryCode: country,
 					firstName,
 					lastName,
-					phone: phone,
+					phone,
 					postalCode,
 					stateCode: state,
 					...(isEditMode ? {} : { useAsBilling: true }),

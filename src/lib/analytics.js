@@ -7,7 +7,7 @@ const analytics = Analytics({
   debug: true,
   plugins: [
     googleAnalytics({
-      measurementIds: ['G-3VRCBCH572'] // GA4 ID
+      measurementIds: ['G-N75CYCY1PB'] // GA4 ID
     })
   ]
 })

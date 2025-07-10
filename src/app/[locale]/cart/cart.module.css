@@ -24,7 +24,7 @@
     "CartItemList OrderSummary"
     "RedeemPoints OrderSummary";
   gap: 20px;
-  @container (max-width: 700px) {
+  @container (max-width: 840px) {
     grid-template-columns: 1fr;
     grid-template-areas:
      "ItemsWrapper"

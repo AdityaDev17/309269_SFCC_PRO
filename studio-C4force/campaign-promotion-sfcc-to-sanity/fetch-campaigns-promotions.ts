@@ -3,10 +3,11 @@
 import dotenv from "dotenv";
 import axios, { AxiosInstance } from "axios";
 import { createClient } from "@sanity/client";
+import { v4 as uuidv4 } from "uuid";  // Unique key generator :contentReference[oaicite:1]{index=1}
 
 dotenv.config();
 
-// Helper to sanitize IDs (valid: a–z, 0–9, dot, underscore, dash)
+// Sanitize IDs (letters, numbers, dot, underscore, dash ✳️ no spaces)
 function sanitizeId(prefix: string, value: string): string {
   return `${prefix}-${value
     .toLowerCase()
@@ -14,12 +15,12 @@ function sanitizeId(prefix: string, value: string): string {
     .replace(/[^a-z0-9._-]/g, "-")}`;
 }
 
-// Sanitize SFCC host
+// Normalize host URL
 const rawHost = process.env.SFCC_API_HOST!;
 const host = rawHost.replace(/^https?:\/\//, "").replace(/\/$/, "");
 console.log("SFCC host:", host);
 
-// Sanity client init
+// Initialize Sanity
 const sanity = createClient({
   projectId: process.env.SANITY_PROJECT_ID!,
   dataset: process.env.SANITY_DATASET!,
@@ -28,7 +29,7 @@ const sanity = createClient({
   useCdn: false,
 });
 
-// SFCC Axios client
+// Initialize SFCC API
 const sfccApi: AxiosInstance = axios.create({
   baseURL: `https://${host}`,
   timeout: 10_000,
@@ -41,7 +42,7 @@ sfccApi.interceptors.request.use((cfg) => {
   return cfg;
 });
 
-// Fetch "hits" from SCAPI
+// Utility to fetch hits
 async function fetchHits(path: string) {
   const res = await sfccApi.post(path, {
     limit: 100,
@@ -52,21 +53,23 @@ async function fetchHits(path: string) {
   return res.data.hits as any[];
 }
 
-// Build and link docs
+// Build Sanity documents with unique keys
 function buildDocs(camps: any[], promos: any[]) {
-  const campDocs = camps.map((c) => ({
+  // Campaign docs
+  const campDocs = camps.map(c => ({
     _id: sanitizeId("campaign", c.campaignId),
     _type: "campaign",
     campaignId: c.campaignId,
     title: c.description || c.campaignId,
     description: c.description || "",
     enabled: c.enabled,
+    promotions: [] as any[],
     creationDate: c.creationDate,
     lastModified: c.lastModified,
-    promotions: [] as any[],
   }));
 
-  const promoDocs = promos.map((p) => ({
+  // Promotion docs
+  const promoDocs = promos.map(p => ({
     _id: sanitizeId("promotion", p.id),
     _type: "promotion",
     promotionId: p.id,
@@ -74,27 +77,35 @@ function buildDocs(camps: any[], promos: any[]) {
     promotionClass: p.promotionClass || "",
     enabled: p.enabled,
     archived: p.archived,
-    creationDate: p.creationDate,
-    lastModified: p.lastModified,
-    calloutMsg: p.calloutMsg,
+    calloutMsg: p.calloutMsg?.default?.markup || "",
     campaignAssignments: (p.assignmentInformation.activeCampaignAssignments || []).map((a: any) => ({
-      _type: "reference" as const,
+      _key: uuidv4(),
+      _type: "reference",
       _ref: sanitizeId("campaign", a.campaignId),
     })),
+    creationDate: p.creationDate,
+    lastModified: p.lastModified,
   }));
 
-  const campIndex = Object.fromEntries(campDocs.map((c) => [c._id, c]));
-
-  promoDocs.forEach((p) => {
+  // Link back promotions to campaigns, with keys
+  const campIndex = Object.fromEntries(campDocs.map(c => [c._id, c]));
+  promoDocs.forEach(p => {
     p.campaignAssignments.forEach((ref: any) => {
-      campIndex[ref._ref]?.promotions.push({ _type: "reference", _ref: p._id });
+      const parent = campIndex[ref._ref];
+      if (parent) {
+        parent.promotions.push({
+          _key: uuidv4(),
+          _type: "reference",
+          _ref: p._id,
+        });
+      }
     });
   });
 
   return { campDocs, promoDocs };
 }
 
-// Main sync function
+// Main sync
 async function syncSFCCToSanity() {
   console.log("Requesting SFCC token...");
   const tokenRes = await axios.post(
@@ -127,14 +138,14 @@ async function syncSFCCToSanity() {
   console.log(`Preparing to sync: ${campDocs.length} camp, ${promoDocs.length} promo`);
 
   const tx = sanity.transaction();
-  campDocs.forEach((d) => tx.createOrReplace(d));
-  promoDocs.forEach((d) => tx.createOrReplace(d));
+  campDocs.forEach(d => tx.createOrReplace(d));
+  promoDocs.forEach(d => tx.createOrReplace(d));
   await tx.commit();
 
   console.log("Sync complete!");
 }
 
-syncSFCCToSanity().catch((err) => {
+syncSFCCToSanity().catch(err => {
   console.error("Sync failed:", err.response?.data || err.message || err);
   process.exit(1);
 });

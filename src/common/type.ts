@@ -342,3 +342,32 @@ export type Promotions={
  promotionId:string
  promotionPrice:string
 }
+
+export type CustomerAddressInput = {
+  customerId: string | null;
+  addressId?: string;
+  address1: string;
+  address2: string;
+  city: string;
+  countryCode: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  postalCode: string;
+  preferred: boolean;
+  stateCode: string;
+};
+
+export type ShippingAddressInput = {
+  basketId: string | null;
+  address1: string;
+  address2: string;
+  city: string;
+  countryCode: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  postalCode: string;
+  stateCode: string;
+  useAsBilling?: boolean;
+};

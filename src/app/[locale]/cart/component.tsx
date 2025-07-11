@@ -41,19 +41,17 @@ export type BasketItem = {
   itemId: string;
   productImage: ProductImage;
 };
-type CartProps = {
-  basketId: string;
-};
 
-const Cart = ({ basketId }: CartProps) => {
-  const t = useTranslations("Cart");
-  const router = useRouter();
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["Basket", basketId],
-    queryFn: () => getBasketDetail(),
-    enabled: !!basketId,
-  });
-  const CartItems = data?.cartItems ?? [];
+const Cart = () => {
+	const t = useTranslations("Cart");
+	const router = useRouter();
+	const basketId = sessionStorage.getItem("basketId") ?? "";
+	const { data, isLoading, refetch } = useQuery({
+		queryKey: ["Basket", basketId],
+		queryFn: () => getBasketDetail(),
+		enabled: !!basketId,
+	});
+	const CartItems = data?.cartItems ?? [];
 
   const removeBasketMutations = useMutation({
     mutationFn: (input: { itemId: string }) => handleDeleteItem(input.itemId),

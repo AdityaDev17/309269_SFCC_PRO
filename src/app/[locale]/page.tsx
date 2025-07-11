@@ -9,6 +9,7 @@ import GetTheLookBanner from "@/components/molecules/GetTheLookBanner/GetTheLook
 import ProductCard from "@/components/molecules/ProductCard/ProductCard";
 import ProductCardBanner from "@/components/molecules/ProductCardBanner/ProductCardBanner";
 import StatementBanner from "@/components/molecules/StatementBanner/StatementBanner";
+import CampaignBlock from "@/components/organisms/CampaignBlock/CampaignBlock";
 // const Banner = dynamic(() => import('../components/molecules/Banner/Banner'))
 // const BannerCarousel = dynamic(() => import('../components/molecules/BannerCarousel/BannerCarousel'));
 // const ProductCardBanner = dynamic(() => import('../components/molecules/ProductCardBanner/ProductCardBanner'));
@@ -32,6 +33,9 @@ export default async function Home() {
         title="Testing Video"
         videoUrl="https://www.w3schools.com/html/mov_bbb.mp4"
       /> */}
+
+	 
+	       <CampaignBlock variant="hero" />
 			{banners[2] && (
 				<SanityWrapper id={banners[2]?._id} type="banner" path="video">
 					<Banner
@@ -100,4 +104,4 @@ export default async function Home() {
 			)}
 		</div>
 	);
-}
+} 

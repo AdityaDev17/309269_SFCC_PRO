@@ -54,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [value, setValue] = useState("");
 
-  const checkMobileView = () => setIsMobile(window.innerWidth <= 768);
+  const checkMobileView = () => setIsMobile(window.innerWidth <= 840);
   
   useEffect(() => {
     checkMobileView();
@@ -186,7 +186,7 @@ const Header: React.FC<HeaderProps> = ({
                   }}>
                   <NavigationMenuList>
                     <NavigationMenuItem value={category.name}>
-                      {category.subcategory && category.image ? (
+                      {category.subcategory && category.image && (
                         <>
                           <NavigationMenuTrigger>
                             <span className={styles.category}>
@@ -267,13 +267,13 @@ const Header: React.FC<HeaderProps> = ({
                           </NavigationMenuContent>
                         </>
                       ) 
-                      : (
-                        <Link href={"/"}>
-                          <span className={styles.category}>
-                            {category.name}
-                          </span>
-                        </Link>
-                      )
+                      // : (
+                      //   <Link href="/">
+                      //     <span className={styles.category}>
+                      //       {category.name}
+                      //     </span>
+                      //   </Link>
+                      // )
                       }
                     </NavigationMenuItem>
                   </NavigationMenuList>

@@ -11,10 +11,10 @@ export default {
     { name: 'price', type: 'number', title: 'Price', readOnly: true },
     { name: 'currency', type: 'string', title: 'Currency', readOnly: true },
     { name: 'isOnline', type: 'boolean', title: 'Is Online?' },
+    { name: 'productKind', type: 'string', title: 'Product Kind', initialValue: 'variant', readOnly: true },
+    { name: 'variationAttributes', type: 'array', of: [{ type: 'string' }], title: 'Variation Attributes',readOnly: true },
     { name: 'size', type: 'string', title: 'Size' , readOnly: true },
     { name: 'colorHex', type: 'string', title: 'Color Hex' },
-    { name: 'variationAttributes', type: 'array', of: [{ type: 'string' }], title: 'Variation Attributes',readOnly: true },
-    { name: 'lastModified', type: 'datetime', title: 'Last Modified' },
     {
       name: 'parentProduct',
       title: 'Parent Product',
@@ -22,7 +22,7 @@ export default {
       to: [{ type: 'product' }], 
       readOnly: true,
     },
-    { name: 'productKind', type: 'string', title: 'Product Kind', initialValue: 'variant', readOnly: true },
+    { name: 'lastModified', type: 'datetime', title: 'Last Modified' },
     { name: 'importedAt', type: 'datetime', title: 'Imported At' },
   ],
 };

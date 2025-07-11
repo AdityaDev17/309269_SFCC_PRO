@@ -32,7 +32,6 @@ const OrderSummary = ({
     "/images/pay5.svg",
   ];
   const t = useTranslations("OrderSummary");
-  console.log("4555Errr", errorMsg);
   return (
     <div className={styles.layout}>
       {totalRowTop && (

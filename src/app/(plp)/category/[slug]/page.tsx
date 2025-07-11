@@ -60,6 +60,7 @@ export default async function PLPPage({ params }: PageProps) {
 					</SelectContent>
 				</Select>
 			</div>
+            
 
 			<div className={styles.grid}>
 				{products.map((product, index) => {

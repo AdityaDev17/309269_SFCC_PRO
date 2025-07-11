@@ -206,6 +206,36 @@ export type GetOrderHistoryResponse = {
   };
 };
 
+export type AccessTokenResponse = {
+  getChatAccessTokenHandler: {
+    access_token: string;
+  };
+};
+
+export type SessionResponse = {
+  getSessionIdHandler: {
+    sessionId: string;
+    messages: { message: string }[];
+  };
+};
+
+export type MessageResponse = {
+  getMessageHandler: {
+    messages: { message: string }[];
+  };
+};
+
+export type DeleteSessionResponse = {
+  deleteSessionHandler: {
+    messages: { type: string }[];
+  };
+};
+
+export type MessageType = {
+  id: string;
+  author: string;
+  text: string;
+};
 export type FilterDialogProps = {
 	priceFilters: { label: string; value: string }[];
 	colorFilters: string[];

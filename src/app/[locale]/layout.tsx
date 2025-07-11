@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import AnalyticsProvider from "@/components/AnalyticsProvider";
 import { DisableDraftMode } from "@/components/DisableDraftMode";
+import Chat from "@/components/organisms/Chat/Chat";
 import Footer from "@/components/organisms/Footer/Footer";
 import HeaderWrapper from "@/components/organisms/Header/HeaderWrapper";
 import { routing } from "@/i18n/routing";
@@ -58,7 +59,8 @@ export default async function RootLayout({
 								<DisableDraftMode />
 							</>
 						)}
-						<ReactQueryDevtools initialIsOpen={false} position="bottom" />
+						{/* <ReactQueryDevtools initialIsOpen={false} position="bottom" /> */}
+						<Chat />
 					</Providers>
 					<Footer />
 				</body>

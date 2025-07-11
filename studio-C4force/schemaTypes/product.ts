@@ -20,13 +20,6 @@ export default {
       title: 'Slug',
       options: {source: 'name', maxLength: 96},
     },
-    {name: 'importedAt', type: 'datetime', title: 'Imported At'},
-    {
-      name: 'slug',
-      type: 'slug',
-      title: 'Slug',
-      options: {source: 'name', maxLength: 96},
-    },
     {name: 'description', type: 'text', title: 'Description'},
     {
       name: 'categoryId',

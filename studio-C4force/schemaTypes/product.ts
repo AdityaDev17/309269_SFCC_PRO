@@ -12,15 +12,15 @@ export default {
     { name: 'price', type: 'number', title: 'Price', readOnly: true },
     { name: 'currency', type: 'string', title: 'Currency', readOnly: true},
     { name: 'isOnline', type: 'boolean', title: 'Is Online?', readOnly: true },
-    { name: 'lastModified', type: 'datetime', title: 'Last Modified' },
-    { name: 'variationAttributes', type: 'array', of: [{ type: 'string' }], title: 'Variation Attributes' , readOnly: true},
     { name: 'productKind', type: 'string', title: 'Product Kind', initialValue: 'master', readOnly: true },
+    { name: 'variationAttributes', type: 'array', of: [{ type: 'string' }], title: 'Variation Attributes' , readOnly: true},
     {
       name: 'variants',
       title: 'Variants',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'variant' }] }], readOnly: true,
     },
+    {name: 'lastModified', type: 'datetime', title: 'Last Modified' },
     { name: "importedAt", type: "datetime", title: "Imported At" },
   ],
 };

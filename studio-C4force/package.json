@@ -16,22 +16,24 @@
   ],
   "dependencies": {
     "@sanity/assist": "^4.2.0",
+    "@sanity/color-input": "^4.0.3",
     "@sanity/image-url": "^1.1.0",
     "@sanity/react-loader": "^1.11.11",
     "@sanity/vision": "^3.93.0",
     "@sanity/visual-editing": "^2.15.0",
-    "@sanity/color-input": "^4.0.3",
     "next-sanity": "^9.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^19.1.0",
-    "sanity": "^3.93.0",
+    "sanity": "^3.97.1",
     "sanity-plugin-asset-source-openai": "^1.1.2",
-    "styled-components": "^6.1.15"
+    "styled-components": "^6.1.15",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^5.0.2",
     "@types/react": "^18.0.25",
+    "@types/uuid": "^10.0.0",
     "eslint": "^9.9.0",
     "prettier": "^3.0.2",
     "typescript": "^5.1.6"

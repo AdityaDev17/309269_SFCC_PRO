@@ -129,8 +129,8 @@ const Page = () => {
 					if (basketId) {
 						sessionStorage.setItem("basketId", basketId);
 					}
-					router.push("/"); //  Only happens after successful login
-					resolve(); // Resolve when everything is done
+					router.push("/"); 
+					resolve(); 
 				})
 				.catch((error) => {
 					console.error("Login error ", error);

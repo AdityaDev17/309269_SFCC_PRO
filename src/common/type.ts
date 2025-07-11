@@ -310,6 +310,7 @@ export type OrderSummaryProps = {
 	delivery?: string;
 	tax?: string;
 	total?: string;
+  errorMsg?:string;
 	totalSavings?: string;
 	buttonText?: string;
   isDelivery?:boolean;

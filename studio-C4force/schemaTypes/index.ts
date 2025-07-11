@@ -5,6 +5,7 @@ import mediaGroup from "./mediaGroup";
 import product from "./product";
 import variant from "./variant";
 import campaign from "./campaign";
+import promotion from "./promotion";
 import test from "node:test";
 import article from "./article";
 import testimonial from "./testimonial";
@@ -14,12 +15,15 @@ import testimonialSection from "./sections/testimonialSection";
 import productCarouselSection from "./sections/productCarouselSection";
 import hero from "./modules/hero";
 import twoColumn from "./modules/twoColumn";
+import siteSettings from './siteSettings'
 
 export const schemaTypes = [
   //Documents
+  siteSettings,
   product,
   variant,
-  campaign,
+  campaign, 
+  promotion,
   banner,
   homePage,
   mediaGroup,
@@ -34,4 +38,4 @@ export const schemaTypes = [
   //Components
   hero,
   twoColumn,
-];
+]

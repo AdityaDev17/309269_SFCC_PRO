@@ -63,3 +63,9 @@
   gap: 10px;
   justify-content: space-between;
 }
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  margin-top: 8px;
+}

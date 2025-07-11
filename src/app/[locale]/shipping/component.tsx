@@ -32,7 +32,6 @@ import AddressCard, {
 } from "@/components/organisms/AddressCard/AddressCard";
 import {
 	AddressDialog,
-	updateShippingAddress,
 } from "@/components/organisms/AddressForm/AddressModal";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";

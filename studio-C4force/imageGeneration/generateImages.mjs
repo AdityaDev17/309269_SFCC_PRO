@@ -7,7 +7,7 @@ import {dirname} from 'path'
 
 dotenv.config()
 
-const dreamStudioApiKey = 'sk-r8qWvX7z8Wdu8wI7U2FrPe0DkhTPDPd3HABUs6IrHnQsvZWr' // Replace with your API key
+const dreamStudioApiKey = 'sk-ApMwHAKRLZqKFkaQKtdSMamGdnTtvngoFD5C7dJAx9nbuSNv' // Replace with your API key
 //const dreamStudioApiKey = process.env.DREAMSTUDIO_API_KEY
 console.log('DREAMSTUDIO_API_KEY:', dreamStudioApiKey)
 

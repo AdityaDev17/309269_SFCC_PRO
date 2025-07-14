@@ -1,3 +1,4 @@
+console.log("ready");
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
  
@@ -19,6 +20,7 @@ export async function POST(req: NextRequest) {
       campaignId,
       promotionId,
       title,
+      name,
       description,
       calloutMsg
     } = body;
@@ -72,14 +74,9 @@ export async function POST(req: NextRequest) {
     let patchUrl = '';
     const patchBody: any = {};
  
-    if (_type === 'product') {
+    if (_type === 'product'|| _type === 'variant') {
       patchUrl = `${baseUrl}/product/products/${version}/organizations/${org}/products/${productId}`;
-      if (title) patchBody.name = { default: title };
-      if (description)
-        patchBody.longDescription = { default: { markup: description, source: description } };
-    } else if (_type === 'variant') {
-      patchUrl = `${baseUrl}/product/products/${version}/organizations/${org}/products/${productId}/variants/${variantId}`;
-      if (title) patchBody.name = { default: title };
+      if (name) patchBody.name = { default: name };
       if (description)
         patchBody.longDescription = { default: { markup: description, source: description } };
     } else if (_type === 'campaign') {

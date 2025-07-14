@@ -8,18 +8,25 @@ export default {
     { name: 'description', title: 'Description', type: 'text' },
     { name: 'enabled', title: 'Enabled', type: 'boolean' },
     {
+      name: 'image',
+      title: 'Image',
+      type: 'image',
+      options: { hotspot: true }
+    },
+    {
       name: 'promotions',
       title: 'Promotions',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'promotion' }] }]
     }, 
     { name: 'creationDate', title: 'Created At', type: 'datetime' },
-    { name: 'lastModified', title: 'Last Modified', type: 'datetime' }
+    { name: 'lastModified', title: 'Last Modified', type: 'datetime' },
   ],
   preview: {
     select: {
       title: 'title',
-      subtitle: 'campaignId'
+      subtitle: 'campaignId',
+      media: 'image'
     }
   }
 }

@@ -275,6 +275,7 @@ export const ADD_ITEM_TO_BASKET = `
     }
   }
 `;
+
 export const GET_BASKET = `
  query BasketInfo($basketId: ID!) {
   basketInfo(basketId: $basketId) {
@@ -419,32 +420,36 @@ export const ADD_ITEM_TO_PRODUCTLIST = `
   }
 `;
 export const WISHLIST_DATA = `
-    query GetWishlist($customerId: ID!) {
-      getWishlist(customerId: $customerId) {
-        data {
-          customerProductListItems {
-            productImage {
-              data {
-                imageGroups {
-                  images {
-                    disBaseLink
-                    alt
-                    link
-                    title
-                  }
+  query GetWishlist($customerId: ID!) {
+    getWishlist(customerId: $customerId) {
+      data {
+        id
+        customerProductListItems {
+          id
+          productId
+          productImage {
+            data {
+              id
+              name
+              price
+              currency
+              brand
+              imageGroups {
+                images {
+                  disBaseLink
+                  alt
+                  link
+                  title
                 }
-                name
-                price
-                id
-                currency
-                brand
               }
             }
           }
         }
       }
     }
+  }
 `;
+
 /*Customer product List(wishlist) Schema Ends*/
 
 /*Access Token Schema */
@@ -916,3 +921,10 @@ export const DELETE_SESSION = `
   }
 `
 
+
+export const REMOVE_ITEM_FROM_WISHLIST = `
+  mutation RemoveFromWishlist($customerId: ID!, $listId: ID!, $itemId: ID!) {
+    removeFromWishlist(customerId: $customerId, listId: $listId, itemId: $itemId) 
+  }`
+
+  

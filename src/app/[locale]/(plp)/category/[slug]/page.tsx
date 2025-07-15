@@ -77,7 +77,7 @@ export default function PLPPage() {
 		queryFn: fetchProductList,
 		enabled: !!slug,
 	});
-	const totalProducts = data?.getProductList.total || 0;
+	const totalProducts = data?.getProductList?.total || 0;
 	const totalPages = Math.ceil(totalProducts / itemsPerPage);
 
 	const products: ProductDetails[] = data?.getProductList?.hits || [];
@@ -124,23 +124,23 @@ export default function PLPPage() {
 
 	const prefetchProduct = (productId: string, url: string) => {
 		timeoutRef.current = setTimeout(() => {
-			console.log("PREFTCHING")
+			console.log("PREFTCHING");
 			queryClient.prefetchQuery({
 				queryKey: ["Product", productId],
 				queryFn: () =>
 					graphqlRequest(GET_PRODUCT_DETAILS, { productId: productId }),
 				staleTime: 5 * 60 * 1000,
-			})
+			});
 
 			router.prefetch(url);
 		}, 200);
-	}
+	};
 
 	const cancelPrefetch = () => {
-    	if (timeoutRef.current) {
+		if (timeoutRef.current) {
 			clearTimeout(timeoutRef.current);
 		}
-  	};
+	};
 
 	return (
 		<div className={styles.container}>
@@ -222,7 +222,12 @@ export default function PLPPage() {
 											`/product-details/${product.productId}?slug=${encodeURIComponent(slug)}&name=${encodeURIComponent(product.productName)}`,
 										);
 									}}
-									onMouseEnter={() => prefetchProduct(product.productId, `/product-details/${product.productId}?slug=${encodeURIComponent(slug)}&name=${encodeURIComponent(product.productName)}`)}
+									onMouseEnter={() =>
+										prefetchProduct(
+											product.productId,
+											`/product-details/${product.productId}?slug=${encodeURIComponent(slug)}&name=${encodeURIComponent(product.productName)}`,
+										)
+									}
 									onMouseLeave={cancelPrefetch}
 								/>
 							</div>

@@ -18,7 +18,15 @@ import { useTranslations } from "next-intl";
 const MyAccount = () => {
 	const t = useTranslations("MyAccount");
 	const router = useRouter();
-	const customerId = sessionStorage.getItem("customer_id");
+
+	const [customerId, setCustomerId] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (typeof window !== "undefined") {
+			const id = sessionStorage.getItem("customer_id");
+			setCustomerId(id);
+		}
+	}, []);
 
 	const { data, isLoading } = useQuery({
 		queryKey: ["GetCustomer", customerId],
@@ -57,7 +65,6 @@ const MyAccount = () => {
 			});
 
 			if (response?.data?.logoutCustomer) {
-
 				clearSession();
 
 				const tokenRefreshSuccess = await handlePostLogoutTokenRefresh();

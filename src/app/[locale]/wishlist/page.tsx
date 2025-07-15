@@ -1,13 +1,14 @@
 "use client";
-import { WISHLIST_DATA } from "@/common/schema";
+import { REMOVE_ITEM_FROM_WISHLIST, WISHLIST_DATA } from "@/common/schema";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
 import Typography from "@/components/atomic/Typography/Typography";
 import ErrorComponent from "@/components/molecules/ErrorComponent/ErrorComponent";
-import { Toaster } from "@/components/molecules/Toast/Toast";
+import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
+import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 import ProductImageCarousel from "@/components/organisms/ProductImageCarousel/ProductImageCarousel";
 import { graphqlRequest } from "@/lib/graphqlRequest";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -36,6 +37,7 @@ interface ProductImageData {
 }
 
 type CustomerProductListItem = {
+	id: string;
 	productImage: {
 		data: ProductImageData[];
 	};
@@ -45,13 +47,36 @@ function Wishlist() {
 	const customerId = sessionStorage.getItem("customer_id") ?? "";
 	const router = useRouter();
 
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Wishlist", customerId],
 		queryFn: () =>
 			graphqlRequest(WISHLIST_DATA, {
 				customerId,
 			}),
 		enabled: !!customerId,
+	});
+
+	const removeFromWishlist = useMutation({
+		mutationFn: async ({
+			customerId,
+			listId,
+			itemId,
+		}: {
+			customerId: string;
+			listId: string;
+			itemId: string;
+		}) => {
+			return graphqlRequest(REMOVE_ITEM_FROM_WISHLIST, {
+				customerId,
+				listId,
+				itemId,
+			});
+		},
+	});
+
+	const moveToBagMutation = useMutation({
+		mutationFn: async ({ productId }: { productId: string }) =>
+			await addToBasket(productId),
 	});
 
 	const wishlistData =
@@ -62,7 +87,9 @@ function Wishlist() {
 				bagPrice: item?.productImage?.data[0]?.price,
 				currency: item?.productImage?.data[0]?.currency,
 				productImage:
-					item?.productImage?.data[0]?.imageGroups[0]?.images[0]?.link,
+					item?.productImage?.data[0]?.imageGroups[0]?.images[0]?.link ?? "",
+				itemId: item?.id,
+				listId: data?.getWishlist?.data?.[0]?.id,
 			}),
 		);
 
@@ -84,6 +111,52 @@ function Wishlist() {
 	const handleProductClick = (productId: string) => {
 		router.push(`/product-details/${productId}`);
 	};
+
+	const handleMoveToBag = async (
+		productId: string,
+		itemId: string,
+		listId: string,
+	) => {
+		try {
+			await moveToBagMutation.mutateAsync({ productId });
+			await removeFromWishlist.mutateAsync({ customerId, listId, itemId });
+			await refetch();
+			sonnerToast("Item moved to Bag!", {
+				className: `${styles.Toast} ${styles.ToastSuccess}`,
+				unstyled: true,
+			});
+		} catch (error: unknown) {
+			if (
+				typeof error === "object" &&
+				error !== null &&
+				"graphQLErrors" in error
+			) {
+				const e = error as {
+					graphQLErrors?: { extensions?: { http?: { status?: number } } }[];
+				};
+				const statusCode = e.graphQLErrors?.[0]?.extensions?.http?.status;
+				if (statusCode === 204 || statusCode === 200) {
+					await refetch();
+					sonnerToast("Item moved to Bag!", {
+						className: `${styles.Toast} ${styles.ToastSuccess}`,
+						unstyled: true,
+					});
+				} else {
+					sonnerToast("Failed to move item to Bag.", {
+						className: `${styles.Toast} ${styles.ToastError}`,
+						unstyled: true,
+					});
+				}
+			} else {
+				await refetch();
+				sonnerToast("Item moved to Bag!.", {
+					className: `${styles.Toast} ${styles.ToastError}`,
+					unstyled: true,
+				});
+			}
+		}
+	};
+
 	const t = useTranslations("Wishlist");
 	return isLoading ? (
 		<div className={styles.container}>
@@ -145,14 +218,9 @@ function Wishlist() {
 					productData={wishlistData}
 					alignment="alignStart"
 					withPagination={false}
-					moveToBag={false}
+					moveToBag={true}
 					onCardClick={handleProductClick}
-					//   onMoveToBag={() => {
-					//     sonnerToast("Item has been moved to your Bag!", {
-					//       className: `${styles.Toast} ${styles.ToastSuccess}`,
-					//       unstyled: true,
-					//     });
-					//   }}
+					onMoveToBag={handleMoveToBag}
 				/>
 			)}
 			<Toaster />

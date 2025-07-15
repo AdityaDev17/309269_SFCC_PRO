@@ -28,6 +28,8 @@ const ProductCard = ({
 	onClick,
 	onButtonClick,
 	onMoveToBag,
+	onMouseEnter,
+	onMouseLeave
 }: ProductCardProps) => {
 	const t = useTranslations("ProductCard");
 	const [isMobile, setIsMobile] = useState(false);
@@ -43,7 +45,7 @@ const ProductCard = ({
 	}, []);
 
 	return (
-		<div>
+		<div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
 			<Card width={width} onClick={() => productId && onClick?.(productId)}>
 				<CardHeader className={styles.imageWrapper}>
 					<Image

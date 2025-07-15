@@ -1,5 +1,5 @@
 "use client";
-import { GET_PRODUCT_LIST } from "@/common/schema";
+import { GET_PRODUCT_DETAILS, GET_PRODUCT_LIST } from "@/common/schema";
 import type { ProductDetails } from "@/common/type";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import {
@@ -23,11 +23,11 @@ import {
 import ProductCard from "@/components/molecules/ProductCard/ProductCard";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { getProductsByCategory } from "@/lib/sfcc/products";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "sanity";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
@@ -38,6 +38,8 @@ export default function PLPPage() {
 	const [activePage, setActivePage] = useState(1);
 	const { slug } = useParams() as { slug: string };
 	const router = useRouter();
+	const queryClient = useQueryClient();
+	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
 	const getCategoryName = (slug: string) => {
 		return slug
@@ -120,6 +122,26 @@ export default function PLPPage() {
 		setActivePage(page);
 	};
 
+	const prefetchProduct = (productId: string, url: string) => {
+		timeoutRef.current = setTimeout(() => {
+			console.log("PREFTCHING")
+			queryClient.prefetchQuery({
+				queryKey: ["Product", productId],
+				queryFn: () =>
+					graphqlRequest(GET_PRODUCT_DETAILS, { productId: productId }),
+				staleTime: 5 * 60 * 1000,
+			})
+
+			router.prefetch(url);
+		}, 200);
+	}
+
+	const cancelPrefetch = () => {
+    	if (timeoutRef.current) {
+			clearTimeout(timeoutRef.current);
+		}
+  	};
+
 	return (
 		<div className={styles.container}>
 			<Breadcrumbs breadcrumbItems={breadcrumbItems} />
@@ -200,6 +222,8 @@ export default function PLPPage() {
 											`/product-details/${product.productId}?slug=${encodeURIComponent(slug)}&name=${encodeURIComponent(product.productName)}`,
 										);
 									}}
+									onMouseEnter={() => prefetchProduct(product.productId, `/product-details/${product.productId}?slug=${encodeURIComponent(slug)}&name=${encodeURIComponent(product.productName)}`)}
+									onMouseLeave={cancelPrefetch}
 								/>
 							</div>
 						))}

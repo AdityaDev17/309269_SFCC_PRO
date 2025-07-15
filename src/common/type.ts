@@ -365,6 +365,8 @@ export type ProductCardProps = {
 	onClick?: (productId: string) => void;
 	onButtonClick?: (productId: string) => void;
 	onMoveToBag?: (productId: string) => void;
+  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 export type Promotions={

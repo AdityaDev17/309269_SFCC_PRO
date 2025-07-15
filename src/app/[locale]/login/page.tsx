@@ -4,7 +4,6 @@ import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Login from "@/components/molecules/Login/Login";
 import SignUp from "@/components/molecules/SignUp/SignUp";
 import { graphqlRequest } from "@/lib/graphqlRequest";
-import { gql } from "@apollo/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";

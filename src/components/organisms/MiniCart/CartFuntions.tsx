@@ -66,7 +66,7 @@ export const getBasketDetail = async () => {
 	);
 	subTotal = response?.basketInfo?.productSubTotal;
 	productTotal = response?.basketInfo?.productTotal;
-	const orderDiscount = response?.basketInfo?.orderPriceAdjustments[0];
+	const orderDiscount = response?.basketInfo?.orderPriceAdjustments?.[0];
 	return { cartItems, subTotal, productTotal, orderDiscount };
 };
 

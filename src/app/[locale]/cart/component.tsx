@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import styles from "./cart.module.css";
 import { X } from 'lucide-react';
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { APPLY_COUPON, REMOVE_COUPON } from "@/common/schema";
 
 type ImageProduct = {
   alt: string;
@@ -53,6 +55,7 @@ const Cart = () => {
 	const router = useRouter();
 	const basketId = sessionStorage.getItem("basketId") ?? "";
   const [discountCode, setDiscountCode] = useState<Code | null>(null);
+  const [couponId, setcouponId] = useState<string | null>(null);
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Basket", basketId],
 		queryFn: () => getBasketDetail(),
@@ -67,6 +70,24 @@ const Cart = () => {
     },
     retry: 3,
   });
+  const removeCoupon = useMutation({
+			mutationFn: () =>
+				graphqlRequest(REMOVE_COUPON, { input: { basketId, couponId:"fcbe84c02ed457a178222ef39b" } }),
+			onSuccess: () => {
+				refetch();
+			},
+			retry: 3,
+		});
+  const applyCoupon = useMutation({
+			mutationFn: () =>
+				graphqlRequest( APPLY_COUPON, {
+					input: { basketId, code: { code: "SUMMER20" } },
+				}),
+			onSuccess: () => {
+				refetch();
+			},
+			retry: 3,
+		});
 
   const onDeleteItem = async (itemId: string) => {
     try {
@@ -94,9 +115,11 @@ const Cart = () => {
     }
   };
 
-  const clickHandler = () => {
+  const clickHandler = async () => {
     console.log("Clicked");
-    setDiscountCode({name: "SKINCARE70", text: "You saved 70 USD"});
+    const response = await applyCoupon.mutateAsync();
+    console.log(response);
+    setDiscountCode({name: "SUMMER20", text: "You saved 70 USD"});
   }
 
   return (
@@ -175,7 +198,10 @@ const Cart = () => {
                           <h4>{discountCode.name}</h4>
                           <p>{discountCode.text}</p>
                         </div>
-                        <X onClick={() => setDiscountCode(null)} style={{cursor: "pointer"}}/>
+                        <X onClick={async () => {
+                          await removeCoupon.mutateAsync();
+                          setDiscountCode(null)
+                        }} style={{cursor: "pointer"}}/>
                       </div>
                     }
                   </div>

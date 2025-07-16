@@ -355,7 +355,14 @@ export const GET_BASKET = `
       customerId
       email
     }
+      couponItems {
+                code
+                couponItemId
+                statusCode
+                valid
+              }
     orderPriceAdjustments {
+    couponCode
       appliedDiscount {
         amount
         type
@@ -385,6 +392,42 @@ mutation RemoveBasketItem($input: RemoveItem!) {
     basketId
   }
 }`;
+
+export const APPLY_COUPON=`mutation addCoupon($input: AddCoupon) {
+  addCoupon(input: $input) {
+    couponItems {
+      code
+      couponItemId
+      statusCode
+      valid
+    }
+    orderPriceAdjustments {
+      couponCode
+      price
+      priceAdjustmentId
+    }
+  }
+}`
+
+export const REMOVE_COUPON=`mutation DeleteCoupon($input: DeleteCoupon) {
+  deleteCoupon(input: $input) {
+    couponItems {
+      code
+      couponItemId
+      statusCode
+      valid
+    }
+    orderPriceAdjustments {
+      couponCode
+      appliedDiscount {
+        amount
+        percentage
+        type
+      }
+      price
+    }
+  }
+}`
 /*Basket Schema Ends*/
 
 /*Customer product List(wishlist) Schema*/

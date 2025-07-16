@@ -13,8 +13,9 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import styles from "./cart.module.css";
+import { X } from 'lucide-react';
 
 type ImageProduct = {
   alt: string;
@@ -42,10 +43,16 @@ export type BasketItem = {
   productImage: ProductImage;
 };
 
+interface Code {
+  name: string;
+  text: string;
+}
+
 const Cart = () => {
 	const t = useTranslations("Cart");
 	const router = useRouter();
 	const basketId = sessionStorage.getItem("basketId") ?? "";
+  const [discountCode, setDiscountCode] = useState<Code | null>(null);
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Basket", basketId],
 		queryFn: () => getBasketDetail(),
@@ -86,6 +93,11 @@ const Cart = () => {
       console.error("Error updating basket item:", error);
     }
   };
+
+  const clickHandler = () => {
+    console.log("Clicked");
+    setDiscountCode({name: "SKINCARE70", text: "You saved 70 USD"});
+  }
 
   return (
     <section className={styles.componentLayout}>
@@ -143,6 +155,32 @@ const Cart = () => {
               />
             </div>
             <div className={styles.orderSummarySection}>
+              {/* APPLY COUPON CODE */}
+                <div className={styles.redeemGrid}>
+                  <div className={styles.redeemPoints}>
+                    <div>
+                      <Typography
+                        type={"Body"}
+                        variant={2}
+                        label={t("applyCoupon")}
+                        color="#4F4B53"
+                      />
+                    {!discountCode ? 
+                      <div className={styles.inputGrid}>
+                        <Input className={styles.input} />
+                        <Button variant="secondary" onClick={clickHandler}>{t("apply")}</Button>
+                      </div> :
+                      <div className={styles.discountApplied}>
+                        <div>
+                          <h4>{discountCode.name}</h4>
+                          <p>{discountCode.text}</p>
+                        </div>
+                        <X onClick={() => setDiscountCode(null)} style={{cursor: "pointer"}}/>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
               <OrderSummary
                 totalRowTop={false}
                 isButton={true}

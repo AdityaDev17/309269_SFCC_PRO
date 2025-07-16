@@ -63,6 +63,7 @@ function buildDocs(camps: any[], promos: any[]) {
     title: c.description || c.campaignId,
     description: c.description || "",
     enabled: c.enabled,
+    coupons: c.coupons,
     promotions: [] as any[],
     creationDate: c.creationDate,
     lastModified: c.lastModified,

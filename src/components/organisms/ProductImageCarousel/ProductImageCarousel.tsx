@@ -14,6 +14,8 @@ interface LayoutProps {
 		currency?: string;
 		wishListed?: boolean;
 		bagPrice?: string;
+		itemId?: string;
+		listId?: string;
 	}[];
 	width?: string | number;
 	alignment?: Alignment;
@@ -21,7 +23,7 @@ interface LayoutProps {
 	withPagination?: boolean;
 	onCardClick?: (productId: string) => void;
 	onButtonClick?: (productId: string) => void;
-	onMoveToBag?: (productId: string) => void;
+	onMoveToBag?: (productId: string, itemId: string, listId: string) => void;
 }
 
 const ProductImageCarousel = ({
@@ -103,7 +105,14 @@ const ProductImageCarousel = ({
 										: undefined
 								}
 								onMoveToBag={
-									onMoveToBag ? () => onMoveToBag(product.productId) : undefined
+									onMoveToBag
+										? () =>
+												onMoveToBag(
+													product.productId,
+													product.itemId as string,
+													product.listId as string,
+												)
+										: undefined
 								}
 							/>
 						))}
@@ -134,7 +143,14 @@ const ProductImageCarousel = ({
 									: undefined
 							}
 							onMoveToBag={
-								onMoveToBag ? () => onMoveToBag(product.productId) : undefined
+								onMoveToBag
+									? () =>
+											onMoveToBag(
+												product.productId,
+												product.itemId as string,
+												product.listId as string,
+											)
+									: undefined
 							}
 						/>
 					))}

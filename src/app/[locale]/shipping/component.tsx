@@ -30,9 +30,7 @@ import Typography from "@/components/atomic/Typography/Typography";
 import AddressCard, {
 	type AddressData,
 } from "@/components/organisms/AddressCard/AddressCard";
-import {
-	AddressDialog,
-} from "@/components/organisms/AddressForm/AddressModal";
+import { AddressDialog } from "@/components/organisms/AddressForm/AddressModal";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -391,7 +389,7 @@ const Shipping = () => {
 							isButton={true}
 							isDelivery={false}
 							discount={
-								shippingAddressData?.basketInfo?.orderPriceAdjustments[0].price
+								shippingAddressData?.basketInfo?.orderPriceAdjustments[0]?.price
 							}
 							total={shippingAddressData?.basketInfo?.productTotal}
 							currency={shippingAddressData?.basketInfo?.currency}

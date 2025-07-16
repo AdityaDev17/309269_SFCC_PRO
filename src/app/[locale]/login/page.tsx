@@ -89,15 +89,17 @@ const Page = () => {
 					usid,
 				}),
 			})
-				.then((response) => response.json())
-				.then((data) => {
-					//  if login failed stop here
-					if (!data?.access_token) {
-						setLoginError("Incorrect email or password.Please try again");
-						loginSuccess = false;
-						reject(new Error("Login failed"));
+
+				.then(async (response) => {
+					const data = await response.json();
+
+					if (!response.ok) {
+						const errorMessage = data?.message || "Login failed";
+						setLoginError(errorMessage);
+						reject(new Error(errorMessage));
 						return;
 					}
+
 					loginSuccess = true;
 					Object.entries(data).map(([key, value]) => {
 						sessionStorage.setItem(key, String(value));
@@ -128,12 +130,12 @@ const Page = () => {
 					if (basketId) {
 						sessionStorage.setItem("basketId", basketId);
 					}
-					router.push("/"); 
-					resolve(); 
+					router.push("/");
+					resolve();
 				})
 				.catch((error) => {
 					console.error("Login error ", error);
-					setLoginError("Something went wrong. Please try again");
+					setLoginError(error.message);
 					reject(error); //  Reject on error
 				});
 		});

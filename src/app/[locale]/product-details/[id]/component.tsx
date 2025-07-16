@@ -51,6 +51,7 @@ export default function ProductDetails() {
 	const [error, setError] = useState("");
 	const [promotions, setPromotions] = useState([]);
 	const [viewMore, setViewMore] = useState(true);
+	const [hasSizeVariations, setHasSizeVariations] = useState(false);
 
 	const createCustomerProductList = useMutation({
 		mutationFn: (input: { customerId: string; type: string }) =>
@@ -87,21 +88,29 @@ export default function ProductDetails() {
 			(item: VariationAttributes) => item?.id === "size",
 		);
 
-		const sizes = sizeAttr?.values?.map((item: Values) => {
-			const hasMatchingVariant = data?.productDetails?.variants?.some(
-				(variant: Variants) =>
-					(variant?.variationValues?.color === targetColor || !targetColor) &&
-					variant?.variationValues?.size === item?.value,
-			);
+		const hasValidSizeVariations = sizeAttr?.values?.some(
+			(item: Values) => item?.value && item?.value !== null,
+		);
 
-			return {
-				value: item?.value,
-				title: item?.name,
-				disabled: !hasMatchingVariant,
-			};
-		});
+		setHasSizeVariations(hasValidSizeVariations || false);
 
-		setSizes(sizes);
+		if (hasValidSizeVariations) {
+			const sizes = sizeAttr?.values?.map((item: Values) => {
+				const hasMatchingVariant = data?.productDetails?.variants?.some(
+					(variant: Variants) =>
+						(variant?.variationValues?.color === targetColor || !targetColor) &&
+						variant?.variationValues?.size === item?.value,
+				);
+				return {
+					value: item?.value,
+					title: item?.name,
+					disabled: !hasMatchingVariant,
+				};
+			});
+			setSizes(sizes || []);
+		} else {
+			setSizes([]);
+		}
 	}, [data, targetColor]);
 
 	const colors = data?.productDetails?.variationAttributes
@@ -188,20 +197,34 @@ export default function ProductDetails() {
 			label: "Summer Sale Banner",
 			debug_mode: true, // Add this line
 		});
-		if (sizes !== undefined && !targetSize) {
+
+		if (hasSizeVariations && !targetSize) {
 			setError("Choose any size");
 			return;
 		}
 
 		setError("");
 
-		const matchedVariant = data?.productDetails?.variants?.find(
-			(variant: Variants) =>
-				(variant?.variationValues?.color === targetColor || !targetColor) &&
-				variant?.variationValues?.size === targetSize,
-		);
+		let selectedProductId = productId;
 
-		const selectedProductId = matchedVariant?.productId ?? productId;
+		if (data?.productDetails?.variants?.length > 0) {
+			const matchedVariant = data?.productDetails?.variants?.find(
+				(variant: Variants) => {
+					const colorMatch =
+						!targetColor || variant?.variationValues?.color === targetColor;
+					const sizeMatch =
+						!hasSizeVariations ||
+						!targetSize ||
+						variant?.variationValues?.size === targetSize ||
+						variant?.variationValues?.size === null;
+					return colorMatch && sizeMatch;
+				},
+			);
+
+			if (matchedVariant) {
+				selectedProductId = matchedVariant.productId;
+			}
+		}
 
 		const response = await addToBasketMutation.mutateAsync({
 			productId: selectedProductId,
@@ -324,13 +347,13 @@ export default function ProductDetails() {
 							</div>
 							<div
 								className={`${styles.buttonContainer} ${
-									sizes ? styles.twoChildren : styles.oneChild
+									hasSizeVariations ? styles.twoChildren : styles.oneChild
 								}`}
 							>
 								<Button onClick={() => handleAddToWishlist()}>
 									{t("add-to-wishlist")}
 								</Button>
-								{sizes !== undefined && (
+								{hasSizeVariations && (
 									<Select onValueChange={(e) => handleChange(e, "title")}>
 										<SelectTrigger
 											data-testid="select-trigger"

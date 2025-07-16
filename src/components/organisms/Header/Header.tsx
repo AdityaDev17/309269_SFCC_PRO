@@ -67,7 +67,13 @@ const Header: React.FC<HeaderProps> = ({
   const handleCartClick = () => setOpen(true);
 
   const subCatgoryHandler = function(arr: any) {
-    if(!arr?.subcategory[0]?.subcategory) return;
+    if (
+    !Array.isArray(arr?.subcategory) ||
+    !arr.subcategory.length ||
+    !Array.isArray(arr.subcategory[0]?.subcategory)
+  ) {
+    return;
+  }
     setShowSubCategory(true);
     setSubcategoryArr(arr.subcategory[0].subcategory);
   }

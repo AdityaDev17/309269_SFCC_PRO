@@ -146,7 +146,6 @@ const Cart = () => {
               <OrderSummary
                 totalRowTop={false}
                 isButton={true}
-                // totalAmt={data?.subTotal}
                 isDelivery={false}
                 discount={data?.orderDiscount?.price}
                 total={data?.productTotal}

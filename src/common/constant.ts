@@ -444,9 +444,9 @@ export const productData = [
 export const categoryList = ["Perfume", "Jewellery", "Brush Set"];
 
 export const states = [
-  { label: "Maharashtra", value: "maharashtra" },
-  { label: "Delhi", value: "delhi" },
-  { label: "Karnataka", value: "karnataka" },
+  { label: "California", value: "california" },
+  { label: "Texas", value: "texas" },
+  { label: "Florida", value: "florida" },
 ];
 
 export const searchSuggestions = ['Blush', 'Foundation', 'Highlighters'];

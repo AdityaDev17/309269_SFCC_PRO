@@ -9,7 +9,7 @@ import {
   handleUpdateQuantity,
 } from "@/components/organisms/MiniCart/CartFuntions";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -127,6 +127,7 @@ const Cart = () => {
     }
   };
 
+  const queryClient = useQueryClient();
   const clickHandler = async () => {
     if(couponInput === '') {
       return;
@@ -137,6 +138,7 @@ const Cart = () => {
       const statusCode = couponItem?.statusCode;
       const code = couponItem?.code;
       const couponId = couponItem?.couponItemId;
+      queryClient.invalidateQueries();
 
       const item = response?.addCoupon?.orderPriceAdjustments?.find(
         (el: { couponCode: string }) => el.couponCode === code

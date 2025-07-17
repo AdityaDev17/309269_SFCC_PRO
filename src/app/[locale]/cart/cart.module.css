@@ -68,7 +68,7 @@
 }
 .redeemGrid {
   display: grid;
-  height: 109px;
+  min-height: 109px;
   overflow: hidden;
   grid-template-columns: 1fr auto;
   gap: 16px;

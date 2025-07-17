@@ -67,7 +67,17 @@ export const getBasketDetail = async () => {
 	subTotal = response?.basketInfo?.productSubTotal;
 	productTotal = response?.basketInfo?.productTotal;
 	const orderDiscount = response?.basketInfo?.orderPriceAdjustments?.[0];
-	return { cartItems, subTotal, productTotal, orderDiscount };
+	const basketInfo = response?.basketInfo;
+	const couponItems = basketInfo?.couponItems ?? [];
+	const orderPriceAdjustments = basketInfo?.orderPriceAdjustments ?? [];
+	return {
+		cartItems,
+		subTotal,
+		productTotal,
+		orderDiscount,
+		couponItems,
+		orderPriceAdjustments,
+	};
 };
 
 export const handleDeleteItem = async (itemId: string) => {

@@ -402,6 +402,7 @@ export const APPLY_COUPON=`mutation addCoupon($input: AddCoupon) {
       valid
     }
     orderPriceAdjustments {
+      itemText
       couponCode
       price
       priceAdjustmentId

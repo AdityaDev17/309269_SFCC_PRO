@@ -1,4 +1,3 @@
-console.log("ready");
 import { NextRequest, NextResponse } from 'next/server';
 import axios from 'axios';
  
@@ -16,7 +15,6 @@ export async function POST(req: NextRequest) {
     const {
       _type,
       productId,
-      variantId,
       campaignId,
       promotionId,
       title,
@@ -32,8 +30,8 @@ export async function POST(req: NextRequest) {
     ) {
       return NextResponse.json({ message: 'Missing productId or campaignId' }, { status: 400 });
     }
-    if (_type === 'variant' && (!productId || !variantId)) {
-      return NextResponse.json({ message: 'Missing productId or variantId' }, { status: 400 });
+    if (_type === 'variant' && !productId ) {
+      return NextResponse.json({ message: 'Missing productId for variant' }, { status: 400 });
     }
     if (_type === 'promotion' && !promotionId) {
       return NextResponse.json({ message: 'Missing promotionId' }, { status: 400 });
@@ -73,19 +71,28 @@ export async function POST(req: NextRequest) {
  
     let patchUrl = '';
     const patchBody: any = {};
- 
-    if (_type === 'product'|| _type === 'variant') {
+    if (_type === 'product'){
       patchUrl = `${baseUrl}/product/products/${version}/organizations/${org}/products/${productId}`;
       if (name) patchBody.name = { default: name };
       if (description)
         patchBody.longDescription = { default: { markup: description, source: description } };
-    } else if (_type === 'campaign') {
+    } else if (_type === 'variant') {
+  // const vid = encodeURIComponent(productId);
+  patchUrl = `${baseUrl}/product/products/${version}/organizations/${org}/products/${productId}`;
+  if (name) patchBody.name = { default: name };
+  if (description) {
+    patchBody.longDescription = {
+      default: { markup: description, source: description }
+    };
+  }
+} else if (_type === 'campaign') {
       patchUrl = `${baseUrl}/pricing/campaigns/${version}/organizations/${org}/campaigns/${campaignId}?siteId=${siteId}`;
-      if (title) patchBody.description = title;
+      // if (title) patchBody.description = title;
       if (description) patchBody.description = description;
     } else if (_type === 'promotion') {
-      patchUrl = `${baseUrl}/pricing/promotions/${version}/organizations/${org}/promotions/${promotionId}?siteId=${siteId}`;
-      if (title) patchBody.name = { default: title };
+      const safePromoID = encodeURIComponent(promotionId);
+      patchUrl = `${baseUrl}/pricing/promotions/${version}/organizations/${org}/promotions/${safePromoID}?siteId=${siteId}`;
+      if (title) patchBody.name = { default: title};
       if (calloutMsg)
         patchBody.calloutMsg = { default: { markup: calloutMsg, source: calloutMsg } };
     } else {
@@ -113,5 +120,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
- 
- 

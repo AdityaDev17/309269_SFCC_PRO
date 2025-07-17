@@ -4,9 +4,10 @@ export default {
   type: 'document',
   fields: [
     { name: 'campaignId', title: 'Campaign ID', type: 'string', validation: Rule => Rule.required() },
-    { name: 'title', title: 'Title', type: 'string', validation: Rule => Rule.required() }, // user-facing title
+    { name: 'title', title: 'Title', type: 'string', validation: Rule => Rule.required(), readOnly: true }, // user-facing title
     { name: 'description', title: 'Description', type: 'text' },
     { name: 'enabled', title: 'Enabled', type: 'boolean' },
+    {name: 'coupons', title: 'Coupons', type: 'array',  of: [{ type: 'string' }]},
     {
       name: 'image',
       title: 'Image',

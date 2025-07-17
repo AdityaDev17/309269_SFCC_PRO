@@ -29,8 +29,8 @@
     grid-template-areas:
      "ItemsWrapper"
       "CartItemList"
-      "RedeemPoints"
       "OrderSummary"
+      "RedeemPoints"
       "CaroselWrapper";
     row-gap: 25px;
   }
@@ -46,13 +46,30 @@
 
 .orderSummarySection {
   grid-area: OrderSummary;
+  display: grid;
+  gap: 20px;
 }
+
+.discountApplied {
+  display: inline-grid;
+  width: auto;
+  grid-template-columns: auto auto;
+  gap: 40px;
+  justify-content: start;
+  align-items: center;
+  border: 1px solid black;
+  background-color: white;
+  padding: 8px;
+}
+
 .redeemWrapper{
   grid-area: RedeemPoints;
   padding-top: 20px;
 }
 .redeemGrid {
   display: grid;
+  min-height: 109px;
+  overflow: hidden;
   grid-template-columns: 1fr auto;
   gap: 16px;
   border: 1px solid #cccbce;

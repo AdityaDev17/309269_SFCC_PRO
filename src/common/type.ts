@@ -344,7 +344,7 @@ export type OrderSummaryProps = {
 	totalSavings?: string;
 	buttonText?: string;
   isDelivery?:boolean;
-  discount?:string;
+  discount?:string|number;
 	onButtonClick?: () => void;
 };
 

@@ -9,12 +9,16 @@ import {
   handleUpdateQuantity,
 } from "@/components/organisms/MiniCart/CartFuntions";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./cart.module.css";
+import { X } from 'lucide-react';
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { APPLY_COUPON, REMOVE_COUPON } from "@/common/schema";
+import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
 
 type ImageProduct = {
   alt: string;
@@ -42,16 +46,37 @@ export type BasketItem = {
   productImage: ProductImage;
 };
 
+interface Code {
+  name: string;
+  text: string;
+  couponId: string;
+}
+
 const Cart = () => {
 	const t = useTranslations("Cart");
 	const router = useRouter();
 	const basketId = sessionStorage.getItem("basketId") ?? "";
+  const [couponInput, setCouponInput] = useState('');
+  const [discountCode, setDiscountCode] = useState<Code | null>();
 	const { data, isLoading, refetch } = useQuery({
 		queryKey: ["Basket", basketId],
 		queryFn: () => getBasketDetail(),
 		enabled: !!basketId,
 	});
 	const CartItems = data?.cartItems ?? [];
+
+  useEffect(() => {
+    if(data?.couponItems && data?.couponItems[0]?.statusCode === 'applied') {
+      const firstCoupon = data.couponItems[0];
+      const name = firstCoupon?.code;
+      const couponId = firstCoupon?.couponItemId;
+
+      const matchedAdjustment = data.orderPriceAdjustments?.find((item: { couponCode: string }) => item.couponCode === name);
+      const text = matchedAdjustment?.itemText;
+
+      setDiscountCode({ name, text, couponId });
+    }
+  },[data])
 
   const removeBasketMutations = useMutation({
     mutationFn: (input: { itemId: string }) => handleDeleteItem(input.itemId),
@@ -60,6 +85,21 @@ const Cart = () => {
     },
     retry: 3,
   });
+  const removeCoupon = useMutation({
+			mutationFn: () =>
+				graphqlRequest(REMOVE_COUPON, { input: { basketId, couponId: discountCode?.couponId } }),
+			onSuccess: () => {
+				refetch();
+			},
+			retry: 3,
+		});
+  const applyCoupon = useMutation({
+			mutationFn: () =>
+				graphqlRequest( APPLY_COUPON, {
+					input: { basketId, code: { code: couponInput } },
+				}),
+			retry: 0,
+		});
 
   const onDeleteItem = async (itemId: string) => {
     try {
@@ -86,6 +126,36 @@ const Cart = () => {
       console.error("Error updating basket item:", error);
     }
   };
+
+  const queryClient = useQueryClient();
+  const clickHandler = async () => {
+    if(couponInput === '') {
+      return;
+    } 
+    try {
+      const response = await applyCoupon.mutateAsync();
+      const couponItem = response?.addCoupon?.couponItems?.[0];
+      const statusCode = couponItem?.statusCode;
+      const code = couponItem?.code;
+      const couponId = couponItem?.couponItemId;
+      queryClient.invalidateQueries();
+
+      const item = response?.addCoupon?.orderPriceAdjustments?.find(
+        (el: { couponCode: string }) => el.couponCode === code
+      );
+      const itemText = item?.itemText;
+
+      if (statusCode === "applied") {
+        setDiscountCode({ name: code, text: itemText, couponId });
+        setCouponInput('');
+      }
+    }catch(err) {
+      sonnerToast("Enter a valid coupon", {
+				className: "toast-error-class",
+				unstyled: true,
+			});
+    }
+  }
 
   return (
     <section className={styles.componentLayout}>
@@ -143,6 +213,35 @@ const Cart = () => {
               />
             </div>
             <div className={styles.orderSummarySection}>
+              {/* APPLY COUPON CODE */}
+                <div className={styles.redeemGrid}>
+                  <div className={styles.redeemPoints}>
+                    <div>
+                      <Typography
+                        type={"Body"}
+                        variant={2}
+                        label={t("applyCoupon")}
+                        color="#4F4B53"
+                      />
+                    {!discountCode ? 
+                      <div className={styles.inputGrid}>
+                        <Input className={styles.input} value={couponInput} onChange={(e) => setCouponInput(e.target.value)}/>
+                        <Button variant="secondary" onClick={clickHandler}>{t("apply")}</Button>
+                      </div> :
+                      <div className={styles.discountApplied}>
+                        <div>
+                          <h4>{discountCode.name}</h4>
+                          <p>{discountCode.text}</p>
+                        </div>
+                        <X onClick={async () => {
+                          await removeCoupon.mutateAsync();
+                          setDiscountCode(null)
+                        }} style={{cursor: "pointer"}}/>
+                      </div>
+                    }
+                  </div>
+                </div>
+              </div>
               <OrderSummary
                 totalRowTop={false}
                 isButton={true}
@@ -208,6 +307,7 @@ const Cart = () => {
           </>
         )}
       </div>
+      <Toaster/>
     </section>
   );
 };

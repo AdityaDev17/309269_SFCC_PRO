@@ -39,7 +39,7 @@ const Banner: React.FC<BannerProps> = ({
 	backgroundImage,
 	videoUrl,
 	alignment = "center-center",
-	buttonLink = "#",
+	buttonLink = "/",
 	textColor = "white",
 	subtitleVariant,
 	centerImage,

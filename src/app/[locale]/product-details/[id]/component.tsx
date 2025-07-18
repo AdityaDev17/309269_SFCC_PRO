@@ -83,7 +83,19 @@ export default function ProductDetails() {
 		}
 	}, [data, viewMore]);
 
+	// biome-ignore lint:""
 	useEffect(() => {
+		analytics.track(
+			"view_item",
+			{
+				productId: productId,
+				productName: data?.productDetails?.name,
+				productPrice: data?.productDetails?.price,
+				userID: sessionStorage.getItem("customer_id") ?? " ",
+				debug_mode: true,
+			}
+
+		);
 		const sizeAttr = data?.productDetails?.variationAttributes?.find(
 			(item: VariationAttributes) => item?.id === "size",
 		);
@@ -192,12 +204,6 @@ export default function ProductDetails() {
 	});
 
 	const handleAddToBasket = async () => {
-		analytics.track("Promo Clicked", {
-			category: "Promotion",
-			label: "Summer Sale Banner",
-			debug_mode: true, // Add this line
-		});
-
 		if (hasSizeVariations && !targetSize) {
 			setError("Choose any size");
 			return;

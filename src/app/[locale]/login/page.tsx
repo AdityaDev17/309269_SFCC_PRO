@@ -3,6 +3,7 @@ import { GET_CUSTOMER_BASKET, MERGE_BASKET, REGISTER } from "@/common/schema";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Login from "@/components/molecules/Login/Login";
 import SignUp from "@/components/molecules/SignUp/SignUp";
+import analytics from "@/lib/analytics";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
@@ -52,7 +53,7 @@ const Page = () => {
 					email: variables.credential.customer.email,
 					password: variables.credential.password,
 				},
-				"registration",
+				"register",
 			);
 		},
 		retry: 3,
@@ -71,6 +72,9 @@ const Page = () => {
 		formData: { email: string; password: string },
 		call = "login",
 	): Promise<void> => {
+		// analytics.identify("xyz-123", () => {
+		// 	console.log("do this after identify");
+		// });
 		return new Promise((resolve, reject) => {
 			setLoginError(undefined); // Clear previous error
 			let loginSuccess = false; // ✅ flag to track success
@@ -103,6 +107,16 @@ const Page = () => {
 					loginSuccess = true;
 					Object.entries(data).map(([key, value]) => {
 						sessionStorage.setItem(key, String(value));
+					});
+					analytics.identify(
+						sessionStorage.getItem("customer_id") ?? " ",
+						() => {
+							console.log("do this after identify");
+						},
+					);
+					analytics.track(`user_${call}`, {
+						userID: sessionStorage.getItem("customer_id") ?? " ",
+						debug_mode: true,
 					});
 					const customerType = data.idp_access_token ? "registered" : "guest";
 					sessionStorage.setItem("customer_type", customerType);

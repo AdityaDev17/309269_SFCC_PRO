@@ -32,6 +32,7 @@ import AddressCard, {
 } from "@/components/organisms/AddressCard/AddressCard";
 import { AddressDialog } from "@/components/organisms/AddressForm/AddressModal";
 import OrderSummary from "@/components/organisms/OrderSummary/OrderSummary";
+import analytics from "@/lib/analytics";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -224,6 +225,13 @@ const Shipping = () => {
 			await updateShippingMethodMutation.mutateAsync({
 				basketId,
 				id: selectedShippingMethod,
+			});
+			analytics.track("begin_checkout", {
+				currency: shippingAddressData?.basketInfo?.currency,
+				purchaseValue: shippingAddressData?.basketInfo?.productTotal,
+				basketId: sessionStorage.getItem("basketId") ?? " ",
+				userID: sessionStorage.getItem("customer_id") ?? " ",
+				debug_mode: true,
 			});
 			router.push("/payment");
 		} catch (error) {

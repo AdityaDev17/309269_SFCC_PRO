@@ -2,6 +2,7 @@ import {
 	ADD_PAYMENT_INSTRUMENT_TO_BASKET,
 	CREATE_ORDER,
 } from "@/common/schema";
+import analytics from "@/lib/analytics";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import {
 	PaymentElement,
@@ -104,6 +105,12 @@ const StripePayment = () => {
 						basketId,
 					});
 					if (order?.createOrder?.orderNo) {
+						analytics.track("payment_success", {
+							basketId: sessionStorage.getItem("basketId") ?? " ",
+							userID: sessionStorage.getItem("customer_id") ?? " ",
+							debug_mode: true,
+						});
+
 						sessionStorage.removeItem("basketId");
 						router.push(`/order-confirmation/${order?.createOrder?.orderNo}`);
 					}

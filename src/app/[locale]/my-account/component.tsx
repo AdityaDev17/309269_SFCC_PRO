@@ -13,6 +13,7 @@ import { GET_CUSTOMER, LOGOUT_CUSTOMER } from "@/common/schema";
 import { clearSession, handlePostLogoutTokenRefresh } from "@/lib/sessionUtils";
 
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+import analytics from "@/lib/analytics";
 import { useTranslations } from "next-intl";
 
 const MyAccount = () => {
@@ -65,6 +66,10 @@ const MyAccount = () => {
 			});
 
 			if (response?.data?.logoutCustomer) {
+				analytics.track("logout", {
+					userId: sessionStorage.getItem("customer_id") ?? " ",
+					debug_mode: true,
+				});
 				clearSession();
 
 				const tokenRefreshSuccess = await handlePostLogoutTokenRefresh();

@@ -15,6 +15,7 @@ import {
 	DrawerTrigger,
 } from "@/components/molecules/Drawer/Drawer";
 import {
+	CartAbandonmentTracker,
 	getBasketDetail,
 	handleDeleteItem,
 	handleUpdateQuantity,
@@ -117,6 +118,10 @@ const MiniCart = ({
 				</DrawerHeader>
 				{cartItems?.length > 0 ? (
 					<>
+						{/* <CartAbandonmentTracker
+							cartItems={cartItems}
+							hasStartedCheckout={false}
+						/> */}
 						<div className={styles.cartItemList}>
 							<CartItemList
 								cartItems={cartItems}

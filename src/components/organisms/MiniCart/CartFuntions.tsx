@@ -1,3 +1,4 @@
+// import { trackCartAbandonment } from "@/GA4/trackCartAbandonment";
 import {
 	ADD_ITEM_TO_BASKET,
 	CREATE_CART,
@@ -12,7 +13,42 @@ import type {
 	Values,
 	VariationAttributes,
 } from "@/common/type";
+import analytics from "@/lib/analytics";
 import { graphqlRequest } from "@/lib/graphqlRequest";
+// components/CartAbandonmentTracker.tsx
+import { useEffect } from "react";
+
+interface Props {
+	cartItems: CartItem[];
+	hasStartedCheckout: boolean;
+}
+
+// export const CartAbandonmentTracker = ({
+// 	cartItems,
+// 	hasStartedCheckout,
+// }: Props) => {
+// 	useEffect(() => {
+// 		const handler = () => {
+// 			// if (!hasStartedCheckout) {
+// 			sessionStorage.setItem("hello", "trackcart");
+// 			const entries = performance.getEntriesByType("navigation");
+// 			const navEntry = entries[0] as PerformanceNavigationTiming | undefined;
+
+// 			const navigationType = navEntry?.type;
+
+// 			if (navigationType === "navigate") {
+// 				// User is navigating (not closing)
+// 				return;
+// 			}
+// 			trackCartAbandonment(cartItems);
+// 			// }
+// 		};
+// 		window.addEventListener("beforeunload", handler);
+// 		return () => window.removeEventListener("beforeunload", handler);
+// 	}, [cartItems]);
+
+// 	return <div>tracker</div>;
+// };
 
 let cartItems: CartItem[];
 let subTotal = "";
@@ -67,7 +103,9 @@ export const getBasketDetail = async () => {
 	subTotal = response?.basketInfo?.productSubTotal;
 	productTotal = response?.basketInfo?.productTotal;
 	// const orderDiscount = response?.basketInfo?.orderPriceAdjustments?.[0];
-	const orderDiscount = {price:Number.parseFloat(productTotal)-Number.parseFloat(subTotal)};
+	const orderDiscount = {
+		price: Number.parseFloat(productTotal) - Number.parseFloat(subTotal),
+	};
 	const basketInfo = response?.basketInfo;
 	const couponItems = basketInfo?.couponItems ?? [];
 	const orderPriceAdjustments = basketInfo?.orderPriceAdjustments ?? [];
@@ -134,6 +172,13 @@ export const addToBasket = async (productId: string) => {
 			basketId = response?.createCart?.basketId;
 			sessionStorage.setItem("basketId", basketId ?? "");
 			subTotal = response?.createCart?.productSubTotal;
+			analytics.track("add_to_cart", {
+				productId: productId,
+				cartItems: cartItems,
+				userId: sessionStorage.getItem("customer_id") ?? " ",
+				basketId: sessionStorage.getItem("basketId") ?? " ",
+				debug_mode: true,
+			});
 			return { cartItems, subTotal };
 		}
 		sessionStorage.setItem("basketId", basketId ?? "");
@@ -149,5 +194,12 @@ export const addToBasket = async (productId: string) => {
 		response?.addToCart?.currency,
 	);
 	subTotal = response?.basketInfo?.productSubTotal;
+	analytics.track("add_to_cart", {
+		productId: productId,
+		cartItems: cartItems,
+		userId: sessionStorage.getItem("customer_id") ?? " ",
+		basketId: sessionStorage.getItem("basketId") ?? " ",
+		debug_mode: true,
+	});
 	return { cartItems, subTotal };
 };

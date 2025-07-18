@@ -21,13 +21,14 @@ import {
 	PaginationPrevious,
 } from "@/components/molecules/Pagination/Pagination";
 import ProductCard from "@/components/molecules/ProductCard/ProductCard";
+import analytics from "@/lib/analytics";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { getProductsByCategory } from "@/lib/sfcc/products";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useParams, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "sanity";
 import { isLargeCard } from "../layoutPattern";
 import styles from "./layout.module.css";
@@ -141,6 +142,14 @@ export default function PLPPage() {
 			clearTimeout(timeoutRef.current);
 		}
 	};
+
+	useEffect(() => {
+		analytics.track("view_category", {
+			category: slug,
+			userID: sessionStorage.getItem("customer_id") ?? " ",
+			debug_mode: true,
+		});
+	}, [slug]);
 
 	return (
 		<div className={styles.container}>

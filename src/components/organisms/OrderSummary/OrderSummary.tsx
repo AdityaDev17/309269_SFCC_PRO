@@ -1,3 +1,5 @@
+import type { OrderSummaryProps } from "@/common/type";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
 import { Button } from "../../atomic/Button/Button";
@@ -5,142 +7,164 @@ import Typography from "../../atomic/Typography/Typography";
 import styles from "./OrderSummary.module.css";
 
 const OrderSummary = ({
-	reverseOrder = false,
-	totalRowTop = false,
-	isButton = true,
-	isPaymentImage = true,
-	totalAmt = "",
-	currency = "$",
-	subTotal = "",
-	delivery = "",
-	tax = "",
-	total = "",
-	totalSavings = "",
-	buttonText = "CONTINUE",
-}) => {
-	const paymentImages = [
-		"/images/pay1.svg",
-		"/images/pay2.svg",
-		"/images/pay3.svg",
-		"/images/pay4.svg",
-		"/images/pay5.svg",
-	];
-
-	return (
-		<div className={styles.layout}>
-			{totalRowTop && (
-				<>
-					<div className={styles.totalRowTop}>
-						<Typography
-							type={"Label"}
-							variant={3}
-							fontWeight="medium"
-							label="Total"
-						/>
-						<Typography
-							type={"Label"}
-							variant={3}
-							fontWeight="medium"
-							label={`${currency}${totalAmt}`}
-						/>
-					</div>
-					<hr className={styles.topDivider} />
-				</>
-			)}
-			<div className={styles.standardLayout}>
-				<div className={styles.title}>
-					<Typography
-						type={"Label"}
-						variant={3}
-						fontWeight="medium"
-						label="Price Details"
-					/>
-				</div>
-				<div className={styles.summaryRow}>
-					<Typography
-						type={"Body"}
-						variant={2}
-						fontWeight="regular"
-						label="Sub Total"
-						color="#4F4B53"
-					/>
-					<Typography
-						type={"Body"}
-						variant={2}
-						fontWeight="regular"
-						label={`${currency}${subTotal}`}
-						color="#4F4B53"
-					/>
-				</div>
-				<div className={styles.summaryRow}>
-					<Typography
-						type={"Body"}
-						variant={2}
-						fontWeight="regular"
-						label="Delivery"
-						color="#4F4B53"
-					/>
-					<Typography
-						type={"Body"}
-						variant={2}
-						fontWeight="regular"
-						label={delivery}
-						color="#4F4B53"
-					/>
-				</div>
-				<div className={styles.summaryRow}>
-					<Typography
-						type={"Body"}
-						variant={2}
-						fontWeight="regular"
-						label="Tax"
-						color="#4F4B53"
-					/>
-					<Typography
-						type={"Body"}
-						variant={2}
-						fontWeight="regular"
-						label={tax}
-						color="#4F4B53"
-					/>
-				</div>
-				<hr className={styles.divider} />
-				<div className={styles.totalRow}>
-					{totalRowTop ? (
-						<>
-							<Typography
-								type={"Body"}
-								variant={2}
-								fontWeight="medium"
-								label="Total"
-							/>
-							<Typography
-								type={"Body"}
-								variant={2}
-								fontWeight="medium"
-								label={`${currency}${total}`}
-							/>
-						</>
-					) : (
-						<>
-							{" "}
-							<Typography
-								type={"Label"}
-								variant={3}
-								fontWeight="medium"
-								label="Total"
-							/>
-							<Typography
-								type={"Label"}
-								variant={3}
-								fontWeight="medium"
-								label={`${currency}${total}`}
-							/>
-						</>
-					)}
-				</div>
-				<hr className={styles.divider} />
-				{!reverseOrder && (
+  reverseOrder = false,
+  totalRowTop = false,
+  isButton = true,
+  isPaymentImage = true,
+  discount,
+  totalAmt = "",
+  currency = "",
+  subTotal = "",
+  delivery = "",
+  tax = "",
+  total = "",
+  totalSavings = " ",
+  errorMsg = "",
+  buttonText = "CONTINUE",
+  onButtonClick,
+  isDelivery = false,
+}: OrderSummaryProps) => {
+  const paymentImages = [
+    "/images/pay1.svg",
+    "/images/pay2.svg",
+    "/images/pay3.svg",
+    "/images/pay4.svg",
+    "/images/pay5.svg",
+  ];
+  const t = useTranslations("OrderSummary");
+  return (
+    <div className={styles.layout}>
+      {totalRowTop && (
+        <>
+          <div className={styles.totalRowTop}>
+            <Typography
+              type={"Label"}
+              variant={3}
+              fontWeight="medium"
+              label={t("total")}
+            />
+            <Typography
+              type={"Label"}
+              variant={3}
+              fontWeight="medium"
+              label={`${currency} ${totalAmt}`}
+            />
+          </div>
+          <hr className={styles.topDivider} />
+        </>
+      )}
+      <div className={styles.standardLayout}>
+        <div className={styles.title}>
+          <Typography
+            type={"Label"}
+            variant={3}
+            fontWeight="medium"
+            label={t("price-details")}
+          />
+        </div>
+        <div className={styles.summaryRow}>
+          <Typography
+            type={"Body"}
+            variant={2}
+            fontWeight="regular"
+            label={t("sub-total")}
+            color="#4F4B53"
+          />
+          <Typography
+            type={"Body"}
+            variant={2}
+            fontWeight="regular"
+            label={`${currency} ${subTotal}`}
+            color="#4F4B53"
+          />
+        </div>
+        <div className={styles.summaryRow}>
+          <Typography
+            type={"Body"}
+            variant={2}
+            fontWeight="regular"
+            label={t("discount")}
+            color="#4F4B53"
+          />
+          <Typography
+            type={"Body"}
+            variant={2}
+            fontWeight="regular"
+            label={`${discount ?? 0}`}
+            color="#4F4B53"
+          />
+        </div>
+        {isDelivery && (
+          <div className={styles.summaryRow}>
+            <Typography
+              type={"Body"}
+              variant={2}
+              fontWeight="regular"
+              label={t("delivery")}
+              color="#4F4B53"
+            />
+            <Typography
+              type={"Body"}
+              variant={2}
+              fontWeight="regular"
+              label={delivery ? `${currency} ${delivery}` : t("free")}
+              color="#4F4B53"
+            />
+          </div>
+        )}
+        <div className={styles.summaryRow}>
+          <Typography
+            type={"Body"}
+            variant={2}
+            fontWeight="regular"
+            label={t("tax")}
+            color="#4F4B53"
+          />
+          <Typography
+            type={"Body"}
+            variant={2}
+            fontWeight="regular"
+            label={tax ? tax : "0"}
+            color="#4F4B53"
+          />
+        </div>
+        <hr className={styles.divider} />
+        <div className={styles.totalRow}>
+          {totalRowTop ? (
+            <>
+              <Typography
+                type={"Body"}
+                variant={2}
+                fontWeight="medium"
+                label={t("total")}
+              />
+              <Typography
+                type={"Body"}
+                variant={2}
+                fontWeight="medium"
+                label={`${currency} ${total}`}
+              />
+            </>
+          ) : (
+            <>
+              {" "}
+              <Typography
+                type={"Label"}
+                variant={3}
+                fontWeight="medium"
+                label={t("total")}
+              />
+              <Typography
+                type={"Label"}
+                variant={3}
+                fontWeight="medium"
+                label={`${currency} ${total}`}
+              />
+            </>
+          )}
+        </div>
+        <hr className={styles.divider} />
+        {/* {!reverseOrder && (
 					<div className={styles.totalSavings}>
 						<Typography
 							type={"Body"}
@@ -153,19 +177,30 @@ const OrderSummary = ({
 							type={"Body"}
 							variant={2}
 							fontWeight="regular"
-							label={`${currency}${totalSavings}`}
+							label={`${currency} ${totalSavings}`}
 							color="#4F4B53"
 						/>
 					</div>
-				)}
-				{isButton && (
-					<div className={styles.summaryButton}>
-						<Button variant="secondary" className={styles.button}>
-							{buttonText}
-						</Button>
-					</div>
-				)}
-				{reverseOrder && (
+				)} */}
+        <div>
+          {errorMsg && <div className={styles.errorText}>{errorMsg}</div>}
+        </div>
+        {isButton && (
+          <div className={styles.summaryButton}>
+            <Button
+              variant="secondary"
+              className={styles.button}
+              onClick={() => {
+                if (errorMsg === "" && onButtonClick) {
+                  onButtonClick();
+                }
+              }}
+            >
+              {buttonText}
+            </Button>
+          </div>
+        )}
+        {/* {reverseOrder && (
 					<div className={styles.reverseTotalSavings}>
 						<Typography
 							type={"Body"}
@@ -182,23 +217,23 @@ const OrderSummary = ({
 							color="#4F4B53"
 						/>
 					</div>
-				)}
-				{isPaymentImage && (
-					<div className={styles.paymentImages}>
-						{paymentImages.map((src) => (
-							<Image
-								key={src}
-								src={src}
-								alt={`payment method ${src}`}
-								width={42}
-								height={28}
-							/>
-						))}
-					</div>
-				)}
-			</div>
-		</div>
-	);
+				)} */}
+        {isPaymentImage && (
+          <div className={styles.paymentImages}>
+            {paymentImages.map((src) => (
+              <Image
+                key={src}
+                src={src}
+                alt={`payment method ${src}`}
+                width={42}
+                height={28}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default OrderSummary;

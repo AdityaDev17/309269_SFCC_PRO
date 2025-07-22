@@ -1,0 +1,138 @@
+.layout{
+    display: grid;
+    gap:27px;
+    container-type: inline-size;
+}
+.detailsSection{
+    display: grid;
+    grid-template-columns: 1fr 0.4fr;
+    gap:20px;
+    @container (max-width: 768px) {
+        grid-template-columns: 1fr;
+      }
+}
+.rootLayer{
+    display: grid;
+    grid-template-columns: 0.1fr 1fr;
+    gap: 8px;
+}
+.secondRow{
+    display: grid;
+    gap: 27px;
+}
+.main{
+    display: grid;
+    gap:var(--space-40);
+    container-type: inline-size;
+}
+.addressSection{
+    display: grid;
+    grid-template-columns: 1fr 0.1fr 1fr 0.1fr 1fr;
+  @container (max-width: 768px) {
+    grid-template-columns: 1fr; 
+  }
+}
+.row{
+    display: grid;
+    grid-template-rows: 0.2fr 1fr;
+    gap:var(--space-16)
+}
+.border{
+    height: 152px;
+    background-color: var(--colour-border-tertiary);
+    width: 1px;
+    margin:0 var(--space-44);
+    @container (max-width: 768px) {
+        width: 100%;
+        height: 1px;
+        margin: var(--space-32) 0;
+    }
+
+}
+.title{
+    font-size: var(--font-size-font-size-400);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-lh-400);
+}
+.address{
+    font-size: var(--font-size-font-size-300-m);
+    font-weight: var(--font-weight-regular);
+    line-height: var( --font-line-height-lh-300);
+    color: var(--colour-text-secondary);
+    display: grid;
+
+}
+
+.pageLayout{
+    padding: 12px 40px;
+}
+.orderSummary{
+    height: fit-content;
+}
+
+/* Skeleton styles */
+.skeletonAddressLine {
+  width: 60%;
+  height: 16px;
+}
+
+.skeletonAddressLineLong {
+  width: 70%;
+  height: 16px;
+}
+
+.skeletonAddressLineShort {
+  width: 50%;
+  height: 16px;
+}
+
+.skeletonCountry {
+  width: 30%;
+  height: 16px;
+}
+
+.skeletonOrderDate {
+  width: 40%;
+  height: 16px;
+}
+
+.skeletonPayment {
+  width: 30%;
+  height: 16px;
+}
+
+.skeletonProductImage {
+  width: 150px;
+  height: 150px;
+}
+
+.skeletonProductDetails {
+  margin-top: 5rem;
+   flex: 1;
+  /* display: flex;
+  flex-direction: column;
+  gap: 0.5rem; */
+}
+
+.skeletonProductTitle {
+  width: 50%;
+  height: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.skeletonProductQty {
+  width: 20%;
+  height: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.skeletonProductPrice {
+  width: 35%;
+  height: 16px;
+  margin-bottom: 0.5rem;
+}
+
+.skeletonOrderSummary {
+  width: 100%;
+  height: 320px;
+}

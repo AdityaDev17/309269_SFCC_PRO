@@ -1,139 +1,71 @@
 "use client";
 
+import { GET_CATEGORIES } from "@/common/schema";
+import { graphqlRequest } from "@/lib/graphqlRequest";
+import { useQuery } from "@tanstack/react-query";
 import { usePathname } from "next/navigation";
 import React from "react";
 import Header from "./Header";
+interface Subcategory {
+	id: string;
+	name: string;
+	description?: string;
+	onlineSubCategoriesCount?: number;
+	parentCategoryId?: string;
+	c_enableCompare?: boolean;
+	c_showInMenu?: boolean;
+}
+
+interface Category {
+	id: string;
+	name: string;
+	description?: string;
+	onlineSubCategoriesCount?: number;
+	parentCategoryId?: string;
+	parentCategoryTree?: { id: string; name: string }[];
+	c_enableCompare?: boolean;
+	c_showInMenu?: boolean;
+	subcategories?: {
+		data?: {
+			categories?: Subcategory[];
+		}[];
+	};
+}
 
 const HeaderWrapper = () => {
 	const pathname = usePathname();
 	const isHome = pathname === "/";
 
-	//   const categories = [
-	//   'MAKEUP',
-	//   'SKINCARE',
-	//   'FRAGRANCE',
-	//   'SUSTAINABILITY',
-	//   'SUBSCRIPTION',
-	//   'GLAM GUIDE',
-	//   'MORE',
-	// ];
+	const { data } = useQuery({
+		queryKey: ["Categories"],
+		queryFn: () => graphqlRequest(GET_CATEGORIES, { id: "root" }),
+		enabled: true,
+	});
 
-	const categories = [
-		{
-			name: "MAKEUP",
+	const categoriesData = data?.categories?.categories || [];
+
+	const categories = categoriesData.map((category: Category) => {
+		const subcategoryList =
+			category.subcategories?.data?.[0]?.categories?.filter(Boolean) || [];
+
+		return {
+			name: category.name,
 			image: [
 				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
+					productImageUrl: "/images/default-subcategory.jpg",
+					productName: category.name,
 				},
 			],
-			subcategory: [
-				{
-					subCategoryName: "LIPS",
-					subcategory: ["Lipstick", "Liquid Lipstick", "Lip Liner", "Lip Balm"],
-				},
-				{
-					subCategoryName: "EYE",
-					subcategory: ["Eyeliner", "Eyebrow", "Eye Shadow", "Mascara"],
-				},
-				{
-					subCategoryName: "COMPLEXION",
-					subcategory: ["Blush", "Foundation", "Highlighter"],
-				},
-			],
-		},
-		{
-			name: "SKINCARE",
-			image: [
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-			],
-			subcategory: [
-				{
-					subCategoryName: "CLEANSER",
-					subcategory: ["Face Wash", "Peels & Scrubs", "Toner"],
-				},
-				{
-					subCategoryName: "MOISTURIZERS",
-					subcategory: [
-						"Face Moisturizer",
-						"Face Oil",
-						"Lotion",
-						"Night Cream",
-					],
-				},
-				{
-					subCategoryName: "SERUMS",
-					subcategory: ["Face Serum"],
-				},
-				{
-					subCategoryName: "UV PROTECTION",
-					subcategory: ["Sunscreen"],
-				},
-			],
-		},
-		{
-			name: "FRAGRANCE",
-			image: [
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-			],
-			subcategory: [
-				{
-					subCategoryName: "COLLECTIONS",
-					subcategory: ["For Men", "For Women"],
-				},
-			],
-		},
-		{
-			name: "SUSTAINABILITY",
-		},
-		{
-			name: "SUBSCRIPTION",
-		},
-		{
-			name: "GLAM GUIDE",
-		},
-		{
-			name: "MORE",
-			image: [
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-				{
-					productImageUrl: "/images/menuImage1.svg",
-					productName: "Lipstick",
-				},
-			],
-			subcategory: [
-				{
-					subCategoryName: "HANDBAGS",
-					subcategory: ["Top Handles", "Totes", "Mini Bags"],
-				},
-				{
-					subCategoryName: "JEWELLERY",
-					subcategory: ["Necklaces", "Rings", "Earrings", "Bracelets"],
-				},
-				{
-					subCategoryName: "GIFT",
-					subcategory: ["Festive Hampers", "Pink Teddy", "Earrings"],
-				},
-			],
-		},
-	];
+			subcategory: subcategoryList.length
+				? [
+						{
+							subCategoryName: category.name,
+							subcategory: subcategoryList.map((sub) => sub.name),
+						},
+					]
+				: undefined,
+		};
+	});
 
 	const headerIcons = [
 		{ label: "Search", icon: "/images/search-normal.png" },
@@ -161,8 +93,8 @@ const HeaderWrapper = () => {
 		<Header
 			isHome={isHome}
 			logoImages={{
-				default: "/images/SFCCPRO.png",
-				white: "/images/SFCCPROWhite.png",
+				default: "/images/Elenor.svg",
+				white: "/images/Elenor-white.svg",
 			}}
 			categories={categories}
 			headerIcons={headerIcons}

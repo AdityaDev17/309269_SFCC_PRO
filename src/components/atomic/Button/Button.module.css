@@ -18,8 +18,8 @@
 
 .Button:hover {
     cursor: pointer;
-    background-color: var(--grey-grey-300);
-    border: 1px solid var(--grey-grey-600);
+    background-color: var(--colour-button-background-primary-hover);
+    border: 1px solid var(--colour-button-border-primary-hover);
     transition: background-color 0.2s ease;
 }
 
@@ -63,14 +63,14 @@
 
 .Button[data-variant='secondary'] {
     background-color: var(--colour-background-overlay);
-    border: 1px solid var(--grey-grey-700);
+    border: 1px solid var(--colour-button-border-secondary);
     color: var(--colour-background-primary);
     transition: background-color 0.2s ease;
 }
 
-.Button[data-variant='secondary']:hover {
-    background-color: var(--grey-grey-700);
-}
+/* .Button[data-variant='secondary']:hover {
+    background-color: var(--colour-icon-secondary);
+} */
 
 /* .Button[data-variant='ghost'] {
     background-color: transparent;
@@ -85,7 +85,7 @@
 } */
 
 .Button[data-variant='link'] {
-    color: var(--grey-grey-800);
+    color: var(--colour-tag-1);
     background-color: transparent;
     text-decoration: none;
     transition: text-decoration 0.2s ease;
@@ -98,7 +98,7 @@
 .Button[data-variant='link']:hover {
     /* color: hsl(var(--primary)); */
     text-decoration: underline;
-    text-decoration-color: var(--grey-grey-800);
+    text-decoration-color: var(--colour-tag-1);
 }
 
 .Button[data-variant='icon'] {
@@ -112,17 +112,17 @@
 }
 
 .Button[data-variant='icon']:hover {
-    background-color: var(--grey-grey-200);
+    background-color: var(--colour-button-background-primary-hover);
 }
 
 /* Active State */
 .Button[data-state="active"] {
-    border: 1px solid var(--grey-grey-700);
+    border: 1px solid var(--colour-button-border-secondary);
     background-color: var(--colour-background-primary);
 }
 
 .Button[data-state='active']:hover {
-    background-color: var(--grey-grey-200);
+    background-color: var(--colour-button-background-tertiary-hover);
 }
 
 /* Close Icon */

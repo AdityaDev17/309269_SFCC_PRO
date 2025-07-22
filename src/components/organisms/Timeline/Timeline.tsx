@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
 import { TiTick } from "react-icons/ti";
 import { Button } from "../../atomic/Button/Button";
@@ -14,7 +15,7 @@ interface TimelineProps {
 // {steps,currentStep,complete = false,}
 const Timeline = ({ steps, currentStep, complete = false }: TimelineProps) => {
 	const [isMobile, setIsMobile] = useState(false);
-
+	const t = useTranslations("Timeline");
 	useEffect(() => {
 		const checkMobileView = () => {
 			setIsMobile(window.innerWidth < 768);
@@ -37,7 +38,7 @@ const Timeline = ({ steps, currentStep, complete = false }: TimelineProps) => {
 				type="Label"
 				variant={3}
 				fontWeight="semibold"
-				label="Shipping Details"
+				label={t("shipping-details")}
 			/>
 			<div className={styles.progress}>
 				{
@@ -87,7 +88,7 @@ const Timeline = ({ steps, currentStep, complete = false }: TimelineProps) => {
 					type="Body"
 					variant={2}
 					fontWeight="regular"
-					label="TRACK PACKAGE"
+					label={t("track-package")}
 				/>
 			</Button>
 		</div>

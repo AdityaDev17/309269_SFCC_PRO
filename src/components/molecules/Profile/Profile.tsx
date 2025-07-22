@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import { Button } from "../../atomic/Button/Button";
 import Input from "../../atomic/Input/Input";
 import {
@@ -11,6 +12,7 @@ import {
 	SelectValue,
 } from "../../atomic/Select/Select";
 import styles from "./Profile.module.css";
+
 type UserDetails = {
 	title: string;
 	lastName: string;
@@ -26,7 +28,12 @@ interface ProfileProps {
 }
 
 const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
+	const t = useTranslations("Profile");
 	const [initialUserData, setInitailUserDate] = useState(userDetails);
+	const [errors, setErrors] = useState<
+		Partial<Record<keyof UserDetails, string>>
+	>({});
+
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement> | string,
 		name?: keyof UserDetails,
@@ -37,7 +44,7 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 		if (typeof e === "string" && name) {
 			targetName = name;
 			value = e;
-		} else if ("target" in e && e.target) {
+		} else if (typeof e === "object" && "target" in e) {
 			targetName = e.target.name as keyof UserDetails;
 			value = e.target.value;
 		} else {
@@ -48,144 +55,157 @@ const Profile = ({ userDetails, onUpdateClicked }: ProfileProps) => {
 			...prevData,
 			[targetName]: value,
 		}));
+
+		setErrors((prev) => ({
+			...prev,
+			[targetName]: "",
+		}));
 	};
 
-	const isDisabled =
-		JSON.stringify(userDetails) === JSON.stringify(initialUserData);
+	const validateFields = () => {
+		const newErrors: Partial<Record<keyof UserDetails, string>> = {};
+		if (!initialUserData.title) newErrors.title = "Title is required";
+		if (!initialUserData.firstName.trim())
+			newErrors.firstName = "First Name is required";
+		if (!initialUserData.lastName.trim())
+			newErrors.lastName = "Last Name is required";
+		if (!initialUserData.birthDate)
+			newErrors.birthDate = "Birth Date is required";
+		if (!initialUserData.gender) newErrors.gender = "Gender is required";
+		setErrors(newErrors);
+		return Object.keys(newErrors).length === 0;
+	};
+
+	const handleUpdateClick = () => {
+		if (!validateFields()) return;
+		onUpdateClicked(initialUserData);
+	};
+
 	return (
 		<div className={styles.layout}>
-			<div className={styles.profileText}>Profile</div>
+			<div className={styles.profileText}>{t("profile")}</div>
 			<div className={styles.section}>
 				<div className={styles.sectionForm}>
+					{/* Title */}
 					<div>
-						<div className={styles.fontColor}>Title*</div>
+						<div className={styles.fontColor}>{t("title")}</div>
 						<Select onValueChange={(e) => handleChange(e, "title")}>
 							<SelectTrigger
-								style={{
-									width: "325px",
-									border: "solid",
-									borderWidth: "1px",
-									borderColor: "#B3B2B5",
-									color: "#75757A",
-								}}
+								className={`${styles.selectTrigger} ${errors.title ? styles.selectTriggerError : ""}`}
 							>
 								<SelectValue placeholder={initialUserData?.title || "Select"} />
 							</SelectTrigger>
-							<SelectContent
-								style={{
-									width: "325px",
-									borderColor: "#B3B2B5",
-									color: "#75757A",
-								}}
-							>
+							<SelectContent>
 								<SelectGroup>
-									<SelectItem value="Mr" data-testid="select-item-1">
-										Mr
-									</SelectItem>
-									<SelectItem value="Mrs" data-testid="select-item-2">
-										Mrs
-									</SelectItem>
-									<SelectItem value="Ms" data-testid="select-item-2">
-										Ms
-									</SelectItem>
+									<SelectItem value="Mr">Mr</SelectItem>
+									<SelectItem value="Mrs">Mrs</SelectItem>
+									<SelectItem value="Ms">Ms</SelectItem>
 								</SelectGroup>
 							</SelectContent>
 						</Select>
+						{errors.title && (
+							<div className={styles.errorText}>{errors.title}</div>
+						)}
 					</div>
+
+					{/* Last Name */}
 					<div>
-						<div className={styles.fontColor}>Last Name*</div>
+						<div className={styles.fontColor}>{t("last-name")}</div>
 						<Input
 							type="text"
 							name="lastName"
 							value={initialUserData?.lastName}
 							onChange={handleChange}
-							style={{ width: "325px", borderColor: "#B3B2B5" }}
+							className={`${styles.inputField} ${errors.lastName ? styles.inputFieldError : ""}`}
 						/>
+						{errors.lastName && (
+							<div className={styles.errorText}>{errors.lastName}</div>
+						)}
 					</div>
+
+					{/* Birth Date */}
 					<div>
-						<div className={styles.fontColor}>Birth Date*</div>
+						<div className={styles.fontColor}>{t("birth-date")}</div>
 						<Input
 							type="date"
 							name="birthDate"
 							value={initialUserData?.birthDate || ""}
 							onChange={handleChange}
-							style={{ width: "325px", borderColor: "#B3B2B5" }}
+							className={`${styles.inputField} ${errors.birthDate ? styles.inputFieldError : ""}`}
 						/>
+						{errors.birthDate && (
+							<div className={styles.errorText}>{errors.birthDate}</div>
+						)}
 					</div>
 				</div>
 				<div className={styles.sectionForm}>
+					{/* First Name */}
 					<div>
-						<div className={styles.fontColor}>First Name*</div>
+						<div className={styles.fontColor}>{t("first-name")}</div>
 						<Input
 							type="text"
 							name="firstName"
 							value={initialUserData?.firstName || ""}
 							onChange={handleChange}
-							style={{ width: "325px", borderColor: "#B3B2B5" }}
+							className={`${styles.inputField} ${errors.firstName ? styles.inputFieldError : ""}`}
 						/>
+						{errors.firstName && (
+							<div className={styles.errorText}>{errors.firstName}</div>
+						)}
 					</div>
+
+					{/* Gender */}
 					<div>
-						<div className={styles.fontColor}>Gender*</div>
+						<div className={styles.fontColor}>{t("gender")}</div>
 						<Select onValueChange={(e) => handleChange(e, "gender")}>
 							<SelectTrigger
-								style={{
-									width: "325px",
-									border: "solid",
-									borderWidth: "1px",
-									borderColor: "#B3B2B5",
-									color: "#75757A",
-								}}
+								className={`${styles.selectTrigger} ${errors.gender ? styles.selectTriggerError : ""}`}
 							>
 								<SelectValue
 									placeholder={initialUserData?.gender || "Gender"}
 								/>
 							</SelectTrigger>
-							<SelectContent
-								style={{
-									width: "325px",
-									borderColor: "#B3B2B5",
-									color: "#75757A",
-								}}
-							>
+							<SelectContent>
 								<SelectGroup>
-									<SelectItem value="male" data-testid="select-item-1">
-										Male
-									</SelectItem>
-									<SelectItem value="female" data-testid="select-item-2">
-										Female
-									</SelectItem>
-									<SelectItem value="others" data-testid="select-item-2">
-										Others
-									</SelectItem>
+									<SelectItem value="male">Male</SelectItem>
+									<SelectItem value="female">Female</SelectItem>
+									<SelectItem value="others">Others</SelectItem>
 								</SelectGroup>
 							</SelectContent>
 						</Select>
+						{errors.gender && (
+							<div className={styles.errorText}>{errors.gender}</div>
+						)}
 					</div>
+
+					{/* Email */}
 					<div>
-						<div className={styles.fontColor}>Email ID*</div>
+						<div className={styles.fontColor}>{t("email")}</div>
 						<Input
 							type="email"
 							name="email"
 							value={initialUserData?.email || ""}
-							onChange={handleChange}
-							style={{ width: "325px", borderColor: "#B3B2B5" }}
+							disabled
+							className={styles.inputField}
 						/>
 					</div>
 				</div>
 			</div>
+
+			{/* Update Button */}
 			<div className={styles.buttonContainer}>
 				<Button
-					disabled={isDisabled}
 					variant="profileUpdate"
 					className={styles.updateButton}
-					onClick={() => onUpdateClicked(initialUserData)}
+					onClick={handleUpdateClick}
 				>
-					UPDATE
+					{t("update")}
 				</Button>
 			</div>
 		</div>
 	);
 };
+
 export default Profile;
 
 /**

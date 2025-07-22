@@ -8,7 +8,7 @@ interface GalleryProps {
 }
 
 const Gallery: React.FC<GalleryProps> = ({ images }) => {
-	const [mainImage, setMainImage] = useState(images[0]);
+	const [mainImage, setMainImage] = useState(images?.[0]);
 	const [isMobile, setIsMobile] = useState(false);
 	const [activeIndex, setActiveIndex] = useState(0);
 
@@ -29,7 +29,7 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 				<ProductCard productImage={mainImage} width="100%" />
 
 				<div className={styles.dotsContainer}>
-					{images.map((img, idx) => (
+					{images?.map((img, idx) => (
 						<span
 							key={img}
 							className={`${styles.dot} ${idx === activeIndex ? styles.activeDot : ""}`}
@@ -45,14 +45,23 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 	return (
 		<div className={styles.layoutGallery}>
 			<div className={styles.thumbnails}>
-				{images.map((img) => {
-					const isSelected = img === mainImage;
+				{images?.map((img, idx) => {
+					const isSelected = idx === activeIndex;
 					return (
 						<div
-							key={img}
-							onMouseEnter={() => setMainImage(img)}
-							onClick={() => setMainImage(img)}
-							onKeyDown={() => setMainImage(img)}
+							key={`${img + idx}`} // safer key
+							onMouseEnter={() => {
+								setMainImage(img);
+								setActiveIndex(idx);
+							}}
+							onClick={() => {
+								setMainImage(img);
+								setActiveIndex(idx);
+							}}
+							onKeyDown={() => {
+								setMainImage(img);
+								setActiveIndex(idx);
+							}}
 							className={`${styles.thumbnailWrapper} ${isSelected ? styles.selected : ""}`}
 						>
 							<ProductCard productImage={img} width="93px" />
@@ -61,7 +70,9 @@ const Gallery: React.FC<GalleryProps> = ({ images }) => {
 					);
 				})}
 			</div>
-			<ProductCard productImage={mainImage} width="42vw" />
+			<div style={{ minWidth: "42vw" }}>
+				<ProductCard productImage={mainImage} />
+			</div>
 		</div>
 	);
 };

@@ -30,3 +30,23 @@
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-font-size-400);
 }
+
+.errorMsg {
+	color: red;
+	margin: 8px 0;
+	font-size: 14px;
+}
+
+.fieldError {
+	color: #dc3545;
+	font-size: 12px;
+	margin-top: 4px;
+	margin-bottom: 0;
+}
+
+.checkboxBox {
+	border: 1px solid var(--colour-button-border-secondary);
+	width: 16px;
+	height: 16px;
+	border-radius: 2px;
+}

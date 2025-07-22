@@ -444,9 +444,9 @@ export const productData = [
 export const categoryList = ["Perfume", "Jewellery", "Brush Set"];
 
 export const states = [
-  { label: "Maharashtra", value: "maharashtra" },
-  { label: "Delhi", value: "delhi" },
-  { label: "Karnataka", value: "karnataka" },
+  { label: "California", value: "california" },
+  { label: "Texas", value: "texas" },
+  { label: "Florida", value: "florida" },
 ];
 
 export const searchSuggestions = ['Blush', 'Foundation', 'Highlighters'];
@@ -721,14 +721,14 @@ export interface UserDetails {
   email: string;
 }
 
-export const mockUserDetails: UserDetails = {
-  title: "Mr.",
-  firstName: "Utkarsh",
-  lastName: "Pai",
-  birthDate: "1985-12-04",
-  gender: "Male",
-  email: "utkarshpai@abc.com",
-};
+// export const mockUserDetails: UserDetails = {
+//   title: "Mr.",
+//   firstName: "Utkarsh",
+//   lastName: "Pai",
+//   birthDate: "1985-12-04",
+//   gender: "Male",
+//   email: "utkarshpai@abc.com",
+// };
 
 export type CardType = {
   type: "text" | "image";

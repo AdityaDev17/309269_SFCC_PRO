@@ -1,10 +1,9 @@
 "use client";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { Button } from "../../atomic/Button/Button";
-import Typography from "../../atomic/Typography/Typography";
-import CartItemList from "../../molecules/CartItemList/CartItemList";
+import { CartItem, type MiniCartProps } from "@/common/type";
+import { Button } from "@/components/atomic/Button/Button";
+import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";
+import Typography from "@/components/atomic/Typography/Typography";
+import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import {
 	Drawer,
 	DrawerClose,
@@ -14,52 +13,77 @@ import {
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
-} from "../../molecules/Drawer/Drawer";
-import styles from "./MiniCart.module.css";
-export interface CartItem {
-	id: string;
-	name: string;
-	description: string;
-	quantity: number;
-	price: number;
-	currency: string;
-	productImage: string;
-}
-
-interface MiniCartProps {
-	cartItems: CartItem[];
-	onDeleteItem?: (itemId: string) => void;
-	onUpdateQuantity?: (itemId: string, newQuantity: number) => void;
-	triggerType?: "button" | "icon";
-	bagIcon?: string;
-}
+} from "@/components/molecules/Drawer/Drawer";
+import {
+	CartAbandonmentTracker,
+	getBasketDetail,
+	handleDeleteItem,
+	handleUpdateQuantity,
+} from "@/components/organisms/MiniCart/CartFuntions";
+import styles from "@/components/organisms/MiniCart/MiniCart.module.css";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
 
 const MiniCart = ({
-	cartItems,
-	onDeleteItem,
-	onUpdateQuantity,
 	triggerType,
 	bagIcon,
+	open,
+	onOpenChange,
 }: MiniCartProps) => {
 	const router = useRouter();
-	const [open, setOpen] = React.useState(false);
+	const t = useTranslations("MiniCart");
+	const basketId = sessionStorage.getItem("basketId") ?? "";
+	const { data, isLoading, refetch } = useQuery({
+		queryKey: ["Basket", basketId],
+		queryFn: () => getBasketDetail(),
+		enabled: !!basketId,
+	});
+
+	const cartItems = data?.cartItems ?? [];
+	const subTotal = data?.subTotal ?? 0;
+
+	const removeBasketMutation = useMutation({
+		mutationFn: (input: { itemId: string }) => handleDeleteItem(input.itemId),
+		onSuccess: () => {
+			refetch();
+		},
+		retry: 3,
+	});
+
+	const onDeleteItem = async (itemId: string) => {
+		try {
+			const response = await removeBasketMutation.mutateAsync({ itemId });
+		} catch (error) {
+			console.error("Error removing basket item:", error);
+		}
+	};
+
+	const updateBasketMutation = useMutation({
+		mutationFn: (input: {
+			itemId: string;
+			quantity: number;
+		}) => handleUpdateQuantity(input.itemId, input.quantity),
+		onSuccess: () => refetch(),
+		retry: 3,
+	});
+
+	const onUpdateQuantity = async (itemId: string, newQuantity: number) => {
+		try {
+			const response = await updateBasketMutation.mutateAsync({
+				itemId,
+				quantity: newQuantity,
+			});
+		} catch (error) {
+			console.error("Error updating basket item:", error);
+		}
+	};
+
 	return (
-		<Drawer open={open} onOpenChange={setOpen} side="right">
-			<DrawerTrigger asChild>
-				{triggerType === "icon" && bagIcon ? (
-					<Image
-						src={bagIcon}
-						alt="Open Cart"
-						width={20}
-						height={20}
-						className={styles.bagIcon}
-					/>
-				) : (
-					<Button variant="secondary" className={styles.cartButton}>
-						Add To Bag
-					</Button>
-				)}
-			</DrawerTrigger>
+		<Drawer open={open} onOpenChange={onOpenChange} side="right">
+			<DrawerTrigger asChild />
 			<DrawerContent side="right">
 				<DrawerHeader className={styles.bagHeader}>
 					<div className={styles.bagWrapper}>
@@ -69,11 +93,11 @@ const MiniCart = ({
 								type={"Label"}
 								variant={3}
 								fontWeight="medium"
-								label="BAG"
+								label={t("bag-title")}
 							/>
 						</DrawerTitle>
 
-						{cartItems.length > 0 && (
+						{cartItems?.length > 0 && (
 							<Typography
 								type={"Body"}
 								variant={3}
@@ -92,14 +116,20 @@ const MiniCart = ({
 						/>
 					</DrawerClose>
 				</DrawerHeader>
-				{cartItems.length > 0 ? (
+				{cartItems?.length > 0 ? (
 					<>
-						<CartItemList
+						{/* <CartAbandonmentTracker
 							cartItems={cartItems}
-							onDeleteItem={onDeleteItem}
-							onUpdateQuantity={onUpdateQuantity}
-							miniCart={true}
-						/>
+							hasStartedCheckout={false}
+						/> */}
+						<div className={styles.cartItemList}>
+							<CartItemList
+								cartItems={cartItems}
+								onDeleteItem={onDeleteItem}
+								onUpdateQuantity={onUpdateQuantity}
+								miniCart={true}
+							/>
+						</div>
 
 						<DrawerFooter>
 							<div className={styles.footerWrapper}>
@@ -108,16 +138,16 @@ const MiniCart = ({
 										type={"Label"}
 										variant={3}
 										fontWeight="medium"
-										label="SUBTOTAL"
+										label={t("subtotal")}
 									/>
 									<Typography
 										type={"Body"}
 										variant={3}
-										label="(including taxes)"
+										label={t("including-taxes")}
 										color="#75757a"
 									/>
 								</div>
-								<Typography type="Label" variant={3} label="$100" />
+								<Typography type="Label" variant={3} label={`${subTotal}`} />
 							</div>
 							<div className={styles.bagButton}>
 								<Button
@@ -125,14 +155,32 @@ const MiniCart = ({
 									className={styles.viewbag}
 									onClick={() => {
 										router.push("/cart");
-										setOpen(false);
 									}}
 								>
-									VIEW BAG
+									{t("view-bag")}
 								</Button>
 							</div>
 						</DrawerFooter>
 					</>
+				) : isLoading ? (
+					<div className={styles.productSkeletonWrapper}>
+						<Skeleton className={styles.titleSkeleton} />
+						<Skeleton className={styles.priceSkeleton} />
+
+						<div>
+							<Skeleton className={styles.descLineSkeleton} />
+							<Skeleton className={styles.descLineSkeletonShort} />
+						</div>
+
+						<Skeleton className={styles.sizeLabelSkeleton} />
+
+						<div className={styles.sizeGridSkeleton}>
+							<Skeleton className={styles.sizeSkeleton} />
+							<Skeleton className={styles.sizeSkeleton} />
+						</div>
+
+						<Skeleton className={styles.cartButtonSkeleton} />
+					</div>
 				) : (
 					<div className={styles.emptyContainer}>
 						<div className={styles.emptyMessage}>
@@ -145,7 +193,7 @@ const MiniCart = ({
 							<Typography
 								type="Body"
 								variant={2}
-								label="There is nothing in your bag!"
+								label={t("empty-message")}
 								color="#75757a"
 							/>
 						</div>

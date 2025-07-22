@@ -1,0 +1,68 @@
+.container {
+    container-type: inline-size;
+    container-name: mainContainer;
+}
+
+.backgroundWrapper {
+    height: 670px;
+    background: linear-gradient(to right, #C6C0C4, #CFBAB2, #F6F6F6 , #F0F0F0 , #FEFEFF , var(--colour-surface-primary));
+}
+
+.navigation {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+}
+
+.loginImg {
+    position: absolute;
+    top: 170px;
+}
+
+.logoImg {
+    position: absolute;
+    top: 635px;
+    left: 500px;
+}
+
+.loginContainer {
+    width: 325px;
+    position: absolute;
+    left: 845px;
+    top: 190px;
+}
+
+@container mainContainer (max-width: 768px) {
+    .logoImg {
+        position: static;
+        height: clamp(75px, 10vh, 130px);
+        width: 100%;
+    }
+
+    .loginContainer {
+        position: static;
+        margin: 150px auto 200px;
+    }
+
+    .navigation {
+        padding-left: var(--space-xl);
+    }
+}
+
+@container mainContainer (min-width: 1700px) {
+    .loginImg {
+        width: 1000px;
+    }
+    .logoImg {
+        width: 1100px;
+    }
+
+    .loginContainer {
+        left: 1000px;
+    }
+
+    .navigation {
+        padding-left: var(--space-28xl);
+    }
+}

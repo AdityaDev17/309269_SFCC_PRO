@@ -1,6 +1,6 @@
 .layoutGallery {
   display: grid;
-  gap: var(--space-40);
+  gap: 20px;
   grid-template-columns: 0.1fr 1fr;
 }
 

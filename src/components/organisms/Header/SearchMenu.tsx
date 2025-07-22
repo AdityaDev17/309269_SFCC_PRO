@@ -9,6 +9,7 @@ import {
 import ProductCard from "@/components/molecules/ProductCard/ProductCard";
 import Search from "@/components/molecules/Search/Search";
 import { SearchIcon, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
 import {
@@ -27,7 +28,7 @@ const SearchMenu = ({ keyVal, searchIcon, isMobile }: SearchMenuProps) => {
 	const searchMenuHeight = useRef<HTMLDivElement | null>(null);
 	const [height, setHeight] = useState(0);
 	const [open, setOpen] = useState(false);
-
+	const t = useTranslations("Header");
 	useEffect(() => {
 		if (!open) return;
 
@@ -100,7 +101,7 @@ const SearchMenu = ({ keyVal, searchIcon, isMobile }: SearchMenuProps) => {
 									<Typography
 										type="Body"
 										variant={1}
-										label="SEARCH SUGGESTION"
+										label={t("searchSuggestion")}
 									/>
 									{searchSuggestions.map((suggestion, index) => (
 										<Fragment key={suggestion}>
@@ -115,7 +116,7 @@ const SearchMenu = ({ keyVal, searchIcon, isMobile }: SearchMenuProps) => {
 									<Typography
 										type="Body"
 										variant={1}
-										label="PRODUCT SUGGESTION"
+										label={t("productSuggestion")}
 									/>
 									<div className={styles.productSuggestionWrapper}>
 										{productSuggestions.map((suggestion, index) => (

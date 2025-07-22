@@ -143,12 +143,6 @@ const SelectItem = React.forwardRef<
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
 >(({ children, ...props }, ref) => (
 	<SelectPrimitive.Item ref={ref} className={styles.SelectItem} {...props}>
-		<span className={styles.SelectItemSpan}>
-			<SelectPrimitive.ItemIndicator>
-				<Check style={{ width: "1rem", height: "1rem" }} />
-			</SelectPrimitive.ItemIndicator>
-		</span>
-
 		<SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
 	</SelectPrimitive.Item>
 ));

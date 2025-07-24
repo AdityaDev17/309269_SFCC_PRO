@@ -149,6 +149,9 @@ const MiniCart = ({
 									variant="icon"
 									className={styles.viewbag}
 									onClick={() => {
+										if (onOpenChange) {
+											onOpenChange(false)
+										}
 										router.push("/cart");
 									}}
 								>

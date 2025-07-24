@@ -33,6 +33,7 @@ import Gallery from "@/components/organisms/Gallery/Gallery";
 import { addToBasket } from "@/components/organisms/MiniCart/CartFuntions";
 import MiniCart from "@/components/organisms/MiniCart/MiniCart";
 import analytics from "@/lib/analytics";
+import { useRouter, usePathname  } from "next/navigation";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -52,6 +53,8 @@ export default function ProductDetails() {
 	const [promotions, setPromotions] = useState([]);
 	const [viewMore, setViewMore] = useState(true);
 	const [hasSizeVariations, setHasSizeVariations] = useState(false);
+	const router = useRouter();
+	const pathname = usePathname();
 
 	const createCustomerProductList = useMutation({
 		mutationFn: (input: { customerId: string; type: string }) =>
@@ -153,6 +156,12 @@ export default function ProductDetails() {
 	};
 
 	const handleAddToWishlist = async () => {
+		const customerType = sessionStorage.getItem("customer_type") ?? "";
+		if (customerType === "guest") {
+			router.push(`/login?returnUrl=${encodeURIComponent(pathname)}`);
+			return;
+		}
+
 		const customerId = sessionStorage.getItem("customer_id") ?? "";
 		const response = await graphqlRequest(GET_CUSTOMER_PRODUCTLIST, {
 			customerId,

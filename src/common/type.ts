@@ -362,11 +362,14 @@ export type ProductCardProps = {
 	moveToBag?: boolean;
 	wishListed?: boolean;
 	bagPrice?: string;
+  itemId?: string;
+  listId?: string;
 	onClick?: (productId: string) => void;
 	onButtonClick?: (productId: string) => void;
 	onMoveToBag?: (productId: string) => void;
   onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
   onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
+  removeFromWishListHandler?: ( itemId: string, listId: string) => void;
 }
 
 export type Promotions={

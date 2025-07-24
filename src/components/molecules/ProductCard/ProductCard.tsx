@@ -25,11 +25,14 @@ const ProductCard = ({
 	moveToBag,
 	wishListed,
 	bagPrice,
+	itemId,
+	listId,
 	onClick,
 	onButtonClick,
 	onMoveToBag,
 	onMouseEnter,
-	onMouseLeave
+	onMouseLeave,
+	removeFromWishListHandler
 }: ProductCardProps) => {
 	const t = useTranslations("ProductCard");
 	const [isMobile, setIsMobile] = useState(false);
@@ -64,6 +67,10 @@ const ProductCard = ({
 							className={styles.wishlistIcon}
 							width={24}
 							height={24}
+							onClick={(e) => {
+								e.stopPropagation();
+								removeFromWishListHandler && itemId && listId && removeFromWishListHandler(listId, itemId);
+							}}
 						/>
 					)}
 				</CardHeader>

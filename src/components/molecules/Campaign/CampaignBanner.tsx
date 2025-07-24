@@ -20,7 +20,7 @@ type CampaignBannerProps = {
 
 const CampaignBanner = ({
   title,
-  description,
+  // description,
   imageUrl,
   imageAlt,
   startDate,
@@ -44,22 +44,22 @@ const CampaignBanner = ({
           className={styles.campaignImage}
         />
       )}
+
       <div className={styles.campaignContent}>
-       
-        {promotions?.length > 0 && (
+        {promotions.length > 0 && (
           <div className={styles.promotions}>
-            {promotions.map((promo, i) => (
-              <div key={i} className={styles.promotionItem}>
+            {promotions.map((promo) => (
+              <div key={promo.title} className={styles.promotionItem}>
                 <strong>{promo.title}</strong>
                 {promo.calloutMsg && <p>{promo.calloutMsg}</p>}
               </div>
             ))}
-            {/* {description && (
-          <p className={styles.campaignDescription}>{description}</p>
-        )} */}
-
           </div>
         )}
+
+        {/* {description && (
+          <p className={styles.campaignDescription}>{description}</p>
+        )} */}
 
         {(formattedStart || formattedEnd) && (
           <p className={styles.campaignDates}>

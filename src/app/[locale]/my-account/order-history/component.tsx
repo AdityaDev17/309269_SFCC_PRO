@@ -245,16 +245,16 @@ const OrderCardContainer = () => {
 	const currentItems = (
 		isLoading ? [] : (data?.getOrderHistory?.data ?? [])
 	).map((order) => ({
-		orderId: order.orderNo,
-		price: order.orderTotal,
-		orderName: `Order #${order.orderNo}`, // Customize as needed
+		orderId: order?.orderNo,
+		price: order?.orderTotal,
+		orderName: `Order #${order?.orderNo}`, // Customize as needed
 		items: order.productItems.map((item) => {
 			return {
-				productId: item.productId,
-				productTitle: item.productName,
+				productId: item?.productId,
+				productTitle: item?.productName,
 				productImage:
-					item.productImage.data[0]?.c_sanityImages?.[0],
-				currency: order.currency,
+					item?.productImage?.data?.[0]?.c_sanityImages?.[0]?? "",
+				currency: order?.currency,
 			};
 		}),
 	}));

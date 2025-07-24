@@ -24,6 +24,7 @@ interface LayoutProps {
 	onCardClick?: (productId: string) => void;
 	onButtonClick?: (productId: string) => void;
 	onMoveToBag?: (productId: string, itemId: string, listId: string) => void;
+	removeFromWishListHandler?: ( itemId: string, listId: string) => void ;
 }
 
 const ProductImageCarousel = ({
@@ -35,6 +36,7 @@ const ProductImageCarousel = ({
 	onCardClick,
 	onButtonClick,
 	onMoveToBag,
+	removeFromWishListHandler
 }: LayoutProps) => {
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const [activeIndex, setActiveIndex] = useState(0);
@@ -96,6 +98,8 @@ const ProductImageCarousel = ({
 								width={width}
 								alignment={alignment}
 								moveToBag={moveToBag}
+								itemId={product.itemId}
+								listId={product.listId}
 								onClick={
 									onCardClick ? () => onCardClick(product.productId) : undefined
 								}
@@ -114,6 +118,7 @@ const ProductImageCarousel = ({
 												)
 										: undefined
 								}
+								removeFromWishListHandler={removeFromWishListHandler}
 							/>
 						))}
 					</div>
@@ -134,6 +139,8 @@ const ProductImageCarousel = ({
 							width={width}
 							alignment={alignment}
 							moveToBag={moveToBag}
+							itemId={product.itemId}
+							listId={product.listId}
 							onClick={
 								onCardClick ? () => onCardClick(product.productId) : undefined
 							}
@@ -152,6 +159,7 @@ const ProductImageCarousel = ({
 											)
 									: undefined
 							}
+							removeFromWishListHandler={removeFromWishListHandler}
 						/>
 					))}
 				</div>

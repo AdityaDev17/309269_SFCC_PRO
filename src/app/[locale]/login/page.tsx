@@ -6,7 +6,7 @@ import SignUp from "@/components/molecules/SignUp/SignUp";
 import analytics from "@/lib/analytics";
 import { graphqlRequest } from "@/lib/graphqlRequest";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useState } from "react";
 import LoginComponent from "./component";
 import styles from "./login.module.css";
@@ -26,6 +26,7 @@ type formDataProps = {
 const Page = () => {
 	const [isLogin, setIsLogin] = useState(true);
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const [loginError, setLoginError] = useState<string | undefined>(undefined);
 	const clearLoginError = () => {
 		setLoginError(undefined);
@@ -76,6 +77,7 @@ const Page = () => {
 		// 	console.log("do this after identify");
 		// });
 		return new Promise((resolve, reject) => {
+			const returnUrl = searchParams.get('returnUrl') || '/';
 			setLoginError(undefined); // Clear previous error
 			let loginSuccess = false; // ✅ flag to track success
 			const usid = sessionStorage.getItem("usid")
@@ -144,7 +146,7 @@ const Page = () => {
 					if (basketId) {
 						sessionStorage.setItem("basketId", basketId);
 					}
-					router.push("/");
+					router.push(returnUrl);
 					resolve();
 				})
 				.catch((error) => {

@@ -6,7 +6,7 @@ export default function Message({ message }: { message: MessageType }) {
 	const sentenceArr = useMemo(() => {
 		return message.text
 			.split("\n")
-			.filter((sentence) => !sentence.includes("https://zzrl"));
+			.filter((sentence) => !sentence.includes("https://"));
 	}, [message.text]);
 	return (
 		<span

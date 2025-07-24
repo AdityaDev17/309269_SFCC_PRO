@@ -96,19 +96,15 @@ const Header: React.FC<HeaderProps> = ({
     }
   }
 
-   const handleIconClick=(name:string)=>{
-    if(name==='Profile')
-    {
-      const customerType = sessionStorage.getItem("customer_type");
-    if (customerType === "registered") {
+  const handleIconClick=(name:string)=>{
+    const customerType = sessionStorage.getItem("customer_type");
+
+    if(customerType === "registered" && name==='Profile') {
       router.push("/my-account");
+    } else if(customerType === "registered" && name==="Whishlist") {
+      router.push(`/wishlist`);
     } else {
-      router.push("/login");
-    }
-  }
-    else if(name==="Whishlist")
-    {
-      router.push(`/wishlist`)
+      router.push('/login');
     }
   }
 

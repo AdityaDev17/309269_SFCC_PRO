@@ -81,16 +81,22 @@ function Wishlist() {
 
 	const wishlistData =
 		data?.getWishlist?.data?.[0]?.customerProductListItems?.map(
-			(item: CustomerProductListItem) => ({
-				productId: item?.productImage?.data[0]?.id,
-				productTitle: item?.productImage?.data[0]?.name,
-				bagPrice: item?.productImage?.data[0]?.price,
-				currency: item?.productImage?.data[0]?.currency,
-				productImage:
-					item?.productImage?.data[0]?.imageGroups[0]?.images[0]?.link ?? "",
-				itemId: item?.id,
-				listId: data?.getWishlist?.data?.[0]?.id,
-			}),
+			(item: CustomerProductListItem) => {
+				const productData = item?.productImage?.data;
+				const firstProduct = Array.isArray(productData) && productData.length > 0 ? productData[0] : null;
+
+				return {
+					productId: firstProduct?.id ?? "",
+					productTitle: firstProduct?.name ?? "",
+					bagPrice: firstProduct?.price ?? "",
+					currency: firstProduct?.currency ?? "",
+					productImage:
+						firstProduct?.imageGroups?.[0]?.images?.[0]?.link ?? "",
+					itemId: item?.id ?? "",
+					listId: data?.getWishlist?.data?.[0]?.id ?? "",
+					wishListed: true
+				};
+			} 
 		);
 
 	const items = data?.getWishlist?.data?.[0]?.customerProductListItems || [];
@@ -111,6 +117,16 @@ function Wishlist() {
 	const handleProductClick = (productId: string) => {
 		router.push(`/product-details/${productId}`);
 	};
+
+	const removeFromWishListHandler = async ( listId: string, itemId: string) => {
+		console.log(listId, itemId);
+		try {
+			await removeFromWishlist.mutateAsync({ customerId, listId, itemId });
+		} catch(err) {
+			console.log("🚀 ~ removeFromWishListHandler ~ err:", err)
+			await refetch();
+		}
+	}
 
 	const handleMoveToBag = async (
 		productId: string,
@@ -177,7 +193,7 @@ function Wishlist() {
 
 			{/* Product cards skeletons */}
 			<div className={styles.skeletonProductContainer}>
-				{Array.from({ length: 1 }).map((_, i) => (
+				{Array.from({ length: 1 })?.map((_, i) => (
 					<div key={`skeleton-${Date.now()}-${Math.random()}`}>
 						<div
 							key={`skeleton-${Date.now()}-${Math.random()}`}
@@ -211,16 +227,17 @@ function Wishlist() {
 				fontWeight="semibold"
 				label={t("title")}
 			/>
-			{data && uniqueBrands && <ButtonList buttonNames={uniqueBrands} />}
+			{/* {data && uniqueBrands && <ButtonList buttonNames={uniqueBrands} />} */}
 			{data && wishlistData && (
 				<ProductImageCarousel
 					width="100%"
 					productData={wishlistData}
 					alignment="alignStart"
 					withPagination={false}
-					moveToBag={true}
+					// moveToBag={true}
 					onCardClick={handleProductClick}
-					onMoveToBag={handleMoveToBag}
+					// onMoveToBag={handleMoveToBag}
+					removeFromWishListHandler={removeFromWishListHandler}
 				/>
 			)}
 			<Toaster />

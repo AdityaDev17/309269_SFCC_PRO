@@ -93,8 +93,8 @@ const HeaderWrapper = () => {
 		<Header
 			isHome={isHome}
 			logoImages={{
-				default: "/images/Elenor.svg",
-				white: "/images/Elenor-white.svg",
+				default: "/images/SFCCLogo.svg",
+				white: "/images/SFCCLogowhite.svg",
 			}}
 			categories={categories}
 			headerIcons={headerIcons}

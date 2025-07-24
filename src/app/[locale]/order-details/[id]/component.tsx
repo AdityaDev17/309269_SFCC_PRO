@@ -47,7 +47,7 @@ const Details = () => {
 
 	const orderdedItems = orderDetails?.productItems?.map((item: ProductItem) => {
 		const imageUrl =
-			item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link || "";
+			item?.productData?.data?.[0]?.c_sanityImages?.[0] || "";
 		const variant = item?.productData?.data?.[0]?.variants?.find(
 			(v) => v?.productId === item.productId,
 		);

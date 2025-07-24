@@ -47,12 +47,13 @@ const ProductCard = ({
 		return () => window.removeEventListener("resize", checkMobileView);
 	}, []);
 
+
 	return (
 		<div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
 			<Card width={width} onClick={() => productId && onClick?.(productId)}>
 				<CardHeader className={styles.imageWrapper}>
 					<Image
-						src={productImage}
+						src={productImage ?? ""}
 						alt="product"
 						className={styles.productImage}
 						width={440}

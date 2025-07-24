@@ -31,7 +31,7 @@ interface ProductImageData {
 	id: string;
 	brand: string;
 	currency: string;
-	imageGroups: ImageGroup[];
+	c_sanityImages:[string];
 	name: string;
 	price: number;
 }
@@ -91,7 +91,7 @@ function Wishlist() {
 					bagPrice: firstProduct?.price ?? "",
 					currency: firstProduct?.currency ?? "",
 					productImage:
-						firstProduct?.imageGroups?.[0]?.images?.[0]?.link ?? "",
+						firstProduct?.c_sanityImages?.[0] ?? "",
 					itemId: item?.id ?? "",
 					listId: data?.getWishlist?.data?.[0]?.id ?? "",
 					wishListed: true

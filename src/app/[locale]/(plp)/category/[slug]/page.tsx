@@ -211,7 +211,7 @@ export default function PLPPage() {
 							>
 								<ProductCard
 									productId={product.productId}
-									productImage={product?.image?.link ?? ""}
+									productImage={product?.c_sanityImages?.[0] ?? ""}
 									productTitle={product?.productName}
 									alignment="alignStart"
 									width={"100%"}

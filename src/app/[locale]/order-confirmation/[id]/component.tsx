@@ -78,7 +78,7 @@ const OrderConfimation = () => {
 				)?.variationValues?.size ?? "",
 			),
 			productImage:
-				item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link,
+				item?.productData?.data?.[0]?.c_sanityImages?.[0],
 		}),
 	);
 

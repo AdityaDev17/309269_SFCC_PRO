@@ -6,7 +6,6 @@ import Typography from "@/components/atomic/Typography/Typography";
 import CartItemList from "@/components/molecules/CartItemList/CartItemList";
 import sonnerToast, { Toaster } from "@/components/molecules/Toast/Toast";
 import {
-	CartAbandonmentTracker,
 	getBasketDetail,
 	handleDeleteItem,
 	handleUpdateQuantity,

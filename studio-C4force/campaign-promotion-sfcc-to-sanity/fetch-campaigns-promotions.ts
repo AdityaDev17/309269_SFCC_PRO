@@ -1,7 +1,6 @@
 // studio-C4force/campaign-promotion-sfcc-to-sanity/fetch-campaigns-promotions.ts
 
 import dotenv from "dotenv";
-import axios, { AxiosInstance } from "axios";
 import { createClient } from "@sanity/client";
 import { v4 as uuidv4 } from "uuid";  // Unique key generator :contentReference[oaicite:1]{index=1}
 
@@ -29,18 +28,53 @@ const sanity = createClient({
   useCdn: false,
 });
 
-// Initialize SFCC API
-const sfccApi: AxiosInstance = axios.create({
-  baseURL: `https://${host}`,
-  timeout: 10_000,
-  headers: { "Content-Type": "application/json" },
-});
-sfccApi.interceptors.request.use((cfg) => {
-  if (process.env.SFCC_AUTH_TOKEN) {
-    cfg.headers!.Authorization = `Bearer ${process.env.SFCC_AUTH_TOKEN}`;
+// Initialize SFCC API client with fetch
+class SfccApiClient {
+  private baseURL: string;
+  private timeout: number;
+  private headers: Record<string, string>;
+  private authToken?: string;
+
+  constructor(baseURL: string, timeout = 10_000) {
+    this.baseURL = baseURL;
+    this.timeout = timeout;
+    this.headers = { "Content-Type": "application/json" };
   }
-  return cfg;
-});
+
+  setAuthToken(token: string) {
+    this.authToken = token;
+  }
+
+  async post(path: string, body: any): Promise<{ data: any }> {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+
+    try {
+      const headers = { ...this.headers };
+      if (this.authToken) {
+        headers.Authorization = `Bearer ${this.authToken}`;
+      }
+
+      const response = await fetch(`${this.baseURL}${path}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+        signal: controller.signal
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return { data };
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+}
+
+const sfccApi = new SfccApiClient(`https://${host}`);
 
 // Utility to fetch hits
 async function fetchHits(path: string) {
@@ -50,7 +84,7 @@ async function fetchHits(path: string) {
     query: { match_all_query: {} },
     sorts: [{ field: "Id", sortOrder: "asc" }],
   });
-  return res.data.hits as any[];
+  return (res.data as { hits: any[] }).hits;
 }
 
 // Build Sanity documents with unique keys
@@ -109,21 +143,29 @@ function buildDocs(camps: any[], promos: any[]) {
 // Main sync
 async function syncSFCCToSanity() {
   console.log("Requesting SFCC token...");
-  const tokenRes = await axios.post(
+  const tokenRes = await fetch(
     `https://account.demandware.com/dwsso/oauth2/access_token`,
-    new URLSearchParams({
-      grant_type: "client_credentials",
-      scope: `SALESFORCE_COMMERCE_API:${process.env.SFCC_TENANT} sfcc.promotions.rw`,
-    }).toString(),
     {
-      auth: {
-        username: process.env.SFCC_CLIENT_ID!,
-        password: process.env.SFCC_CLIENT_SECRET!,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Basic ${Buffer.from(`${process.env.SFCC_CLIENT_ID}:${process.env.SFCC_CLIENT_SECRET}`).toString('base64')}`
       },
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+        scope: `SALESFORCE_COMMERCE_API:${process.env.SFCC_TENANT} sfcc.promotions.rw`,
+      }).toString()
     }
   );
-  process.env.SFCC_AUTH_TOKEN = tokenRes.data.access_token;
+
+  if (!tokenRes.ok) {
+    throw new Error(`Token request failed: ${tokenRes.status} ${tokenRes.statusText}`);
+  }
+
+  const tokenData = await tokenRes.json();
+  const authToken = (tokenData as { access_token: string }).access_token;
+  process.env.SFCC_AUTH_TOKEN = authToken;
+  sfccApi.setAuthToken(authToken);
 
   const version = process.env.SFCC_API_VERSION!;
   const org = process.env.SFCC_ORGANIZATION_ID!;
@@ -147,6 +189,6 @@ async function syncSFCCToSanity() {
 }
 
 syncSFCCToSanity().catch(err => {
-  console.error("Sync failed:", err.response?.data || err.message || err);
+  console.error("Sync failed:", err instanceof Error ? err.message : String(err));
   process.exit(1);
 });

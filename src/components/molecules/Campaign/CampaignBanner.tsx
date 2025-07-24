@@ -2,51 +2,69 @@
 
 import styles from "./Campaign.module.css";
 
+type Promotion = {
+  title: string;
+  calloutMsg?: string;
+};
+
 type CampaignBannerProps = {
   title: string;
-  ctaText?: string;
-  ctaLink?: string;
-  bannerImageUrl?: string;
-  bannerAlt?: string;
-  showCountdown?: boolean;
-  countdownEnd?: string;
+  description?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+  startDate?: string;
+  endDate?: string;
   variant?: "hero" | "slim" | "inline";
+  promotions?: Promotion[];
 };
 
 const CampaignBanner = ({
   title,
-  ctaText,
-  ctaLink,
-  bannerImageUrl,
-  bannerAlt,
-  showCountdown,
-  countdownEnd,
+  description,
+  imageUrl,
+  imageAlt,
+  startDate,
+  endDate,
   variant = "hero",
+  promotions = [],
 }: CampaignBannerProps) => {
-  
-
-  const formattedDate = countdownEnd
-    ? new Date(countdownEnd).toLocaleDateString("en-GB")
+  const formattedStart = startDate
+    ? new Date(startDate).toLocaleDateString("en-GB")
+    : "";
+  const formattedEnd = endDate
+    ? new Date(endDate).toLocaleDateString("en-GB")
     : "";
 
   return (
     <div className={`${styles.campaignBanner} ${styles[variant]}`}>
-      {bannerImageUrl && (
-        <img src={bannerImageUrl} alt={bannerAlt || title} />
+      {imageUrl && (
+        <img
+          src={imageUrl}
+          alt={imageAlt || title}
+          className={styles.campaignImage}
+        />
       )}
-
       <div className={styles.campaignContent}>
-        <h2 className={styles.campaignTitle}>{title}</h2>
+       
+        {promotions?.length > 0 && (
+          <div className={styles.promotions}>
+            {promotions.map((promo, i) => (
+              <div key={i} className={styles.promotionItem}>
+                <strong>{promo.title}</strong>
+                {promo.calloutMsg && <p>{promo.calloutMsg}</p>}
+              </div>
+            ))}
+            {/* {description && (
+          <p className={styles.campaignDescription}>{description}</p>
+        )} */}
 
-        {ctaText && (
-          <a href={ctaLink || "#"} className={styles.campaignCTA}>
-            {ctaText}
-          </a>
+          </div>
         )}
 
-        {showCountdown && countdownEnd && (
-          <p className={styles.campaignCountdown}>
-            Ends on {formattedDate}
+        {(formattedStart || formattedEnd) && (
+          <p className={styles.campaignDates}>
+            {formattedStart && `Starts: ${formattedStart}`}
+            {formattedEnd && ` | Ends: ${formattedEnd}`}
           </p>
         )}
       </div>

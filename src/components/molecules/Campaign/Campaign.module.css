@@ -1,10 +1,11 @@
+/* /components/molecules/Campaign/Campaign.module.css */
+
 .campaignBanner {
   position: relative;
   width: 100%;
-  max-width: 1441px;
-  margin: 0 auto;
+  max-width: 1440px;
+  margin-bottom: 3rem;
   overflow: hidden;
-  border-radius: 8px;
 }
 
 .campaignBanner img {
@@ -16,7 +17,7 @@
 
 .campaignContent {
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #ffffff;
@@ -24,6 +25,7 @@
   padding: 2rem;
   border-radius: 8px;
   max-width: 90%;
+   background-color: rgba(255, 255, 255, 0.15);
 }
 
 .hero {
@@ -38,11 +40,35 @@
   height: 80px;
 }
 
+.campaignDescription {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.campaignDates {
+  font-size: 1rem;
+  color: #f0f0f0;
+  margin-top: 2rem;
+}
+
+
+.promotionItem {
+  margin-bottom: 1 rem;
+  font-size: 1.5rem;
+}
+
+.promotionItem strong {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* 
 .campaignTitle {
   font-size: 3rem;
   font-weight: bold;
   margin-bottom: 1rem;
-}
+} */
 
 .slim .campaignTitle {
   font-size: 1.8rem;
@@ -50,25 +76,4 @@
 
 .inline .campaignTitle {
   font-size: 1.2rem;
-}
-
-.campaignCTA {
-  display: inline-block;
-  color: #fff;
-  padding: 0.75rem 1.5rem;
-  text-decoration: none;
-  font-weight: 600;
-  border-radius: 4px;
-  margin-top: 2rem;
-  transition: background 0.3s;
-}
-
-.campaignCTA:hover {
-  background: #e65c00;
-}
-
-.campaignCountdown {
-  margin-top: 1rem;
-  font-size: 1.2rem;
-  color: #ffffff;
 }

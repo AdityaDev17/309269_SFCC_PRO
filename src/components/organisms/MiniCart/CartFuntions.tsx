@@ -22,6 +22,7 @@ const getSize = (values: Values[], size: string) => {
 	return values?.find((item) => item.value === size)?.name;
 };
 const prepareCartItems = (response: CartItemResponse[], currency: string) => {
+	console.log("🚀 ~ prepareCartItems ~ response:", response)
 	cartItems = response?.map((item) => ({
 		id: item?.productId,
 		name: item?.productName,
@@ -46,7 +47,7 @@ const prepareCartItems = (response: CartItemResponse[], currency: string) => {
 			)?.variationValues?.size ?? "",
 		),
 		productImage:
-			item?.productData?.data?.[0]?.imageGroups?.[0]?.images?.[0]?.link ?? "",
+			item?.productData?.data?.[0]?.c_sanityImages?.[0] ?? "",
 	}));
 };
 
@@ -60,6 +61,7 @@ export const getBasketDetail = async () => {
 		if (basketId) sessionStorage.setItem("basketId", basketId);
 	}
 	const response = await graphqlRequest(GET_BASKET, { basketId });
+	console.log("🚀 ~ getBasketDetail ~ response:", response);
 	prepareCartItems(
 		response?.basketInfo?.productItems,
 		response?.basketInfo?.currency,

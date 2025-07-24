@@ -6,15 +6,6 @@ export const GET_PRODUCT_DETAILS = `
     currency
     longDescription
     price
-    imageGroups {
-      images {
-        alt
-        link
-        title
-        disBaseLink
-      }
-      viewType
-    }
     variants {
       orderable
       price
@@ -38,6 +29,7 @@ export const GET_PRODUCT_DETAILS = `
       promotionId
       promotionPrice
     }
+    c_sanityImages
   }
 }
 
@@ -294,14 +286,7 @@ export const GET_BASKET = `
         price
         productData {
           data {
-            imageGroups {
-              images {
-                alt
-                link
-                title
-                disBaseLink
-              }
-            }
+            c_sanityImages
             variants {
             productId
             variationValues {

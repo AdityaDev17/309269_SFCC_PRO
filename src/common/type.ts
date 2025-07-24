@@ -166,11 +166,7 @@ export type CartItemResponse = {
   priceAfterOrderDiscount?:number;
   productData?: {
     data?: {
-      imageGroups?: {
-        images?: {
-          link?: string;
-        }[];
-      }[];
+      c_sanityImages: String
       variants?: {
         productId: string;
         variationValues?: {

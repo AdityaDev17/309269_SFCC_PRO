@@ -30,7 +30,7 @@ export default function Chat() {
 	const [messages, setMessages] = useState<MessageType[]>([]);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const chatContainerRef = useRef<HTMLDivElement>(null);
-	const { data: tokenData } = useQuery({
+	const { data: tokenData, isSuccess } = useQuery({
 		queryKey: ["authToken"],
 		queryFn: async () => {
 			const data = await getValidToken();
@@ -147,8 +147,8 @@ export default function Chat() {
 
 	// biome-ignore lint: ''
 	useEffect(() => {
-		setInitialMessage();
-	}, []);
+		if(isSuccess) setInitialMessage();
+	}, [isSuccess]);
 
 	const messageBoxHeight = fullHeight ? "400px" : "238px";
 

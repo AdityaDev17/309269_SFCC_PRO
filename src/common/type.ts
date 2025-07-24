@@ -79,22 +79,12 @@ export type ProductItem = {
   price?: string;
   productImage?: {
     data: {
-      imageGroups: {
-        images: {
-          alt: string;
-          link: string;
-        }[];
-      };
+      c_sanityImages:string
     }[];
   };
   productData?: {
     data: {
-      imageGroups: {
-        images: {
-          alt: string;
-          link: string;
-        }[];
-      }[];
+      c_sanityImages:string
       variants: {
         productId: string;
         variationValues: {
@@ -166,11 +156,7 @@ export type CartItemResponse = {
   priceAfterOrderDiscount?:number;
   productData?: {
     data?: {
-      imageGroups?: {
-        images?: {
-          link?: string;
-        }[];
-      }[];
+      c_sanityImages: String
       variants?: {
         productId: string;
         variationValues?: {
@@ -245,12 +231,13 @@ export type FilterDialogProps = {
 export type ProductDetails = {
 		currency: string;
 		hitType: string;
-		image?: {
-			alt: string;
-			disBaseLink: string;
-			link: string;
-			title: string;
-		};
+		// image?: {
+		// 	alt: string;
+		// 	disBaseLink: string;
+		// 	link: string;
+		// 	title: string;
+		// };
+    c_sanityImages:[string];
 		orderable: string;
 		price: string;
 		pricePerUnit: string;

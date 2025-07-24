@@ -74,10 +74,7 @@ export default function ProductDetails() {
 		enabled: !!productId,
 	});
 
-	const galleryImages = data?.productDetails?.imageGroups
-		?.flatMap((group: ImageGroup) => group?.images ?? [])
-		.map((image: ProductImage) => image?.link);
-
+	const galleryImages = data?.productDetails?.c_sanityImages ?? [];
 	useEffect(() => {
 		if (viewMore) {
 			setPromotions(data?.productDetails?.productPromotions?.slice(0, 1));
@@ -280,7 +277,7 @@ export default function ProductDetails() {
 							<Skeleton className={styles.mainImageSkeleton} />
 						</div>
 					) : (
-						data?.productDetails?.imageGroups != null &&
+						data?.productDetails?.c_sanityImages != null &&
 						galleryImages?.length !== 0 && <Gallery images={galleryImages} />
 					)}
 				</div>

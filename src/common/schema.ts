@@ -6,15 +6,6 @@ export const GET_PRODUCT_DETAILS = `
     currency
     longDescription
     price
-    imageGroups {
-      images {
-        alt
-        link
-        title
-        disBaseLink
-      }
-      viewType
-    }
     variants {
       orderable
       price
@@ -38,6 +29,7 @@ export const GET_PRODUCT_DETAILS = `
       promotionId
       promotionPrice
     }
+    c_sanityImages
   }
 }
 
@@ -52,12 +44,7 @@ export const GET_PRODUCT_LIST = `
       hits {
         currency
         hitType
-        image {
-          alt
-          disBaseLink
-          link
-          title
-        }
+        c_sanityImages
         orderable
         price
         pricePerUnit
@@ -91,12 +78,7 @@ export const GET_ORDER_DETAILS = `
         price
         productData {
           data {
-            imageGroups {
-              images {
-                alt
-                link
-              }
-            }
+            c_sanityImages
             variants {
               productId
               variationValues {
@@ -294,14 +276,7 @@ export const GET_BASKET = `
         price
         productData {
           data {
-            imageGroups {
-              images {
-                alt
-                link
-                title
-                disBaseLink
-              }
-            }
+            c_sanityImages
             variants {
             productId
             variationValues {
@@ -478,14 +453,7 @@ export const WISHLIST_DATA = `
               price
               currency
               brand
-              imageGroups {
-                images {
-                  disBaseLink
-                  alt
-                  link
-                  title
-                }
-              }
+              c_sanityImages
             }
           }
         }
@@ -913,11 +881,7 @@ export const ORDER_HISTORY = `query OrderHistory($customerId: ID!, $limit: Int, 
         productName
         productImage {
           data {
-            imageGroups {
-              images {
-                link
-              }
-            }
+            c_sanityImages
           }
         }
       }

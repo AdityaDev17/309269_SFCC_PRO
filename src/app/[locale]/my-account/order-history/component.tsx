@@ -253,7 +253,7 @@ const OrderCardContainer = () => {
 				productId: item.productId,
 				productTitle: item.productName,
 				productImage:
-					item.productImage.data[0]?.imageGroups?.[0]?.images[0]?.link,
+					item.productImage.data[0]?.c_sanityImages?.[0],
 				currency: order.currency,
 			};
 		}),

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import axios from 'axios';
  
 export async function POST(req: NextRequest) {
   try {
@@ -46,24 +47,21 @@ export async function POST(req: NextRequest) {
         ? `sfcc.products.rw`
         : `sfcc.promotions.rw`;
  
-    const tokenRes = await fetch(authUrl, {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${authHeader}`,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
+    const tokenRes = await axios.post(
+      authUrl,
+      new URLSearchParams({
         grant_type: 'client_credentials',
         scope: `SALESFORCE_COMMERCE_API:${process.env.SFCC_TENANT} ${scope}`
-      }).toString()
-    });
-
-    if (!tokenRes.ok) {
-      throw new Error(`Token request failed: ${tokenRes.status} ${tokenRes.statusText}`);
-    }
-
-    const tokenData = await tokenRes.json();
-    const accessToken = tokenData.access_token;
+      }).toString(),
+      {
+        headers: {
+          Authorization: `Basic ${authHeader}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }
+    );
+ 
+    const accessToken = tokenRes.data.access_token;
     console.log('SCAPI token acquired');
  
     const baseUrl = process.env.SFCC_API_HOST!;
@@ -72,7 +70,7 @@ export async function POST(req: NextRequest) {
     const siteId = process.env.SFCC_SITE_ID!;
  
     let patchUrl = '';
-    const patchBody: Record<string, any> = {};
+    const patchBody: any = {};
     if (_type === 'product'){
       patchUrl = `${baseUrl}/product/products/${version}/organizations/${org}/products/${productId}`;
       if (name) patchBody.name = { default: name };
@@ -104,40 +102,20 @@ export async function POST(req: NextRequest) {
     console.log('PATCH URL:', patchUrl);
     console.log('PATCH body:', JSON.stringify(patchBody));
  
-    const res = await fetch(patchUrl, {
-      method: 'PATCH',
+    const res = await axios.patch(patchUrl, patchBody, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
         'x-dw-client-site-id': siteId
-      },
-      body: JSON.stringify(patchBody)
-    });
-
-    if (!res.ok) {
-      throw new Error(`SCAPI PATCH failed: ${res.status} ${res.statusText}`);
-    }
-
-    const responseData = await res.json();
-
-    console.log(`SCAPI PATCH success for ${_type}`, responseData);
-    return NextResponse.json({ message: `${_type} updated in SFCC`, data: responseData });
-  } catch (err: any) {
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-    console.error('SCAPI sync error:', errorMessage);
-    
-    // Try to get more detailed error information if it's a fetch response error
-    let errorData = errorMessage;
-    if (err instanceof Response) {
-      try {
-        errorData = await err.text();
-      } catch {
-        errorData = `HTTP ${err.status}: ${err.statusText}`;
       }
-    }
-    
+    });
+ 
+    console.log(`SCAPI PATCH success for ${_type}`, res.data);
+    return NextResponse.json({ message: `${_type} updated in SFCC`, data: res.data });
+  } catch (err: any) {
+    console.error('SCAPI sync error:', err.response?.data || err.message || err);
     return NextResponse.json(
-      { message: 'Error syncing with SFCC', error: errorData },
+      { message: 'Error syncing with SFCC', error: err.response?.data || err.message },
       { status: 500 }
     );
   }

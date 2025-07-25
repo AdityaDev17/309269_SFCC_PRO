@@ -1,3 +1,4 @@
+import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
 import dotenv from 'dotenv'
@@ -21,46 +22,39 @@ const __dirname = dirname(__filename)
 
 const generateImage = async (prompt) => {
   try {
-    const response = await fetch(
+    const response = await axios.post(
       'https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image',
       {
-        method: 'POST',
+        text_prompts: [{text: prompt}],
+        cfg_scale: 7, // Adjust for image quality
+        height: 512,
+        width: 512,
+        samples: 1,
+      },
+      {
         headers: {
           Authorization: `Bearer ${dreamStudioApiKey}`,
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        body: JSON.stringify({
-          text_prompts: [{text: prompt}],
-          cfg_scale: 7, // Adjust for image quality
-          height: 512,
-          width: 512,
-          samples: 1,
-        })
-      }
+      },
     )
 
-    if (!response.ok) {
-      console.error(`API request failed: ${response.status} ${response.statusText}`)
-      return undefined
-    }
+    console.log('API Response:', response.data)
 
-    const data = await response.json()
-    console.log('API Response:', data)
-
-    if (!data.artifacts || data.artifacts.length === 0) {
+    if (!response.data.artifacts || response.data.artifacts.length === 0) {
       console.error('No artifacts found in the API response.')
       return undefined
     }
 
-    const base64Image = data.artifacts[0].base64
+    const base64Image = response.data.artifacts[0].base64
     console.log('Base64 Image Data:', base64Image)
     return base64Image
   } catch (error) {
-    if (error instanceof Response) {
-      console.error('Error generating image:', error.status, error.statusText)
+    if (axios.isAxiosError(error)) {
+      console.error('Error generating image:', error.response?.data || error.message)
     } else {
-      console.error('Error generating image:', error.message || error)
+      console.error('Error generating image:', error)
     }
     return undefined
   }

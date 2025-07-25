@@ -1,4 +1,3 @@
-import axios from 'axios'
 import fs from 'fs'
 import path from 'path'
 import dotenv from 'dotenv'
@@ -22,39 +21,46 @@ const __dirname = dirname(__filename)
 
 const generateImage = async (prompt) => {
   try {
-    const response = await axios.post(
+    const response = await fetch(
       'https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image',
       {
-        text_prompts: [{text: prompt}],
-        cfg_scale: 7, // Adjust for image quality
-        height: 512,
-        width: 512,
-        samples: 1,
-      },
-      {
+        method: 'POST',
         headers: {
           Authorization: `Bearer ${dreamStudioApiKey}`,
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-      },
+        body: JSON.stringify({
+          text_prompts: [{text: prompt}],
+          cfg_scale: 7, // Adjust for image quality
+          height: 512,
+          width: 512,
+          samples: 1,
+        })
+      }
     )
 
-    console.log('API Response:', response.data)
+    if (!response.ok) {
+      console.error(`API request failed: ${response.status} ${response.statusText}`)
+      return undefined
+    }
 
-    if (!response.data.artifacts || response.data.artifacts.length === 0) {
+    const data = await response.json()
+    console.log('API Response:', data)
+
+    if (!data.artifacts || data.artifacts.length === 0) {
       console.error('No artifacts found in the API response.')
       return undefined
     }
 
-    const base64Image = response.data.artifacts[0].base64
+    const base64Image = data.artifacts[0].base64
     console.log('Base64 Image Data:', base64Image)
     return base64Image
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Error generating image:', error.response?.data || error.message)
+    if (error instanceof Response) {
+      console.error('Error generating image:', error.status, error.statusText)
     } else {
-      console.error('Error generating image:', error)
+      console.error('Error generating image:', error.message || error)
     }
     return undefined
   }

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import dotenv from 'dotenv';
 import csv from 'csvtojson';
 import slugify from 'slugify';
@@ -33,34 +34,18 @@ const client = createClient({
 async function getBearerToken(): Promise<string> {
   const { SFCC_AUTH_URL, SFCC_CLIENT_ID, SFCC_CLIENT_SECRET } = process.env!;
   const authHeader = Buffer.from(`${SFCC_CLIENT_ID}:${SFCC_CLIENT_SECRET}`).toString('base64');
-  
-  const res = await fetch(SFCC_AUTH_URL!, {
-    method: 'POST',
-    headers: { 
-      Authorization: `Basic ${authHeader}`, 
-      'Content-Type': 'application/x-www-form-urlencoded' 
-    }
+  const res = await axios.post(SFCC_AUTH_URL!, null, {
+    headers: { Authorization: `Basic ${authHeader}`, 'Content-Type': 'application/x-www-form-urlencoded' },
   });
-  
-  if (!res.ok) {
-    throw new Error(`Auth request failed: ${res.status} ${res.statusText}`);
-  }
-  
-  const data = await res.json();
-  return (data as { access_token: string }).access_token;
+  return res.data.access_token;
 }
 
 async function fetchCSVFeed(token: string): Promise<ProductRow[]> {
-  const res = await fetch(process.env.SFCC_FEED_URL!, {
-    headers: { Authorization: `Bearer ${token}` }
+  const res = await axios.get(process.env.SFCC_FEED_URL!, {
+    headers: { Authorization: `Bearer ${token}` },
+    responseType: 'text',
   });
-  
-  if (!res.ok) {
-    throw new Error(`CSV feed request failed: ${res.status} ${res.statusText}`);
-  }
-  
-  const csvText = await res.text();
-  return csv().fromString(csvText);
+  return csv().fromString(res.data);
 }
 
 function chunk<T>(arr: T[], size: number): T[][] {
@@ -85,9 +70,9 @@ async function importToSanity(rows: ProductRow[], batchSize = 250) {
     }
   }
 
-  const masterDocs: { _id: string; _type: string; [key: string]: any }[] = [];
-  const variantDocs: { _id: string; _type: string; [key: string]: any }[] = [];
-  const patchVariants: { patch: { id: string; set: { variants: { _key: string; _type: string; _ref: string }[] } } }[] = [];
+  const masterDocs: any[] = [];
+  const variantDocs: any[] = [];
+  const patchVariants: { patch: { id: string; set: { variants: any[] } } }[] = [];
 
   for (const row of rows) {
     const safeId = slugify(row.ID, { lower: true, strict: true });
@@ -141,14 +126,14 @@ variantDocs.push({
     patchVariants.push({ patch: { id: masterId, set: { variants: refs } } });
   }
 
-  const applyMutations = async (docs: { _id: string; _type: string; [key: string]: any }[]) => {
+  const applyMutations = async (docs: any[]) => {
     const batches = chunk(docs, batchSize);
     for (const b of batches) {
       await client.mutate(b.map(d => ({ createOrReplace: d })));
     }
   };
 
-  const applyPatches = async (patches: { patch: { id: string; set: { variants: { _key: string; _type: string; _ref: string }[] } } }[]) => {
+  const applyPatches = async (patches: any[]) => {
     const nonNullPatches = patches.filter(Boolean);
     const batches = chunk(nonNullPatches, batchSize);
     for (const b of batches) {

@@ -9,24 +9,17 @@ type CampaignBlockProps = {
 const CampaignBlock = async ({ variant = "hero" }: CampaignBlockProps) => {
   const campaign = await getActiveCampaign();
 
-  if (!campaign?._id) {
-    return null;
-  }
+  if (!campaign?._id) return null;
 
   return (
-    <SanityWrapper
-      id={campaign._id}
-      type="campaign"
-      path="bannerImage"
-    >
+    <SanityWrapper id={campaign._id} type="campaign" path="image">
       <CampaignBanner
         title={campaign.title}
-        ctaText={campaign.ctaText}
-        ctaLink={campaign.ctaLink}
-        bannerImageUrl={campaign.bannerImageUrl}
-        bannerAlt={campaign.bannerAlt}
-        showCountdown={campaign.showCountdown}
-        countdownEnd={campaign.countdownEnd}
+        description={campaign.description}
+        imageUrl={campaign.image?.asset?.url}
+        startDate={campaign.startDate}
+        endDate={campaign.endDate}
+        promotions={campaign.promotions}
         variant={variant}
       />
     </SanityWrapper>

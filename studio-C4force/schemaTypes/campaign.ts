@@ -20,6 +20,8 @@ export default {
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'promotion' }] }]
     }, 
+    {name:'startDate', title:'Start Date', type: 'datetime'},
+    {name:'endDate', title:'End Date', type: 'datetime'},
     { name: 'creationDate', title: 'Created At', type: 'datetime' },
     { name: 'lastModified', title: 'Last Modified', type: 'datetime' },
   ],

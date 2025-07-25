@@ -65,6 +65,8 @@ function buildDocs(camps: any[], promos: any[]) {
     enabled: c.enabled,
     coupons: c.coupons,
     promotions: [] as any[],
+    startDate: c.startDate,
+    endDate: c.endDate,
     creationDate: c.creationDate,
     lastModified: c.lastModified,
   }));

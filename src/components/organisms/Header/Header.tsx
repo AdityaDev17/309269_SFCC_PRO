@@ -148,13 +148,13 @@ const Header: React.FC<HeaderProps> = ({
                       <ChevronRight size={20} />
                     </div>
                   ))
-                  : subcategoryArr.map((name: any, index: any) => (
+                  : subcategoryArr.map((subCategory: any, index: any) => (
                     <div
                       key={index}
                       className={styles.categoryItem}
-                      onClick={() => handleItemClick(name)}
+                      onClick={() => handleItemClick(subCategory?.id)}
                     >
-                      <span>{name}</span>
+                      <span>{subCategory?.name}</span>
                       <ChevronRight size={20} />
                     </div>
                   ))
@@ -246,16 +246,16 @@ const Header: React.FC<HeaderProps> = ({
                                           label={subCategoryName}
                                           fontWeight="bold"
                                         />
-                                        {subcategory.map(
-                                          (subcategoryName, index) => {
+                                        {(subcategory as any[]).map(
+                                          (subcategoryItem, index) => {
                                             return (
                                               <Button
                                                 key={index}
                                                 variant="link"
                                                 style={{ fontWeight: "500" }}
-                                                onClick={()=>handleItemClick(subcategoryName)}
+                                                onClick={()=>handleItemClick(subcategoryItem?.id)}
                                               >
-                                                {subcategoryName}
+                                                {subcategoryItem?.name}
                                               </Button>
                                             );
                                           }

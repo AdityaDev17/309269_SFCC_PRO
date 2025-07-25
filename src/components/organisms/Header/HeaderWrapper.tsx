@@ -50,6 +50,7 @@ const HeaderWrapper = () => {
 
 		return {
 			name: category.name,
+			id:category.id,
 			image: [
 				{
 					productImageUrl: "/images/default-subcategory.jpg",
@@ -60,13 +61,15 @@ const HeaderWrapper = () => {
 				? [
 						{
 							subCategoryName: category.name,
-							subcategory: subcategoryList.map((sub) => sub.name),
+							subcategory: subcategoryList.map((sub) => ({
+							name: sub.name,
+							id: sub.id,
+						})),
 						},
 					]
 				: undefined,
 		};
 	});
-
 	const headerIcons = [
 		{ label: "Search", icon: "/images/search-normal.png" },
 		{

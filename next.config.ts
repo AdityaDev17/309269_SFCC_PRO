@@ -1,7 +1,7 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
- 
+import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
  
  
 const nextConfig: NextConfig = {
@@ -25,6 +25,12 @@ const nextConfig: NextConfig = {
 };
 const withNextIntl = createNextIntlPlugin();
  
+if (process.env.NODE_ENV === "development") {
+  (async () => {
+    await setupDevPlatform();
+  })();
+}
+
 export default withSentryConfig(withNextIntl(nextConfig), {
     // For all available options, see:
     // https://www.npmjs.com/package/@sentry/webpack-plugin#options

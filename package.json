@@ -11,7 +11,10 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "generate-docs": "node scripts/generateDocs.js",
-    "prepare": "husky"
+    "prepare": "husky",
+    "pages:build": "npx @cloudflare/next-on-pages",
+    "preview": "npm run pages:build && wrangler pages dev",
+    "deploy": "npm run pages:build && wrangler pages deploy"
   },
   "proxy": "http://localhost:4000",
   "dependencies": {
@@ -49,9 +52,9 @@
     "cloudinary": "^2.7.0",
     "clsx": "^2.1.1",
     "commerce-sdk-isomorphic": "^3.2.0",
+    "dotenv": "^17.2.0",
     "graphql": "^16.11.0",
     "graphql-request": "^7.2.0",
-    "dotenv": "^17.2.0",
     "groq": "^3.88.3",
     "lucide-react": "^0.487.0",
     "next": "15.2.4",
@@ -72,6 +75,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
+    "@cloudflare/next-on-pages": "^1.13.13",
     "@eslint/eslintrc": "^3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",

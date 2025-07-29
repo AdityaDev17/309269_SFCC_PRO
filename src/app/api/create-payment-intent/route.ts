@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export async function POST(request: NextRequest) {
+  const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
   const basketDetails = await request.json();
   try {
     const customer = await stripe.customers.create({

@@ -46,6 +46,9 @@
 
 // //   return result.toDataStreamResponse();
 // // }
+
+export const runtime = 'edge';
+
 import { google } from '@ai-sdk/google'
 import { generateText } from 'ai'
 

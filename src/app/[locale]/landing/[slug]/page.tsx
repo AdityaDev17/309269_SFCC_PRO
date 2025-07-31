@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import LandingPageMapper from "@/sanity/mappers/LandingPageMapper";
 import { getLandingPageData } from "@/sanity/queries/landing";
 

@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { NextRequest, NextResponse } from "next/server";
 
 import { helpers, ShopperLogin } from "commerce-sdk-isomorphic";

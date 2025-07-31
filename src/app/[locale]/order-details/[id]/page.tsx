@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";
 import React from "react";

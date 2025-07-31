@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Banner from "@/components/molecules/Banner/Banner";
 import { getTranslations } from "next-intl/server";

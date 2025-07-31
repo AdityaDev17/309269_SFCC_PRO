@@ -1,4 +1,7 @@
 "use client";
+
+export const runtime = "edge";
+
 import { GET_CUSTOMER_BASKET, MERGE_BASKET, REGISTER } from "@/common/schema";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Login from "@/components/molecules/Login/Login";

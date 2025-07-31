@@ -1,5 +1,7 @@
 "use client";
 
+export const runtime = "edge";
+
 import { DELETE_CUSTOMER_ADDRESS, GET_CUSTOMER_ADDRESS } from "@/common/schema";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import { Button } from "@/components/atomic/Button/Button";

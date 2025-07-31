@@ -1,4 +1,7 @@
 "use client";
+
+export const runtime = "edge";
+
 import type { UserDetails } from "@/common/constant";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import EditPassword from "@/components/molecules/EditPassword/EditPassword";

@@ -1,4 +1,7 @@
 "use client";
+
+export const runtime = "edge";
+
 import { Button } from "@/components/atomic/Button/Button";
 import CheckBox from "@/components/atomic/CheckBox/CheckBox";
 import Input from "@/components/atomic/Input/Input";

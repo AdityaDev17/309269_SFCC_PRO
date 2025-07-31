@@ -1,4 +1,7 @@
 "use client";
+
+export const runtime = "edge";
+
 import { REMOVE_ITEM_FROM_WISHLIST, WISHLIST_DATA } from "@/common/schema";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import { Skeleton } from "@/components/atomic/Skeleton/Skeleton";

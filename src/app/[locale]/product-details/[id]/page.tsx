@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 import { productData } from "@/common/constant";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
 import Typography from "@/components/atomic/Typography/Typography";

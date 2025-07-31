@@ -1,3 +1,5 @@
+export const runtime = "edge";
+
 "use client";
 import { productData } from "@/common/constant";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";

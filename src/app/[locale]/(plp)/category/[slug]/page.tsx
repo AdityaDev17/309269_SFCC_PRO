@@ -1,4 +1,7 @@
 "use client";
+
+export const runtime = "edge";
+
 import { GET_PRODUCT_DETAILS, GET_PRODUCT_LIST } from "@/common/schema";
 import type { ProductDetails } from "@/common/type";
 import Breadcrumbs from "@/components/atomic/Breadcrumbs/Breadcrumbs";
